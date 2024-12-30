@@ -1,10 +1,11 @@
 import { cn } from "@/utils/cn";
 import React from "react";
 // import RichText from "@/components/RichText";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 import type { ContentBlock as ContentBlockProps } from "@/payload-types";
 
-import { CMSLink } from "../../components/Link";
+import { CMSLink } from "@/components/payload/CMSLink";
 
 export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   const { columns } = props;
@@ -33,7 +34,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
                 })}
                 key={index}
               >
-                {/* {richText && <RichText data={richText} enableGutter={false} />} */}
+                {richText && <RichText data={richText} />}
 
                 {enableLink && <CMSLink {...link} />}
               </div>
