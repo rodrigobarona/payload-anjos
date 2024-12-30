@@ -5,7 +5,6 @@ export const LogoIcon = () => {
       width={18}
       height={18}
       viewBox="0 0 283.46 283.46"
-      color="currentColor"
       fill="currentColor"
     >
       <path

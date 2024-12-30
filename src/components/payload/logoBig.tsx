@@ -5,9 +5,7 @@ export const LogoBig = () => {
       viewBox="0 0 841.89 595.28"
       fill="currentColor"
       height={200}
-      style={{
-        margin: "-50px 0",
-      }}
+      className="twp -tw-my-16"
       width={480}
     >
       <path

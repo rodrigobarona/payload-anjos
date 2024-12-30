@@ -56,6 +56,9 @@ const config = {
       },
     },
   },
+  corePlugins: {
+    preflight: false,
+  },
   plugins: [
     require("tailwindcss-animate"),
     scopedPreflightStyles({
