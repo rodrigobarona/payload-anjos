@@ -1,6 +1,3 @@
-import { cn } from "@/utils/cn";
-import React from "react";
-
 import type { Page } from "@/payload-types";
 
 // import { ArchiveBlock } from "@/blocks/ArchiveBlock/Component";
@@ -36,7 +33,7 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16 mx-auto max-w-screen-xl" key={index}>
+                <div className="mx-auto" key={index}>
                   {/* @ts-ignore */}
                   <Block {...block} disableInnerContainer />
                 </div>

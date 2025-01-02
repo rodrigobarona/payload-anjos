@@ -4,12 +4,25 @@ import type { CallToActionBlock as CTABlockProps } from "@/payload-types";
 
 import RichText from "@/components/payload/richText";
 import { CMSLink } from "@/components/payload/CMSLink";
+import { cn } from "@/utils/cn";
+import { spacingBottomClasses, spacingTopClasses } from "../globals";
 
-export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
+export const CallToActionBlock: React.FC<CTABlockProps> = ({
+  links,
+  richText,
+  spacingTop,
+  spacingBottom,
+}) => {
   return (
-    <div className="container">
-      <div className="bg-card rounded border-border border p-4 flex flex-col gap-8 md:flex-row md:justify-between md:items-center">
-        <div className="max-w-[48rem] flex items-center">
+    <div
+      className={cn(
+        "container",
+        spacingTopClasses[spacingTop || "medium"],
+        spacingBottomClasses[spacingBottom || "medium"],
+      )}
+    >
+      <div className="flex flex-col gap-8 rounded border border-border bg-card p-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex max-w-[48rem] items-center">
           {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
         </div>
         <div className="flex flex-col gap-8">

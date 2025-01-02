@@ -7,6 +7,7 @@ import RichText from "@/components/payload/richText";
 import type { MediaBlock as MediaBlockProps } from "@/payload-types";
 
 import { Media } from "@/components/payload/Media";
+import { spacingTopClasses, spacingBottomClasses } from "../globals";
 
 type Props = MediaBlockProps & {
   breakout?: boolean;
@@ -40,6 +41,8 @@ export const MediaBlock: React.FC<Props> = (props) => {
           container: enableGutter,
         },
         className,
+        spacingTopClasses[props["spacingTop"] || "medium"],
+        spacingBottomClasses[props["spacingBottom"] || "medium"],
       )}
     >
       <Media

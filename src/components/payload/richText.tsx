@@ -9,6 +9,8 @@ import type { CallToActionBlock as CTABlockProps, MediaBlock as MediaBlockProps 
 // import { BannerBlock } from "@/blocks/Banner/Component";
 import { CallToActionBlock } from "@/blocks/CallToAction/Component";
 import { cn } from "@/utils/cn";
+import { TextJSXConverter } from "./lexical-ext/text";
+import { ParagraphJSXConverter } from "./lexical-ext/paragraph";
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<CTABlockProps | MediaBlockProps | CodeBlockProps>;
 
@@ -18,7 +20,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     // banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (
       <MediaBlock
-        className="col-start-1 col-span-3"
+        className="col-span-3 col-start-1"
         imgClassName="m-0"
         {...node.fields}
         captionClassName="mx-auto max-w-[48rem]"
@@ -29,6 +31,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
   },
+  // ...JSXConverters,
+  ...TextJSXConverter,
+  ...ParagraphJSXConverter,
 });
 
 type Props = {
@@ -45,9 +50,9 @@ export default function RichText(props: Props) {
       converters={jsxConverters}
       className={cn(
         {
-          container: enableGutter,
+          // container: enableGutter,
           "max-w-none": !enableGutter,
-          "mx-auto prose md:prose-md dark:prose-invert": enableProse,
+          "md:prose-md prose mx-auto dark:prose-invert": enableProse,
         },
         className,
       )}

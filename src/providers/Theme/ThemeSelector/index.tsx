@@ -1,7 +1,7 @@
 "use client";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 
 import type { Theme } from "./types";
 
@@ -22,7 +22,7 @@ export const ThemeSelector: React.FC = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const preference = window.localStorage.getItem(themeLocalStorageKey);
     setValue(preference ?? "auto");
   }, []);
