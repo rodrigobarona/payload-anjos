@@ -8,6 +8,7 @@ import {
 } from "@payloadcms/richtext-lexical";
 
 import { linkGroup } from "@/fields/linkGroup";
+import { spacingFields } from "@/fields/spacingFields";
 
 export const CallToAction: Block = {
   slug: "cta",
@@ -34,54 +35,7 @@ export const CallToAction: Block = {
         maxRows: 2,
       },
     }),
-    {
-      name: "spacingTop",
-      label: "Spacing Top",
-      type: "select",
-      defaultValue: "medium",
-      options: [
-        {
-          label: "None",
-          value: "none",
-        },
-        {
-          label: "Small",
-          value: "small",
-        },
-        {
-          label: "Medium",
-          value: "medium",
-        },
-        {
-          label: "Large",
-          value: "large",
-        },
-      ],
-    },
-    {
-      name: "spacingBottom",
-      label: "Spacing Bottom",
-      type: "select",
-      defaultValue: "medium",
-      options: [
-        {
-          label: "None",
-          value: "none",
-        },
-        {
-          label: "Small",
-          value: "small",
-        },
-        {
-          label: "Medium",
-          value: "medium",
-        },
-        {
-          label: "Large",
-          value: "large",
-        },
-      ],
-    },
+    ...spacingFields,
   ],
   labels: {
     plural: "Calls to Action",

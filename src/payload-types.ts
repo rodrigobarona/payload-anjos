@@ -222,7 +222,7 @@ export interface Page {
     media?: (string | null) | Media;
     reversed?: boolean | null;
   };
-  layout: (ContentBlock | CallToActionBlock | MediaBlock)[];
+  layout: (ContentBlock | CallToActionBlock | MediaBlock | CarouselBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -279,8 +279,8 @@ export interface ContentBlock {
         id?: string | null;
       }[]
     | null;
-  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
@@ -324,8 +324,8 @@ export interface CallToActionBlock {
         id?: string | null;
       }[]
     | null;
-  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -336,11 +336,44 @@ export interface CallToActionBlock {
  */
 export interface MediaBlock {
   media: string | Media;
-  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselBlock".
+ */
+export interface CarouselBlock {
+  slides?:
+    | {
+        image: string | Media;
+        enableLink?: boolean | null;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  autoplay: boolean;
+  spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'carousel';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -568,6 +601,7 @@ export interface PagesSelect<T extends boolean = true> {
         content?: T | ContentBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
+        carousel?: T | CarouselBlockSelect<T>;
       };
   meta?:
     | T
@@ -606,8 +640,8 @@ export interface ContentBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  spacingTop?: T;
   spacingBottom?: T;
+  spacingTop?: T;
   id?: T;
   blockName?: T;
 }
@@ -632,8 +666,8 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  spacingTop?: T;
   spacingBottom?: T;
+  spacingTop?: T;
   id?: T;
   blockName?: T;
 }
@@ -643,8 +677,36 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
-  spacingTop?: T;
   spacingBottom?: T;
+  spacingTop?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselBlock_select".
+ */
+export interface CarouselBlockSelect<T extends boolean = true> {
+  slides?:
+    | T
+    | {
+        image?: T;
+        enableLink?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  autoplay?: T;
+  spacingBottom?: T;
+  spacingTop?: T;
   id?: T;
   blockName?: T;
 }

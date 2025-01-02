@@ -20,7 +20,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   };
 
   return (
-    <div
+    <section
       className={cn(
         "container",
         spacingTopClasses[props["spacingTop"] || "medium"],
@@ -47,6 +47,6 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
             );
           })}
       </div>
-    </div>
+    </section>
   );
 };
