@@ -238,7 +238,7 @@ export interface Page {
 export interface ContentBlock {
   columns?:
     | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        size?: ('oneSixth' | 'oneThird' | 'half' | 'twoThirds' | 'fiveSixth' | 'full') | null;
         richText?: {
           root: {
             type: string;
