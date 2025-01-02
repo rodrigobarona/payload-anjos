@@ -11,6 +11,7 @@ import { CallToActionBlock } from "@/blocks/CallToAction/Component";
 import { cn } from "@/utils/cn";
 import { TextJSXConverter } from "./lexical-ext/text";
 import { ParagraphJSXConverter } from "./lexical-ext/paragraph";
+import { HeadingJSXConverter } from "./lexical-ext/heading";
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<CTABlockProps | MediaBlockProps | CodeBlockProps>;
 
@@ -34,6 +35,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   // ...JSXConverters,
   ...TextJSXConverter,
   ...ParagraphJSXConverter,
+  ...HeadingJSXConverter,
 });
 
 type Props = {
@@ -44,6 +46,7 @@ type Props = {
 
 export default function RichText(props: Props) {
   const { className, enableProse = true, enableGutter = true, ...rest } = props;
+  // console.log(props.data.root.children);
   return (
     <RichTextWithoutBlocks
       //@ts-ignore

@@ -34,7 +34,7 @@ export const defaultLexical: Config["editor"] = lexicalEditor({
           ];
         },
       }),
-      TextColorFeature({}),
+      TextColorFeature(),
       HighlightColorFeature(),
       BgColorFeature(),
       //   YoutubeFeature(),

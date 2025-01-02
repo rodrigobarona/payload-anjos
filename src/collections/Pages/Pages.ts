@@ -6,7 +6,7 @@ import { CallToAction } from "@/blocks/CallToAction/config";
 import { Content } from "@/blocks/Content/config";
 // import { FormBlock } from "@/blocks/Form/config";
 import { MediaBlock } from "@/blocks/MediaBlock/config";
-import { hero } from "@/heros/config";
+import { hero } from "@/components/payload/Heros/config";
 import { slugField } from "@/fields/slug";
 import { populatePublishedAt } from "@/hooks/payload/populatePublishedAt";
 import { generatePreviewPath } from "@/utils/payload/generatePreviewPath";

@@ -9,6 +9,8 @@ import { Media } from "./collections/Media/Media";
 import { Pages } from "./collections/Pages/Pages";
 import { plugins } from "./plugins";
 import { defaultLexical } from "./fields/defaultLexical";
+import { Header } from "./components/payload/Header/config";
+import { Footer } from "./components/payload/Footer/config";
 // import "payloadcms-lexical-ext/client/client.css";
 
 const filename = fileURLToPath(import.meta.url);
@@ -50,6 +52,7 @@ export default buildConfig({
     },
   },
   collections: [Administrators, Media, Pages],
+  globals: [Header, Footer],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

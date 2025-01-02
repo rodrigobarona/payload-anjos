@@ -1,6 +1,6 @@
 import React from "react";
 import { JSXConverters } from "@payloadcms/richtext-lexical/react";
-import { SerializedCustomParagraphNode } from "./SerializedCustomParagraphNode";
+import { SerializedCustomParagraphNode } from "./CustomParagraphNode";
 
 export const ParagraphJSXConverter: JSXConverters<SerializedCustomParagraphNode> = {
   "custom-paragraph": ({ node, nodesToJSX }) => {

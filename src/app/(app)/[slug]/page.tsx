@@ -9,7 +9,7 @@ import React, { cache } from "react";
 import type { Page as PageType } from "@/payload-types";
 
 import { RenderBlocks } from "@/blocks/RenderBlocks";
-import { RenderHero } from "@/heros/RenderHero";
+import { RenderHero } from "@/components/payload/Heros/RenderHero";
 import { generateMeta } from "@/utils/payload/generateMeta";
 import PageClient from "./page.client";
 import { LivePreviewListener } from "@/components/payload/livePreviewListener";
@@ -62,7 +62,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { hero, layout } = page;
 
   return (
-    <article className="pt-16 pb-24">
+    <article className="pb-24 pt-16">
       <PageClient />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />

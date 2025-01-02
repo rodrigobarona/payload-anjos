@@ -1,8 +1,8 @@
 import type { Page } from "@/payload-types";
 
-import { HighImpactHero } from "@/heros/HighImpact";
-import { LowImpactHero } from "@/heros/LowImpact";
-import { MediumImpactHero } from "@/heros/MediumImpact";
+import { HighImpactHero } from "@/components/payload/Heros/HighImpact";
+import { LowImpactHero } from "@/components/payload/Heros/LowImpact";
+import { MediumImpactHero } from "@/components/payload/Heros/MediumImpact";
 
 const heroes = {
   highImpact: HighImpactHero,
