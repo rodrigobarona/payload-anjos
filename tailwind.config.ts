@@ -4,7 +4,7 @@ import { scopedPreflightStyles, isolateInsideOfContainer } from "tailwindcss-sco
 const config = {
   darkMode: ["class"],
   content: ["./src/**/*.{ts,tsx,mdx}"],
-  prefix: "tw-",
+  prefix: "",
   theme: {
     extend: {
       borderRadius: {

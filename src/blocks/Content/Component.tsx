@@ -1,7 +1,6 @@
 import { cn } from "@/utils/cn";
 import React from "react";
-// import RichText from "@/components/RichText";
-import { RichText } from "@payloadcms/richtext-lexical/react";
+import RichText from "@/components/payload/richText";
 
 import type { ContentBlock as ContentBlockProps } from "@/payload-types";
 

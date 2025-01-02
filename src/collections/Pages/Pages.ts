@@ -2,11 +2,11 @@ import type { CollectionConfig } from "payload";
 
 import { adminAuthenticated } from "@/access/adminAuthenticated";
 import { adminOrPublished } from "@/access/adminOrPublished";
-// import { CallToAction } from "@/blocks/CallToAction/config";
+import { CallToAction } from "@/blocks/CallToAction/config";
 import { Content } from "@/blocks/Content/config";
 // import { FormBlock } from "@/blocks/Form/config";
-// import { MediaBlock } from "@/blocks/MediaBlock/config";
-// import { hero } from "@/heros/config";
+import { MediaBlock } from "@/blocks/MediaBlock/config";
+import { hero } from "@/heros/config";
 import { slugField } from "@/fields/slug";
 import { populatePublishedAt } from "@/hooks/payload/populatePublishedAt";
 import { generatePreviewPath } from "@/utils/payload/generatePreviewPath";
@@ -66,17 +66,16 @@ export const Pages: CollectionConfig<"pages"> = {
     {
       type: "tabs",
       tabs: [
-        // Temporary removal of hero block
-        // {
-        //   fields: [hero],
-        //   label: "Hero",
-        // },
+        {
+          fields: [hero],
+          label: "Hero",
+        },
         {
           fields: [
             {
               name: "layout",
               type: "blocks",
-              blocks: [Content],
+              blocks: [Content, CallToAction, MediaBlock],
               required: true,
               admin: {
                 initCollapsed: true,
