@@ -5,7 +5,7 @@ import RichText from "@/components/payload/richText";
 import type { ContentBlock as ContentBlockProps } from "@/payload-types";
 
 import { CMSLink } from "@/components/payload/CMSLink";
-import { spacingTopClasses, spacingBottomClasses } from "../globals";
+import { spacingTopClasses, spacingBottomClasses, getCenteringClasses } from "../globals";
 
 export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   const { columns } = props;
@@ -25,6 +25,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
         "container",
         spacingTopClasses[props["spacingTop"] || "medium"],
         spacingBottomClasses[props["spacingBottom"] || "medium"],
+        getCenteringClasses(props.alignment || undefined),
       )}
     >
       <div className="grid grid-cols-4 gap-x-16 gap-y-8 lg:grid-cols-12">

@@ -279,6 +279,7 @@ export interface ContentBlock {
         id?: string | null;
       }[]
     | null;
+  alignment?: ('center' | 'left' | 'right' | 'full') | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
@@ -347,6 +348,21 @@ export interface MediaBlock {
  * via the `definition` "CarouselBlock".
  */
 export interface CarouselBlock {
+  title?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   slides?:
     | {
         image: string | Media;
@@ -368,7 +384,7 @@ export interface CarouselBlock {
         id?: string | null;
       }[]
     | null;
-  autoplay: boolean;
+  autoplay?: number | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
@@ -640,6 +656,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  alignment?: T;
   spacingBottom?: T;
   spacingTop?: T;
   id?: T;
@@ -687,6 +704,7 @@ export interface MediaBlockSelect<T extends boolean = true> {
  * via the `definition` "CarouselBlock_select".
  */
 export interface CarouselBlockSelect<T extends boolean = true> {
+  title?: T;
   slides?:
     | T
     | {

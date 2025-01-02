@@ -14,12 +14,14 @@ import type { CarouselBlock as CarouselBlockProps } from "@/payload-types";
 import { spacingTopClasses, spacingBottomClasses } from "../globals";
 import Image from "next/image";
 import Link from "next/link";
+import RichText from "@/components/payload/richText";
 
 export const CarouselBlock: React.FC<CarouselBlockProps> = ({
   slides,
   autoplay,
   spacingBottom,
   spacingTop,
+  title,
 }) => {
   return (
     <section
@@ -29,12 +31,13 @@ export const CarouselBlock: React.FC<CarouselBlockProps> = ({
         spacingBottomClasses[spacingBottom || "medium"],
       )}
     >
+      {title && <RichText data={title} className="mb-6" />}
       <Carousel
         plugins={
-          autoplay
+          autoplay && autoplay !== 0
             ? [
                 AutoplayPlugin({
-                  delay: 5000, // TODO: make this configurable
+                  delay: autoplay,
                 }),
               ]
             : []

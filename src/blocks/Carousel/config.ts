@@ -35,6 +35,10 @@ export const Carousel: Block = {
   interfaceName: "CarouselBlock",
   fields: [
     {
+      name: "title",
+      type: "richText",
+    },
+    {
       name: "slides",
       type: "array",
       admin: {
@@ -44,8 +48,7 @@ export const Carousel: Block = {
     },
     {
       name: "autoplay",
-      type: "checkbox",
-      required: true,
+      type: "number",
     },
     ...spacingFields,
   ],

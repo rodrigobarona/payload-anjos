@@ -32,13 +32,20 @@ const config = {
       },
       screens: {
         "2xl": "86rem",
+        xl: "80rem",
         lg: "64rem",
         md: "48rem",
         sm: "40rem",
-        xl: "80rem",
       },
     },
     extend: {
+      maxWidth: {
+        "2xl-half": "calc((100vw - 86rem) / 2 + 86rem)",
+        "xl-half": "calc((100vw - 80rem) / 2 + 80rem)",
+        "lg-half": "calc((100vw - 64rem) / 2 + 64rem)",
+        "md-half": "calc((100vw - 48rem) / 2 + 48rem)",
+        "sm-half": "calc((100vw - 40rem) / 2 + 40rem)",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

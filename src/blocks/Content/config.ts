@@ -9,6 +9,7 @@ import {
 
 import { link } from "@/fields/link";
 import { spacingFields } from "@/fields/spacingFields";
+import { AlignmentField } from "@/fields/alignmentField";
 
 const columnFields: Field[] = [
   {
@@ -82,6 +83,7 @@ export const Content: Block = {
       },
       fields: columnFields,
     },
+    AlignmentField,
     ...spacingFields,
   ],
 };
