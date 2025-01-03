@@ -1,5 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+import { scopedPreflightStyles, isolateInsideOfContainer } from "tailwindcss-scoped-preflight";
+import type { Config } from "tailwindcss";
+
+const config = {
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -7,7 +9,14 @@ export default {
     './src/**/*.{ts,tsx}',
   ],
   darkMode: ['selector', '[data-theme="dark"]'],
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  corePlugins: {
+    preflight: false,
+  },
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography'),     scopedPreflightStyles({
+    isolationStrategy: isolateInsideOfContainer(".twp", {
+      except: ".no-twp", 
+    }),
+  }),],
   prefix: '',
   safelist: [
     'lg:col-span-4',
@@ -43,6 +52,13 @@ export default {
       },
     },
     extend: {
+      maxWidth: {
+        "2xl-half": "calc((100vw - 86rem) / 2 + 86rem)",
+        "xl-half": "calc((100vw - 80rem) / 2 + 80rem)",
+        "lg-half": "calc((100vw - 64rem) / 2 + 64rem)",
+        "md-half": "calc((100vw - 48rem) / 2 + 48rem)",
+        "sm-half": "calc((100vw - 40rem) / 2 + 40rem)",
+      },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
@@ -145,4 +161,6 @@ export default {
       }),
     },
   },
-}
+} satisfies Config
+
+export default config

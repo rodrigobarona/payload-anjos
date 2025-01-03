@@ -1,4 +1,5 @@
-// storage-adapter-import-placeholder
+
+import { s3Storage } from "@payloadcms/storage-s3";
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 
 import sharp from 'sharp' // sharp-import
@@ -26,9 +27,10 @@ export default buildConfig({
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: ['@/components/BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      beforeDashboard: ['@/components/BeforeDashboard'],
+      graphics: {
+        Logo: "@/components/AdminLogoBig/AdminLogoBig#AdminLogoBig",
+        Icon: "@/components/AdminLogoIcon/AdminLogoIcon#AdminLogoIcon",
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -67,11 +69,25 @@ export default buildConfig({
   globals: [Header, Footer],
   plugins: [
     ...plugins,
-    // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        [Media.slug]: true,
+      },
+      bucket: process.env.S3_BUCKET || "",
+      config: {
+        endpoint: process.env.S3_ENDPOINT || "",
+        region: "auto",
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+        },
+      },
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+
 })

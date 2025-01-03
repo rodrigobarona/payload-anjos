@@ -11,4 +11,8 @@
 **/temp
 **/docs/**
 tsconfig.json
-
+.next
+node_modules
+package-lock.json
+bunb.lock
+pnpm-lock.yaml
