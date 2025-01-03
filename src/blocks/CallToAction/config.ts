@@ -8,7 +8,7 @@ import {
 } from "@payloadcms/richtext-lexical";
 
 import { linkGroup } from "@/fields/linkGroup";
-import { spacingFields } from "@/fields/spacingFields";
+import { marginFields, paddingFields } from "@/fields/spacingFields";
 import { defaultLexical } from "@/fields/defaultLexical";
 
 export const CallToAction: Block = {
@@ -27,7 +27,8 @@ export const CallToAction: Block = {
         maxRows: 2,
       },
     }),
-    ...spacingFields,
+    marginFields,
+    paddingFields,
   ],
   labels: {
     plural: "Calls to Action",

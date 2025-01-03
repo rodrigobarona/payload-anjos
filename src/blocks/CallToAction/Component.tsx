@@ -1,17 +1,24 @@
-import React from 'react'
+import React from "react";
 
-import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
+import type { CallToActionBlock as CTABlockProps } from "@/payload-types";
 
-import RichText from '@/components/RichText'
-import { CMSLink } from '@/components/Link'
-import { cn } from '@/utilities/cn'
-import { spacingBottomClasses, spacingTopClasses } from "@/blocks/globals";
+import RichText from "@/components/RichText";
+import { CMSLink } from "@/components/Link";
+import { cn } from "@/utilities/cn";
+import {
+  paddingBottomClasses,
+  paddingTopClasses,
+  spacingBottomClasses,
+  spacingTopClasses,
+} from "@/blocks/globals";
 
 export const CallToActionBlock: React.FC<CTABlockProps> = ({
   links,
   richText,
   spacingTop,
   spacingBottom,
+  paddingBottom,
+  paddingTop,
 }) => {
   return (
     <div
@@ -19,6 +26,8 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({
         "container",
         spacingTopClasses[spacingTop || "medium"],
         spacingBottomClasses[spacingBottom || "medium"],
+        paddingTopClasses[paddingTop || "medium"],
+        paddingBottomClasses[paddingBottom || "medium"],
       )}
     >
       <div className="flex flex-col gap-8 rounded border border-border bg-card p-4 md:flex-row md:items-center md:justify-between">
@@ -34,4 +43,3 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({
     </div>
   );
 };
-

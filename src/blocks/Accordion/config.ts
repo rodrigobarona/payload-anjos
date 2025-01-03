@@ -1,6 +1,6 @@
 import type { Block, Field } from "payload";
 
-import { spacingFields } from "@/fields/spacingFields";
+import { marginFields, paddingFields } from "@/fields/spacingFields";
 import { defaultLexical } from "@/fields/defaultLexical";
 
 const faqFields: Field[] = [
@@ -20,8 +20,8 @@ const faqFields: Field[] = [
 export const Accordion: Block = {
   slug: "accordion",
   interfaceName: "AccordionBlock",
-  imageURL: '/accordion.png',
-  imageAltText: 'Accordion',
+  imageURL: "/accordion.png",
+  imageAltText: "Accordion",
   fields: [
     {
       name: "title",
@@ -37,6 +37,7 @@ export const Accordion: Block = {
       required: true,
       fields: faqFields,
     },
-    ...spacingFields,
+    marginFields,
+    paddingFields,
   ],
 };

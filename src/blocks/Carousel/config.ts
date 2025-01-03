@@ -8,7 +8,7 @@ import {
 } from "@payloadcms/richtext-lexical";
 
 import { link } from "@/fields/link";
-import { spacingFields } from "@/fields/spacingFields";
+import { marginFields, paddingFields } from "@/fields/spacingFields";
 
 const slideFields: Field[] = [
   {
@@ -81,6 +81,7 @@ export const Carousel: Block = {
         condition: (_, { type }) => Boolean(type !== "logo"),
       },
     },
-    ...spacingFields,
+    marginFields,
+    paddingFields,
   ],
 };

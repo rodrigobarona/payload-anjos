@@ -13,7 +13,12 @@ import AutoplayPlugin from "embla-carousel-autoplay";
 import AutoScrollPlugin from "embla-carousel-auto-scroll";
 
 import type { CarouselBlock as CarouselBlockProps } from "@/payload-types";
-import { spacingTopClasses, spacingBottomClasses } from "@/blocks/globals";
+import {
+  spacingTopClasses,
+  spacingBottomClasses,
+  paddingTopClasses,
+  paddingBottomClasses,
+} from "@/blocks/globals";
 import Image from "next/image";
 import Link from "next/link";
 import RichText from "@/components/RichText";
@@ -24,6 +29,8 @@ export const CarouselBlock: React.FC<CarouselBlockProps> = ({
   autoplay,
   spacingBottom,
   spacingTop,
+  paddingBottom,
+  paddingTop,
   title,
 }) => {
   const plugins = {
@@ -59,6 +66,8 @@ export const CarouselBlock: React.FC<CarouselBlockProps> = ({
         "container",
         spacingTopClasses[spacingTop || "medium"],
         spacingBottomClasses[spacingBottom || "medium"],
+        paddingTopClasses[paddingTop || "medium"],
+        paddingBottomClasses[paddingBottom || "medium"],
       )}
     >
       {title && <RichText data={title} className="mb-6" />}

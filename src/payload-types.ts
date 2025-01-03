@@ -366,6 +366,8 @@ export interface CallToActionBlock {
     | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -395,6 +397,8 @@ export interface ContentBlock {
         } | null;
         enableLink?: boolean | null;
         enableProse?: boolean | null;
+        paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+        paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
         link?: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
@@ -414,12 +418,16 @@ export interface ContentBlock {
            */
           appearance?: ('default' | 'outline') | null;
         };
+        background?: string | null;
         id?: string | null;
       }[]
     | null;
   alignment?: ('center' | 'left' | 'right' | 'full') | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  background?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
@@ -432,6 +440,8 @@ export interface MediaBlock {
   media: string | Media;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -719,6 +729,8 @@ export interface CarouselBlock {
   autoplay?: number | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'carousel';
@@ -764,6 +776,8 @@ export interface AccordionBlock {
   }[];
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'accordion';
@@ -1003,6 +1017,8 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
       };
   spacingBottom?: T;
   spacingTop?: T;
+  paddingBottom?: T;
+  paddingTop?: T;
   id?: T;
   blockName?: T;
 }
@@ -1018,6 +1034,8 @@ export interface ContentBlockSelect<T extends boolean = true> {
         richText?: T;
         enableLink?: T;
         enableProse?: T;
+        paddingBottom?: T;
+        paddingTop?: T;
         link?:
           | T
           | {
@@ -1028,11 +1046,15 @@ export interface ContentBlockSelect<T extends boolean = true> {
               label?: T;
               appearance?: T;
             };
+        background?: T;
         id?: T;
       };
   alignment?: T;
   spacingBottom?: T;
   spacingTop?: T;
+  paddingBottom?: T;
+  paddingTop?: T;
+  background?: T;
   id?: T;
   blockName?: T;
 }
@@ -1044,6 +1066,8 @@ export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
   spacingBottom?: T;
   spacingTop?: T;
+  paddingBottom?: T;
+  paddingTop?: T;
   id?: T;
   blockName?: T;
 }
@@ -1099,6 +1123,8 @@ export interface CarouselBlockSelect<T extends boolean = true> {
   autoplay?: T;
   spacingBottom?: T;
   spacingTop?: T;
+  paddingBottom?: T;
+  paddingTop?: T;
   id?: T;
   blockName?: T;
 }
@@ -1117,6 +1143,8 @@ export interface AccordionBlockSelect<T extends boolean = true> {
       };
   spacingBottom?: T;
   spacingTop?: T;
+  paddingBottom?: T;
+  paddingTop?: T;
   id?: T;
   blockName?: T;
 }

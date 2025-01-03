@@ -1,15 +1,16 @@
-import type { Block, Field } from 'payload'
+import type { Block, Field } from "payload";
 
 import {
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+} from "@payloadcms/richtext-lexical";
 
-import { link } from '@/fields/link'
-import { spacingFields } from '@/fields/spacingFields'
-import { AlignmentField } from '@/fields/alignmentField'
+import { link } from "@/fields/link";
+import { marginFields, paddingFields } from "@/fields/spacingFields";
+import { AlignmentField } from "@/fields/alignmentField";
+import { backgroundPicker } from "@/fields/backgroundPicker";
 
 const columnFields: Field[] = [
   {
@@ -44,29 +45,30 @@ const columnFields: Field[] = [
     ],
   },
   {
-    name: 'richText',
-    type: 'richText',
+    name: "richText",
+    type: "richText",
     editor: lexicalEditor({
       features: ({ rootFeatures }) => {
         return [
           ...rootFeatures,
-          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+          HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),
-        ]
+        ];
       },
     }),
     label: false,
   },
   {
-    name: 'enableLink',
-    type: 'checkbox',
+    name: "enableLink",
+    type: "checkbox",
   },
   {
-    name: 'enableProse',
-    type: 'checkbox',
+    name: "enableProse",
+    type: "checkbox",
     defaultValue: true,
   },
+  paddingFields,
   link({
     overrides: {
       admin: {
@@ -74,21 +76,24 @@ const columnFields: Field[] = [
       },
     },
   }),
-]
+  backgroundPicker,
+];
 
 export const Content: Block = {
-  slug: 'content',
-  interfaceName: 'ContentBlock',
+  slug: "content",
+  interfaceName: "ContentBlock",
   fields: [
     {
-      name: 'columns',
-      type: 'array',
+      name: "columns",
+      type: "array",
       admin: {
         initCollapsed: true,
       },
       fields: columnFields,
     },
     AlignmentField,
-    ...spacingFields,
+    marginFields,
+    paddingFields,
+    backgroundPicker,
   ],
-}
+};
