@@ -22,6 +22,9 @@ import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/cn'
 
+import { JSXConverters } from 'payloadcms-lexical-ext'
+
+
 type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
@@ -38,6 +41,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  // ...JSXConverters,
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (
@@ -68,7 +72,7 @@ export default function RichText(props: Props) {
       converters={jsxConverters}
       className={cn(
         {
-          'container ': enableGutter,
+          // 'container': enableGutter,
           'max-w-none': !enableGutter,
           'mx-auto prose md:prose-md dark:prose-invert ': enableProse,
         },

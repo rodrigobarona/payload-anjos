@@ -364,6 +364,8 @@ export interface CallToActionBlock {
         id?: string | null;
       }[]
     | null;
+  spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -375,7 +377,7 @@ export interface CallToActionBlock {
 export interface ContentBlock {
   columns?:
     | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        size?: ('oneSixth' | 'oneThird' | 'half' | 'twoThirds' | 'fiveSixth' | 'full') | null;
         richText?: {
           root: {
             type: string;
@@ -414,6 +416,9 @@ export interface ContentBlock {
         id?: string | null;
       }[]
     | null;
+  alignment?: ('center' | 'left' | 'right' | 'full') | null;
+  spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
@@ -424,6 +429,8 @@ export interface ContentBlock {
  */
 export interface MediaBlock {
   media: string | Media;
+  spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -946,6 +953,8 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  spacingBottom?: T;
+  spacingTop?: T;
   id?: T;
   blockName?: T;
 }
@@ -972,6 +981,9 @@ export interface ContentBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  alignment?: T;
+  spacingBottom?: T;
+  spacingTop?: T;
   id?: T;
   blockName?: T;
 }
@@ -981,6 +993,8 @@ export interface ContentBlockSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
+  spacingBottom?: T;
+  spacingTop?: T;
   id?: T;
   blockName?: T;
 }

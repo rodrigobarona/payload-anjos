@@ -1,42 +1,46 @@
-import { Config } from 'payload'
+import { Config } from "payload";
+import { LinkFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import {
-  BoldFeature,
-  ItalicFeature,
-  LinkFeature,
-  ParagraphFeature,
-  lexicalEditor,
-  UnderlineFeature,
-} from '@payloadcms/richtext-lexical'
+  BgColorFeature,
+  HighlightColorFeature,
+  TextColorFeature,
+  YoutubeFeature,
+  VimeoFeature,
+} from "payloadcms-lexical-ext";
 
-export const defaultLexical: Config['editor'] = lexicalEditor({
-  features: () => {
+export const defaultLexical: Config["editor"] = lexicalEditor({
+  features: ({ defaultFeatures }) => {
     return [
-      ParagraphFeature(),
-      UnderlineFeature(),
-      BoldFeature(),
-      ItalicFeature(),
+      ...defaultFeatures,
       LinkFeature({
-        enabledCollections: ['pages', 'posts'],
+        enabledCollections: ["pages", "posts"],
         fields: ({ defaultFields }) => {
           const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-            if ('name' in field && field.name === 'url') return false
-            return true
-          })
+            if ("name" in field && field.name === "url") return false;
+            return true;
+          });
 
           return [
             ...defaultFieldsWithoutUrl,
             {
-              name: 'url',
-              type: 'text',
+              name: "url",
+              type: "text",
               admin: {
-                condition: ({ linkType }) => linkType !== 'internal',
+                condition: ({ linkType }) => linkType !== "internal",
               },
-              label: ({ t }) => t('fields:enterURL'),
+              label: ({ t }) => t("fields:enterURL"),
               required: true,
             },
-          ]
+          ];
         },
       }),
-    ]
+      // TextColorFeature(),
+      // HighlightColorFeature(),
+      // BgColorFeature(),
+
+
+      //   YoutubeFeature(),
+      //   VimeoFeature(),
+    ];
   },
-})
+});

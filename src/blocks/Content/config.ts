@@ -8,28 +8,38 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
+import { spacingFields } from '@/fields/spacingFields'
+import { AlignmentField } from '@/fields/alignmentField'
 
 const columnFields: Field[] = [
   {
-    name: 'size',
-    type: 'select',
-    defaultValue: 'oneThird',
+    name: "size",
+    type: "select",
+    defaultValue: "oneThird",
     options: [
       {
-        label: 'One Third',
-        value: 'oneThird',
+        label: "One Sixth",
+        value: "oneSixth",
       },
       {
-        label: 'Half',
-        value: 'half',
+        label: "One Third",
+        value: "oneThird",
       },
       {
-        label: 'Two Thirds',
-        value: 'twoThirds',
+        label: "Half",
+        value: "half",
       },
       {
-        label: 'Full',
-        value: 'full',
+        label: "Two Thirds",
+        value: "twoThirds",
+      },
+      {
+        label: "Five Sixth",
+        value: "fiveSixth",
+      },
+      {
+        label: "Full",
+        value: "full",
       },
     ],
   },
@@ -73,5 +83,7 @@ export const Content: Block = {
       },
       fields: columnFields,
     },
+    AlignmentField,
+    ...spacingFields,
   ],
 }

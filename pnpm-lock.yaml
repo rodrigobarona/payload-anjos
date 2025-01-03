@@ -95,6 +95,9 @@ importers:
       payload-admin-bar:
         specifier: ^1.0.6
         version: 1.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      payloadcms-lexical-ext:
+        specifier: ^0.5.2
+        version: 0.5.2(@lexical/table@0.20.0)(@payloadcms/richtext-lexical@3.13.0(g2oe2h3l6niypvuubtbjxgztr4))(escape-html@1.0.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       prism-react-renderer:
         specifier: ^2.4.1
         version: 2.4.1(react@19.0.0)
@@ -3448,6 +3451,13 @@ packages:
     peerDependencies:
       graphql: ^16.8.1
 
+  payloadcms-lexical-ext@0.5.2:
+    resolution: {integrity: sha512-ax2yjSiGG12w79tB90FhaXwdeP/B72+oyBzKBxMW8jb7aq2U4PkuBt0eYEasYc8qShnZzGJ5EhcDdZKL5cxBWA==}
+    peerDependencies:
+      '@lexical/table': ^0.20.0
+      '@payloadcms/richtext-lexical': ^3.0.0
+      escape-html: ^1.0.3
+
   peberminta@0.8.0:
     resolution: {integrity: sha512-YYEs+eauIjDH5nUEGi18EohWE0nV2QbGTqmxQcqgZ/0g+laPCQmuIqq7EBLVi9uim9zMgfJv0QBZEnQ3uHw/Tw==}
 
@@ -3609,6 +3619,12 @@ packages:
   range-parser@1.2.1:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
+
+  react-colorful@5.6.1:
+    resolution: {integrity: sha512-1exovf0uGTGyq5mXQT0zgQ80uvj2PCwvF8zY1RN9/vbJVSjSo3fsB/4L3ObbF7u70NduSiK4xu4Y6q1MHoUGEw==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
 
   react-datepicker@7.5.0:
     resolution: {integrity: sha512-6MzeamV8cWSOcduwePHfGqY40acuGlS1cG//ePHT6bVbLxWyqngaStenfH03n1wbzOibFggF66kWaBTb1SbTtQ==}
@@ -8624,6 +8640,17 @@ snapshots:
       - typescript
       - utf-8-validate
 
+  payloadcms-lexical-ext@0.5.2(@lexical/table@0.20.0)(@payloadcms/richtext-lexical@3.13.0(g2oe2h3l6niypvuubtbjxgztr4))(escape-html@1.0.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      '@lexical/table': 0.20.0
+      '@payloadcms/richtext-lexical': 3.13.0(g2oe2h3l6niypvuubtbjxgztr4)
+      escape-html: 1.0.3
+      lucide-react: 0.469.0(react@19.0.0)
+      react-colorful: 5.6.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+    transitivePeerDependencies:
+      - react
+      - react-dom
+
   peberminta@0.8.0: {}
 
   peek-readable@5.3.1: {}
@@ -8781,6 +8808,11 @@ snapshots:
   quick-format-unescaped@4.0.4: {}
 
   range-parser@1.2.1: {}
+
+  react-colorful@5.6.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   react-datepicker@7.5.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:

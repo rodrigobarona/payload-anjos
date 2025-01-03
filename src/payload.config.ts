@@ -17,6 +17,7 @@ import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

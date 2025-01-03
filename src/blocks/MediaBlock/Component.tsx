@@ -7,6 +7,7 @@ import RichText from '@/components/RichText'
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
 
 import { Media } from '../../components/Media'
+import { spacingBottomClasses, spacingTopClasses } from '@/blocks/globals'
 
 type Props = MediaBlockProps & {
   breakout?: boolean
@@ -35,24 +36,24 @@ export const MediaBlock: React.FC<Props> = (props) => {
   return (
     <div
       className={cn(
-        '',
+        "",
         {
           container: enableGutter,
         },
         className,
+        spacingTopClasses[props["spacingTop"] || "medium"],
+        spacingBottomClasses[props["spacingBottom"] || "medium"],
       )}
     >
-      {(media || staticImage) && (
-        <Media
-          imgClassName={cn('border border-border rounded-[0.8rem]', imgClassName)}
-          resource={media}
-          src={staticImage}
-        />
-      )}
+      <Media
+        imgClassName={cn("border border-border rounded-[0.8rem]", imgClassName)}
+        resource={media}
+        src={staticImage}
+      />
       {caption && (
         <div
           className={cn(
-            'mt-6',
+            "mt-6",
             {
               container: !disableInnerContainer,
             },
