@@ -674,6 +674,7 @@ export interface Form {
  * via the `definition` "CarouselBlock".
  */
 export interface CarouselBlock {
+  type: 'default' | 'logo';
   title?: {
     root: {
       type: string;
@@ -1076,6 +1077,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "CarouselBlock_select".
  */
 export interface CarouselBlockSelect<T extends boolean = true> {
+  type?: T;
   title?: T;
   slides?:
     | T

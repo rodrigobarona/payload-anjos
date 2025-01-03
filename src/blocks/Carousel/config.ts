@@ -33,7 +33,25 @@ const slideFields: Field[] = [
 export const Carousel: Block = {
   slug: "carousel",
   interfaceName: "CarouselBlock",
+  imageURL: "/carousel.png",
+  imageAltText: "Carousel",
   fields: [
+    {
+      name: "type",
+      type: "select",
+      options: [
+        {
+          label: "Default",
+          value: "default",
+        },
+        {
+          label: "Logo",
+          value: "logo",
+        },
+      ],
+      required: true,
+      defaultValue: "default",
+    },
     {
       name: "title",
       type: "richText",
@@ -41,10 +59,10 @@ export const Carousel: Block = {
         features: ({ rootFeatures }) => {
           return [
             ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+            HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
-          ]
+          ];
         },
       }),
     },
@@ -59,6 +77,9 @@ export const Carousel: Block = {
     {
       name: "autoplay",
       type: "number",
+      admin: {
+        condition: (_, { type }) => Boolean(type !== "logo"),
+      },
     },
     ...spacingFields,
   ],

@@ -23,6 +23,7 @@ import {
 import { Carousel } from '@/blocks/Carousel/config'
 import { Accordion } from '@/blocks/Accordion/config'
 
+
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
   access: {

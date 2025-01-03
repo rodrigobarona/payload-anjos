@@ -6,6 +6,10 @@ body {
   margin: 0;
 }
 
+.direction-rtl {
+  direction: rtl;
+}
+
 @layer base {
   h1,
   h2,
@@ -53,7 +57,7 @@ body {
     --error: 10 100% 86%;
   }
 
-  [data-theme='dark'] {
+  [data-theme="dark"] {
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
 
@@ -93,7 +97,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply flex min-h-[100vh] flex-col bg-background text-foreground;
   }
 }
 
@@ -101,7 +105,7 @@ html {
   opacity: 0;
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
+html[data-theme="dark"],
+html[data-theme="light"] {
   opacity: initial;
 }

@@ -7,8 +7,10 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  CarouselProps,
 } from "@/components/ui/carousel";
 import AutoplayPlugin from "embla-carousel-autoplay";
+import AutoScrollPlugin from "embla-carousel-auto-scroll";
 
 import type { CarouselBlock as CarouselBlockProps } from "@/payload-types";
 import { spacingTopClasses, spacingBottomClasses } from "@/blocks/globals";
@@ -17,12 +19,40 @@ import Link from "next/link";
 import RichText from "@/components/RichText";
 
 export const CarouselBlock: React.FC<CarouselBlockProps> = ({
+  type,
   slides,
   autoplay,
   spacingBottom,
   spacingTop,
   title,
 }) => {
+  const plugins = {
+    logo: [
+      AutoScrollPlugin({
+        speed: 3,
+      }),
+    ],
+    default: [
+      ...(autoplay && autoplay !== 0
+        ? [
+            AutoplayPlugin({
+              delay: autoplay,
+            }),
+          ]
+        : []),
+    ],
+  };
+
+  const options: { [key: string]: Partial<CarouselProps["opts"]> } = {
+    logo: {
+      loop: true,
+      watchDrag: false,
+    },
+    default: {
+      loop: true,
+    },
+  };
+
   return (
     <section
       className={cn(
@@ -32,22 +62,12 @@ export const CarouselBlock: React.FC<CarouselBlockProps> = ({
       )}
     >
       {title && <RichText data={title} className="mb-6" />}
-      <Carousel
-        plugins={
-          autoplay && autoplay !== 0
-            ? [
-                AutoplayPlugin({
-                  delay: autoplay,
-                }),
-              ]
-            : []
-        }
-      >
+      <Carousel opts={options[type]} plugins={plugins[type]}>
         <CarouselContent>
           {slides?.map((slide) => (
             <CarouselItem
               key={slide.id}
-              className="basis-full md:basis-[50%] lg:basis-[33.33%] 2xl:basis-[25%]"
+              className={cn("basis-full md:basis-[50%] lg:basis-[33.33%] 2xl:basis-[25%]")}
             >
               {typeof slide.image !== "string" && slide.image.url && (
                 <>
@@ -79,8 +99,12 @@ export const CarouselBlock: React.FC<CarouselBlockProps> = ({
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        {type === "default" && (
+          <>
+            <CarouselPrevious />
+            <CarouselNext />
+          </>
+        )}
       </Carousel>
     </section>
   );
