@@ -120,7 +120,7 @@ const config: Config = {
           to: { height: '0' },
         },
       },
-      typography: ({ theme }) => ({
+      typography: () => ({
         DEFAULT: {
           css: [
             {

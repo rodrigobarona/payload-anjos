@@ -7,15 +7,9 @@ import {
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
 
-import {
-  BgColorFeature,
-  HighlightColorFeature,
-  TextColorFeature,
-
-} from "payloadcms-lexical-ext";
-
 import { linkGroup } from "@/fields/linkGroup";
 import { spacingFields } from "@/fields/spacingFields";
+import { defaultLexical } from "@/fields/defaultLexical";
 
 export const CallToAction: Block = {
   slug: "cta",
@@ -24,19 +18,7 @@ export const CallToAction: Block = {
     {
       name: "richText",
       type: "richText",
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3", "h4"] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-            TextColorFeature(),
-            HighlightColorFeature(),
-            BgColorFeature(),
-          ];
-        },
-      }),
+      editor: defaultLexical,
       label: false,
     },
     linkGroup({

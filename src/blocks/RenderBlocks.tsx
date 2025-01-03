@@ -6,6 +6,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { CarouselBlock } from './Carousel/Component'
+import { AccordionBlock } from './Accordion/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -14,6 +15,7 @@ const blockComponents = {
   formBlock: FormBlock,
   carousel: CarouselBlock,
   mediaBlock: MediaBlock,
+  accordion: AccordionBlock,
 }
 
 export const RenderBlocks: React.FC<{

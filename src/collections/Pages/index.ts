@@ -21,6 +21,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { Carousel } from '@/blocks/Carousel/config'
+import { Accordion } from '@/blocks/Accordion/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -76,7 +77,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Carousel],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Carousel, Accordion],
               required: true,
               admin: {
                 initCollapsed: true,

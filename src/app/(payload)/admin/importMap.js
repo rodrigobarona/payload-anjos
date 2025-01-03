@@ -21,9 +21,6 @@ import { RelationshipFeatureClient as RelationshipFeatureClient_e70f5e05f09f93e0
 import { BlockquoteFeatureClient as BlockquoteFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { UploadFeatureClient as UploadFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { BgColorFeatureClient as BgColorFeatureClient_bdd62b616b227465b00e7faff4bdc6d8 } from 'payloadcms-lexical-ext/client'
-import { HighlightColorFeatureClient as HighlightColorFeatureClient_bdd62b616b227465b00e7faff4bdc6d8 } from 'payloadcms-lexical-ext/client'
-import { TextColorFeatureClient as TextColorFeatureClient_bdd62b616b227465b00e7faff4bdc6d8 } from 'payloadcms-lexical-ext/client'
 import { OverviewComponent as OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -62,9 +59,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BlockquoteFeatureClient": BlockquoteFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#UploadFeatureClient": UploadFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "payloadcms-lexical-ext/client#BgColorFeatureClient": BgColorFeatureClient_bdd62b616b227465b00e7faff4bdc6d8,
-  "payloadcms-lexical-ext/client#HighlightColorFeatureClient": HighlightColorFeatureClient_bdd62b616b227465b00e7faff4bdc6d8,
-  "payloadcms-lexical-ext/client#TextColorFeatureClient": TextColorFeatureClient_bdd62b616b227465b00e7faff4bdc6d8,
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,

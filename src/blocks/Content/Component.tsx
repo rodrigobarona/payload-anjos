@@ -32,7 +32,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
         {columns &&
           columns.length > 0 &&
           columns.map((col, index) => {
-            const { enableLink, link, richText, size } = col;
+            const { enableLink, link, richText, size, enableProse } = col;
 
             return (
               <div
@@ -41,7 +41,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
                 })}
                 key={index}
               >
-                {richText && <RichText data={richText} />}
+                {richText && <RichText data={richText} enableProse={enableProse ?? false}/>}
 
                 {enableLink && <CMSLink {...link} />}
               </div>

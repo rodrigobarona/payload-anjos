@@ -128,7 +128,7 @@ export interface Page {
     media?: (string | null) | Media;
     reversed?: boolean | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | CarouselBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | CarouselBlock | AccordionBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -394,6 +394,7 @@ export interface ContentBlock {
           [k: string]: unknown;
         } | null;
         enableLink?: boolean | null;
+        enableProse?: boolean | null;
         link?: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
@@ -723,6 +724,51 @@ export interface CarouselBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordionBlock".
+ */
+export interface AccordionBlock {
+  title?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  items: {
+    title: string;
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accordion';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -917,6 +963,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
+        accordion?: T | AccordionBlockSelect<T>;
       };
   meta?:
     | T
@@ -969,6 +1016,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
         size?: T;
         richText?: T;
         enableLink?: T;
+        enableProse?: T;
         link?:
           | T
           | {
@@ -1047,6 +1095,24 @@ export interface CarouselBlockSelect<T extends boolean = true> {
         id?: T;
       };
   autoplay?: T;
+  spacingBottom?: T;
+  spacingTop?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordionBlock_select".
+ */
+export interface AccordionBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        content?: T;
+        id?: T;
+      };
   spacingBottom?: T;
   spacingTop?: T;
   id?: T;

@@ -21,6 +21,6 @@ export const getCenteringClasses = (alignment: "left" | "right" | "full" | "cent
       : "",
     alignment === "left" ? "ml-0 pl-0" : "",
     alignment === "right" ? "mr-0 pr-0" : "",
-    alignment === "full" ? "max-w-none" : "",
+    alignment === "full" ? "max-w-none mx-0 px-0" : "",
   );
 };

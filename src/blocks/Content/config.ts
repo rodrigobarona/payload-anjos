@@ -62,6 +62,11 @@ const columnFields: Field[] = [
     name: 'enableLink',
     type: 'checkbox',
   },
+  {
+    name: 'enableProse',
+    type: 'checkbox',
+    defaultValue: true,
+  },
   link({
     overrides: {
       admin: {
