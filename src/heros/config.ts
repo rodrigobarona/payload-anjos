@@ -67,6 +67,15 @@ export const hero: Field = {
       relationTo: 'media',
       required: true,
     },
+    {
+      name: "reversed",
+      label: "Reverse photo and text",
+      type: "checkbox",
+      admin: {
+        condition: (_, { type } = {}) => ["mediumImpact"].includes(type),
+      },
+      required: true,
+    },
   ],
   label: false,
 }
