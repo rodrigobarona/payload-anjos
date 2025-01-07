@@ -22,6 +22,7 @@ import {
 } from "@payloadcms/plugin-seo/fields";
 import { Carousel } from "@/blocks/Carousel/config";
 import { Accordion } from "@/blocks/Accordion/config";
+import { Code } from "@/blocks/Code/config";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
