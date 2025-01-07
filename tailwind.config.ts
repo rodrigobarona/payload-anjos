@@ -56,6 +56,9 @@ const config: Config = {
       },
     },
     extend: {
+      transition: {
+        transformColors: "transform 0.3s, background 0.3s, color 0.3s",
+      },
       maxWidth: {
         "2xl-half": "calc((100vw - 86rem) / 2 + 86rem)",
         "xl-half": "calc((100vw - 80rem) / 2 + 80rem)",

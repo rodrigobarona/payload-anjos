@@ -1625,7 +1625,8 @@ export interface Header {
     | null;
   type: 'default' | 'floating';
   logo?: (string | null) | Media;
-  sticky?: boolean | null;
+  hideOnScroll?: boolean | null;
+  background?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1694,7 +1695,8 @@ export interface HeaderSelect<T extends boolean = true> {
       };
   type?: T;
   logo?: T;
-  sticky?: T;
+  hideOnScroll?: T;
+  background?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

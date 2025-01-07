@@ -2,6 +2,7 @@ import type { GlobalConfig } from "payload";
 
 import { link } from "@/fields/link";
 import { revalidateHeader } from "./hooks/revalidateHeader";
+import { backgroundPicker } from "@/fields/backgroundPicker";
 
 export const Header: GlobalConfig = {
   slug: "header",
@@ -47,10 +48,12 @@ export const Header: GlobalConfig = {
       relationTo: "media",
     },
     {
-      name: "sticky",
-      label: "Sticky Header",
+      name: "hideOnScroll",
+      label: "Hide on Scroll",
       type: "checkbox",
+      defaultValue: false,
     },
+    backgroundPicker,
   ],
   hooks: {
     afterChange: [revalidateHeader],

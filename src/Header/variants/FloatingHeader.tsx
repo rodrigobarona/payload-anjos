@@ -12,28 +12,29 @@ import { Button } from "@/components/ui/button";
 export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | null }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
-  //   hiding on scroll
-  //   const [scrollDown, setScrollDown] = useState(false);
+  const [scrollDown, setScrollDown] = useState(false);
 
   const toggleMenu = () => {
     setisMenuOpened((menuState) => !menuState);
-    document.body.classList.toggle("overflow-hidden");
+    document.body.classList.toggle("overflow-clip");
+    document.body.classList.toggle("overflow-y-clip");
   };
 
   useEffect(() => {
-    // let lastScrollValue = 0;
+    let lastScrollValue = 0;
 
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      //   uncomment those all to enable hiding on scroll
-      //   if (scrollTop > lastScrollValue && scrollTop > 300) {
-      //     setScrollDown(true);
-      //   } else if (scrollTop < lastScrollValue) {
-      //     setScrollDown(false);
-      //   }
+      if (data.hideOnScroll) {
+        if (scrollTop > lastScrollValue && scrollTop > 300) {
+          setScrollDown(true);
+        } else if (scrollTop < lastScrollValue) {
+          setScrollDown(false);
+        }
+        lastScrollValue = scrollTop;
+      }
 
       setScrollValue(scrollTop);
-      //   lastScrollValue = scrollTop;
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -41,18 +42,23 @@ export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | 
   }, []);
 
   const classes = cn(
-    `sticky flex w-full top-0 justify-center md:px-12 transition-transform z-50`,
+    `sticky flex w-full top-0 justify-center md:px-12 transition-transformColors z-50`,
     `${scrollValue > 0 && !isMenuOpened ? "md:translate-y-6" : ""}`,
-    // hiding on scroll
-    // `${scrollDown ? "-translate-y-full md:-translate-y-full" : ""}`,
+    `${data.hideOnScroll && scrollDown ? "-translate-y-full md:-translate-y-full" : ""}`,
     { ...(theme ? { "data-theme": theme } : {}) },
   );
 
   console.log(theme);
 
   return (
-    <header className={classes}>
-      <div className={`header ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}>
+    <header
+      className={classes}
+      style={data.background && scrollValue === 0 ? { background: data.background } : {}}
+    >
+      <div
+        className={`header ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}
+        style={data.background ? { background: data.background } : {}}
+      >
         <Link href="/" className="mr-auto">
           {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (
             <Image
@@ -60,7 +66,7 @@ export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | 
               alt={data.logo.alt}
               width={data.logo.width ?? 256}
               height={data.logo.height ?? 256}
-              className={`${isMenuOpened && "invert"} -my-7 h-[88px] w-full max-w-[9.375rem]`}
+              className={`${isMenuOpened && "invert lg:invert-0"} -my-7 h-[88px] w-full max-w-[9.375rem]`}
             />
           ) : (
             <Logo />
