@@ -7,7 +7,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import type { Header } from "@/payload-types";
 
 import { DefaultHeader } from "./variants/DefaultHeader";
-import { FloatingHeader } from "./variants/floatingHeader";
+import { FloatingHeader } from "./variants/FloatingHeader";
 
 interface HeaderClientProps {
   data: Header;

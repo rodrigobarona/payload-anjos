@@ -4,7 +4,7 @@ import { Header } from "@/payload-types";
 import { cn } from "@/utilities/cn";
 import Image from "next/image";
 import Link from "next/link";
-import { HeaderNav } from "../Nav";
+import { CMSLink } from "@/components/Link";
 
 export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | null }) => {
   return (
@@ -29,7 +29,10 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
           )}
         </Link>
         <nav className="flex items-center gap-3">
-          <HeaderNav data={data} />
+          {data.navItems &&
+            data.navItems.map(({ link }, i) => {
+              return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
+            })}
         </nav>
       </div>
     </header>
