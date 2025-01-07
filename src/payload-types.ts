@@ -427,6 +427,68 @@ export interface ContentBlock {
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
   paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  radius?: boolean | null;
+  specifiedRadius?: boolean | null;
+  radiusAll?:
+    | (
+        | 'rounded-none'
+        | 'rounded-sm'
+        | 'rounded-md'
+        | 'rounded-lg'
+        | 'rounded-xl'
+        | 'rounded-2xl'
+        | 'rounded-3xl'
+        | 'rounded-full'
+      )
+    | null;
+  radiusTopLeft?:
+    | (
+        | 'rounded-tl-none'
+        | 'rounded-tl-sm'
+        | 'rounded-tl-md'
+        | 'rounded-tl-lg'
+        | 'rounded-tl-xl'
+        | 'rounded-tl-2xl'
+        | 'rounded-tl-3xl'
+        | 'rounded-tl-full'
+      )
+    | null;
+  radiusTopRight?:
+    | (
+        | 'rounded-tr-none'
+        | 'rounded-tr-sm'
+        | 'rounded-tr-md'
+        | 'rounded-tr-lg'
+        | 'rounded-tr-xl'
+        | 'rounded-tr-2xl'
+        | 'rounded-tr-3xl'
+        | 'rounded-tr-full'
+      )
+    | null;
+  radiusBottomLeft?:
+    | (
+        | 'rounded-bl-none'
+        | 'rounded-bl-sm'
+        | 'rounded-bl-md'
+        | 'rounded-bl-lg'
+        | 'rounded-bl-xl'
+        | 'rounded-bl-2xl'
+        | 'rounded-bl-3xl'
+        | 'rounded-bl-full'
+      )
+    | null;
+  radiusBottomRight?:
+    | (
+        | 'rounded-br-none'
+        | 'rounded-br-sm'
+        | 'rounded-br-md'
+        | 'rounded-br-lg'
+        | 'rounded-br-xl'
+        | 'rounded-br-2xl'
+        | 'rounded-br-3xl'
+        | 'rounded-br-full'
+      )
+    | null;
   background?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1054,6 +1116,13 @@ export interface ContentBlockSelect<T extends boolean = true> {
   spacingTop?: T;
   paddingBottom?: T;
   paddingTop?: T;
+  radius?: T;
+  specifiedRadius?: T;
+  radiusAll?: T;
+  radiusTopLeft?: T;
+  radiusTopRight?: T;
+  radiusBottomLeft?: T;
+  radiusBottomRight?: T;
   background?: T;
   id?: T;
   blockName?: T;

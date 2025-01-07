@@ -25,18 +25,37 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
     full: "12",
   };
 
+  const isSingleRadius = !props.specifiedRadius && props.radius && props.radiusAll;
+  const isMultiRadius = props.specifiedRadius && props.radius && !isSingleRadius;
+
+  const backgroundStyle =
+    props.background && props.alignment && props.alignment !== "center"
+      ? { background: props.background }
+      : {};
+
   return (
     <section
       className={cn(
-        "container px-0",
+        "container relative px-0",
         spacingTopClasses[props["spacingTop"] || "medium"],
         spacingBottomClasses[props["spacingBottom"] || "medium"],
         paddingTopClasses[props["paddingTop"] || "medium"],
         paddingBottomClasses[props["paddingBottom"] || "medium"],
         getCenteringClasses(props.alignment || undefined),
+        isSingleRadius && props.radiusAll,
+        isMultiRadius &&
+          `${props.radiusTopLeft} ${props.radiusTopRight} ${props.radiusBottomRight} ${props.radiusBottomLeft}`,
       )}
-      style={props.background ? { background: props.background } : {}}
+      style={{
+        ...backgroundStyle,
+      }}
     >
+      {(!props.alignment || props.alignment === null || props.alignment === "center") && (
+        <div
+          style={props.background ? { background: props.background } : {}}
+          className="absolute left-1/2 top-1/2 -z-10 h-full w-screen -translate-x-1/2 -translate-y-1/2"
+        />
+      )}
       <div className="grid grid-cols-4 gap-y-8 lg:grid-cols-12">
         {columns &&
           columns.length > 0 &&

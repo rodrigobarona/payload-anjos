@@ -11,6 +11,7 @@ import { link } from "@/fields/link";
 import { marginFields, paddingFields } from "@/fields/spacingFields";
 import { AlignmentField } from "@/fields/alignmentField";
 import { backgroundPicker } from "@/fields/backgroundPicker";
+import { radiusFields } from "@/fields/radiusFields";
 
 const columnFields: Field[] = [
   {
@@ -91,9 +92,10 @@ export const Content: Block = {
       },
       fields: columnFields,
     },
-    AlignmentField,
-    marginFields,
-    paddingFields,
-    backgroundPicker,
+    {
+      label: "Styling Options",
+      type: "collapsible",
+      fields: [AlignmentField, marginFields, paddingFields, ...radiusFields, backgroundPicker],
+    },
   ],
 };
