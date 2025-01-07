@@ -10,7 +10,7 @@ import { homeStatic } from "@/endpoints/seed/home-static";
 import type { Page as PageType } from "@/payload-types";
 
 import { RenderBlocks } from "@/blocks/RenderBlocks";
-import { RenderHero } from "@/heros/RenderHero";
+import { RenderHero } from "@/components/heros/RenderHero";
 import { generateMeta } from "@/utilities/generateMeta";
 import PageClient from "./page.client";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
