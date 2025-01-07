@@ -48,6 +48,8 @@ export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | 
     { ...(theme ? { "data-theme": theme } : {}) },
   );
 
+  console.log(theme);
+
   return (
     <header className={classes}>
       <div className={`header ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}>
@@ -58,13 +60,27 @@ export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | 
               alt={data.logo.alt}
               width={data.logo.width ?? 256}
               height={data.logo.height ?? 256}
+              className={`${isMenuOpened && "invert"} -my-7 h-[88px] w-full max-w-[9.375rem]`}
             />
           ) : (
             <Logo />
           )}
         </Link>
-        {/* <Button onClick={toggleMenu}> test</Button> */}
-        {/* <MenuButton onClick={toggleMenu} isMenuOpened={isMenuOpened} /> */}
+        <button
+          aria-label="Toggle Menu"
+          className="order-1 ml-8 flex flex-col items-end justify-center gap-[6px] lg:hidden"
+          onClick={toggleMenu}
+        >
+          <div
+            className={`h-[3px] w-7 rounded-full bg-white transition-transform ${isMenuOpened && "absolute top-1/2 -translate-y-1/2 rotate-45 invert"}`}
+          />
+          <div
+            className={`h-[3px] w-[22px] rounded-full bg-white transition-opacity ${isMenuOpened && "opacity-0"}`}
+          />
+          <div
+            className={`h-[3px] w-7 rounded-full bg-white transition-transform ${isMenuOpened && "absolute top-1/2 -translate-y-1/2 -rotate-45 invert"}`}
+          />
+        </button>
         <nav
           className={`absolute left-1/2 top-0 -z-10 flex origin-bottom transition-opacity duration-300 ${isMenuOpened ? "opacity-100" : "scale-y-0 opacity-0"} h-dvh w-screen -translate-x-1/2 flex-col items-start justify-between bg-white p-8 pb-16 md:p-12 lg:static lg:h-auto lg:w-fit lg:translate-x-0 lg:scale-100 lg:flex-row lg:bg-transparent lg:p-0 lg:opacity-100`}
         >
