@@ -7,6 +7,7 @@ import type { Footer } from "@/payload-types";
 import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
 import { CMSLink } from "@/components/Link";
 import { Logo } from "@/components/Logo/Logo";
+import RichText from "@/components/RichText";
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal("footer", 1)();
@@ -29,6 +30,13 @@ export async function Footer() {
           </nav>
         </div>
       </div>
+      {footerData.attribution ? (
+        <div className="flex border-t p-4 text-xs">
+          <div className="container">
+            <RichText data={footerData.attribution} />
+          </div>
+        </div>
+      ) : null}
     </footer>
   );
 }

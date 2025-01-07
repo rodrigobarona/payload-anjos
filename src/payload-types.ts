@@ -1634,6 +1634,21 @@ export interface Header {
  */
 export interface Footer {
   id: string;
+  attribution?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   navItems?:
     | {
         link: {
@@ -1687,6 +1702,7 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  attribution?: T;
   navItems?:
     | T
     | {
