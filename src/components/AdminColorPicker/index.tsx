@@ -3,11 +3,15 @@
 import { GradientPicker } from "../ui/backgroundPicker";
 import { TextFieldClientComponent } from "payload";
 import { useField } from "@payloadcms/ui";
+import { useEffect } from "react";
 
 export const AdminColorPicker: TextFieldClientComponent = ({ path }) => {
   const { value, setValue } = useField<{ value: string | undefined }>({ path });
 
-  console.log(value);
+  // TODO: fetch media images or sth
+  // useEffect(() => {
+  //   const fetchImages = async () => {};
+  // });
 
   return (
     <div
