@@ -26,6 +26,22 @@ export const Header: GlobalConfig = {
       },
     },
     {
+      name: "type",
+      type: "select",
+      options: [
+        {
+          label: "Default",
+          value: "default",
+        },
+        {
+          label: "Floating",
+          value: "floating",
+        },
+      ],
+      required: true,
+      defaultValue: "default",
+    },
+    {
       name: "logo",
       type: "upload",
       relationTo: "media",

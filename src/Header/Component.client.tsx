@@ -2,14 +2,12 @@
 import { useHeaderTheme } from "@/providers/HeaderTheme";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import type { Header } from "@/payload-types";
 
-import { Logo } from "@/components/Logo/Logo";
-import { HeaderNav } from "./Nav";
-import { cn } from "@/utilities/cn";
-import Image from "next/image";
+import { DefaultHeader } from "./variants/DefaultHeader";
+import { FloatingHeader } from "./variants/floatingHeader";
 
 interface HeaderClientProps {
   data: Header;
@@ -31,29 +29,19 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerTheme]);
 
-  return (
-    <header
-      className={cn(
-        "container relative z-20",
-        { ...(theme ? { "data-theme": theme } : {}) },
-        data.sticky && `sticky top-0`,
-      )}
-    >
-      <div className="flex justify-between py-8">
-        <Link href="/">
-          {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (
-            <Image
-              src={data.logo.url}
-              alt={data.logo.alt}
-              width={data.logo.width ?? 256}
-              height={data.logo.height ?? 256}
-            />
-          ) : (
-            <Logo />
-          )}
-        </Link>
-        <HeaderNav data={data} />
-      </div>
-    </header>
-  );
+  let header: ReactNode = null;
+
+  switch (data.type) {
+    case "default":
+      header = <DefaultHeader data={data} theme={theme} />;
+      break;
+    case "floating":
+      header = <FloatingHeader data={data} theme={theme} />;
+      break;
+    default:
+      header = <DefaultHeader data={data} theme={theme} />;
+      break;
+  }
+
+  return header;
 };

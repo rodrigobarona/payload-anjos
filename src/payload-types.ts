@@ -1623,6 +1623,7 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
+  type: 'default' | 'floating';
   logo?: (string | null) | Media;
   sticky?: boolean | null;
   updatedAt?: string | null;
@@ -1691,6 +1692,7 @@ export interface HeaderSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  type?: T;
   logo?: T;
   sticky?: T;
   updatedAt?: T;
