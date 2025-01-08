@@ -1,7 +1,6 @@
 "use client";
-import { cn } from "@/utilities/cn";
-import React from "react";
 
+import { cn } from "@/utilities/cn";
 import type { AccordionBlock as AccordionBlockProps } from "@/payload-types";
 import {
   spacingTopClasses,

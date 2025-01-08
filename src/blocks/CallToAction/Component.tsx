@@ -1,5 +1,3 @@
-import React from "react";
-
 import type { CallToActionBlock as CTABlockProps } from "@/payload-types";
 
 import RichText from "@/components/RichText";
@@ -12,14 +10,14 @@ import {
   spacingTopClasses,
 } from "@/blocks/globals";
 
-export const CallToActionBlock: React.FC<CTABlockProps> = ({
+export const CallToActionBlock = ({
   links,
   richText,
   spacingTop,
   spacingBottom,
   paddingBottom,
   paddingTop,
-}) => {
+}: CTABlockProps) => {
   return (
     <div
       className={cn(

@@ -1,12 +1,5 @@
 import type { Block } from "payload";
 
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from "@payloadcms/richtext-lexical";
-
 import { linkGroup } from "@/fields/linkGroup";
 import { marginFields, paddingFields } from "@/fields/spacingFields";
 import { defaultLexical } from "@/fields/defaultLexical";

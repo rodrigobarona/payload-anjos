@@ -1,6 +1,6 @@
 "use client";
+
 import { cn } from "@/utilities/cn";
-import React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -23,7 +23,7 @@ import Image from "next/image";
 import Link from "next/link";
 import RichText from "@/components/RichText";
 
-export const CarouselBlock: React.FC<CarouselBlockProps> = ({
+export const CarouselBlock = ({
   type,
   slides,
   autoplay,
@@ -32,7 +32,7 @@ export const CarouselBlock: React.FC<CarouselBlockProps> = ({
   paddingBottom,
   paddingTop,
   title,
-}) => {
+}: CarouselBlockProps) => {
   const plugins = {
     logo: [
       AutoScrollPlugin({

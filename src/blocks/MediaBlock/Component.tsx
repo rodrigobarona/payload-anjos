@@ -1,7 +1,6 @@
 import type { StaticImageData } from "next/image";
 
 import { cn } from "src/utilities/cn";
-import React from "react";
 import RichText from "@/components/RichText";
 
 import type { MediaBlock as MediaBlockProps } from "@/payload-types";
@@ -13,6 +12,7 @@ import {
   spacingBottomClasses,
   spacingTopClasses,
 } from "@/blocks/globals";
+import { SerializedEditorState, SerializedLexicalNode } from "@payloadcms/richtext-lexical/lexical";
 
 type Props = MediaBlockProps & {
   breakout?: boolean;
@@ -24,7 +24,7 @@ type Props = MediaBlockProps & {
   disableInnerContainer?: boolean;
 };
 
-export const MediaBlock: React.FC<Props> = (props) => {
+export const MediaBlock = (props: Props) => {
   const {
     captionClassName,
     className,
@@ -37,10 +37,9 @@ export const MediaBlock: React.FC<Props> = (props) => {
     spacingBottom,
     paddingBottom,
     paddingTop,
-
   } = props;
 
-  let caption;
+  let caption: SerializedEditorState<SerializedLexicalNode> | null | undefined;
   if (media && typeof media === "object") caption = media.caption;
 
   return (

@@ -1,5 +1,4 @@
 import { cn } from "@/utilities/cn";
-import React from "react";
 import RichText from "@/components/RichText";
 import { CMSLink } from "@/components/Link";
 import {
@@ -12,10 +11,7 @@ import {
 
 import type { ContentBlock as ContentBlockProps } from "@/payload-types";
 
-
 export const ContentBlock = (props: ContentBlockProps) => {
-  const { columns } = props;
-
   const colsSpanClasses = {
     oneSixth: "2",
     oneThird: "4",
@@ -57,9 +53,9 @@ export const ContentBlock = (props: ContentBlockProps) => {
         />
       )}
       <div className="grid grid-cols-4 gap-y-8 lg:grid-cols-12">
-        {columns &&
-          columns.length > 0 &&
-          columns.map((col, index) => {
+        {props.columns &&
+          props.columns.length > 0 &&
+          props.columns.map((col, index) => {
             const { enableLink, link, richText, size, enableProse } = col;
 
             return (
