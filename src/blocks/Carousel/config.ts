@@ -35,6 +35,11 @@ export const Carousel: Block = {
   interfaceName: "CarouselBlock",
   imageURL: "/carousel.png",
   imageAltText: "Carousel",
+  // admin: {
+  //   components: {
+  //     Block: "@/blocks/Carousel/Component#CarouselBlock",
+  //   },
+  // },
   fields: [
     {
       name: "type",
