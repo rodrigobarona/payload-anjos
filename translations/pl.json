@@ -2,5 +2,9 @@
   "HomePage": {
     "title": "Hello world!",
     "about": "Go to the about page"
+  },
+  "LocaleSwitch": {
+    "label": "Wybierz język",
+    "locale": "{locale, select, pl {Polski} en {Angielski} other {Unknown}}"
   }
 }

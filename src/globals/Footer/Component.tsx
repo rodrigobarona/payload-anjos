@@ -9,6 +9,7 @@ import { Logo } from "@/components/Logo/Logo";
 import RichText from "@/components/RichText";
 import { getLocale } from "next-intl/server";
 import { Locale } from "@/i18n/config";
+import LocaleSwitch from "@/components/LocaleSwitch/LocaleSwitch";
 
 export async function Footer() {
   const locale = (await getLocale()) as Locale;
@@ -25,6 +26,7 @@ export async function Footer() {
 
         <div className="flex flex-col-reverse items-start gap-4 md:flex-row md:items-center">
           <ThemeSelector />
+          <LocaleSwitch />
           <nav className="flex flex-col gap-4 md:flex-row">
             {navItems.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />;
