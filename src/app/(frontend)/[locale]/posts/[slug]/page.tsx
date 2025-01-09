@@ -98,6 +98,7 @@ const queryPostBySlug = cache(async ({ slug, locale }: { slug: string; locale: L
     limit: 1,
     overrideAccess: draft,
     pagination: false,
+    locale,
     where: {
       slug: {
         equals: slug,

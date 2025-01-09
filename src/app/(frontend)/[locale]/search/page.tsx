@@ -7,6 +7,8 @@ import React from "react";
 import { Search } from "@/components/search/Component";
 import PageClient from "./page.client";
 import { CardPostData } from "@/components/Card";
+import { getLocale } from "next-intl/server";
+import { Locale } from "@/i18n/config";
 
 type Args = {
   searchParams: Promise<{
@@ -16,11 +18,13 @@ type Args = {
 export default async function Page({ searchParams: searchParamsPromise }: Args) {
   const { q: query } = await searchParamsPromise;
   const payload = await getPayload({ config });
+  const locale = (await getLocale()) as Locale;
 
   const posts = await payload.find({
     collection: "search",
     depth: 1,
     limit: 12,
+    locale,
     select: {
       title: true,
       slug: true,

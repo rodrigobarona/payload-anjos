@@ -1,8 +1,10 @@
 import { draftMode } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import { getPayload, type PayloadRequest } from "payload";
 import configPromise from "@payload-config";
 import { CollectionSlug } from "payload";
+import { Locale } from "@/i18n/config";
+import { getLocale } from "next-intl/server";
 
 const payloadToken = "payload-token";
 
@@ -21,6 +23,7 @@ export async function GET(
   const path = searchParams.get("path");
   const collection = searchParams.get("collection") as CollectionSlug;
   const slug = searchParams.get("slug");
+  const locale = (await getLocale()) as Locale;
 
   const previewSecret = searchParams.get("previewSecret");
 
@@ -89,6 +92,6 @@ export async function GET(
 
     draft.enable();
 
-    redirect(path);
+    return redirect({ href: path, locale });
   }
 }

@@ -7,17 +7,21 @@ import config from "@payload-config";
 import { getPayload } from "payload";
 import React from "react";
 import PageClient from "./page.client";
+import { getLocale } from "next-intl/server";
+import { Locale } from "@/i18n/config";
 
 export const dynamic = "force-static";
 export const revalidate = 600;
 
 export default async function Page() {
   const payload = await getPayload({ config });
+  const locale = (await getLocale()) as Locale;
 
   const posts = await payload.find({
     collection: "posts",
     depth: 1,
     limit: 12,
+    locale,
     overrideAccess: false,
     select: {
       title: true,
