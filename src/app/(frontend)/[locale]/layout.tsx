@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
@@ -37,12 +37,14 @@ export default async function RootLayout({
   const { locale } = await params;
 
   if (!routing.locales.includes(locale as Locale)) {
+    const newLocale = await getLocale();
+    console.log(newLocale);
     notFound();
   }
 
   setRequestLocale(locale);
 
-  const messages = await getMessages();
+  const messages = await getMessages({ locale });
 
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable, "twp")} lang="en" suppressHydrationWarning>
