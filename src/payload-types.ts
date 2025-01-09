@@ -1682,7 +1682,7 @@ export interface Footer {
  */
 export interface ProductDetail {
   id: string;
-  text?: string | null;
+  type?: 'WithImageGalleryExpandableDetails' | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1742,7 +1742,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "productDetails_select".
  */
 export interface ProductDetailsSelect<T extends boolean = true> {
-  text?: T;
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

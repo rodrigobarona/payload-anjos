@@ -3,14 +3,30 @@ import type { GlobalConfig } from "payload";
 
 export const ProductDetails: GlobalConfig = {
   slug: "productDetails",
+  label: {
+    en: "Product Details Page",
+    pl: "Karta produktu",
+  },
   access: {
     read: () => true,
   },
   fields: [
     {
-      name: "text",
-      type: "text",
-      label: "Text",
+      name: "type",
+      type: "select",
+      options: [
+        {
+          label: {
+            en: "With image gallery and expandable details",
+            pl: "Z galerią zdjęć i rozszerzalnymi szczegółami",
+          },
+          value: "WithImageGalleryExpandableDetails",
+        },
+      ],
+      label: {
+        en: "Type of product card",
+        pl: "Rodzaj karty produktu",
+      },
     },
   ],
   hooks: {
