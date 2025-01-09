@@ -1,3 +1,4 @@
+import { Locale } from "@/i18n/config";
 import { PayloadRequest, CollectionSlug } from "payload";
 
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
@@ -12,9 +13,11 @@ type Props = {
 };
 
 export const generatePreviewPath = ({ collection, slug, req }: Props) => {
+  const locale = req.query.locale as Locale;
   const path = `${collectionPrefixMap[collection]}/${slug}`;
 
   const params = {
+    locale,
     slug,
     collection,
     path,

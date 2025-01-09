@@ -7,9 +7,13 @@ import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
 import { CMSLink } from "@/components/Link";
 import { Logo } from "@/components/Logo/Logo";
 import RichText from "@/components/RichText";
+import { getLocale } from "next-intl/server";
+import { Locale } from "@/i18n/config";
+import LocaleSwitch from "@/components/LocaleSwitch/LocaleSwitch";
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal("footer", 1)();
+  const locale = (await getLocale()) as Locale;
+  const footerData: Footer = await getCachedGlobal("footer", locale, 1)();
 
   const navItems = footerData?.navItems || [];
 
@@ -22,6 +26,7 @@ export async function Footer() {
 
         <div className="flex flex-col-reverse items-start gap-4 md:flex-row md:items-center">
           <ThemeSelector />
+          <LocaleSwitch />
           <nav className="flex flex-col gap-4 md:flex-row">
             {navItems.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />;

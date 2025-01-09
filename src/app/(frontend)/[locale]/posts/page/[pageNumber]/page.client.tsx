@@ -9,7 +9,7 @@ const PageClient = () => {
   useEffect(() => {
     setHeaderTheme("light");
   }, [setHeaderTheme]);
-  return <React.Fragment />;
+  return <></>;
 };
 
 export default PageClient;

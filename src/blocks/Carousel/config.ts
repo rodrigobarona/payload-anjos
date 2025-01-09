@@ -33,7 +33,7 @@ const slideFields: Field[] = [
 export const Carousel: Block = {
   slug: "carousel",
   interfaceName: "CarouselBlock",
-  imageURL: "/carousel.png",
+  imageURL: "/blocksThumbnails/carousel.png",
   imageAltText: "Carousel",
   // admin: {
   //   components: {
@@ -70,6 +70,7 @@ export const Carousel: Block = {
           ];
         },
       }),
+      localized: true,
     },
     {
       name: "slides",

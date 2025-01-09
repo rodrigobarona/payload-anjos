@@ -7,11 +7,13 @@ const faqFields: Field[] = [
   {
     name: "title",
     type: "text",
+    localized: true,
     required: true,
   },
   {
     name: "content",
     type: "richText",
+    localized: true,
     editor: defaultLexical,
     required: true,
   },
@@ -20,12 +22,13 @@ const faqFields: Field[] = [
 export const Accordion: Block = {
   slug: "accordion",
   interfaceName: "AccordionBlock",
-  imageURL: "/accordion.png",
+  imageURL: "/blocksThumbnails/accordion.png",
   imageAltText: "Accordion",
   fields: [
     {
       name: "title",
       type: "richText",
+      localized: true,
       editor: defaultLexical,
     },
     {

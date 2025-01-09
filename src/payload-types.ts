@@ -52,7 +52,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     productDetails: ProductDetailsSelect<false> | ProductDetailsSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'pl';
   user: User & {
     collection: 'users';
   };

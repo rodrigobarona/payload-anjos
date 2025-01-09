@@ -5,6 +5,7 @@ import config from "@payload-config";
 import { getPayload } from "payload";
 import { draftMode } from "next/headers";
 import React, { cache } from "react";
+import { Locale } from "@/i18n/config";
 
 import type { Page as PageType } from "@/payload-types";
 
@@ -13,6 +14,7 @@ import { RenderHero } from "@/components/heros/RenderHero";
 import { generateMeta } from "@/utilities/generateMeta";
 import PageClient from "./page.client";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
+import { routing } from "@/i18n/routing";
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -27,36 +29,38 @@ export async function generateStaticParams() {
     },
   });
 
-  const params = pages.docs
-    ?.filter((doc) => {
-      return doc.slug !== "home";
-    })
-    .map(({ slug }) => {
-      return { slug };
-    });
+  const params = routing.locales.flatMap((locale) => {
+    return pages.docs
+      ?.filter((doc) => doc.slug !== "home")
+      .map(({ slug }) => {
+        return { locale, slug };
+      });
+  });
 
   return params;
 }
 
 type Args = {
   params: Promise<{
+    locale: Locale;
     slug?: string;
   }>;
 };
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode();
-  const { slug = "home" } = await paramsPromise;
-  const url = "/" + slug;
+  const { slug = "home", locale } = await paramsPromise;
+  const url = `/${locale}/${slug}`;
 
   let page: PageType | null;
 
   page = await queryPageBySlug({
     slug,
+    locale,
   });
 
   if (!page) {
-    return <PayloadRedirects url={url} />;
+    return <PayloadRedirects url={url} locale={locale} />;
   }
 
   const { hero, layout } = page;
@@ -65,7 +69,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     <article className="pb-24 pt-16">
       <PageClient />
       {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
+      <PayloadRedirects disableNotFound locale={locale} url={url} />
 
       {draft && <LivePreviewListener />}
 
@@ -75,16 +79,17 @@ export default async function Page({ params: paramsPromise }: Args) {
   );
 }
 
-export async function generateMetadata({ params: paramsPromise }): Promise<Metadata> {
-  const { slug = "home" } = await paramsPromise;
+export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { slug = "home", locale } = await paramsPromise;
   const page = await queryPageBySlug({
     slug,
+    locale,
   });
 
   return generateMeta({ doc: page });
 }
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: Locale }) => {
   const { isEnabled: draft } = await draftMode();
 
   const payload = await getPayload({ config });
@@ -93,6 +98,7 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
     collection: "pages",
     draft,
     limit: 1,
+    locale,
     pagination: false,
     overrideAccess: draft,
     where: {

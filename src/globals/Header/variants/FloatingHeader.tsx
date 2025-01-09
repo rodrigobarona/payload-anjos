@@ -47,8 +47,6 @@ export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | 
     { ...(theme ? { "data-theme": theme } : {}) },
   );
 
-  console.log(theme);
-
   return (
     <header
       className={classes}

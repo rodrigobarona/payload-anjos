@@ -1,17 +1,16 @@
-import clsx from 'clsx'
-import React from 'react'
+import clsx from "clsx";
 
 interface Props {
-  className?: string
-  loading?: 'lazy' | 'eager'
-  priority?: 'auto' | 'high' | 'low'
+  className?: string;
+  loading?: "lazy" | "eager";
+  priority?: "auto" | "high" | "low";
 }
 
 export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className } = props
+  const { loading: loadingFromProps, priority: priorityFromProps, className } = props;
 
-  const loading = loadingFromProps || 'lazy'
-  const priority = priorityFromProps || 'low'
+  const loading = loadingFromProps || "lazy";
+  const priority = priorityFromProps || "low";
 
   return (
     /* eslint-disable @next/next/no-img-element */
@@ -22,8 +21,8 @@ export const Logo = (props: Props) => {
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[88px] -my-7', className)}
+      className={clsx("-my-7 h-[88px] w-full max-w-[9.375rem]", className)}
       src="/pimento.svg"
     />
-  )
-}
+  );
+};

@@ -14,6 +14,8 @@ import { PostHero } from "@/components/heros/PostHero";
 import { generateMeta } from "@/utilities/generateMeta";
 import PageClient from "./page.client";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
+import { Locale } from "@/i18n/config";
+import { routing } from "@/i18n/routing";
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -28,8 +30,10 @@ export async function generateStaticParams() {
     },
   });
 
-  const params = posts.docs.map(({ slug }) => {
-    return { slug };
+  const params = routing.locales.flatMap((locale) => {
+    return posts.docs.map(({ slug }) => {
+      return { locale, slug };
+    });
   });
 
   return params;
@@ -38,23 +42,24 @@ export async function generateStaticParams() {
 type Args = {
   params: Promise<{
     slug?: string;
+    locale: Locale;
   }>;
 };
 
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode();
-  const { slug = "" } = await paramsPromise;
+  const { slug = "", locale } = await paramsPromise;
   const url = "/posts/" + slug;
-  const post = await queryPostBySlug({ slug });
+  const post = await queryPostBySlug({ slug, locale });
 
-  if (!post) return <PayloadRedirects url={url} />;
+  if (!post) return <PayloadRedirects locale={locale} url={url} />;
 
   return (
     <article className="pb-16 pt-16">
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
+      <PayloadRedirects locale={locale} disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
 
@@ -76,13 +81,13 @@ export default async function Post({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = "" } = await paramsPromise;
-  const post = await queryPostBySlug({ slug });
+  const { slug = "", locale } = await paramsPromise;
+  const post = await queryPostBySlug({ slug, locale });
 
   return generateMeta({ doc: post });
 }
 
-const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPostBySlug = cache(async ({ slug, locale }: { slug: string; locale: Locale }) => {
   const { isEnabled: draft } = await draftMode();
 
   const payload = await getPayload({ config });
@@ -93,6 +98,7 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
     limit: 1,
     overrideAccess: draft,
     pagination: false,
+    locale,
     where: {
       slug: {
         equals: slug,
