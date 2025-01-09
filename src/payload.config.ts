@@ -16,6 +16,8 @@ import { Header } from "./globals/Header/config";
 import { plugins } from "./plugins";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { getServerSideURL } from "./utilities/getURL";
+import { en } from "payload/i18n/en";
+import { pl } from "payload/i18n/pl";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -55,6 +57,14 @@ export default buildConfig({
         },
       ],
     },
+  },
+  i18n: {
+    supportedLanguages: { en, pl },
+    fallbackLanguage: "en",
+  },
+  localization: {
+    locales: ["en", "pl"],
+    defaultLocale: "en",
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
