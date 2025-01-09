@@ -1,8 +1,8 @@
 import type { GlobalConfig } from "payload";
 
 import { link } from "@/fields/link";
-import { revalidateHeader } from "./hooks/revalidateHeader";
 import { backgroundPicker } from "@/fields/backgroundPicker";
+import { revalidateGlobal } from "@/hooks/revalidateGlobal";
 
 export const Header: GlobalConfig = {
   slug: "header",
@@ -56,6 +56,6 @@ export const Header: GlobalConfig = {
     backgroundPicker,
   ],
   hooks: {
-    afterChange: [revalidateHeader],
+    afterChange: [revalidateGlobal],
   },
 };
