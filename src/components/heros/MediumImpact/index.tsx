@@ -1,13 +1,11 @@
-import React from 'react'
+import type { Page } from "@/payload-types";
 
-import type { Page } from '@/payload-types'
+import { CMSLink } from "@/components/Link";
+import { Media } from "@/components/Media";
+import RichText from "@/components/RichText";
+import { cn } from "@/utilities/cn";
 
-import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
-import RichText from '@/components/RichText'
-import { cn } from '@/utilities/cn'
-
-export const MediumImpactHero: React.FC<Page['hero']> = ({ links, media, richText, reversed }) => {
+export const MediumImpactHero = ({ links, media, richText, reversed }: Page["hero"]) => {
   return (
     <div
       className={cn(
@@ -43,5 +41,5 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ links, media, richTex
         )}
       </div>
     </div>
-  )
-}
+  );
+};
