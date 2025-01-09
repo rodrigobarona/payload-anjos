@@ -70,6 +70,7 @@ export const Carousel: Block = {
           ];
         },
       }),
+      localized: true,
     },
     {
       name: "slides",

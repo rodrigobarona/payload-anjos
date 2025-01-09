@@ -46,6 +46,7 @@ export const Header: GlobalConfig = {
       name: "logo",
       type: "upload",
       relationTo: "media",
+      localized: true,
     },
     {
       name: "hideOnScroll",

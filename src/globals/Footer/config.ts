@@ -13,6 +13,7 @@ export const Footer: GlobalConfig = {
       name: "attribution",
       type: "richText",
       label: "Attribution",
+      localized: true,
     },
     {
       name: "navItems",

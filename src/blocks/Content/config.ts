@@ -12,6 +12,7 @@ import { marginFields, paddingFields } from "@/fields/spacingFields";
 import { AlignmentField } from "@/fields/alignmentField";
 import { backgroundPicker } from "@/fields/backgroundPicker";
 import { radiusFields } from "@/fields/radiusFields";
+import { defaultLexical } from "@/fields/defaultLexical";
 
 const columnFields: Field[] = [
   {
@@ -48,16 +49,8 @@ const columnFields: Field[] = [
   {
     name: "richText",
     type: "richText",
-    editor: lexicalEditor({
-      features: ({ rootFeatures }) => {
-        return [
-          ...rootFeatures,
-          HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
-          FixedToolbarFeature(),
-          InlineToolbarFeature(),
-        ];
-      },
-    }),
+    editor: defaultLexical,
+    localized: true,
     label: false,
   },
   {

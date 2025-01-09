@@ -7,11 +7,13 @@ const faqFields: Field[] = [
   {
     name: "title",
     type: "text",
+    localized: true,
     required: true,
   },
   {
     name: "content",
     type: "richText",
+    localized: true,
     editor: defaultLexical,
     required: true,
   },
@@ -26,6 +28,7 @@ export const Accordion: Block = {
     {
       name: "title",
       type: "richText",
+      localized: true,
       editor: defaultLexical,
     },
     {

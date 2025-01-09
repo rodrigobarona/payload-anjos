@@ -73,6 +73,7 @@ export const Posts: CollectionConfig<"posts"> = {
       name: "title",
       type: "text",
       required: true,
+      localized: true,
     },
     {
       type: "tabs",
@@ -99,6 +100,7 @@ export const Posts: CollectionConfig<"posts"> = {
                   ];
                 },
               }),
+              localized: true,
               label: false,
               required: true,
             },
@@ -161,6 +163,7 @@ export const Posts: CollectionConfig<"posts"> = {
               descriptionPath: "meta.description",
             }),
           ],
+          localized: true,
         },
       ],
     },

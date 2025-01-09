@@ -12,6 +12,7 @@ export const CallToAction: Block = {
       name: "richText",
       type: "richText",
       editor: defaultLexical,
+      localized: true,
       label: false,
     },
     linkGroup({

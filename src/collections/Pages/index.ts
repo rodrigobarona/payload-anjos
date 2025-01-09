@@ -114,6 +114,7 @@ export const Pages: CollectionConfig<"pages"> = {
               descriptionPath: "meta.description",
             }),
           ],
+          localized: true,
         },
       ],
     },
