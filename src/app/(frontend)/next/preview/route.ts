@@ -23,7 +23,7 @@ export async function GET(
   const path = searchParams.get("path");
   const collection = searchParams.get("collection") as CollectionSlug;
   const slug = searchParams.get("slug");
-  const locale = (await getLocale()) as Locale;
+  const locale = searchParams.get("locale") as Locale;
 
   const previewSecret = searchParams.get("previewSecret");
 

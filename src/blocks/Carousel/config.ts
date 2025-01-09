@@ -33,7 +33,7 @@ const slideFields: Field[] = [
 export const Carousel: Block = {
   slug: "carousel",
   interfaceName: "CarouselBlock",
-  imageURL: "/carousel.png",
+  imageURL: "@/assets/blocksThumbnails/carousel.png",
   imageAltText: "Carousel",
   // admin: {
   //   components: {

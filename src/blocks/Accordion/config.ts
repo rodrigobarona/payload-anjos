@@ -22,7 +22,7 @@ const faqFields: Field[] = [
 export const Accordion: Block = {
   slug: "accordion",
   interfaceName: "AccordionBlock",
-  imageURL: "/accordion.png",
+  imageURL: "@/assets/blocksThumbnails/accordion.png",
   imageAltText: "Accordion",
   fields: [
     {
