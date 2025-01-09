@@ -13,6 +13,8 @@ const heroes = {
 export const RenderHero = (props: Page["hero"]) => {
   const { type } = props || {};
 
+  console.log(props.richText?.root);
+
   if (!type || type === "none") return null;
 
   const HeroToRender = heroes[type];

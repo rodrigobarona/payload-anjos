@@ -3,14 +3,16 @@ import type { Config } from "@/payload-types";
 import configPromise from "@payload-config";
 import { DataFromGlobalSlug, getPayload } from "payload";
 import { unstable_cache } from "next/cache";
+import { Locale } from "@/i18n/config";
 
 type Global = keyof Config["globals"];
 
-async function getGlobal(slug: Global, depth = 0) {
+async function getGlobal(slug: Global, depth = 0, locale: Locale) {
   const payload = await getPayload({ config: configPromise });
 
   const global = await payload.findGlobal({
     slug,
+    locale,
     depth,
   });
 
@@ -22,11 +24,12 @@ async function getGlobal(slug: Global, depth = 0) {
  */
 export const getCachedGlobal = <T extends Global>(
   slug: T,
+  locale: Locale,
   depth?: number,
 ): (() => Promise<DataFromGlobalSlug<T>>) =>
   unstable_cache(
     async (): Promise<DataFromGlobalSlug<T>> => {
-      return (await getGlobal(slug, depth)) as DataFromGlobalSlug<T>;
+      return (await getGlobal(slug, depth, locale)) as DataFromGlobalSlug<T>;
     },
     [slug],
     {

@@ -7,9 +7,12 @@ import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
 import { CMSLink } from "@/components/Link";
 import { Logo } from "@/components/Logo/Logo";
 import RichText from "@/components/RichText";
+import { getLocale } from "next-intl/server";
+import { Locale } from "@/i18n/config";
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal("footer", 1)();
+  const locale = (await getLocale()) as Locale;
+  const footerData: Footer = await getCachedGlobal("footer", locale, 1)();
 
   const navItems = footerData?.navItems || [];
 
