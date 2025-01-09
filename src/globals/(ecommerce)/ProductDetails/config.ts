@@ -1,3 +1,4 @@
+import { revalidateGlobal } from "@/hooks/revalidateGlobal";
 import type { GlobalConfig } from "payload";
 
 export const ProductDetails: GlobalConfig = {
@@ -7,12 +8,12 @@ export const ProductDetails: GlobalConfig = {
   },
   fields: [
     {
-      name: "attribution",
-      type: "richText",
-      label: "Attribution",
+      name: "text",
+      type: "text",
+      label: "Text",
     },
   ],
   hooks: {
-    // afterChange: [revalidateProductDetails],
+    afterChange: [revalidateGlobal],
   },
 };

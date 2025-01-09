@@ -45,10 +45,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    productDetails: ProductDetail;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    productDetails: ProductDetailsSelect<false> | ProductDetailsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1676,6 +1678,16 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productDetails".
+ */
+export interface ProductDetail {
+  id: string;
+  text?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1721,6 +1733,16 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productDetails_select".
+ */
+export interface ProductDetailsSelect<T extends boolean = true> {
+  text?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

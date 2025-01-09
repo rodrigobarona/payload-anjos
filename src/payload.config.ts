@@ -6,16 +6,17 @@ import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
-import { Categories } from "./collections/Categories";
-import { Media } from "./collections/Media";
-import { Pages } from "./collections/Pages";
-import { Posts } from "./collections/Posts";
-import { Users } from "./collections/Users";
-import { Footer } from "./globals/Footer/config";
-import { Header } from "./globals/Header/config";
-import { plugins } from "./plugins";
+import { Categories } from "@/collections/Categories";
+import { Media } from "@/collections/Media";
+import { Pages } from "@/collections/Pages";
+import { Posts } from "@/collections/Posts";
+import { Users } from "@/collections/Users";
+import { Footer } from "@/globals/Footer/config";
+import { Header } from "@/globals/Header/config";
+import { plugins } from "@/plugins";
 import { defaultLexical } from "@/fields/defaultLexical";
-import { getServerSideURL } from "./utilities/getURL";
+import { getServerSideURL } from "@/utilities/getURL";
+import { ProductDetails } from "@/globals/(ecommerce)/ProductDetails/config";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -63,7 +64,7 @@ export default buildConfig({
   }),
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, ProductDetails],
   plugins: [
     ...plugins,
     s3Storage({
