@@ -7,7 +7,6 @@ import { cn } from "@/utilities/cn";
 import { CMSLink } from "@/components/Link";
 import type { Header } from "@/payload-types";
 import { Logo } from "@/components/Logo/Logo";
-import { Button } from "@/components/ui/button";
 
 export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | null }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);

@@ -1,7 +1,6 @@
 "use client";
-import { useHeaderTheme } from "@/providers/HeaderTheme";
-import { usePathname } from "next/navigation";
-import React, { ReactNode, useEffect, useState } from "react";
+
+import { ReactNode } from "react";
 
 import type { Header } from "@/payload-types";
 
