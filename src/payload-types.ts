@@ -92,6 +92,24 @@ export interface AdministratorAuthOperations {
     password: string;
   };
 }
+export interface CustomerAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
@@ -1136,6 +1154,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'administrators';
         value: string | Administrator;
+      } | null)
+    | ({
+        relationTo: 'customers';
+        value: string | Customer;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'productCategories';
+        value: string | ProductCategory;
+      } | null)
+    | ({
+        relationTo: 'productReviews';
+        value: string | ProductReview;
       } | null)
     | ({
         relationTo: 'redirects';
