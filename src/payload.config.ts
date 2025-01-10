@@ -10,7 +10,7 @@ import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Posts } from "./collections/Posts";
-import { Users } from "./collections/Users";
+import { Administrators } from "./collections/Administrators";
 import { Footer } from "./globals/Footer/config";
 import { Header } from "./globals/Header/config";
 import { plugins } from "./plugins";
@@ -34,7 +34,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    user: Users.slug,
+    user: Administrators.slug,
     livePreview: {
       breakpoints: [
         {
@@ -71,7 +71,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || "",
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Media, Categories, Administrators],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

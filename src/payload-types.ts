@@ -8,14 +8,14 @@
 
 export interface Config {
   auth: {
-    users: UserAuthOperations;
+    administrators: AdministratorAuthOperations;
   };
   collections: {
     pages: Page;
     posts: Post;
     media: Media;
     categories: Category;
-    users: User;
+    administrators: Administrator;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -30,7 +30,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
+    administrators: AdministratorsSelect<false> | AdministratorsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -51,15 +51,15 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: 'en' | 'pl';
-  user: User & {
-    collection: 'users';
+  user: Administrator & {
+    collection: 'administrators';
   };
   jobs: {
     tasks: unknown;
     workflows: unknown;
   };
 }
-export interface UserAuthOperations {
+export interface AdministratorAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -178,7 +178,7 @@ export interface Post {
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
+  authors?: (string | Administrator)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -304,9 +304,9 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "administrators".
  */
-export interface User {
+export interface Administrator {
   id: string;
   name?: string | null;
   updatedAt: string;
@@ -941,8 +941,8 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
-        relationTo: 'users';
-        value: string | User;
+        relationTo: 'administrators';
+        value: string | Administrator;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -962,8 +962,8 @@ export interface PayloadLockedDocument {
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: 'users';
-    value: string | User;
+    relationTo: 'administrators';
+    value: string | Administrator;
   };
   updatedAt: string;
   createdAt: string;
@@ -975,8 +975,8 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: string;
   user: {
-    relationTo: 'users';
-    value: string | User;
+    relationTo: 'administrators';
+    value: string | Administrator;
   };
   key?: string | null;
   value?:
@@ -1361,9 +1361,9 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "administrators_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface AdministratorsSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
