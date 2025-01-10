@@ -8,7 +8,7 @@
 
 export interface Config {
   auth: {
-    users: UserAuthOperations;
+    administrators: AdministratorAuthOperations;
     customers: CustomerAuthOperations;
   };
   collections: {
@@ -16,7 +16,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
-    users: User;
+    administrators: Administrator;
     customers: Customer;
     products: Product;
     productCategories: ProductCategory;
@@ -35,7 +35,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
+    administrators: AdministratorsSelect<false> | AdministratorsSelect<true>;
     customers: CustomersSelect<false> | CustomersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     productCategories: ProductCategoriesSelect<false> | ProductCategoriesSelect<true>;
@@ -63,8 +63,8 @@ export interface Config {
   };
   locale: 'en' | 'pl';
   user:
-    | (User & {
-        collection: 'users';
+    | (Administrator & {
+        collection: 'administrators';
       })
     | (Customer & {
         collection: 'customers';
@@ -74,25 +74,7 @@ export interface Config {
     workflows: unknown;
   };
 }
-export interface UserAuthOperations {
-  forgotPassword: {
-    email: string;
-    password: string;
-  };
-  login: {
-    email: string;
-    password: string;
-  };
-  registerFirstUser: {
-    email: string;
-    password: string;
-  };
-  unlock: {
-    email: string;
-    password: string;
-  };
-}
-export interface CustomerAuthOperations {
+export interface AdministratorAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -211,7 +193,7 @@ export interface Post {
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
+  authors?: (string | Administrator)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -337,9 +319,9 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "administrators".
  */
-export interface User {
+export interface Administrator {
   id: string;
   name?: string | null;
   updatedAt: string;
@@ -1152,24 +1134,8 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
-    | ({
-        relationTo: 'customers';
-        value: string | Customer;
-      } | null)
-    | ({
-        relationTo: 'products';
-        value: string | Product;
-      } | null)
-    | ({
-        relationTo: 'productCategories';
-        value: string | ProductCategory;
-      } | null)
-    | ({
-        relationTo: 'productReviews';
-        value: string | ProductReview;
+        relationTo: 'administrators';
+        value: string | Administrator;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1190,8 +1156,8 @@ export interface PayloadLockedDocument {
   globalSlug?: string | null;
   user:
     | {
-        relationTo: 'users';
-        value: string | User;
+        relationTo: 'administrators';
+        value: string | Administrator;
       }
     | {
         relationTo: 'customers';
@@ -1208,8 +1174,8 @@ export interface PayloadPreference {
   id: string;
   user:
     | {
-        relationTo: 'users';
-        value: string | User;
+        relationTo: 'administrators';
+        value: string | Administrator;
       }
     | {
         relationTo: 'customers';
@@ -1598,9 +1564,9 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "administrators_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface AdministratorsSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -2,8 +2,8 @@ import type { CollectionConfig } from "payload";
 
 import { authenticated } from "@/access/authenticated";
 
-export const Users: CollectionConfig = {
-  slug: "users",
+export const Administrators: CollectionConfig = {
+  slug: "administrators",
   access: {
     admin: authenticated,
     create: authenticated,

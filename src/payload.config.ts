@@ -6,14 +6,14 @@ import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
-import { Categories } from "@/collections/Categories";
-import { Media } from "@/collections/Media";
-import { Pages } from "@/collections/Pages";
-import { Posts } from "@/collections/Posts";
-import { Users } from "@/collections/Users";
-import { Footer } from "@/globals/Footer/config";
-import { Header } from "@/globals/Header/config";
-import { plugins } from "@/plugins";
+import { Categories } from "./collections/Categories";
+import { Media } from "./collections/Media";
+import { Pages } from "./collections/Pages";
+import { Posts } from "./collections/Posts";
+import { Administrators } from "./collections/Administrators";
+import { Footer } from "./globals/Footer/config";
+import { Header } from "./globals/Header/config";
+import { plugins } from "./plugins";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { getServerSideURL } from "@/utilities/getURL";
 import { ProductDetails } from "@/globals/(ecommerce)/ProductDetails/config";
@@ -39,7 +39,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    user: Users.slug,
+    user: Administrators.slug,
     livePreview: {
       breakpoints: [
         {
@@ -81,7 +81,7 @@ export default buildConfig({
     Posts,
     Media,
     Categories,
-    Users,
+    Administrators,
     Customers,
     Products,
     ProductCategories,
