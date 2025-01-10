@@ -52,19 +52,16 @@ export const Posts: CollectionConfig<"posts"> = {
     livePreview: {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
-          slug: typeof data?.slug === "string" ? data.slug : "",
-          collection: "posts",
-          req,
+          path: `/posts/${typeof data?.slug === "string" ? data.slug : ""}`,
+          locale: req.query.locale,
         });
-
-        return path;
+        return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`;
       },
     },
     preview: (data, { req }) =>
       generatePreviewPath({
-        slug: typeof data?.slug === "string" ? data.slug : "",
-        collection: "posts",
-        req,
+        path: `/posts/${typeof data?.slug === "string" ? data.slug : ""}`,
+        locale: req.query.locale,
       }),
     useAsTitle: "title",
   },
