@@ -19,6 +19,7 @@ import { getServerSideURL } from "@/utilities/getURL";
 import { ProductDetails } from "@/globals/(ecommerce)/ProductDetails/config";
 import { en } from "payload/i18n/en";
 import { pl } from "payload/i18n/pl";
+import { Products } from "./collections/(ecommerce)/Products";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -72,7 +73,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || "",
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Media, Categories, Users, Products],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, ProductDetails],
   plugins: [

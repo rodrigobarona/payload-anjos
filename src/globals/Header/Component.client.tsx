@@ -12,7 +12,7 @@ interface HeaderClientProps {
   data: Header;
 }
 
-export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
+export const HeaderClient = ({ data }: HeaderClientProps) => {
   const { theme } = useTheme();
 
   let header: ReactNode = null;

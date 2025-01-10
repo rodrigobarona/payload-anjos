@@ -16,6 +16,7 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    products: Product;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -31,6 +32,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -848,6 +850,100 @@ export interface AccordionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  name: string;
+  content: {
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    images: (string | Media)[];
+  };
+  variantsOptions?: {
+    enableVariants?: boolean | null;
+    /**
+     * If false, price is in Product Details
+     */
+    enableVariantPrices?: boolean | null;
+    /**
+     * If false, weight is in Product Details
+     */
+    enableVariantWeights?: boolean | null;
+    variantsGroup?: {
+      options?:
+        | {
+            label: string;
+            slug: string;
+            values?:
+              | {
+                  label: string;
+                  slug: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
+      variants?:
+        | {
+            options: string[];
+            images?: (string | Media)[] | null;
+            /**
+             * Define stock for this variant. A stock of 0 disables checkout for this variant.
+             */
+            stock: number;
+            /**
+             * Define weight for this variant.
+             */
+            weight?: number | null;
+            pricing?:
+              | {
+                  value: number;
+                  currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  productDetails?: {
+    /**
+     * Define stock for whole product. A stock of 0 disables checkout for this product.
+     */
+    stock?: number | null;
+    /**
+     * Define weight for whole product.
+     */
+    weight?: number | null;
+    pricing?:
+      | {
+          value: number;
+          currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -945,6 +1041,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1376,6 +1476,75 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  name?: T;
+  content?:
+    | T
+    | {
+        description?: T;
+        images?: T;
+      };
+  variantsOptions?:
+    | T
+    | {
+        enableVariants?: T;
+        enableVariantPrices?: T;
+        enableVariantWeights?: T;
+        variantsGroup?:
+          | T
+          | {
+              options?:
+                | T
+                | {
+                    label?: T;
+                    slug?: T;
+                    values?:
+                      | T
+                      | {
+                          label?: T;
+                          slug?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variants?:
+                | T
+                | {
+                    options?: T;
+                    images?: T;
+                    stock?: T;
+                    weight?: T;
+                    pricing?:
+                      | T
+                      | {
+                          value?: T;
+                          currency?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+            };
+      };
+  productDetails?:
+    | T
+    | {
+        stock?: T;
+        weight?: T;
+        pricing?:
+          | T
+          | {
+              value?: T;
+              currency?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
