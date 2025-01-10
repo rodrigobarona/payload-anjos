@@ -21,6 +21,7 @@ import { draftMode } from "next/headers";
 import "./globals.css";
 import { getServerSideURL } from "@/utilities/getURL";
 import { Locale } from "@/i18n/config";
+import { LivePreviewListener } from "@/components/LivePreviewListener";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -59,6 +60,7 @@ export default async function RootLayout({
                 preview: isEnabled,
               }}
             />
+            <LivePreviewListener />
 
             <Header />
             {children}
