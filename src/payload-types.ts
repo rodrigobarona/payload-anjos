@@ -9,6 +9,7 @@
 export interface Config {
   auth: {
     users: UserAuthOperations;
+    customers: CustomerAuthOperations;
   };
   collections: {
     pages: Page;
@@ -16,7 +17,10 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    customers: Customer;
     products: Product;
+    productCategories: ProductCategory;
+    productReviews: ProductReview;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -32,7 +36,10 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    customers: CustomersSelect<false> | CustomersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    productCategories: ProductCategoriesSelect<false> | ProductCategoriesSelect<true>;
+    productReviews: ProductReviewsSelect<false> | ProductReviewsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -55,15 +62,37 @@ export interface Config {
     productDetails: ProductDetailsSelect<false> | ProductDetailsSelect<true>;
   };
   locale: 'en' | 'pl';
-  user: User & {
-    collection: 'users';
-  };
+  user:
+    | (User & {
+        collection: 'users';
+      })
+    | (Customer & {
+        collection: 'customers';
+      });
   jobs: {
     tasks: unknown;
     workflows: unknown;
   };
 }
 export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
+export interface CustomerAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -850,6 +879,25 @@ export interface AccordionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers".
+ */
+export interface Customer {
+  id: string;
+  firstName: string;
+  lastName: string;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
  */
 export interface Product {
@@ -873,6 +921,9 @@ export interface Product {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * If you have variants, first image will be variant image.
+     */
     images: (string | Media)[];
     details?:
       | {
@@ -924,7 +975,7 @@ export interface Product {
       variants?:
         | {
             options: string[];
-            images?: (string | Media)[] | null;
+            images?: (string | null) | Media;
             /**
              * Define stock for this variant. A stock of 0 disables checkout for this variant.
              */
@@ -962,6 +1013,45 @@ export interface Product {
         }[]
       | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productCategories".
+ */
+export interface ProductCategory {
+  id: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productReviews".
+ */
+export interface ProductReview {
+  id: string;
+  product: string | Product;
+  author: string | Customer;
+  rating: number;
+  review?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1066,8 +1156,20 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
+        relationTo: 'customers';
+        value: string | Customer;
+      } | null)
+    | ({
         relationTo: 'products';
         value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'productCategories';
+        value: string | ProductCategory;
+      } | null)
+    | ({
+        relationTo: 'productReviews';
+        value: string | ProductReview;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1086,10 +1188,15 @@ export interface PayloadLockedDocument {
         value: string | Search;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'customers';
+        value: string | Customer;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -1099,10 +1206,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: string;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'customers';
+        value: string | Customer;
+      };
   key?: string | null;
   value?:
     | {
@@ -1502,6 +1614,23 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers_select".
+ */
+export interface CustomersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
@@ -1575,6 +1704,29 @@ export interface ProductsSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productCategories_select".
+ */
+export interface ProductCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productReviews_select".
+ */
+export interface ProductReviewsSelect<T extends boolean = true> {
+  product?: T;
+  author?: T;
+  rating?: T;
+  review?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1884,6 +2036,7 @@ export interface Footer {
 export interface ProductDetail {
   id: string;
   type?: 'WithImageGalleryExpandableDetails' | null;
+  reviewsEnabled?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1944,6 +2097,7 @@ export interface FooterSelect<T extends boolean = true> {
  */
 export interface ProductDetailsSelect<T extends boolean = true> {
   type?: T;
+  reviewsEnabled?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

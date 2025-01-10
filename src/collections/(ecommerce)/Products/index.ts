@@ -93,6 +93,12 @@ export const Products: CollectionConfig = {
               maxRows: 10,
               minRows: 1,
               required: true,
+              admin: {
+                description: {
+                  en: "If you have variants, first image will be variant image.",
+                  pl: "Jeśli masz warianty, pierwsze zdjęcie będzie zdjęciem wariantu.",
+                },
+              },
             },
             {
               name: "details",
@@ -327,7 +333,7 @@ export const Products: CollectionConfig = {
                       name: "images",
                       type: "upload",
                       relationTo: "media",
-                      hasMany: true,
+                      // hasMany: true,
                     },
                     {
                       name: "stock",

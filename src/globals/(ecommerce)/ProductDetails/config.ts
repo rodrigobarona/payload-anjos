@@ -28,6 +28,15 @@ export const ProductDetails: GlobalConfig = {
         pl: "Rodzaj karty produktu",
       },
     },
+    {
+      name: "reviewsEnabled",
+      type: "checkbox",
+      label: {
+        en: "Enable product reviews",
+        pl: "Włącz opinie o produkcie",
+      },
+      defaultValue: true,
+    },
   ],
   hooks: {
     afterChange: [revalidateGlobal],

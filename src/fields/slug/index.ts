@@ -7,9 +7,9 @@ type Overrides = {
   checkboxOverrides?: Partial<CheckboxField>;
 };
 
-type Slug = (fieldToUse?: string, overrides?: Overrides) => [TextField, CheckboxField];
+type Slug = (fieldToUse?: string, overrides?: Overrides, localized?: boolean) => [TextField, CheckboxField];
 
-export const slugField: Slug = (fieldToUse = "title", overrides = {}) => {
+export const slugField: Slug = (fieldToUse = "title", overrides = {}, localized = true) => {
   const { slugOverrides, checkboxOverrides } = overrides;
 
   const checkBoxField: CheckboxField = {
@@ -32,7 +32,7 @@ export const slugField: Slug = (fieldToUse = "title", overrides = {}) => {
     label: "Slug",
 
     // decide if localized or not
-    localized: true,
+    localized,
     ...(slugOverrides || {}),
     hooks: {
       // Kept this in for hook or API based updates
