@@ -4,6 +4,9 @@ import { CollectionConfig } from "payload";
 export const ProductCategories: CollectionConfig = {
   slug: "productCategories",
   access: {},
+  admin: {
+    useAsTitle: "title",
+  },
   labels: {
     singular: {
       en: "Product Category",

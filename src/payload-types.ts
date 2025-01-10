@@ -905,114 +905,111 @@ export interface Product {
   title: string;
   slug?: string | null;
   slugLock?: boolean | null;
-  content: {
-    description?: {
-      root: {
+  description?: {
+    root: {
+      type: string;
+      children: {
         type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
         version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    /**
-     * If you have variants, first image will be variant image.
-     */
-    images: (string | Media)[];
-    details?:
-      | {
-          title: string;
-          content: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  variantsOptions?: {
-    enableVariants?: boolean | null;
-    /**
-     * If false, price is in Product Details
-     */
-    enableVariantPrices?: boolean | null;
-    /**
-     * If false, weight is in Product Details
-     */
-    enableVariantWeights?: boolean | null;
-    variantsGroup?: {
-      options?:
-        | {
-            label: string;
-            slug: string;
-            values?:
-              | {
-                  label: string;
-                  slug: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-          }[]
-        | null;
-      variants?:
-        | {
-            options: string[];
-            images?: (string | null) | Media;
-            /**
-             * Define stock for this variant. A stock of 0 disables checkout for this variant.
-             */
-            stock: number;
-            /**
-             * Define weight for this variant.
-             */
-            weight?: number | null;
-            pricing?:
-              | {
-                  value: number;
-                  currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-          }[]
-        | null;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
     };
-  };
-  productDetails?: {
-    /**
-     * Define stock for whole product. A stock of 0 disables checkout for this product.
-     */
-    stock?: number | null;
-    /**
-     * Define weight for whole product.
-     */
-    weight?: number | null;
-    pricing?:
-      | {
-          value: number;
-          currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
-          id?: string | null;
-        }[]
-      | null;
-  };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * If you have variants, first image will be variant image.
+   */
+  images: (string | Media)[];
+  details?:
+    | {
+        title: string;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  enableVariants?: boolean | null;
+  /**
+   * If false, price is in Product Details
+   */
+  enableVariantPrices?: boolean | null;
+  /**
+   * If false, weight is in Product Details
+   */
+  enableVariantWeights?: boolean | null;
+  variantsType?: ('colors' | 'sizes' | 'colorsAndSizes') | null;
+  colors?:
+    | {
+        label: string;
+        slug: string;
+        colorValue?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  sizes?:
+    | {
+        label: string;
+        slug: string;
+        id?: string | null;
+      }[]
+    | null;
+  variants?:
+    | {
+        size: string;
+        color: string;
+        variantSlug?: string | null;
+        images?: (string | null) | Media;
+        /**
+         * Define stock for this variant. A stock of 0 disables checkout for this variant.
+         */
+        stock: number;
+        /**
+         * Define weight for this variant.
+         */
+        weight?: number | null;
+        pricing?:
+          | {
+              value: number;
+              currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  categories: (string | ProductCategory)[];
+  /**
+   * Define stock for whole product. A stock of 0 disables checkout for this product.
+   */
+  stock?: number | null;
+  /**
+   * Define weight for whole product.
+   */
+  weight?: number | null;
+  pricing?:
+    | {
+        value: number;
+        currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1637,63 +1634,41 @@ export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   slugLock?: T;
-  content?:
+  description?: T;
+  images?: T;
+  details?:
     | T
     | {
-        description?: T;
+        title?: T;
+        content?: T;
+        id?: T;
+      };
+  enableVariants?: T;
+  enableVariantPrices?: T;
+  enableVariantWeights?: T;
+  variantsType?: T;
+  colors?:
+    | T
+    | {
+        label?: T;
+        slug?: T;
+        colorValue?: T;
+        id?: T;
+      };
+  sizes?:
+    | T
+    | {
+        label?: T;
+        slug?: T;
+        id?: T;
+      };
+  variants?:
+    | T
+    | {
+        size?: T;
+        color?: T;
+        variantSlug?: T;
         images?: T;
-        details?:
-          | T
-          | {
-              title?: T;
-              content?: T;
-              id?: T;
-            };
-      };
-  variantsOptions?:
-    | T
-    | {
-        enableVariants?: T;
-        enableVariantPrices?: T;
-        enableVariantWeights?: T;
-        variantsGroup?:
-          | T
-          | {
-              options?:
-                | T
-                | {
-                    label?: T;
-                    slug?: T;
-                    values?:
-                      | T
-                      | {
-                          label?: T;
-                          slug?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              variants?:
-                | T
-                | {
-                    options?: T;
-                    images?: T;
-                    stock?: T;
-                    weight?: T;
-                    pricing?:
-                      | T
-                      | {
-                          value?: T;
-                          currency?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-            };
-      };
-  productDetails?:
-    | T
-    | {
         stock?: T;
         weight?: T;
         pricing?:
@@ -1703,6 +1678,17 @@ export interface ProductsSelect<T extends boolean = true> {
               currency?: T;
               id?: T;
             };
+        id?: T;
+      };
+  categories?: T;
+  stock?: T;
+  weight?: T;
+  pricing?:
+    | T
+    | {
+        value?: T;
+        currency?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

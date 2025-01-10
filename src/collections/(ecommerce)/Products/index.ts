@@ -5,6 +5,7 @@ import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { slugField } from "@/fields/slug";
 import { generatePreviewPath } from "@/utilities/generatePreviewPath";
+import { backgroundPicker } from "@/fields/backgroundPicker";
 
 const currencyOptions = [
   { value: "USD", label: "USD" },
@@ -65,7 +66,6 @@ export const Products: CollectionConfig = {
       type: "tabs",
       tabs: [
         {
-          name: "content",
           label: {
             en: "Content",
             pl: "Zawartość",
@@ -142,7 +142,6 @@ export const Products: CollectionConfig = {
           ],
         },
         {
-          name: "variantsOptions",
           label: {
             en: "Variants options",
             pl: "Opcje wariantów",
@@ -203,221 +202,289 @@ export const Products: CollectionConfig = {
               ],
             },
             {
-              name: "variantsGroup",
-              type: "group",
-              label: false,
+              type: "radio",
+              name: "variantsType",
+              label: {
+                en: "Variants type",
+                pl: "Rodzaj wariantów",
+              },
+              options: [
+                {
+                  value: "colors",
+                  label: {
+                    en: "Only colors",
+                    pl: "Tylko kolory",
+                  },
+                },
+                {
+                  value: "sizes",
+                  label: {
+                    en: "Only sizes",
+                    pl: "Tylko rozmiary",
+                  },
+                },
+                {
+                  value: "colorsAndSizes",
+                  label: {
+                    en: "Colors and sizes",
+                    pl: "Kolory i rozmiary",
+                  },
+                },
+              ],
+            },
+            {
+              name: "colors",
+              labels: {
+                singular: {
+                  en: "Color",
+                  pl: "Kolor",
+                },
+                plural: {
+                  en: "Colors",
+                  pl: "Kolory",
+                },
+              },
+              type: "array",
               admin: {
-                condition: (_, siblingData) => siblingData.enableVariants,
-                style: {
-                  marginTop: "0",
+                // components: {
+                // RowLabel: '@/collections/Products/ui/RowLabels/KeyLabel#KeyLabel',
+                // },
+                condition: (_, siblingData) =>
+                  Boolean(siblingData.enableVariants && siblingData.variantsType !== "sizes"),
+                initCollapsed: true,
+              },
+              fields: [
+                {
+                  name: "label",
+                  label: {
+                    en: "Color name",
+                    pl: "Nazwa koloru",
+                  },
+                  type: "text",
+                  localized: true,
+                  required: true,
+                },
+                {
+                  name: "slug",
+                  type: "text",
+                  required: true,
+                  label: {
+                    en: "Color slug",
+                    pl: "Slug koloru",
+                  },
+                },
+                {
+                  name: "colorValue",
+                  label: {
+                    en: "Color",
+                    pl: "Kolor",
+                  },
+                  type: "text",
+                  admin: {
+                    components: {
+                      Field: "@/components/AdminColorPicker#AdminColorPicker",
+                    },
+                  },
+                },
+              ],
+              label: {
+                en: "Color options",
+                pl: "Opcje kolorów",
+              },
+              minRows: 1,
+            },
+            {
+              name: "sizes",
+              labels: {
+                singular: {
+                  en: "Size",
+                  pl: "Rozmiar",
+                },
+                plural: {
+                  en: "Sizes",
+                  pl: "Rozmiary",
+                },
+              },
+              type: "array",
+              admin: {
+                // components: {
+                // RowLabel: '@/collections/Products/ui/RowLabels/KeyLabel#KeyLabel',
+                // },
+                condition: (_, siblingData) =>
+                  Boolean(siblingData.enableVariants && siblingData.variantsType !== "colors"),
+                initCollapsed: true,
+              },
+              fields: [
+                {
+                  name: "label",
+                  label: {
+                    en: "Size label",
+                    pl: "Etykieta rozmiaru",
+                  },
+                  type: "text",
+                  localized: true,
+                  required: true,
+                },
+                {
+                  name: "slug",
+                  type: "text",
+                  required: true,
+                  label: {
+                    en: "Size slug",
+                    pl: "Slug rozmiaru",
+                  },
+                },
+              ],
+              label: {
+                en: "Size options",
+                pl: "Opcje rozmiarów",
+              },
+              minRows: 1,
+            },
+            {
+              name: "variants",
+              type: "array",
+              admin: {
+                // components: {
+                //   RowLabel: "@/collections/Products/ui/RowLabels/VariantLabel#VariantLabel",
+                // },
+                condition: (_, siblingData) => {
+                  return Boolean(siblingData.enableVariants);
                 },
               },
               fields: [
                 {
-                  name: "options",
-                  labels: {
-                    singular: {
-                      en: "Option",
-                      pl: "Opcja",
+                  type: "row",
+                  fields: [
+                    {
+                      name: "size",
+                      type: "text",
+                      label: {
+                        en: "Size",
+                        pl: "Rozmiar",
+                      },
+                      admin: {
+                        components: {
+                          Field: "@/collections/(ecommerce)/Products/ui/SizeSelect#SizeSelect",
+                        },
+                      },
+                      required: true,
                     },
-                    plural: {
-                      en: "Options",
-                      pl: "Opcje",
+                    {
+                      name: "color",
+                      type: "text",
+                      label: {
+                        en: "Color",
+                        pl: "Kolor",
+                      },
+                      admin: {
+                        components: {
+                          Field: "@/collections/(ecommerce)/Products/ui/ColorSelect#ColorSelect",
+                        },
+                      },
+                      required: true,
+                    },
+                  ],
+                },
+                {
+                  name: "variantSlug",
+                  type: "text",
+                  hooks: {
+                    beforeValidate: [
+                      (data) => {
+                        // TODO: check if unique, if not throw an error;
+                      },
+                    ],
+                  },
+                  admin: {
+                    readOnly: true,
+                  },
+                },
+                {
+                  name: "images",
+                  type: "upload",
+                  relationTo: "media",
+                },
+                {
+                  name: "stock",
+                  type: "number",
+                  admin: {
+                    description: {
+                      en: "Define stock for this variant. A stock of 0 disables checkout for this variant.",
+                      pl: "Zdefiniuj stan magazynowy dla tego wariantu. Stan magazynowy 0 wyłącza możliwość zakupu tego wariantu.",
                     },
                   },
-                  type: "array",
+                  defaultValue: 0,
+                  required: true,
+                },
+                {
+                  name: "weight",
+                  label: {
+                    en: "Weight (g)",
+                    pl: "Waga (g)",
+                  },
+                  type: "number",
                   admin: {
-                    // components: {
-                    // RowLabel: '@/collections/Products/ui/RowLabels/KeyLabel#KeyLabel',
-                    // },
-                    initCollapsed: true,
+                    condition: (data) => data.enableVariantWeights,
+                    description: {
+                      en: "Define weight for this variant.",
+                      pl: "Zdefiniuj wagę dla tego wariantu.",
+                    },
+                  },
+                  defaultValue: 0,
+                  required: true,
+                },
+                {
+                  name: "pricing",
+                  type: "array",
+                  label: {
+                    en: "Pricing",
+                    pl: "Cennik",
+                  },
+                  minRows: 1,
+                  required: true,
+                  labels: {
+                    singular: {
+                      en: "Price",
+                      pl: "Cena",
+                    },
+                    plural: {
+                      en: "Prices",
+                      pl: "Ceny",
+                    },
+                  },
+                  admin: {
+                    condition: (data) => data.enableVariantPrices,
                   },
                   fields: [
                     {
                       type: "row",
                       fields: [
                         {
-                          name: "label",
+                          name: "value",
+                          type: "number",
                           label: {
-                            en: "Option name",
-                            pl: "Nazwa opcji",
+                            en: "Price",
+                            pl: "Cena",
                           },
-                          type: "text",
-                          localized: true,
                           required: true,
                         },
                         {
-                          name: "slug",
-                          type: "text",
+                          name: "currency",
+                          type: "select",
                           required: true,
-                        },
-                      ],
-                    },
-                    {
-                      name: "values",
-                      label: {
-                        en: "Values",
-                        pl: "Wartości",
-                      },
-                      labels: {
-                        singular: {
-                          en: "Value",
-                          pl: "Wartość",
-                        },
-                        plural: {
-                          en: "Values",
-                          pl: "Wartości",
-                        },
-                      },
-                      type: "array",
-                      admin: {
-                        // components: {
-                        //   RowLabel: '@/collections/Products/ui/RowLabels/OptionLabel#OptionLabel',
-                        // },
-                        initCollapsed: true,
-                      },
-                      fields: [
-                        {
-                          type: "row",
-                          fields: [
-                            {
-                              name: "label",
-                              type: "text",
-                              label: {
-                                en: "Option value",
-                                pl: "Wartość opcji",
-                              },
-                              localized: true,
-                              required: true,
-                            },
-                            {
-                              name: "slug",
-                              type: "text",
-                              required: true,
-                            },
-                          ],
+                          options: currencyOptions,
                         },
                       ],
                     },
                   ],
-                  label: {
-                    en: "Variant options",
-                    pl: "Opcje wariantów",
-                  },
-                  minRows: 1,
-                },
-                {
-                  name: "variants",
-                  type: "array",
-                  admin: {
-                    // components: {
-                    //   RowLabel: "@/collections/Products/ui/RowLabels/VariantLabel#VariantLabel",
-                    // },
-                    condition: (_, siblingData) => {
-                      return Boolean(siblingData?.options?.length);
-                    },
-                  },
-                  fields: [
-                    {
-                      name: "options",
-                      type: "text",
-                      admin: {
-                        // components: {
-                        //   Field: "@/collections/Products/ui/VariantSelect#VariantSelect",
-                        // },
-                      },
-                      hasMany: true,
-                      required: true,
-                    },
-                    {
-                      name: "images",
-                      type: "upload",
-                      relationTo: "media",
-                      // hasMany: true,
-                    },
-                    {
-                      name: "stock",
-                      type: "number",
-                      admin: {
-                        description: {
-                          en: "Define stock for this variant. A stock of 0 disables checkout for this variant.",
-                          pl: "Zdefiniuj stan magazynowy dla tego wariantu. Stan magazynowy 0 wyłącza możliwość zakupu tego wariantu.",
-                        },
-                      },
-                      defaultValue: 0,
-                      required: true,
-                    },
-                    {
-                      name: "weight",
-                      label: {
-                        en: "Weight (g)",
-                        pl: "Waga (g)",
-                      },
-                      type: "number",
-                      admin: {
-                        condition: (data) => data.variantsOptions.enableVariantWeights,
-                        description: {
-                          en: "Define weight for this variant.",
-                          pl: "Zdefiniuj wagę dla tego wariantu.",
-                        },
-                      },
-                      defaultValue: 0,
-                      required: true,
-                    },
-                    {
-                      name: "pricing",
-                      type: "array",
-                      label: {
-                        en: "Pricing",
-                        pl: "Cennik",
-                      },
-                      minRows: 1,
-                      required: true,
-                      labels: {
-                        singular: {
-                          en: "Price",
-                          pl: "Cena",
-                        },
-                        plural: {
-                          en: "Prices",
-                          pl: "Ceny",
-                        },
-                      },
-                      admin: {
-                        condition: (data) => data.variantsOptions.enableVariantPrices,
-                      },
-                      fields: [
-                        {
-                          type: "row",
-                          fields: [
-                            {
-                              name: "value",
-                              type: "number",
-                              label: {
-                                en: "Price",
-                                pl: "Cena",
-                              },
-                              required: true,
-                            },
-                            {
-                              name: "currency",
-                              type: "select",
-                              required: true,
-                              options: currencyOptions,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                  minRows: 1,
                 },
               ],
+              minRows: 1,
             },
           ],
         },
         {
-          name: "productDetails",
           label: {
             en: "Product details",
             pl: "Szczegóły produktu",
@@ -425,10 +492,21 @@ export const Products: CollectionConfig = {
           admin: {
             // todo: not working condition
             // condition: (data) => {
-            //   return !data.variantsOptions.enableVariants && !data.variantsOptions.enableVariantPrices;
+            //   return !data.enableVariants && !data.enableVariantPrices;
             // },
           },
           fields: [
+            {
+              name: "categories",
+              label: {
+                en: "Product categories",
+                pl: "Kategorie produktu",
+              },
+              type: "relationship",
+              relationTo: "productCategories",
+              hasMany: true,
+              required: true,
+            },
             {
               name: "stock",
               label: {
@@ -437,7 +515,7 @@ export const Products: CollectionConfig = {
               },
               type: "number",
               admin: {
-                condition: (data) => !data.variantsOptions.enableVariants,
+                condition: (data) => !data.enableVariants,
                 description: {
                   en: "Define stock for whole product. A stock of 0 disables checkout for this product.",
                   pl: "Zdefiniuj stan magazynowy dla całego produktu. Stan magazynowy 0 wyłącza możliwość zakupu tego produktu.",
@@ -454,7 +532,7 @@ export const Products: CollectionConfig = {
               },
               type: "number",
               admin: {
-                condition: (data) => !data.variantsOptions.enableVariantWeights,
+                condition: (data) => !data.enableVariantWeights,
                 description: {
                   en: "Define weight for whole product.",
                   pl: "Zdefiniuj wagę dla całego produktu.",
@@ -483,7 +561,7 @@ export const Products: CollectionConfig = {
                 },
               },
               admin: {
-                condition: (data) => !data.variantsOptions.enableVariantPrices,
+                condition: (data) => !data.enableVariantPrices,
               },
               fields: [
                 {

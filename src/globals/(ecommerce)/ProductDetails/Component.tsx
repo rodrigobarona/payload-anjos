@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 export const ProductDetails = async ({ product }: { product: Product }) => {
   try {
     const locale = (await getLocale()) as Locale;
+    console.log(product.variants);
     const productDetailsData = await getCachedGlobal("productDetails", locale, 1)();
 
     let ProductDetailsComponent: ReactNode = null;
