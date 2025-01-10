@@ -12,7 +12,7 @@ type Props = {
   req: PayloadRequest;
 };
 
-export const generatePreviewPath = ({ collection, slug, req }: Props) => {
+export const generatePreviewPath1 = ({ collection, slug, req }: Props) => {
   const locale = req.query.locale as Locale;
   const path = `${collectionPrefixMap[collection]}/${slug}`;
 
@@ -37,3 +37,6 @@ export const generatePreviewPath = ({ collection, slug, req }: Props) => {
 
   return url;
 };
+
+export const generatePreviewPath = ({ path, locale }) =>
+  `/next/preview?path=${encodeURIComponent(path)}&locale=${locale}`;
