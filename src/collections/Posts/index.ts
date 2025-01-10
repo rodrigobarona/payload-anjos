@@ -53,7 +53,7 @@ export const Posts: CollectionConfig<"posts"> = {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
           path: `/posts/${typeof data?.slug === "string" ? data.slug : ""}`,
-          locale: req.query.locale,
+          locale: req.locale,
         });
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`;
       },
@@ -61,7 +61,7 @@ export const Posts: CollectionConfig<"posts"> = {
     preview: (data, { req }) =>
       generatePreviewPath({
         path: `/posts/${typeof data?.slug === "string" ? data.slug : ""}`,
-        locale: req.query.locale,
+        locale: req.locale,
       }),
     useAsTitle: "title",
   },
