@@ -31,7 +31,7 @@ const product = {
       alt: "Angled front view with bag zipped and handles upright.",
     },
     {
-      id: 1,
+      id: 2,
       name: "Angled view",
       src: "https://tailwindui.com/plus/img/ecommerce-images/product-page-03-product-01.jpg",
       alt: "Angled front view with bag zipped and handles upright.",

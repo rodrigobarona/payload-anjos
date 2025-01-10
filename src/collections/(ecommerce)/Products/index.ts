@@ -4,6 +4,7 @@ import { authenticated } from "@/access/authenticated";
 import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { slugField } from "@/fields/slug";
+import { generatePreviewPath } from "@/utilities/generatePreviewPath";
 
 const currencyOptions = [
   { value: "USD", label: "USD" },
@@ -33,6 +34,20 @@ export const Products: CollectionConfig = {
   admin: {
     defaultColumns: ["title"],
     useAsTitle: "title",
+    livePreview: {
+      url: ({ data, req }) => {
+        const path = generatePreviewPath({
+          path: `/product/${typeof data?.slug === "string" ? data.slug : ""}`,
+          locale: req.locale,
+        });
+        return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`;
+      },
+    },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        path: `/product/${typeof data?.slug === "string" ? data.slug : ""}`,
+        locale: req.locale,
+      }),
   },
   fields: [
     {
