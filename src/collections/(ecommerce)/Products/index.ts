@@ -3,6 +3,7 @@ import type { CollectionConfig } from "payload";
 import { authenticated } from "@/access/authenticated";
 import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
 import { defaultLexical } from "@/fields/defaultLexical";
+import { slugField } from "@/fields/slug";
 
 const currencyOptions = [
   { value: "USD", label: "USD" },
@@ -30,12 +31,12 @@ export const Products: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ["name"],
-    useAsTitle: "name",
+    defaultColumns: ["title"],
+    useAsTitle: "title",
   },
   fields: [
     {
-      name: "name",
+      name: "title",
       label: {
         en: "Product name",
         pl: "Nazwa produktu",
@@ -44,6 +45,7 @@ export const Products: CollectionConfig = {
       localized: true,
       required: true,
     },
+    ...slugField(),
     {
       type: "tabs",
       tabs: [
@@ -76,6 +78,45 @@ export const Products: CollectionConfig = {
               maxRows: 10,
               minRows: 1,
               required: true,
+            },
+            {
+              name: "details",
+              type: "array",
+              label: {
+                en: "Details",
+                pl: "Szczegóły",
+              },
+              labels: {
+                singular: {
+                  en: "Detail",
+                  pl: "Szczegół",
+                },
+                plural: {
+                  en: "Details",
+                  pl: "Szczegóły",
+                },
+              },
+              fields: [
+                {
+                  name: "title",
+                  label: {
+                    en: "Title",
+                    pl: "Tytuł",
+                  },
+                  type: "text",
+                  required: true,
+                },
+                {
+                  name: "content",
+                  label: {
+                    en: "Content",
+                    pl: "Zawartość",
+                  },
+                  required: true,
+                  type: "richText",
+                  editor: defaultLexical,
+                },
+              ],
             },
           ],
         },

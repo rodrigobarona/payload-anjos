@@ -854,7 +854,9 @@ export interface AccordionBlock {
  */
 export interface Product {
   id: string;
-  name: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
   content: {
     description?: {
       root: {
@@ -872,6 +874,27 @@ export interface Product {
       [k: string]: unknown;
     } | null;
     images: (string | Media)[];
+    details?:
+      | {
+          title: string;
+          content: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          id?: string | null;
+        }[]
+      | null;
   };
   variantsOptions?: {
     enableVariants?: boolean | null;
@@ -1482,12 +1505,21 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
-  name?: T;
+  title?: T;
+  slug?: T;
+  slugLock?: T;
   content?:
     | T
     | {
         description?: T;
         images?: T;
+        details?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              id?: T;
+            };
       };
   variantsOptions?:
     | T
