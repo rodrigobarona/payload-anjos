@@ -101,7 +101,13 @@ export const WithImageGalleryExpandableDetails = ({
 
   useEffect(() => {
     setSelectedTab(0);
-  }, [selectedVariant]);
+    if (quantity > maxQuantity) {
+      setQuantity(maxQuantity);
+    }
+    if (quantity < minQuantity) {
+      setQuantity(minQuantity);
+    }
+  }, [selectedVariant, minQuantity, maxQuantity]);
 
   const t = useTranslations("ProductDetails");
 
@@ -322,13 +328,13 @@ export const WithImageGalleryExpandableDetails = ({
                 </div>
               )}
 
-              <div className="mt-10 flex">
+              <div className="mt-10 grid grid-cols-2 gap-y-4 sm:flex">
                 <button
                   type="submit"
                   disabled={Boolean(
                     product.enableVariants && (!selectedVariant || selectedVariant.stock === 0),
                   )}
-                  className="focus:outline-hidden flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                  className="focus:outline-hidden col-span-2 row-start-2 flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                   onClick={(e) => {
                     e.preventDefault();
                     console.log(selectedVariant);
@@ -337,7 +343,7 @@ export const WithImageGalleryExpandableDetails = ({
                   {t("add-to-cart")}
                 </button>
 
-                <div className="ml-4 flex w-fit items-center border border-gray-200">
+                <div className="flex w-fit items-center border border-gray-200 sm:ml-4">
                   <button
                     type="button"
                     className="cursor-pointer p-2"
@@ -348,7 +354,7 @@ export const WithImageGalleryExpandableDetails = ({
                   </button>
                   <Input
                     type="number"
-                    className={`mx-auto h-full w-16 p-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+                    className={`mx-auto h-full w-full min-w-10 max-w-16 p-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
                     defaultValue={quantity}
                     value={quantity}
                     min={1}
@@ -385,7 +391,7 @@ export const WithImageGalleryExpandableDetails = ({
 
                 <button
                   type="button"
-                  className="ml-4 flex items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+                  className="flex w-fit items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500 sm:ml-4"
                 >
                   <HeartIcon aria-hidden="true" className="size-6 shrink-0" />
                   <span className="sr-only">{t("add-to-favs")}</span>
