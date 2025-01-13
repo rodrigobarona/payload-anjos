@@ -20,6 +20,7 @@ export interface Config {
     customers: Customer;
     products: Product;
     productCategories: ProductCategory;
+    productSubCategories: ProductSubCategory;
     productReviews: ProductReview;
     redirects: Redirect;
     forms: Form;
@@ -29,7 +30,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    productCategories: {
+      subcategories: 'productSubCategories';
+    };
+  };
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
@@ -39,6 +44,7 @@ export interface Config {
     customers: CustomersSelect<false> | CustomersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     productCategories: ProductCategoriesSelect<false> | ProductCategoriesSelect<true>;
+    productSubCategories: ProductSubCategoriesSelect<false> | ProductSubCategoriesSelect<true>;
     productReviews: ProductReviewsSelect<false> | ProductReviewsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -994,7 +1000,13 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  categories: (string | ProductCategory)[];
+  categoriesArr?:
+    | {
+        category: string | ProductCategory;
+        subcategories?: (string | ProductSubCategory)[] | null;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * Define stock for whole product. A stock of 0 disables checkout for this product.
    */
@@ -1019,6 +1031,23 @@ export interface Product {
  */
 export interface ProductCategory {
   id: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  subcategories?: {
+    docs?: (string | ProductSubCategory)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productSubCategories".
+ */
+export interface ProductSubCategory {
+  id: string;
+  category: string | ProductCategory;
   title: string;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -1163,6 +1192,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'productCategories';
         value: string | ProductCategory;
+      } | null)
+    | ({
+        relationTo: 'productSubCategories';
+        value: string | ProductSubCategory;
       } | null)
     | ({
         relationTo: 'productReviews';
@@ -1680,7 +1713,13 @@ export interface ProductsSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  categories?: T;
+  categoriesArr?:
+    | T
+    | {
+        category?: T;
+        subcategories?: T;
+        id?: T;
+      };
   stock?: T;
   weight?: T;
   pricing?:
@@ -1698,6 +1737,19 @@ export interface ProductsSelect<T extends boolean = true> {
  * via the `definition` "productCategories_select".
  */
 export interface ProductCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
+  subcategories?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productSubCategories_select".
+ */
+export interface ProductSubCategoriesSelect<T extends boolean = true> {
+  category?: T;
   title?: T;
   slug?: T;
   slugLock?: T;

@@ -3,6 +3,7 @@
 import { Product } from "@/payload-types";
 import { FieldLabel, Select, useField, useForm } from "@payloadcms/ui";
 import { TextFieldClientComponent } from "payload";
+import { useEffect } from "react";
 
 export const SizeSelect: TextFieldClientComponent = ({ path }) => {
   const { value, setValue } = useField<string>({ path });
@@ -15,18 +16,26 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
 
   const { getDataByPath, getSiblingData } = useForm();
 
+  const { value: variantType } = useField<string>({ path: "variantsType" });
+
   const sizes = getDataByPath("sizes") as Product["sizes"];
 
-  const handleSizeChange = (option: { label: string; value: string }) => {
+  const handleSizeChange = (option: { value: string }) => {
     setValue(option.value);
 
     const siblings = getSiblingData(path);
-    const size = siblings.size as string;
+    const color = siblings.color as string;
 
-    setVariantSlugValue(`${option.value}-${size}`);
+    setVariantSlugValue(`${color ?? ""}${color && option.value ? "-" : ""}${option.value ?? ""}`);
   };
 
-  return (
+  useEffect(() => {
+    if (variantType === "sizes") {
+      handleSizeChange({ value: "" });
+    }
+  }, [variantType]);
+
+  return variantType !== "colors" ? (
     <div className="twp my-auto h-fit w-1/2 px-2">
       <FieldLabel label="Rozmiar" />
       <Select
@@ -45,5 +54,5 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
         }
       />
     </div>
-  );
+  ) : null;
 };

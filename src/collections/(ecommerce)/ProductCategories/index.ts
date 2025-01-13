@@ -3,7 +3,6 @@ import { CollectionConfig } from "payload";
 
 export const ProductCategories: CollectionConfig = {
   slug: "productCategories",
-  access: {},
   admin: {
     useAsTitle: "title",
   },
@@ -29,5 +28,11 @@ export const ProductCategories: CollectionConfig = {
       localized: true,
     },
     ...slugField(),
+    {
+      name: "subcategories",
+      type: "join",
+      collection: "productSubCategories",
+      on: "category",
+    },
   ],
 };

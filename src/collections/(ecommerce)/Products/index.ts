@@ -1,4 +1,4 @@
-import type { CollectionConfig } from "payload";
+import { APIError, type CollectionConfig } from "payload";
 
 import { authenticated } from "@/access/authenticated";
 import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
@@ -246,9 +246,9 @@ export const Products: CollectionConfig = {
               },
               type: "array",
               admin: {
-                // components: {
-                // RowLabel: '@/collections/Products/ui/RowLabels/KeyLabel#KeyLabel',
-                // },
+                components: {
+                  RowLabel: "@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel#OptionLabel",
+                },
                 condition: (_, siblingData) =>
                   Boolean(siblingData.enableVariants && siblingData.variantsType !== "sizes"),
                 initCollapsed: true,
@@ -307,9 +307,9 @@ export const Products: CollectionConfig = {
               },
               type: "array",
               admin: {
-                // components: {
-                // RowLabel: '@/collections/Products/ui/RowLabels/KeyLabel#KeyLabel',
-                // },
+                components: {
+                  RowLabel: "@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel#OptionLabel",
+                },
                 condition: (_, siblingData) =>
                   Boolean(siblingData.enableVariants && siblingData.variantsType !== "colors"),
                 initCollapsed: true,
@@ -345,12 +345,30 @@ export const Products: CollectionConfig = {
               name: "variants",
               type: "array",
               admin: {
-                // components: {
-                //   RowLabel: "@/collections/Products/ui/RowLabels/VariantLabel#VariantLabel",
-                // },
+                components: {
+                  RowLabel: "@/collections/(ecommerce)/Products/ui/RowLabels/VariantLabel#VariantLabel",
+                },
                 condition: (_, siblingData) => {
                   return Boolean(siblingData.enableVariants);
                 },
+              },
+              validate: (value) => {
+                if (!value) return true;
+                const groupedByVariantSlug = value.reduce((acc: Record<string, any[]>, item: any) => {
+                  if (!acc[item.variantSlug]) {
+                    acc[item.variantSlug] = [];
+                  }
+                  acc[item.variantSlug].push(item);
+                  return acc;
+                }, {}) as any[];
+
+                const duplicateSlugs = Object.keys(groupedByVariantSlug).filter(
+                  (slug) => groupedByVariantSlug[slug].length > 1,
+                );
+                if (duplicateSlugs.length > 0) {
+                  return `Duplicated variant slugs: ${duplicateSlugs.join(", ")}`;
+                }
+                return true;
               },
               fields: [
                 {
@@ -389,13 +407,6 @@ export const Products: CollectionConfig = {
                 {
                   name: "variantSlug",
                   type: "text",
-                  hooks: {
-                    beforeValidate: [
-                      (data) => {
-                        // TODO: check if unique, if not throw an error;
-                      },
-                    ],
-                  },
                   admin: {
                     readOnly: true,
                   },
@@ -497,15 +508,46 @@ export const Products: CollectionConfig = {
           },
           fields: [
             {
-              name: "categories",
+              name: "categoriesArr",
               label: {
                 en: "Product categories",
                 pl: "Kategorie produktu",
               },
-              type: "relationship",
-              relationTo: "productCategories",
-              hasMany: true,
-              required: true,
+              labels: {
+                singular: {
+                  en: "Category",
+                  pl: "Kategoria",
+                },
+                plural: {
+                  en: "Categories",
+                  pl: "Kategorie",
+                },
+              },
+              type: "array",
+              fields: [
+                {
+                  name: "category",
+                  type: "relationship",
+                  relationTo: "productCategories",
+                  required: true,
+                },
+                {
+                  name: "subcategories",
+                  type: "relationship",
+                  relationTo: "productSubCategories",
+                  filterOptions: ({ siblingData }) => {
+                    const siblingDataTyped: {
+                      category: string;
+                    } = siblingData as any;
+                    return {
+                      category: {
+                        equals: siblingDataTyped.category,
+                      },
+                    };
+                  },
+                  hasMany: true,
+                },
+              ],
             },
             {
               name: "stock",
