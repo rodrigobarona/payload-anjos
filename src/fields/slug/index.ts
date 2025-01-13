@@ -32,7 +32,7 @@ export const slugField: Slug = (fieldToUse = "title", overrides = {}, localized 
     label: "Slug",
 
     // decide if localized or not
-    localized,
+    // localized,
     ...(slugOverrides || {}),
     hooks: {
       // Kept this in for hook or API based updates

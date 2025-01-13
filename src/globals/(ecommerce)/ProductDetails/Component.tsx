@@ -15,7 +15,9 @@ export const ProductDetails = async ({ product }: { product: Product }) => {
     let ProductDetailsComponent: ReactNode = null;
     switch (productDetailsData.type) {
       case "WithImageGalleryExpandableDetails":
-        ProductDetailsComponent = <WithImageGalleryExpandableDetails product={product} />;
+        ProductDetailsComponent = (
+          <WithImageGalleryExpandableDetails productSettings={productDetailsData} product={product} />
+        );
         break;
     }
 

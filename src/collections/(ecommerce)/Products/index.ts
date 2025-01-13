@@ -527,6 +527,10 @@ export const Products: CollectionConfig = {
               fields: [
                 {
                   name: "category",
+                  label: {
+                    en: "Category",
+                    pl: "Kategoria",
+                  },
                   type: "relationship",
                   relationTo: "productCategories",
                   required: true,
@@ -534,6 +538,10 @@ export const Products: CollectionConfig = {
                 {
                   name: "subcategories",
                   type: "relationship",
+                  label: {
+                    en: "Subcategories",
+                    pl: "Podkategorie",
+                  },
                   relationTo: "productSubCategories",
                   filterOptions: ({ siblingData }) => {
                     const siblingDataTyped: {

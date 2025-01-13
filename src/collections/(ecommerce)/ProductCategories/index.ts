@@ -30,6 +30,10 @@ export const ProductCategories: CollectionConfig = {
     ...slugField(),
     {
       name: "subcategories",
+      label: {
+        en: "Related subcategories",
+        pl: "Powiązane podkategorie",
+      },
       type: "join",
       collection: "productSubCategories",
       on: "category",

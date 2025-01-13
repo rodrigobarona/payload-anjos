@@ -18,7 +18,31 @@ export function LocaleSwitchSelect({ children, defaultValue, label }: Props) {
   const pathname = usePathname();
   const params = useParams();
 
-  function onSelectChange(locale: Locale) {
+  // console.log(pathname);
+
+  async function onSelectChange(locale: Locale) {
+    // const segments = pathname.split("/").filter(Boolean);
+    // if (segments.length > 1) {
+    //   const collection = pathnameCollections.find((item) => item.slug === segments[0])?.collection ?? "pages";
+    //   const slug = segments[1];
+
+    //   const query: Where = {
+    //     slug: {
+    //       equals: slug,
+    //     },
+    //   };
+
+    //   const stringifiedQuery = stringify(
+    //     {
+    //       where: query,
+    //     },
+    //     { addQueryPrefix: true },
+    //   );
+
+    //   const res = await axios.post(`/api/${collection}?where[slug][equals]=${slug}`);
+    //   console.log(res.data?.slug);
+    // }
+    // console.log(segments);
     startTransition(() => {
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
