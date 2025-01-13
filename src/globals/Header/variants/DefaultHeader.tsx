@@ -39,6 +39,8 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  console.log(theme);
+
   const classes = cn(
     `sticky flex w-full top-0 justify-center md:px-12 transition-transform z-50`,
 
@@ -57,7 +59,7 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
               alt={data.logo.alt}
               width={data.logo.width ?? 256}
               height={data.logo.height ?? 256}
-              className={`${isMenuOpened && "invert lg:invert-0"} -my-7 h-[88px] w-full max-w-[9.375rem]`}
+              className={cn(isMenuOpened && "invert lg:invert-0", "-my-7 h-[88px] w-full max-w-[9.375rem]")}
             />
           ) : (
             <Logo />

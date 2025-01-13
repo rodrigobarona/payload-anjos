@@ -981,7 +981,7 @@ export interface Product {
         size: string;
         color: string;
         variantSlug?: string | null;
-        images?: (string | null) | Media;
+        image?: (string | null) | Media;
         /**
          * Define stock for this variant. A stock of 0 disables checkout for this variant.
          */
@@ -1701,7 +1701,7 @@ export interface ProductsSelect<T extends boolean = true> {
         size?: T;
         color?: T;
         variantSlug?: T;
-        images?: T;
+        image?: T;
         stock?: T;
         weight?: T;
         pricing?:

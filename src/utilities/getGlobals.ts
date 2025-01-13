@@ -7,7 +7,7 @@ import { Locale } from "@/i18n/config";
 
 type Global = keyof Config["globals"];
 
-async function getGlobal(slug: Global, depth = 0, locale: Locale) {
+async function getGlobal(slug: Global, depth = 5, locale: Locale) {
   const payload = await getPayload({ config: configPromise });
 
   const global = await payload.findGlobal({

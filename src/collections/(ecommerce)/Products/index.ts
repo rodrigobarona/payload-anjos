@@ -412,7 +412,7 @@ export const Products: CollectionConfig = {
                   },
                 },
                 {
-                  name: "images",
+                  name: "image",
                   type: "upload",
                   relationTo: "media",
                 },

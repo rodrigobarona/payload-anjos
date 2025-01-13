@@ -6,5 +6,19 @@
   "LocaleSwitch": {
     "label": "Change language",
     "locale": "{locale, select, pl {Polish} en {English} other {Unknown}}"
+  },
+  "ProductDetails": {
+    "add-to-cart": "Add to cart",
+    "description": "Description",
+    "price": "Price",
+    "color": "Color",
+    "choose-color": "Choose a color",
+    "size": "Size",
+    "choose-size": "Choose a size",
+    "product-info": "Product information",
+    "reviews": "Reviews",
+    "sizing-chart": "See sizing chart",
+    "additional-details": "Additional details",
+    "add-to-favs": "Add to favorites"
   }
 }
