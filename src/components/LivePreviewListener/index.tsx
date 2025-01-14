@@ -7,7 +7,7 @@ export const LivePreviewListener = () => {
   return (
     <PayloadLivePreview
       refresh={router.refresh}
-      serverURL={process.env.NEXT_PUBLIC_SERVER_URL || "https://boilerplate.mandala.sh"}
+      serverURL={process.env.NEXT_PUBLIC_SERVER_URL || "https://ecommerce.mandala.sh"}
     />
   );
 };
