@@ -5,8 +5,8 @@ import { ThemeProvider } from "./Theme";
 
 export const Providers = ({ children }: { children: ReactNode }) => {
   return (
-    <ThemeProvider>
-      <HeaderThemeProvider>{children}</HeaderThemeProvider>
-    </ThemeProvider>
+    // <ThemeProvider>
+    <HeaderThemeProvider>{children}</HeaderThemeProvider>
+    // </ThemeProvider>
   );
 };
