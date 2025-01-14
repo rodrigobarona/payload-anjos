@@ -4,6 +4,7 @@ import { redirect } from "@/i18n/routing";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { Locale } from "@/i18n/config";
+import { headers as getHeaders } from "next/headers";
 
 const payloadToken = "payload-token";
 
@@ -19,6 +20,7 @@ export async function GET(
   const payload = await getPayload({ config: configPromise });
   const token = req.cookies.get(payloadToken)?.value;
   const { searchParams } = new URL(req.url);
+  const headers = await getHeaders();
   const path = searchParams.get("path");
   const locale = searchParams.get("locale") as Locale;
   const draft = await draftMode();
@@ -31,19 +33,19 @@ export async function GET(
     new Response("You are not allowed to preview this page", { status: 403 });
   }
 
-  let user;
+  // let user;
 
-  try {
-    user = jwt.verify(token, payload.secret);
-  } catch (error) {
-    payload.logger.error("Error verifying token for live preview:", error);
-  }
+  // try {
+  //   user = await payload.auth({ headers });
+  // } catch (error) {
+  //   payload.logger.error("Error verifying token for live preview:", error);
+  // }
 
-  // You can add additional checks here to see if the user is allowed to preview this page
-  if (!user) {
-    draft.disable();
-    return new Response("You are not allowed to preview this page", { status: 403 });
-  }
+  // // You can add additional checks here to see if the user is allowed to preview this page
+  // if (!user) {
+  //   draft.disable();
+  //   return new Response("You are not allowed to preview this page", { status: 403 });
+  // }
 
   draft.enable();
   return redirect({ href: path, locale });
