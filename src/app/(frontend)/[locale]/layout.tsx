@@ -46,7 +46,11 @@ export default async function RootLayout({
   const messages = await getMessages({ locale });
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable, "twp")} lang="en" suppressHydrationWarning>
+    <html
+      className={cn(GeistSans.variable, GeistMono.variable, "twp")}
+      lang={locale}
+      suppressHydrationWarning
+    >
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
