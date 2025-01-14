@@ -47,8 +47,6 @@ export const WithSidebar = ({
     return "subcategories" in category;
   };
 
-  console.log(products);
-
   const searchParams = useSearchParams();
   const router = useRouter();
   const handleCheckFilter = (e: ChangeEvent<HTMLInputElement>, filterType: string) => {
@@ -182,7 +180,12 @@ export const WithSidebar = ({
                 {filters.map(
                   (section) =>
                     section.options.length > 0 && (
-                      <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
+                      <Disclosure
+                        defaultOpen={Boolean(section.options.find((option) => option.checked))}
+                        key={section.id}
+                        as="div"
+                        className="border-t border-gray-200 px-4 py-6"
+                      >
                         <h3 className="-mx-2 -my-3 flow-root">
                           <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
                             <span className="font-medium text-gray-900">{section.name}</span>
@@ -332,7 +335,12 @@ export const WithSidebar = ({
                 {filters.map(
                   (section) =>
                     section.options.length > 0 && (
-                      <Disclosure key={section.id} as="div" className="border-b border-gray-200 py-6">
+                      <Disclosure
+                        key={section.id}
+                        as="div"
+                        defaultOpen={Boolean(section.options.find((option) => option.checked))}
+                        className="border-b border-gray-200 py-6"
+                      >
                         <h3 className="-my-3 flow-root">
                           <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
                             <span className="font-medium text-gray-900">{section.name}</span>

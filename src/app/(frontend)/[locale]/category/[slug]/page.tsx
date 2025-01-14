@@ -10,7 +10,7 @@ const CategoryPage = async ({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
   try {
     const payload = await getPayload({ config });
@@ -28,6 +28,9 @@ const CategoryPage = async ({
       },
     });
 
+    const colorArr = color ? color.split(",") : [];
+    const sizeArr = size ? size.split(",") : [];
+
     const { docs: products } = await payload.find({
       collection: "products",
       depth: 2,
@@ -36,8 +39,10 @@ const CategoryPage = async ({
         "categoriesArr.category": {
           equals: categories[0].id,
         },
-        ...(color && { "variants.color": { equals: color } }),
-        ...(size && { "variants.size": { equals: size } }),
+        ...(color && !size && { and: [{ "variants.color": { in: colorArr } }] }),
+        ...(size && !size && { "variants.size": { in: sizeArr } }),
+        ...(size &&
+          color && { and: [{ "variants.size": { in: sizeArr } }, { "variants.color": { in: colorArr } }] }),
       },
     });
 
