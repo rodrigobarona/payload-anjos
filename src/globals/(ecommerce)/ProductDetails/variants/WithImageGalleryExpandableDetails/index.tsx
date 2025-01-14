@@ -121,6 +121,7 @@ export const WithImageGalleryExpandableDetails = ({
       <div className="container mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {/* Image gallery */}
+          
           <TabGroup
             defaultIndex={0}
             selectedIndex={selectedTab}
