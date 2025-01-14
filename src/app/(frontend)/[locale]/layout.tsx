@@ -55,11 +55,11 @@ export default async function RootLayout({
       <body className="max-w-screen overflow-x-clip lg:overflow-y-auto">
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <AdminBar
+            {/* <AdminBar
               adminBarProps={{
                 preview: isEnabled,
               }}
-            />
+            /> */}
             <LivePreviewListener />
 
             <Header />
