@@ -121,7 +121,7 @@ export const WithImageGalleryExpandableDetails = ({
       <div className="container mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {/* Image gallery */}
-          
+
           <TabGroup
             defaultIndex={0}
             selectedIndex={selectedTab}
@@ -349,58 +349,60 @@ export const WithImageGalleryExpandableDetails = ({
                   {isProductAvailable ? t("add-to-cart") : t("product-unavailable")}
                 </button>
 
-                <div className="flex w-fit items-center border border-gray-200 sm:ml-4">
+                <div className="flex">
+                  <div className="flex w-fit items-center border border-gray-200 sm:ml-4">
+                    <button
+                      type="button"
+                      className="cursor-pointer p-2"
+                      disabled={quantity <= minQuantity}
+                      onClick={handleDecreaseQuantity}
+                    >
+                      <MinusIcon width={20} height={20} />
+                    </button>
+                    <Input
+                      type="number"
+                      className={`mx-auto h-full w-full min-w-10 max-w-16 p-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+                      value={quantity}
+                      min={1}
+                      max={selectedVariant?.stock || product?.stock || 999}
+                      onKeyDown={(e) => {
+                        const key = e.key;
+
+                        const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+
+                        if (!/^[0-9]$/.test(key) && !allowedKeys.includes(key)) {
+                          e.preventDefault();
+                        }
+                      }}
+                      onChange={(e) => {
+                        const quantityFromInput = Number(e.target.value);
+                        if (quantityFromInput > maxQuantity) {
+                          setQuantity(maxQuantity);
+                        } else if (quantityFromInput < minQuantity) {
+                          setQuantity(minQuantity);
+                        } else {
+                          setQuantity(quantityFromInput);
+                        }
+                      }}
+                    />
+                    <button
+                      className="cursor-pointer p-2"
+                      type="button"
+                      disabled={quantity >= maxQuantity}
+                      onClick={handleIncreaseQuantity}
+                    >
+                      <PlusIcon width={20} height={20} />
+                    </button>
+                  </div>
+
                   <button
                     type="button"
-                    className="cursor-pointer p-2"
-                    disabled={quantity <= minQuantity}
-                    onClick={handleDecreaseQuantity}
+                    className="ml-4 flex w-fit items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                   >
-                    <MinusIcon width={20} height={20} />
-                  </button>
-                  <Input
-                    type="number"
-                    className={`mx-auto h-full w-full min-w-10 max-w-16 p-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
-                    value={quantity}
-                    min={1}
-                    max={selectedVariant?.stock || product?.stock || 999}
-                    onKeyDown={(e) => {
-                      const key = e.key;
-
-                      const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
-
-                      if (!/^[0-9]$/.test(key) && !allowedKeys.includes(key)) {
-                        e.preventDefault();
-                      }
-                    }}
-                    onChange={(e) => {
-                      const quantityFromInput = Number(e.target.value);
-                      if (quantityFromInput > maxQuantity) {
-                        setQuantity(maxQuantity);
-                      } else if (quantityFromInput < minQuantity) {
-                        setQuantity(minQuantity);
-                      } else {
-                        setQuantity(quantityFromInput);
-                      }
-                    }}
-                  />
-                  <button
-                    className="cursor-pointer p-2"
-                    type="button"
-                    disabled={quantity >= maxQuantity}
-                    onClick={handleIncreaseQuantity}
-                  >
-                    <PlusIcon width={20} height={20} />
+                    <HeartIcon aria-hidden="true" className="size-6 shrink-0" />
+                    <span className="sr-only">{t("add-to-favs")}</span>
                   </button>
                 </div>
-
-                <button
-                  type="button"
-                  className="flex w-fit items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500 sm:ml-4"
-                >
-                  <HeartIcon aria-hidden="true" className="size-6 shrink-0" />
-                  <span className="sr-only">{t("add-to-favs")}</span>
-                </button>
               </div>
             </form>
 
