@@ -118,7 +118,7 @@ export const WithImageGalleryExpandableDetails = ({
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <div className="container mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {/* Image gallery */}
           <TabGroup
@@ -260,7 +260,6 @@ export const WithImageGalleryExpandableDetails = ({
                   <fieldset aria-label={t("choose-color")} className="mt-2">
                     <RadioGroup
                       value={selectedVariant?.color?.id}
-                      defaultValue={selectedVariant?.color?.id}
                       onChange={handleChangeColor}
                       className="flex items-center gap-x-3"
                     >
@@ -361,7 +360,6 @@ export const WithImageGalleryExpandableDetails = ({
                   <Input
                     type="number"
                     className={`mx-auto h-full w-full min-w-10 max-w-16 p-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
-                    defaultValue={quantity}
                     value={quantity}
                     min={1}
                     max={selectedVariant?.stock || product?.stock || 999}

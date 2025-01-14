@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 import { WithImageGalleryExpandableDetails } from "./variants/WithImageGalleryExpandableDetails";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/routing";
-import { Breadcrumbs } from "./components/Breadcrumbs";
+import { ProductBreadcrumbs } from "../../../components/(ecommerce)/ProductBreadcrumbs";
 
 export const ProductDetails = async ({ product }: { product: Product }) => {
   try {
@@ -28,7 +28,7 @@ export const ProductDetails = async ({ product }: { product: Product }) => {
 
     return (
       <>
-        <Breadcrumbs product={product} />
+        <ProductBreadcrumbs product={product} />
         {ProductDetailsComponent}
       </>
     );

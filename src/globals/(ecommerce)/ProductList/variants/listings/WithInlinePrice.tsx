@@ -2,11 +2,13 @@ import { Locale } from "@/i18n/config";
 import { Link } from "@/i18n/routing";
 import { Product } from "@/payload-types";
 import { formatPrice } from "@/utilities/formatPrices";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Locale }) => {
+  const t = useTranslations("ProductList");
   return (
-    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+    <>
       {products.map(
         (product) =>
           typeof product.images[0] !== "string" && (
@@ -29,7 +31,7 @@ const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Lo
                   {
                     <p className="mt-1 text-sm text-gray-500">
                       {product.enableVariants && product.variants
-                        ? `${product.variants.length} variants`
+                        ? `${product.variants.length} ${product.variants.length > 1 ? t("variants-plural") : t("variants-singular")}`
                         : ""}
                     </p>
                   }
@@ -41,7 +43,7 @@ const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Lo
             </div>
           ),
       )}
-    </div>
+    </>
   );
 };
 export default WithInlinePrice;

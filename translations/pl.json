@@ -21,5 +21,9 @@
     "sizing-chart": "Zobacz tabelę rozmiarów",
     "additional-details": "Dodatkowe szczegóły",
     "add-to-favs": "Dodaj do ulubionych"
+  },
+  "ProductList": {
+    "variants-singular": "wariant",
+    "variants-plural": "warianty"
   }
 }

@@ -21,5 +21,9 @@
     "sizing-chart": "See sizing chart",
     "additional-details": "Additional details",
     "add-to-favs": "Add to favorites"
+  },
+  "ProductList": {
+    "variants-singular": "variant",
+    "variants-plural": "variants"
   }
 }

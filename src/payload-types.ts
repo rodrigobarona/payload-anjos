@@ -65,11 +65,13 @@ export interface Config {
     header: Header;
     footer: Footer;
     productDetails: ProductDetail;
+    productList: ProductList;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     productDetails: ProductDetailsSelect<false> | ProductDetailsSelect<true>;
+    productList: ProductListSelect<false> | ProductListSelect<true>;
   };
   locale: 'en' | 'pl';
   user:
@@ -2094,6 +2096,16 @@ export interface ProductDetail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productList".
+ */
+export interface ProductList {
+  id: string;
+  filters?: ('none' | 'withSidebar' | 'sortOnly') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2150,6 +2162,16 @@ export interface FooterSelect<T extends boolean = true> {
 export interface ProductDetailsSelect<T extends boolean = true> {
   type?: T;
   reviewsEnabled?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productList_select".
+ */
+export interface ProductListSelect<T extends boolean = true> {
+  filters?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

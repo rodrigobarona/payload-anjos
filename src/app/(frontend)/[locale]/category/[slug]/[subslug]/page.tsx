@@ -5,18 +5,18 @@ import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const SubcategoryPage = async ({ params }: { params: Promise<{ subslug: string }> }) => {
   try {
     const payload = await getPayload({ config });
     const locale = (await getLocale()) as Locale;
-    const { slug } = await params;
-    const { docs: categories } = await payload.find({
-      collection: "productCategories",
+    const { subslug } = await params;
+    const { docs: subcategories } = await payload.find({
+      collection: "productSubCategories",
       depth: 1,
       locale,
       where: {
         slug: {
-          equals: slug,
+          equals: subslug,
         },
       },
     });
@@ -26,20 +26,21 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
       depth: 2,
       locale,
       where: {
-        "categoriesArr.category": {
-          equals: categories[0].id,
+        "categoriesArr.subcategories": {
+          equals: subcategories[0].id,
         },
       },
     });
 
-    if (categories.length === 0) {
+    if (subcategories.length === 0) {
       notFound();
     }
 
-    return <ProductList products={products} title={categories[0].title} category={categories[0]} />;
+    return <ProductList products={products} title={subcategories[0].title} subcategory={subcategories[0]} />;
   } catch (error) {
+    console.log(error);
     notFound();
   }
 };
 
-export default CategoryPage;
+export default SubcategoryPage;
