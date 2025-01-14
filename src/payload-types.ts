@@ -966,7 +966,7 @@ export interface Product {
    * If false, weight is in Product Details
    */
   enableVariantWeights?: boolean | null;
-  variantsType?: ('colors' | 'sizes' | 'colorsAndSizes') | null;
+  variantsType?: ('sizes' | 'colors' | 'colorsAndSizes') | null;
   colors?:
     | {
         label: string;

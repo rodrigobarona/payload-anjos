@@ -5,10 +5,17 @@ import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-const SubcategoryPage = async ({ params }: { params: Promise<{ subslug: string }> }) => {
+const SubcategoryPage = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ subslug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   try {
     const payload = await getPayload({ config });
     const locale = (await getLocale()) as Locale;
+    const { color, size } = await searchParams;
     const { subslug } = await params;
     const { docs: subcategories } = await payload.find({
       collection: "productSubCategories",
@@ -30,13 +37,21 @@ const SubcategoryPage = async ({ params }: { params: Promise<{ subslug: string }
           equals: subcategories[0].id,
         },
       },
+      ...(color && { "variants.color": { equals: color } }),
+      ...(size && { "variants.size": { equals: size } }),
     });
 
     if (subcategories.length === 0) {
       notFound();
     }
 
-    return <ProductList products={products} title={subcategories[0].title} subcategory={subcategories[0]} />;
+    return (
+      <ProductList
+        filteredProducts={products}
+        title={subcategories[0].title}
+        subcategory={subcategories[0]}
+      />
+    );
   } catch (error) {
     console.log(error);
     notFound();

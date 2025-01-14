@@ -8,14 +8,16 @@ import { WithSidebar } from "./variants/filters/WithSidebar";
 import None from "./variants/filters/None";
 import { notFound } from "next/navigation";
 import { ListingBreadcrumbs } from "@/components/(ecommerce)/ListingBreadcrumbs";
+import config from "@payload-config";
+import { getPayload } from "payload";
 
 export const ProductList = async ({
-  products,
+  filteredProducts,
   title,
   category,
   subcategory,
 }: {
-  products: Product[];
+  filteredProducts: Product[];
   title: string;
   category?: ProductCategory;
   subcategory?: ProductSubCategory;
@@ -33,8 +35,18 @@ export const ProductList = async ({
         ProductDetailsComponent = None;
     }
 
-    const productColors = products.map((product) => product.colors);
-    const productSizes = products.map((product) => product.sizes);
+    const payload = await getPayload({ config });
+
+    const { docs: allProducts } = await payload.find({
+      collection: "products",
+      depth: 2,
+      locale,
+      where: {
+        "categoriesArr.category": {
+          equals: category?.id,
+        },
+      },
+    });
 
     return (
       <div>
@@ -42,8 +54,8 @@ export const ProductList = async ({
         {subcategory && typeof subcategory.category !== "string" && (
           <ListingBreadcrumbs category={subcategory.category} subcategory={subcategory} />
         )}
-        <ProductDetailsComponent title={title} category={category}>
-          <WithInlinePrice products={products} locale={locale} />
+        <ProductDetailsComponent products={allProducts} title={title} category={category}>
+          <WithInlinePrice products={filteredProducts} locale={locale} />
         </ProductDetailsComponent>
       </div>
     );

@@ -208,19 +208,23 @@ export const Products: CollectionConfig = {
                 en: "Variants type",
                 pl: "Rodzaj wariantów",
               },
+              admin: {
+                condition: (data) => data.enableVariants,
+              },
+              defaultValue: "sizes",
               options: [
-                {
-                  value: "colors",
-                  label: {
-                    en: "Only colors",
-                    pl: "Tylko kolory",
-                  },
-                },
                 {
                   value: "sizes",
                   label: {
                     en: "Only sizes",
                     pl: "Tylko rozmiary",
+                  },
+                },
+                {
+                  value: "colors",
+                  label: {
+                    en: "Only colors",
+                    pl: "Tylko kolory",
                   },
                 },
                 {
