@@ -38,5 +38,15 @@ export const ProductCategories: CollectionConfig = {
       collection: "productSubCategories",
       on: "category",
     },
+    {
+      name: "products",
+      label: {
+        en: "Products in this category",
+        pl: "Produkty w tej kategorii",
+      },
+      type: "join",
+      collection: "products",
+      on: "categoriesArr.category",
+    },
   ],
 };

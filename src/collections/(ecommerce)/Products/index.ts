@@ -385,8 +385,9 @@ export const Products: CollectionConfig = {
                         components: {
                           Field: "@/collections/(ecommerce)/Products/ui/SizeSelect#SizeSelect",
                         },
+                        condition: (_, siblingData) => siblingData.variantsType !== "colors",
                       },
-                      required: true,
+                      // required: true,
                     },
                     {
                       name: "color",
@@ -399,8 +400,9 @@ export const Products: CollectionConfig = {
                         components: {
                           Field: "@/collections/(ecommerce)/Products/ui/ColorSelect#ColorSelect",
                         },
+                        condition: (_, siblingData) => siblingData.variantsType !== "sizes",
                       },
-                      required: true,
+                      // required: true,
                     },
                   ],
                 },

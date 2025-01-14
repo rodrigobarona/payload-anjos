@@ -33,6 +33,10 @@ export interface Config {
   collectionsJoins: {
     productCategories: {
       subcategories: 'productSubCategories';
+      products: 'products';
+    };
+    productSubCategories: {
+      products: 'products';
     };
   };
   collectionsSelect: {
@@ -978,8 +982,8 @@ export interface Product {
     | null;
   variants?:
     | {
-        size: string;
-        color: string;
+        size?: string | null;
+        color?: string | null;
         variantSlug?: string | null;
         image?: (string | null) | Media;
         /**
@@ -1038,6 +1042,10 @@ export interface ProductCategory {
     docs?: (string | ProductSubCategory)[] | null;
     hasNextPage?: boolean | null;
   } | null;
+  products?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1051,6 +1059,10 @@ export interface ProductSubCategory {
   title: string;
   slug?: string | null;
   slugLock?: boolean | null;
+  products?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1741,6 +1753,7 @@ export interface ProductCategoriesSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   subcategories?: T;
+  products?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1753,6 +1766,7 @@ export interface ProductSubCategoriesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   slugLock?: T;
+  products?: T;
   updatedAt?: T;
   createdAt?: T;
 }

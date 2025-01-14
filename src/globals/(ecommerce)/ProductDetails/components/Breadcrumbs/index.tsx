@@ -13,7 +13,7 @@ export const Breadcrumbs = ({ product }: { product: Product }) => {
                   <li key={breadcrumb.id}>
                     <div className="flex items-center">
                       <Link
-                        href={`/categories/${breadcrumb.category.slug}`}
+                        href={`/category/${breadcrumb.category.slug}`}
                         className="mr-4 text-sm font-medium text-gray-900"
                       >
                         {breadcrumb.category.title}

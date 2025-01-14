@@ -9,7 +9,7 @@ export const ProductSubCategories: CollectionConfig = {
   labels: {
     singular: {
       en: "Product Subcategory",
-      pl: "Podkateogria produktu",
+      pl: "Podkategoria produktu",
     },
     plural: {
       en: "Product Subcategories",
@@ -38,5 +38,15 @@ export const ProductSubCategories: CollectionConfig = {
       localized: true,
     },
     ...slugField(),
+    {
+      name: "products",
+      label: {
+        en: "Products in this category",
+        pl: "Produkty w tej kategorii",
+      },
+      type: "join",
+      collection: "products",
+      on: "categoriesArr.subcategories",
+    },
   ],
 };

@@ -97,6 +97,11 @@ export const WithImageGalleryExpandableDetails = ({
     return Boolean(isAvailable);
   };
 
+  const isProductAvailable = !Boolean(
+    (product.enableVariants && (!selectedVariant || selectedVariant.stock === 0)) ||
+      (!product.enableVariants && product.stock === 0),
+  );
+
   const [selectedTab, setSelectedTab] = useState(0);
 
   useEffect(() => {
@@ -208,7 +213,7 @@ export const WithImageGalleryExpandableDetails = ({
             <div className="mt-3">
               <h2 className="sr-only">{t("product-info")}</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                {formatPrice(product.pricing ? product.pricing[0].value : 0, "USD", locale)}
+                {formatPrice(product.pricing ? product.pricing[0].value : 0, "PLN", locale)}
               </p>
             </div>
 
@@ -288,7 +293,7 @@ export const WithImageGalleryExpandableDetails = ({
               )}
 
               {/* Size picker */}
-              {product.variants && product.enableVariants && product.variantsType !== "sizes" && (
+              {product.variants && product.enableVariants && product.variantsType !== "colors" && (
                 <div className="mt-8">
                   <div className="flex items-center justify-between">
                     <h2 className="text-sm font-medium text-gray-900">{t("size")}</h2>
@@ -331,16 +336,17 @@ export const WithImageGalleryExpandableDetails = ({
               <div className="mt-10 grid grid-cols-2 gap-y-4 sm:flex">
                 <button
                   type="submit"
-                  disabled={Boolean(
-                    product.enableVariants && (!selectedVariant || selectedVariant.stock === 0),
+                  disabled={!isProductAvailable}
+                  className={cn(
+                    "focus:outline-hidden col-span-2 row-start-2 flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full",
+                    !isProductAvailable && "cursor-not-allowed opacity-25",
                   )}
-                  className="focus:outline-hidden col-span-2 row-start-2 flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                   onClick={(e) => {
                     e.preventDefault();
                     console.log(selectedVariant);
                   }}
                 >
-                  {t("add-to-cart")}
+                  {isProductAvailable ? t("add-to-cart") : t("product-unavailable")}
                 </button>
 
                 <div className="flex w-fit items-center border border-gray-200 sm:ml-4">

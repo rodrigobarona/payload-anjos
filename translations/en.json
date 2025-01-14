@@ -9,6 +9,7 @@
   },
   "ProductDetails": {
     "add-to-cart": "Add to cart",
+    "product-unavailable": "Product unavailable",
     "description": "Description",
     "price": "Price",
     "color": "Color",

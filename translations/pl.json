@@ -9,6 +9,7 @@
   },
   "ProductDetails": {
     "add-to-cart": "Dodaj do koszyka",
+    "product-unavailable": "Produkt niedostępny",
     "description": "Opis",
     "price": "Cena",
     "color": "Kolor",
