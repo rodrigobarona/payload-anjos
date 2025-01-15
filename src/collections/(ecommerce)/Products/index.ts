@@ -642,6 +642,15 @@ export const Products: CollectionConfig = {
                 },
               ],
             },
+            {
+              name: "bought",
+              label: {
+                en: "Bought",
+                pl: "Kupiono",
+              },
+              type: "number",
+              defaultValue: 0,
+            },
           ],
         },
       ],

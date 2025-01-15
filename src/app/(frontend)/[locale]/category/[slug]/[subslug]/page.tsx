@@ -3,7 +3,7 @@ import { Locale } from "@/i18n/config";
 import config from "@payload-config";
 import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { getPayload } from "payload";
+import { getPayload, Sort } from "payload";
 
 const SubcategoryPage = async ({
   params,
@@ -15,7 +15,7 @@ const SubcategoryPage = async ({
   try {
     const payload = await getPayload({ config });
     const locale = (await getLocale()) as Locale;
-    const { color, size } = await searchParams;
+    const { color, size, sortBy } = await searchParams;
     const { subslug } = await params;
     const { docs: subcategories } = await payload.find({
       collection: "productSubCategories",
@@ -35,6 +35,22 @@ const SubcategoryPage = async ({
     const colorArr = color ? color.split(",") : [];
     const sizeArr = size ? size.split(",") : [];
 
+    let sortQuery: Sort = "bought";
+    switch (sortBy) {
+      case "priceasc":
+        sortQuery = ["variants.pricing[0].value", "pricing.value"];
+        break;
+      case "pricedesc":
+        sortQuery = ["-variants.pricing[0].value", "-pricing.value"];
+        break;
+      case "newest":
+        sortQuery = ["-createdAt"];
+        break;
+      default:
+        sortQuery = "-bought";
+        break;
+    }
+
     const { docs: products } = await payload.find({
       collection: "products",
       depth: 2,
@@ -48,6 +64,7 @@ const SubcategoryPage = async ({
       ...(size && !size && { "variants.size": { in: sizeArr } }),
       ...(size &&
         color && { and: [{ "variants.size": { in: sizeArr } }, { "variants.color": { in: colorArr } }] }),
+      sort: sortQuery,
     });
 
     return (

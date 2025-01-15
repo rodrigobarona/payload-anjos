@@ -20,13 +20,14 @@ import { Product, ProductCategory, ProductSubCategory } from "@/payload-types";
 import { Link } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { label: "Most Popular", value: "most-popular" },
+  // { label: "Best Rating", value: "best-rating" },
+  { label: "Newest", value: "newest" },
+  { label: "Price: Low to High", value: "priceasc" },
+  { label: "Price: High to Low", value: "pricedesc" },
 ];
 
 export const WithSidebar = ({
@@ -123,6 +124,18 @@ export const WithSidebar = ({
       options: sizes,
     },
   ];
+
+  const handleSortingOptions = (value: string) => {
+    const currentParams = new URLSearchParams(searchParams?.toString());
+
+    if (!value || value === "most-popular") {
+      currentParams.delete("sortBy");
+    } else {
+      currentParams.set("sortBy", value);
+    }
+
+    router.push(`?${currentParams.toString()}`);
+  };
 
   return (
     <div className="bg-white">
@@ -256,38 +269,18 @@ export const WithSidebar = ({
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">{title}</h1>
 
             <div className="flex items-center">
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Sort
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
-                    />
-                  </MenuButton>
-                </div>
-
-                <MenuItems
-                  transition
-                  className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                >
-                  <div className="py-1">
-                    {sortOptions.map((option) => (
-                      <MenuItem key={option.name}>
-                        <a
-                          href={option.href}
-                          className={cn(
-                            option.current ? "font-medium text-gray-900" : "text-gray-500",
-                            "block px-4 py-2 text-sm data-[focus]:bg-gray-100 data-[focus]:outline-none",
-                          )}
-                        >
-                          {option.name}
-                        </a>
-                      </MenuItem>
-                    ))}
-                  </div>
-                </MenuItems>
-              </Menu>
+              <Select defaultValue="most-popular" onValueChange={handleSortingOptions}>
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="Sort" />
+                </SelectTrigger>
+                <SelectContent className="py-1">
+                  {sortOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
               <button
                 type="button"

@@ -1028,6 +1028,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  bought?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1743,6 +1744,7 @@ export interface ProductsSelect<T extends boolean = true> {
         currency?: T;
         id?: T;
       };
+  bought?: T;
   updatedAt?: T;
   createdAt?: T;
 }
