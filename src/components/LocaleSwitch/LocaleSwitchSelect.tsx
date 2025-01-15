@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { ReactNode, useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { Locale } from "@/i18n/config";
@@ -17,38 +17,19 @@ export function LocaleSwitchSelect({ children, defaultValue, label }: Props) {
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
   const params = useParams();
-
-  // console.log(pathname);
+  const searchParams = useSearchParams();
 
   async function onSelectChange(locale: Locale) {
-    // const segments = pathname.split("/").filter(Boolean);
-    // if (segments.length > 1) {
-    //   const collection = pathnameCollections.find((item) => item.slug === segments[0])?.collection ?? "pages";
-    //   const slug = segments[1];
-
-    //   const query: Where = {
-    //     slug: {
-    //       equals: slug,
-    //     },
-    //   };
-
-    //   const stringifiedQuery = stringify(
-    //     {
-    //       where: query,
-    //     },
-    //     { addQueryPrefix: true },
-    //   );
-
-    //   const res = await axios.post(`/api/${collection}?where[slug][equals]=${slug}`);
-    //   console.log(res.data?.slug);
-    // }
-    // console.log(segments);
     startTransition(() => {
+      const query = {
+        ...Object.fromEntries(searchParams.entries()),
+      };
+
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will
         // always match for the current route, we can skip runtime checks.
-        { pathname, params },
+        { pathname, params, query },
         { scroll: false, locale },
       );
     });
