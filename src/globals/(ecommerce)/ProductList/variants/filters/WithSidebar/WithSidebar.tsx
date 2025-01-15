@@ -21,6 +21,7 @@ import { MobileFiltersProvider } from "./context/MobileFiltersContext";
 import { MobileFunnelFiltersButton } from "./components/MobileFunnelFiltersButton";
 import { MobileFiltersDialog } from "./components/MobileFiltersDialog";
 import { MobileFiltersCloseButton } from "./components/MobileFiltersCloseButton";
+import { useTranslations } from "next-intl";
 
 const sortOptions = [
   { label: "Most Popular", value: "most-popular" },
@@ -98,6 +99,8 @@ export const WithSidebar = ({
     },
   ];
 
+  const t = useTranslations("ProductList");
+
   return (
     <div className="bg-white">
       <div>
@@ -116,7 +119,7 @@ export const WithSidebar = ({
                 className="relative ml-auto flex size-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
               >
                 <div className="flex items-center justify-between px-4">
-                  <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                  <h2 className="text-lg font-medium text-gray-900">{t("filters")}</h2>
                   <MobileFiltersCloseButton />
                 </div>
 
@@ -127,7 +130,7 @@ export const WithSidebar = ({
                     category.subcategories &&
                     category.subcategories.docs && (
                       <>
-                        <h3 className="sr-only">Categories</h3>
+                        <h3 className="sr-only">{t("categories")}</h3>
                         <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                           {category.subcategories.docs.map(
                             (subcategory) =>
@@ -242,7 +245,7 @@ export const WithSidebar = ({
 
             <section aria-labelledby="products-heading" className="pb-24 pt-6">
               <h2 id="products-heading" className="sr-only">
-                Products
+                {t("products")}
               </h2>
 
               <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
@@ -253,7 +256,7 @@ export const WithSidebar = ({
                     category.subcategories &&
                     category.subcategories.docs && (
                       <>
-                        <h3 className="sr-only">Categories</h3>
+                        <h3 className="sr-only">{t("categories")}</h3>
                         <ul
                           role="list"
                           className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"

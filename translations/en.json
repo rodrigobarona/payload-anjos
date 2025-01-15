@@ -24,6 +24,10 @@
   },
   "ProductList": {
     "variants-singular": "variant",
-    "variants-plural": "variants"
+    "variants-plural": "variants",
+    "filters": "Filters",
+    "categories": "Categories",
+    "products": "Products",
+    "close-filters": "Close filters"
   }
 }
