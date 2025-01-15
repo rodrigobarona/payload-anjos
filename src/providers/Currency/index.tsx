@@ -28,7 +28,7 @@ export const CurrencyProvider = ({
   );
 
   const setCurrency = useCallback((currencyToSet: Currency) => {
-    window.localStorage.setItem("currency", currencyToSet);
+    canUseDOM && window.localStorage.setItem("currency", currencyToSet);
     setCurrencyState(currencyToSet);
   }, []);
 
