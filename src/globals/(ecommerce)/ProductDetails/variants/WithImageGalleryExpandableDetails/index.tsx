@@ -312,10 +312,15 @@ export const WithImageGalleryExpandableDetails = ({
                       {product.sizes &&
                         product.sizes.map((size) => {
                           const matchingVariant = findAvailableSizeVariant(size.id || "");
+
                           return (
                             <Radio
-                              key={`${matchingVariant?.size?.id}-${matchingVariant?.color?.id}`}
-                              value={matchingVariant?.size?.id}
+                              key={
+                                matchingVariant
+                                  ? `${matchingVariant?.size?.id}-${matchingVariant?.color?.id}`
+                                  : `${size.id}-unavailable`
+                              }
+                              value={matchingVariant ? matchingVariant?.size?.id : `${size.id}-unavailable`}
                               disabled={!matchingVariant}
                               className={cn(
                                 matchingVariant
