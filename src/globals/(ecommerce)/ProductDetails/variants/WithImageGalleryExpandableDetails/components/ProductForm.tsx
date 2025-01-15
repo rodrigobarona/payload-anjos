@@ -1,0 +1,237 @@
+"use client";
+import { Product } from "@/payload-types";
+import { useProductContext } from "../context/ProductContext";
+import { useTranslations } from "next-intl";
+import { FilledVariant } from "../../../types";
+import { Input, Radio, RadioGroup } from "@headlessui/react";
+import { cn } from "@/utilities/cn";
+import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+
+export const ProductForm = ({
+  product,
+  filledVariants,
+}: {
+  product: Product;
+  filledVariants?: FilledVariant[];
+}) => {
+  const { quantity, selectedVariant, setQuantity, setSelectedVariant } = useProductContext();
+  const t = useTranslations("ProductDetails");
+
+  const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
+  const minQuantity = 1;
+
+  const handleChangeColor = (id: string) => {
+    const matchingVariant = filledVariants?.filter(
+      (variant) => variant.color?.id === id && variant.stock > 0,
+    );
+    const closestVariant = matchingVariant?.find((variant) => variant.size?.id === selectedVariant?.size?.id);
+
+    if (closestVariant) {
+      setSelectedVariant(closestVariant);
+    } else if (matchingVariant) {
+      setSelectedVariant(matchingVariant[0]);
+    }
+  };
+
+  const isColorAvailable = (colorID: string) => {
+    const isAvailable = filledVariants?.find((variant) => {
+      return variant.color?.id === colorID && variant.stock > 0;
+    });
+    return Boolean(isAvailable);
+  };
+
+  const findAvailableSizeVariant = (sizeID: string) => {
+    const matchingVariant = filledVariants?.find((variant) => {
+      return variant.color?.id === selectedVariant?.color?.id && variant.size?.id === sizeID;
+    });
+    if (matchingVariant && matchingVariant.stock > 0) {
+      return matchingVariant;
+    }
+  };
+
+  const handleChangeSize = (id: string) => {
+    const matchingVariant = findAvailableSizeVariant(id);
+    if (matchingVariant) {
+      setSelectedVariant(matchingVariant);
+    }
+  };
+
+  const isProductAvailable = !Boolean(
+    (product.enableVariants && (!selectedVariant || selectedVariant.stock === 0)) ||
+      (!product.enableVariants && product.stock === 0),
+  );
+
+  const handleIncreaseQuantity = () => {
+    console.log(quantity, maxQuantity);
+    if (quantity < maxQuantity) {
+      setQuantity((prevQuantity: number) => prevQuantity + 1);
+    }
+  };
+
+  const handleDecreaseQuantity = () => {
+    if (quantity > minQuantity) {
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    }
+  };
+
+  return (
+    <form className="mt-6">
+      {/* Colors */}
+      {product.variants && product.enableVariants && product.variantsType !== "sizes" && (
+        <div>
+          <h3 className="text-sm font-medium text-gray-600">{t("color")}</h3>
+
+          <fieldset aria-label={t("choose-color")} className="mt-2">
+            <RadioGroup
+              value={selectedVariant?.color?.id}
+              onChange={handleChangeColor}
+              className="flex items-center gap-x-3"
+            >
+              {product.colors &&
+                product.colors.map((color) => {
+                  const isAvailable = isColorAvailable(color.id ?? "");
+                  return (
+                    <Radio
+                      key={color.id}
+                      value={color.id}
+                      aria-label={color.label}
+                      disabled={!isAvailable}
+                      className={cn(
+                        "ring-gray-500",
+                        "focus:outline-hidden data-[focus]:data-[checked]:ring-3 relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 data-[checked]:ring-2 data-[focus]:data-[checked]:ring-offset-1",
+                        !isAvailable && "cursor-not-allowed opacity-25",
+                      )}
+                    >
+                      <span
+                        aria-hidden="true"
+                        style={{ background: color.colorValue ?? "" }}
+                        className={cn("size-8 rounded-full border border-black/10")}
+                      />
+                    </Radio>
+                  );
+                })}
+            </RadioGroup>
+          </fieldset>
+        </div>
+      )}
+
+      {/* Size picker */}
+      {product.variants && product.enableVariants && product.variantsType !== "colors" && (
+        <div className="mt-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-medium text-gray-900">{t("size")}</h2>
+            <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+              {t("sizing-chart")}
+            </a>
+          </div>
+
+          <fieldset aria-label={t("choose-size")} className="mt-2">
+            <RadioGroup
+              defaultValue={selectedVariant?.size?.id}
+              value={selectedVariant?.size?.id}
+              onChange={handleChangeSize}
+              className="grid grid-cols-3 gap-3 sm:grid-cols-6"
+            >
+              {product.sizes &&
+                product.sizes.map((size) => {
+                  const matchingVariant = findAvailableSizeVariant(size.id || "");
+
+                  return (
+                    <Radio
+                      key={
+                        matchingVariant
+                          ? `${matchingVariant?.size?.id}-${matchingVariant?.color?.id}`
+                          : `${size.id}-unavailable`
+                      }
+                      value={matchingVariant ? matchingVariant?.size?.id : `${size.id}-unavailable`}
+                      disabled={!matchingVariant}
+                      className={cn(
+                        matchingVariant
+                          ? "focus:outline-hidden cursor-pointer"
+                          : "cursor-not-allowed opacity-25",
+                        "flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-indigo-600 data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-indigo-500 data-[focus]:ring-offset-2 data-[checked]:hover:bg-indigo-700 sm:flex-1",
+                      )}
+                    >
+                      {size.label}
+                    </Radio>
+                  );
+                })}
+            </RadioGroup>
+          </fieldset>
+        </div>
+      )}
+
+      <div className="mt-10 grid grid-cols-2 gap-y-4 sm:flex">
+        <button
+          type="submit"
+          disabled={!isProductAvailable}
+          className={cn(
+            "focus:outline-hidden col-span-2 row-start-2 flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full",
+            !isProductAvailable && "cursor-not-allowed opacity-25",
+          )}
+          onClick={(e) => {
+            e.preventDefault();
+            console.log(selectedVariant);
+          }}
+        >
+          {isProductAvailable ? t("add-to-cart") : t("product-unavailable")}
+        </button>
+
+        <div className="flex">
+          <div className="flex w-fit items-center border border-gray-200 sm:ml-4">
+            <button
+              type="button"
+              className="cursor-pointer p-2"
+              disabled={quantity <= minQuantity}
+              onClick={handleDecreaseQuantity}
+            >
+              <MinusIcon width={20} height={20} />
+            </button>
+            <Input
+              type="number"
+              className={`mx-auto h-full w-full min-w-10 max-w-16 p-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+              value={quantity}
+              min={1}
+              max={selectedVariant?.stock || product?.stock || 999}
+              onKeyDown={(e) => {
+                const key = e.key;
+
+                const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+
+                if (!/^[0-9]$/.test(key) && !allowedKeys.includes(key)) {
+                  e.preventDefault();
+                }
+              }}
+              onChange={(e) => {
+                const quantityFromInput = Number(e.target.value);
+                if (quantityFromInput > maxQuantity) {
+                  setQuantity(maxQuantity);
+                } else if (quantityFromInput < minQuantity) {
+                  setQuantity(minQuantity);
+                } else {
+                  setQuantity(quantityFromInput);
+                }
+              }}
+            />
+            <button
+              className="cursor-pointer p-2"
+              type="button"
+              disabled={quantity >= maxQuantity}
+              onClick={handleIncreaseQuantity}
+            >
+              <PlusIcon width={20} height={20} />
+            </button>
+          </div>
+
+          <button
+            type="button"
+            className="ml-4 flex w-fit items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+          >
+            <HeartIcon aria-hidden="true" className="size-6 shrink-0" />
+            <span className="sr-only">{t("add-to-favs")}</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+};
