@@ -20,8 +20,7 @@ import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Product, ProductDetail } from "@/payload-types";
 import Image from "next/image";
 import RichText from "@/components/RichText";
-import { formatPrice } from "@/utilities/formatPrices";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 
 export const WithImageGalleryExpandableDetails = ({
