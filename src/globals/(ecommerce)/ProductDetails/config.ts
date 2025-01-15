@@ -27,6 +27,8 @@ export const ProductDetails: GlobalConfig = {
         en: "Type of product card",
         pl: "Rodzaj karty produktu",
       },
+      required: true,
+      defaultValue: "WithImageGalleryExpandableDetails",
     },
     {
       name: "reviewsEnabled",
@@ -36,6 +38,7 @@ export const ProductDetails: GlobalConfig = {
         pl: "Włącz opinie o produkcie",
       },
       defaultValue: true,
+      required: true,
     },
   ],
   hooks: {

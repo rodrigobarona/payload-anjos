@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { CMSLink } from "@/components/Link";
 import { useEffect, useState } from "react";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { useCartState } from "@/globals/(ecommerce)/Cart/stores/CartStateStore";
 
 export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | null }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);
@@ -17,6 +19,8 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
     document.body.classList.toggle("overflow-clip");
     document.body.classList.toggle("overflow-y-clip");
   };
+
+  const { toggleCart } = useCartState();
 
   useEffect(() => {
     let lastScrollValue = 0;
@@ -48,7 +52,7 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
   return (
     <header className={classes} style={data.background ? { background: data.background } : {}}>
       <div
-        className={`container flex w-full items-center py-8 ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}
+        className={`container flex w-full items-center py-8 lg:gap-8 ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}
       >
         <Link href="/" className="mr-auto">
           {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (
@@ -88,6 +92,9 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
               })}
           </div>
         </nav>
+        <button onClick={toggleCart} className="-m-2 cursor-pointer p-2">
+          <ShoppingBagIcon color="white" width={24} height={24} />
+        </button>
         <CMSLink className="ml-auto hidden md:flex" />
         <div className="backdrop_blur absolute left-1/2 -z-30 h-full w-full -translate-x-1/2" />
       </div>

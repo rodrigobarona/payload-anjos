@@ -67,6 +67,7 @@ export interface Config {
     productDetails: ProductDetail;
     productList: ProductList;
     shopSettings: ShopSetting;
+    cart: Cart;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -74,6 +75,7 @@ export interface Config {
     productDetails: ProductDetailsSelect<false> | ProductDetailsSelect<true>;
     productList: ProductListSelect<false> | ProductListSelect<true>;
     shopSettings: ShopSettingsSelect<false> | ShopSettingsSelect<true>;
+    cart: CartSelect<false> | CartSelect<true>;
   };
   locale: 'en' | 'pl';
   user:
@@ -2093,8 +2095,8 @@ export interface Footer {
  */
 export interface ProductDetail {
   id: string;
-  type?: 'WithImageGalleryExpandableDetails' | null;
-  reviewsEnabled?: boolean | null;
+  type: 'WithImageGalleryExpandableDetails';
+  reviewsEnabled: boolean;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2118,6 +2120,16 @@ export interface ShopSetting {
    * First currency is the default one
    */
   availableCurrencies: ('USD' | 'EUR' | 'GBP' | 'PLN')[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cart".
+ */
+export interface Cart {
+  id: string;
+  type: 'slideOver';
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2199,6 +2211,16 @@ export interface ProductListSelect<T extends boolean = true> {
  */
 export interface ShopSettingsSelect<T extends boolean = true> {
   availableCurrencies?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cart_select".
+ */
+export interface CartSelect<T extends boolean = true> {
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

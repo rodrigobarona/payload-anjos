@@ -22,6 +22,7 @@ import "./globals.css";
 import { getServerSideURL } from "@/utilities/getURL";
 import { Locale } from "@/i18n/config";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
+import { Cart } from "@/globals/(ecommerce)/Cart/Component";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -66,7 +67,7 @@ export default async function RootLayout({
               }}
             /> */}
             {isEnabled && <LivePreviewListener />}
-
+            <Cart />
             <Header />
             {children}
             <Footer />

@@ -178,7 +178,6 @@ export const ProductForm = ({
           )}
           onClick={(e) => {
             e.preventDefault();
-            console.log("updatingCart");
             updateCart([
               {
                 id: product.id,

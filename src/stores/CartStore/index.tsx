@@ -6,6 +6,7 @@ interface CartState {
   cart: Cart | null;
   setCart: (cartToSet: Cart) => void;
   updateCart: (cartToSet: Cart) => void;
+  removeFromCart: (productId: string, variantSlug?: string) => void;
 }
 
 const useCartStore = create<CartState>((set) => ({
@@ -44,6 +45,24 @@ const useCartStore = create<CartState>((set) => ({
         } else {
           updatedCart.push(newProduct);
         }
+      });
+
+      if (canUseDOM) {
+        window.localStorage.setItem("cart", JSON.stringify(updatedCart));
+      }
+
+      return { cart: updatedCart };
+    });
+  },
+
+  removeFromCart: (productId: string, variantSlug?: string) => {
+    set((state) => {
+      const updatedCart = state.cart?.filter((product) => {
+        if (variantSlug) {
+          return product.id !== productId || product.choosenVariantSlug !== variantSlug;
+        }
+
+        return product.id !== productId;
       });
 
       if (canUseDOM) {
