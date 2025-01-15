@@ -66,7 +66,18 @@ const CategoryPage = async ({
       sort: sortQuery,
     });
 
-    return <ProductList filteredProducts={products} title={categories[0].title} category={categories[0]} />;
+    return (
+      <ProductList
+        filteredProducts={products}
+        title={categories[0].title}
+        category={categories[0]}
+        searchParams={{
+          color: colorArr,
+          size: sizeArr,
+          sortBy: sortBy || "most-popular",
+        }}
+      />
+    );
   } catch (error) {
     console.log(error);
     notFound();

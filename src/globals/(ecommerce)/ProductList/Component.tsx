@@ -3,7 +3,7 @@ import { Locale } from "@/i18n/config";
 import WithInlinePrice from "./variants/listings/WithInlinePrice";
 import { getLocale } from "next-intl/server";
 import { getCachedGlobal } from "@/utilities/getGlobals";
-import { WithSidebar } from "./variants/filters/WithSidebar";
+import { WithSidebar } from "./variants/filters/WithSidebar/WithSidebar";
 
 import None from "./variants/filters/None";
 import { notFound } from "next/navigation";
@@ -16,11 +16,17 @@ export const ProductList = async ({
   title,
   category,
   subcategory,
+  searchParams,
 }: {
   filteredProducts: Product[];
   title: string;
   category?: ProductCategory;
   subcategory?: ProductSubCategory;
+  searchParams: {
+    size: string[];
+    color: string[];
+    sortBy: string;
+  };
 }) => {
   try {
     const locale = (await getLocale()) as Locale;
@@ -63,7 +69,12 @@ export const ProductList = async ({
         {subcategory && typeof subcategory.category !== "string" && (
           <ListingBreadcrumbs category={subcategory.category} subcategory={subcategory} />
         )}
-        <ProductDetailsComponent products={allProducts} title={title} category={category}>
+        <ProductDetailsComponent
+          products={allProducts}
+          title={title}
+          category={category}
+          searchParams={searchParams}
+        >
           <WithInlinePrice products={filteredProducts} locale={locale} />
         </ProductDetailsComponent>
       </div>
