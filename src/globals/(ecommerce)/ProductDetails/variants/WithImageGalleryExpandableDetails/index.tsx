@@ -39,8 +39,8 @@ export const WithImageGalleryExpandableDetails = ({
     slug: variant.variantSlug,
     stock: variant.stock,
     image: typeof variant.image !== "string" ? variant.image : null,
+    pricing: variant.pricing,
   }));
-  const locale = useLocale();
 
   const [selectedVariant, setSelectedVariant] = useState(filledVariants ? filledVariants[0] : null);
   const [quantity, setQuantity] = useState(1);
@@ -217,8 +217,11 @@ export const WithImageGalleryExpandableDetails = ({
               <p className="text-3xl tracking-tight text-gray-900">
                 <PriceClient
                   pricing={
-                    (product.enableVariants && product.enableVariantPrices && product.variants
-                      ? product.variants[0].pricing
+                    (product.enableVariants &&
+                    product.enableVariantPrices &&
+                    product.variants &&
+                    selectedVariant
+                      ? selectedVariant.pricing
                       : product.pricing) ?? []
                   }
                 />
