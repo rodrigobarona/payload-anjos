@@ -1,11 +1,13 @@
 "use client";
 import { Product } from "@/payload-types";
-import { useProductContext } from "../context/ProductContext";
+
 import { useTranslations } from "next-intl";
 import { FilledVariant } from "../../../types";
 import { Input, Radio, RadioGroup } from "@headlessui/react";
 import { cn } from "@/utilities/cn";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { useCart } from "@/stores/CartStore";
+import { useProductContext } from "../stores/ProductContext";
 
 export const ProductForm = ({
   product,
@@ -14,7 +16,14 @@ export const ProductForm = ({
   product: Product;
   filledVariants?: FilledVariant[];
 }) => {
-  const { quantity, selectedVariant, setQuantity, setSelectedVariant } = useProductContext();
+  const {
+    quantity = 1,
+    selectedVariant,
+    updateQuantity,
+    setQuantity,
+    setSelectedVariant,
+  } = useProductContext(filledVariants && filledVariants[0]);
+  const { updateCart } = useCart();
   const t = useTranslations("ProductDetails");
 
   const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
@@ -62,15 +71,14 @@ export const ProductForm = ({
   );
 
   const handleIncreaseQuantity = () => {
-    console.log(quantity, maxQuantity);
     if (quantity < maxQuantity) {
-      setQuantity((prevQuantity: number) => prevQuantity + 1);
+      updateQuantity(1);
     }
   };
 
   const handleDecreaseQuantity = () => {
     if (quantity > minQuantity) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
+      updateQuantity(-1);
     }
   };
 
@@ -83,7 +91,7 @@ export const ProductForm = ({
 
           <fieldset aria-label={t("choose-color")} className="mt-2">
             <RadioGroup
-              value={selectedVariant?.color?.id}
+              value={selectedVariant?.color?.id ?? (filledVariants && filledVariants[0]?.color?.id)}
               onChange={handleChangeColor}
               className="flex items-center gap-x-3"
             >
@@ -127,8 +135,7 @@ export const ProductForm = ({
 
           <fieldset aria-label={t("choose-size")} className="mt-2">
             <RadioGroup
-              defaultValue={selectedVariant?.size?.id}
-              value={selectedVariant?.size?.id}
+              value={selectedVariant?.size?.id ?? (filledVariants && filledVariants[0]?.size?.id)}
               onChange={handleChangeSize}
               className="grid grid-cols-3 gap-3 sm:grid-cols-6"
             >
@@ -171,7 +178,14 @@ export const ProductForm = ({
           )}
           onClick={(e) => {
             e.preventDefault();
-            console.log(selectedVariant);
+            console.log("updatingCart");
+            updateCart([
+              {
+                id: product.id,
+                quantity: quantity,
+                choosenVariantSlug: selectedVariant?.slug ?? undefined,
+              },
+            ]);
           }}
         >
           {isProductAvailable ? t("add-to-cart") : t("product-unavailable")}

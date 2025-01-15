@@ -10,7 +10,7 @@ import RichText from "@/components/RichText";
 import { getLocale } from "next-intl/server";
 import { Locale } from "@/i18n/config";
 import LocaleSwitch from "@/components/LocaleSwitch/LocaleSwitch";
-import { CurrencySelector } from "@/providers/Currency/CurrencySelector";
+import { CurrencySelector } from "@/stores/Currency/CurrencySelector";
 
 export async function Footer() {
   const locale = (await getLocale()) as Locale;

@@ -2,9 +2,12 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCurrency } from "..";
+import { Currency } from "../types";
 
 export const CurrencySelector = ({ currencyOptions }: { currencyOptions: string[] }) => {
-  const { setCurrency, currency } = useCurrency();
+  const { setCurrency, currency } = useCurrency(
+    currencyOptions ? (currencyOptions[0] as Currency) : undefined,
+  );
 
   const onCurrencyChange = (currencyToSet: Currency) => {
     setCurrency(currencyToSet);

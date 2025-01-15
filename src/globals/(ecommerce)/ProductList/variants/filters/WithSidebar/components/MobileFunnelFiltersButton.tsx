@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useMobileFilters } from "../context/MobileFiltersContext";
+import { useMobileFilters } from "../stores/MobileFiltersContext";
 import { FunnelIcon } from "@heroicons/react/20/solid";
 
 export const MobileFunnelFiltersButton = () => {

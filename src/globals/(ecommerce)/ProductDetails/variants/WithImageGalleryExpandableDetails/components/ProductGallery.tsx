@@ -1,7 +1,7 @@
 "use client";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { ReactNode, useEffect, useState } from "react";
-import { useProductContext } from "../context/ProductContext";
+import { useProductContext } from "../stores/ProductContext";
 import { Product } from "@/payload-types";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
