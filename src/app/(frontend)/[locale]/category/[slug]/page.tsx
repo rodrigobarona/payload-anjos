@@ -50,6 +50,8 @@ const CategoryPage = async ({
         break;
     }
 
+    console.log(sizeArr);
+
     const { docs: products } = await payload.find({
       collection: "products",
       depth: 2,
@@ -58,7 +60,7 @@ const CategoryPage = async ({
         "categoriesArr.category": {
           equals: categories[0].id,
         },
-        ...(color && !size && { and: [{ "variants.color": { in: colorArr } }] }),
+        ...(color && !size && { "variants.color": { in: colorArr } }),
         ...(size && !color && { "variants.size": { in: sizeArr } }),
         ...(size &&
           color && { and: [{ "variants.size": { in: sizeArr } }, { "variants.color": { in: colorArr } }] }),

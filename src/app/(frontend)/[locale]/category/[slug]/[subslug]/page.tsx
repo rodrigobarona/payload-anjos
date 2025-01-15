@@ -60,8 +60,8 @@ const SubcategoryPage = async ({
           equals: subcategories[0].id,
         },
       },
-      ...(color && !size && { and: [{ "variants.color": { in: colorArr } }] }),
-      ...(size && !size && { "variants.size": { in: sizeArr } }),
+      ...(color && !size && { "variants.color": { in: colorArr } }),
+      ...(size && !color && { "variants.size": { in: sizeArr } }),
       ...(size &&
         color && { and: [{ "variants.size": { in: sizeArr } }, { "variants.color": { in: colorArr } }] }),
       sort: sortQuery,
