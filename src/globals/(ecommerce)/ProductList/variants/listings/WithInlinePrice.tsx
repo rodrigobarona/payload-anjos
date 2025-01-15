@@ -1,10 +1,9 @@
+import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import { Locale } from "@/i18n/config";
 import { Link } from "@/i18n/routing";
 import { Product } from "@/payload-types";
-import { formatPrice } from "@/utilities/formatPrices";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import PriceClient from "./PriceClient";
 
 const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Locale }) => {
   const t = useTranslations("ProductList");
@@ -37,13 +36,15 @@ const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Lo
                     </p>
                   }
                 </div>
-                <PriceClient
-                  pricing={
-                    (product.enableVariants && product.variants
-                      ? product.variants[0].pricing
-                      : product.pricing) ?? []
-                  }
-                />
+                <p className="text-sm font-medium text-gray-900">
+                  <PriceClient
+                    pricing={
+                      (product.enableVariants && product.enableVariantPrices && product.variants
+                        ? product.variants[0].pricing
+                        : product.pricing) ?? []
+                    }
+                  />
+                </p>
               </div>
             </div>
           ),

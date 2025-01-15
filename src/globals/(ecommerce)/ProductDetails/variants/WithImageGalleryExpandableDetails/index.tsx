@@ -22,6 +22,7 @@ import Image from "next/image";
 import RichText from "@/components/RichText";
 import { formatPrice } from "@/utilities/formatPrices";
 import { useLocale, useTranslations } from "next-intl";
+import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 
 export const WithImageGalleryExpandableDetails = ({
   product,
@@ -214,7 +215,13 @@ export const WithImageGalleryExpandableDetails = ({
             <div className="mt-3">
               <h2 className="sr-only">{t("product-info")}</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                {formatPrice(product.pricing ? product.pricing[0].value : 0, "PLN", locale)}
+                <PriceClient
+                  pricing={
+                    (product.enableVariants && product.enableVariantPrices && product.variants
+                      ? product.variants[0].pricing
+                      : product.pricing) ?? []
+                  }
+                />
               </p>
             </div>
 
