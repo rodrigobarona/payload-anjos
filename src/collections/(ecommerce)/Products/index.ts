@@ -377,6 +377,12 @@ export const Products: CollectionConfig = {
               fields: [
                 {
                   type: "row",
+                  admin: {
+                    style: {
+                      gap: 16,
+                    },
+                    className: "test123",
+                  },
                   fields: [
                     {
                       name: "size",

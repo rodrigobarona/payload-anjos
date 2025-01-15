@@ -30,13 +30,15 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
   };
 
   useEffect(() => {
-    if (variantType === "sizes") {
+    if (variantType === "colors") {
       handleSizeChange({ value: "" });
     }
   }, [variantType]);
 
+  console.log(value);
+
   return variantType !== "colors" ? (
-    <div className="twp my-auto h-fit w-1/2 px-2">
+    <div className="twp my-auto h-fit w-1/2">
       <FieldLabel label="Rozmiar" />
       <Select
         value={{
