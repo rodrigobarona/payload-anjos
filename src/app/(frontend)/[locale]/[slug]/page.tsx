@@ -70,7 +70,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     <article className="pb-24 pt-16">
       <PageClient />
       {/* Allows redirects for valid pages too */}
-      {!page && slug !== "home" && <PayloadRedirects disableNotFound locale={locale} url={url} />}
+      {!page && slug !== "home" && <PayloadRedirects locale={locale} url={url} />}
 
       {draft && <LivePreviewListener />}
 

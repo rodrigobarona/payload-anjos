@@ -28,6 +28,10 @@ const SubcategoryPage = async ({
       },
     });
 
+    if (!subcategories[0]) {
+      notFound();
+    }
+
     const colorArr = color ? color.split(",") : [];
     const sizeArr = size ? size.split(",") : [];
 
@@ -45,10 +49,6 @@ const SubcategoryPage = async ({
       ...(size &&
         color && { and: [{ "variants.size": { in: sizeArr } }, { "variants.color": { in: colorArr } }] }),
     });
-
-    if (subcategories.length === 0) {
-      notFound();
-    }
 
     return (
       <ProductList

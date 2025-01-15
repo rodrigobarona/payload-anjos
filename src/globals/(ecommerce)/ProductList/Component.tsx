@@ -42,9 +42,18 @@ export const ProductList = async ({
       depth: 2,
       locale,
       where: {
-        "categoriesArr.category": {
-          equals: category?.id,
-        },
+        or: [
+          {
+            "categoriesArr.category": {
+              equals: category?.id,
+            },
+          },
+          {
+            "categoriesArr.subcategories": {
+              equals: subcategory?.id,
+            },
+          },
+        ],
       },
     });
 

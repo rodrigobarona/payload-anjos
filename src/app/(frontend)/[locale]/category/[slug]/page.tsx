@@ -28,6 +28,10 @@ const CategoryPage = async ({
       },
     });
 
+    if (!categories[0]) {
+      notFound();
+    }
+
     const colorArr = color ? color.split(",") : [];
     const sizeArr = size ? size.split(",") : [];
 
@@ -40,15 +44,11 @@ const CategoryPage = async ({
           equals: categories[0].id,
         },
         ...(color && !size && { and: [{ "variants.color": { in: colorArr } }] }),
-        ...(size && !size && { "variants.size": { in: sizeArr } }),
+        ...(size && !color && { "variants.size": { in: sizeArr } }),
         ...(size &&
           color && { and: [{ "variants.size": { in: sizeArr } }, { "variants.color": { in: colorArr } }] }),
       },
     });
-
-    if (categories.length === 0) {
-      notFound();
-    }
 
     return <ProductList filteredProducts={products} title={categories[0].title} category={categories[0]} />;
   } catch (error) {
