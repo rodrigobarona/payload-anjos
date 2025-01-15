@@ -66,12 +66,14 @@ export interface Config {
     footer: Footer;
     productDetails: ProductDetail;
     productList: ProductList;
+    shopSettings: ShopSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     productDetails: ProductDetailsSelect<false> | ProductDetailsSelect<true>;
     productList: ProductListSelect<false> | ProductListSelect<true>;
+    shopSettings: ShopSettingsSelect<false> | ShopSettingsSelect<true>;
   };
   locale: 'en' | 'pl';
   user:
@@ -2108,6 +2110,19 @@ export interface ProductList {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shopSettings".
+ */
+export interface ShopSetting {
+  id: string;
+  /**
+   * First currency is the default one
+   */
+  availableCurrencies: ('USD' | 'EUR' | 'GBP' | 'PLN')[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2174,6 +2189,16 @@ export interface ProductDetailsSelect<T extends boolean = true> {
  */
 export interface ProductListSelect<T extends boolean = true> {
   filters?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shopSettings_select".
+ */
+export interface ShopSettingsSelect<T extends boolean = true> {
+  availableCurrencies?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

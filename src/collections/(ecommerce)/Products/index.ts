@@ -6,7 +6,6 @@ import { defaultLexical } from "@/fields/defaultLexical";
 import { slugField } from "@/fields/slug";
 import { generatePreviewPath } from "@/utilities/generatePreviewPath";
 import { backgroundPicker } from "@/fields/backgroundPicker";
-import { currencyOptions } from "@/utilities/currencies";
 
 export const Products: CollectionConfig = {
   slug: "products",
@@ -487,7 +486,12 @@ export const Products: CollectionConfig = {
                           name: "currency",
                           type: "select",
                           required: true,
-                          options: currencyOptions,
+                          options: [
+                            { value: "USD", label: "USD" },
+                            { value: "EUR", label: "EUR" },
+                            { value: "GBP", label: "GBP" },
+                            { value: "PLN", label: "PLN" },
+                          ], // temporary, custom component with global config here
                         },
                       ],
                     },
@@ -633,7 +637,12 @@ export const Products: CollectionConfig = {
                       name: "currency",
                       type: "select",
                       required: true,
-                      options: currencyOptions,
+                      options: [
+                        { value: "USD", label: "USD" },
+                        { value: "EUR", label: "EUR" },
+                        { value: "GBP", label: "GBP" },
+                        { value: "PLN", label: "PLN" },
+                      ], // temporary, custom component with global config here
                     },
                   ],
                 },

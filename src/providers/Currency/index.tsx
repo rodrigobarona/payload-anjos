@@ -16,9 +16,15 @@ const initialContext: ContextType = {
 
 const CurrencyContext = createContext(initialContext);
 
-export const CurrencyProvider = ({ children }: { children: React.ReactNode }) => {
+export const CurrencyProvider = ({
+  defaultCurrency,
+  children,
+}: {
+  defaultCurrency: Currency;
+  children: React.ReactNode;
+}) => {
   const [currency, setCurrencyState] = useState<Currency>(
-    canUseDOM ? ((window.localStorage.getItem("currency") as Currency) ?? "PLN") : "PLN",
+    canUseDOM ? ((window.localStorage.getItem("currency") as Currency) ?? defaultCurrency) : defaultCurrency,
   );
 
   const setCurrency = useCallback((currencyToSet: Currency) => {

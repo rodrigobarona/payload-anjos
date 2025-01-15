@@ -1,7 +1,7 @@
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import Link from "next/link";
 
-import type { Footer } from "@/payload-types";
+import type { Footer, ShopSetting } from "@/payload-types";
 
 // import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
 import { CMSLink } from "@/components/Link";
@@ -15,7 +15,7 @@ import { CurrencySelector } from "@/providers/Currency/CurrencySelector";
 export async function Footer() {
   const locale = (await getLocale()) as Locale;
   const footerData: Footer = await getCachedGlobal("footer", locale, 1)();
-
+  const shopSettings: ShopSetting = await getCachedGlobal("shopSettings", locale, 1)();
   const navItems = footerData?.navItems || [];
 
   return (
@@ -27,7 +27,7 @@ export async function Footer() {
 
         <div className="flex flex-col-reverse items-start gap-4 md:flex-row md:items-center">
           {/* <ThemeSelector /> */}
-          <CurrencySelector />
+          <CurrencySelector currencyOptions={shopSettings.availableCurrencies} />
           <LocaleSwitch />
           <nav className="flex flex-col gap-4 md:flex-row">
             {navItems.map(({ link }, i) => {

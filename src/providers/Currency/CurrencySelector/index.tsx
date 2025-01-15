@@ -2,9 +2,8 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCurrency } from "..";
-import { currencyOptions } from "@/utilities/currencies";
 
-export const CurrencySelector = () => {
+export const CurrencySelector = ({ currencyOptions }: { currencyOptions: string[] }) => {
   const { setCurrency, currency } = useCurrency();
 
   const onCurrencyChange = (currencyToSet: Currency) => {
@@ -20,9 +19,9 @@ export const CurrencySelector = () => {
         <SelectValue placeholder="Currency" />
       </SelectTrigger>
       <SelectContent>
-        {currencyOptions.map((currencyOption) => (
-          <SelectItem key={currencyOption.value} value={currencyOption.value}>
-            {currencyOption.label}
+        {currencyOptions?.map((currencyOption) => (
+          <SelectItem key={currencyOption} value={currencyOption}>
+            {currencyOption}
           </SelectItem>
         ))}
       </SelectContent>
