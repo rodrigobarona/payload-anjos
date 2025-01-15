@@ -378,10 +378,7 @@ export const Products: CollectionConfig = {
                 {
                   type: "row",
                   admin: {
-                    style: {
-                      gap: 16,
-                    },
-                    className: "test123",
+                    className: "variant-gap-row",
                   },
                   fields: [
                     {

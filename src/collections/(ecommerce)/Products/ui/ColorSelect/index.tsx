@@ -37,7 +37,7 @@ export const ColorSelect: TextFieldClientComponent = ({ path }) => {
   }, [variantType]);
 
   return variantType !== "sizes" ? (
-    <div className="twp my-auto h-fit w-1/2">
+    <div className="twp my-auto h-fit flex-1">
       <FieldLabel label="Kolor" />
       <Select
         value={{

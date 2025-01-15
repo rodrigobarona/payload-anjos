@@ -38,7 +38,7 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
   console.log(value);
 
   return variantType !== "colors" ? (
-    <div className="twp my-auto h-fit w-1/2">
+    <div className="twp my-auto h-fit flex-1">
       <FieldLabel label="Rozmiar" />
       <Select
         value={{
