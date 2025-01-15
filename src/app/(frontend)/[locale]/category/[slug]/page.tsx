@@ -50,8 +50,6 @@ const CategoryPage = async ({
         break;
     }
 
-    console.log(sizeArr);
-
     const { docs: products } = await payload.find({
       collection: "products",
       depth: 2,
