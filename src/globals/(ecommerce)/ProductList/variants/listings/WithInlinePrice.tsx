@@ -4,6 +4,7 @@ import { Product } from "@/payload-types";
 import { formatPrice } from "@/utilities/formatPrices";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import PriceClient from "./PriceClient";
 
 const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Locale }) => {
   const t = useTranslations("ProductList");
@@ -36,9 +37,13 @@ const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Lo
                     </p>
                   }
                 </div>
-                <p className="text-sm font-medium text-gray-900">
-                  {formatPrice((product.pricing && product.pricing[0].value) ?? 0, "USD", locale)}
-                </p>
+                <PriceClient
+                  pricing={
+                    (product.enableVariants && product.variants
+                      ? product.variants[0].pricing
+                      : product.pricing) ?? []
+                  }
+                />
               </div>
             </div>
           ),

@@ -58,7 +58,7 @@ export default async function RootLayout({
       </head>
       <body className="max-w-screen overflow-x-clip lg:overflow-y-auto">
         <Providers>
-          <NextIntlClientProvider messages={messages}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
             {/* <AdminBar
               adminBarProps={{
                 preview: isEnabled,

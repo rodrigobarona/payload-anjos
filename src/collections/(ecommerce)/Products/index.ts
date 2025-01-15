@@ -6,13 +6,7 @@ import { defaultLexical } from "@/fields/defaultLexical";
 import { slugField } from "@/fields/slug";
 import { generatePreviewPath } from "@/utilities/generatePreviewPath";
 import { backgroundPicker } from "@/fields/backgroundPicker";
-
-const currencyOptions = [
-  { value: "USD", label: "USD" },
-  { value: "EUR", label: "EUR" },
-  { value: "GBP", label: "GBP" },
-  { value: "PLN", label: "PLN" },
-];
+import { currencyOptions } from "@/utilities/currencies";
 
 export const Products: CollectionConfig = {
   slug: "products",

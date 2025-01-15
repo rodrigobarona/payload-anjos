@@ -10,7 +10,7 @@ import { themeIsValid } from "./types";
 
 const initialContext: ThemeContextType = {
   setTheme: () => null,
-  theme: undefined,
+  theme: "light",
 };
 
 const ThemeContext = createContext(initialContext);
@@ -22,16 +22,17 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const setTheme = useCallback((themeToSet: Theme | null) => {
-    if (themeToSet === null) {
-      window.localStorage.removeItem(themeLocalStorageKey);
-      const implicitPreference = getImplicitPreference();
-      document.documentElement.setAttribute("data-theme", implicitPreference || "");
-      if (implicitPreference) setThemeState(implicitPreference);
-    } else {
-      setThemeState(themeToSet);
-      window.localStorage.setItem(themeLocalStorageKey, themeToSet);
-      document.documentElement.setAttribute("data-theme", themeToSet);
-    }
+    return;
+    // if (themeToSet === null) {
+    //   window.localStorage.removeItem(themeLocalStorageKey);
+    //   const implicitPreference = getImplicitPreference();
+    //   document.documentElement.setAttribute("data-theme", implicitPreference || "");
+    //   if (implicitPreference) setThemeState(implicitPreference);
+    // } else {
+    //   setThemeState(themeToSet);
+    //   window.localStorage.setItem(themeLocalStorageKey, themeToSet);
+    //   document.documentElement.setAttribute("data-theme", themeToSet);
+    // }
   }, []);
 
   useEffect(() => {

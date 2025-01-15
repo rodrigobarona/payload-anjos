@@ -8,7 +8,7 @@ import { CMSLink } from "@/components/Link";
 import type { Header } from "@/payload-types";
 import { Logo } from "@/components/Logo/Logo";
 
-export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | null }) => {
+export const FloatingHeader = ({ data, theme }: { data: Header; theme?: string | null }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [scrollDown, setScrollDown] = useState(false);
@@ -44,7 +44,7 @@ export const FloatingHeader = ({ data, theme }: { data: Header; theme: string | 
     `sticky flex w-full top-0 justify-center md:px-12 transition-transformColors z-50`,
     `${scrollValue > 0 && !isMenuOpened ? "md:translate-y-6" : ""}`,
     `${data.hideOnScroll && scrollDown ? "-translate-y-full md:-translate-y-full" : ""}`,
-    { ...(theme ? { "data-theme": theme } : {}) },
+    // { ...(theme ? { "data-theme": theme } : {}) },
   );
 
   return (

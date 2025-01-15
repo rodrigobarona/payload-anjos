@@ -13,19 +13,19 @@ interface HeaderClientProps {
 }
 
 export const HeaderClient = ({ data }: HeaderClientProps) => {
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
 
   let header: ReactNode = null;
 
   switch (data.type) {
     case "default":
-      header = <DefaultHeader data={data} theme={theme?.toString() ?? null} />;
+      header = <DefaultHeader data={data} />;
       break;
     case "floating":
-      header = <FloatingHeader data={data} theme={theme?.toString() ?? null} />;
+      header = <FloatingHeader data={data} />;
       break;
     default:
-      header = <DefaultHeader data={data} theme={theme?.toString() ?? null} />;
+      header = <DefaultHeader data={data} />;
       break;
   }
 

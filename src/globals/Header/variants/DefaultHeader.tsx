@@ -7,7 +7,7 @@ import Link from "next/link";
 import { CMSLink } from "@/components/Link";
 import { useEffect, useState } from "react";
 
-export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | null }) => {
+export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | null }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [scrollDown, setScrollDown] = useState(false);
@@ -39,13 +39,11 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // console.log(theme);
-
   const classes = cn(
     `sticky flex w-full top-0 justify-center md:px-12 transition-transform z-50`,
 
     `${data.hideOnScroll && scrollDown ? "-translate-y-full md:-translate-y-full" : ""}`,
-    { ...(theme ? { "data-theme": theme } : {}) },
+    // { ...(theme ? { "data-theme": theme } : {}) },
   );
   return (
     <header className={classes} style={data.background ? { background: data.background } : {}}>
