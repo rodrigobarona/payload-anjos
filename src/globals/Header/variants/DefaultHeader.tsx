@@ -39,7 +39,7 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  console.log(theme);
+  // console.log(theme);
 
   const classes = cn(
     `sticky flex w-full top-0 justify-center md:px-12 transition-transform z-50`,

@@ -72,7 +72,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       {/* Allows redirects for valid pages too */}
       {!page && slug !== "home" && <PayloadRedirects locale={locale} url={url} />}
 
-      {draft && <LivePreviewListener />}
+      {/* {draft && <LivePreviewListener />} */}
 
       <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
