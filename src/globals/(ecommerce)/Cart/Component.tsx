@@ -1,9 +1,7 @@
 import { Locale } from "@/i18n/config";
-import { Product } from "@/payload-types";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getLocale } from "next-intl/server";
 import { ReactNode } from "react";
-import { notFound } from "next/navigation";
 import { SlideOver } from "./variants/SlideOver";
 
 export const Cart = async () => {

@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { stringify } from "qs-esm";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useCartState } from "../../stores/CartStateStore";
 import { useCart } from "@/stores/CartStore";
 import axios from "axios";
-import type { Where } from "payload";
 import { FilledVariant } from "@/globals/(ecommerce)/ProductDetails/types";
 import { Media, Product } from "@/payload-types";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
@@ -16,31 +14,6 @@ import { Currency } from "@/stores/Currency/types";
 import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-
-const products = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc: "https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt: "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc: "https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-  // More products...
-];
 
 type ProductWithFilledVariants = Omit<Product, "variants"> & {
   variant: FilledVariant | undefined;
@@ -206,6 +179,7 @@ export const SlideOver = () => {
                                   {product.enableVariants && product.variant && product.variant.size?.label}
                                 </p>
                               </div>
+
                               <div className="flex flex-1 items-end justify-between text-sm">
                                 <QuantityInput
                                   quantity={product.quantity}

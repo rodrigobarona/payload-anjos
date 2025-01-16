@@ -14,7 +14,7 @@ import { FilledVariant } from "../../types";
 import { ProductForm } from "./components/ProductForm";
 
 import { ProductGallery } from "./components/ProductGallery";
-import { PriceWithContext } from "./components/PriceWithContext";
+import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 
 export const WithImageGalleryExpandableDetails = ({
   variant,
@@ -39,6 +39,9 @@ export const WithImageGalleryExpandableDetails = ({
   const selectedVariant =
     filledVariants?.find((filledVariant) => filledVariant.slug === variant) ?? filledVariants?.[0];
 
+  const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
+  const minQuantity = 1;
+
   const t = useTranslations("ProductDetails");
 
   return (
@@ -50,6 +53,8 @@ export const WithImageGalleryExpandableDetails = ({
           <ProductGallery
             product={product}
             selectedVariant={selectedVariant}
+            minQuantity={minQuantity}
+            maxQuantity={maxQuantity}
             tabs={product.images.map(
               (image) =>
                 typeof image !== "string" && (
@@ -97,7 +102,16 @@ export const WithImageGalleryExpandableDetails = ({
             <div className="mt-3">
               <h2 className="sr-only">{t("product-info")}</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                <PriceWithContext selectedVariant={selectedVariant} product={product} />
+                <PriceClient
+                  pricing={
+                    (product.enableVariants &&
+                    product.enableVariantPrices &&
+                    product.variants &&
+                    selectedVariant
+                      ? selectedVariant.pricing
+                      : product.pricing) ?? []
+                  }
+                />
               </p>
             </div>
 
@@ -135,6 +149,8 @@ export const WithImageGalleryExpandableDetails = ({
 
             <ProductForm
               product={product}
+              minQuantity={minQuantity}
+              maxQuantity={maxQuantity}
               selectedVariant={selectedVariant}
               filledVariants={filledVariants}
             />

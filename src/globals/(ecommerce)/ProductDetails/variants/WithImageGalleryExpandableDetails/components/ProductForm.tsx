@@ -16,10 +16,14 @@ export const ProductForm = ({
   product,
   selectedVariant,
   filledVariants,
+  minQuantity,
+  maxQuantity,
 }: {
   product: Product;
   filledVariants?: FilledVariant[];
   selectedVariant?: FilledVariant;
+  minQuantity: number;
+  maxQuantity: number;
 }) => {
   const [quantity, setQuantity] = useState(1);
   const { updateCart, cart } = useCart();
@@ -27,9 +31,6 @@ export const ProductForm = ({
   const [overStock, setOverStock] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
-  const minQuantity = 1;
 
   const updateQuantity = (delta: number) => {
     setQuantity((prev) => prev + delta);
@@ -45,19 +46,6 @@ export const ProductForm = ({
     }
 
     router.replace(`?${params.toString()}`);
-  };
-
-  const handleChangeColor = (id: string) => {
-    const matchingVariant = filledVariants?.filter(
-      (variant) => variant.color?.id === id && variant.stock > 0,
-    );
-    const closestVariant = matchingVariant?.find((variant) => variant.size?.id === selectedVariant?.size?.id);
-
-    if (closestVariant) {
-      setSelectedVariant(closestVariant.slug ?? undefined);
-    } else if (matchingVariant) {
-      setSelectedVariant(matchingVariant[0].slug ?? undefined);
-    }
   };
 
   useEffect(() => {
@@ -90,6 +78,19 @@ export const ProductForm = ({
     const matchingVariant = findAvailableSizeVariant(id);
     if (matchingVariant) {
       setSelectedVariant(matchingVariant.slug ?? undefined);
+    }
+  };
+
+  const handleChangeColor = (id: string) => {
+    const matchingVariant = filledVariants?.filter(
+      (variant) => variant.color?.id === id && variant.stock > 0,
+    );
+    const closestVariant = matchingVariant?.find((variant) => variant.size?.id === selectedVariant?.size?.id);
+
+    if (closestVariant) {
+      setSelectedVariant(closestVariant.slug ?? undefined);
+    } else if (matchingVariant) {
+      setSelectedVariant(matchingVariant[0].slug ?? undefined);
     }
   };
 

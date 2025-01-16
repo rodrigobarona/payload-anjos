@@ -9,17 +9,18 @@ export const ProductGallery = ({
   product,
   tabs,
   selectedVariant,
+  minQuantity,
+  maxQuantity,
   children,
 }: {
   product: Product;
   selectedVariant?: FilledVariant;
   tabs: ReactNode;
+  minQuantity: number;
+  maxQuantity: number;
   children: ReactNode;
 }) => {
   const [selectedTab, setSelectedTab] = useState(0);
-
-  const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
-  const minQuantity = 1;
 
   useEffect(() => {
     setSelectedTab(0);
