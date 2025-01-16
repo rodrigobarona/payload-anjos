@@ -8,7 +8,7 @@ import { cn } from "@/utilities/cn";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useCart } from "@/stores/CartStore";
 import { useProductContext } from "../stores/ProductContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 
 // TODO - variant slug in query params to handle that on server + redirect to variant from cart/url
@@ -27,8 +27,9 @@ export const ProductForm = ({
     setQuantity,
     setSelectedVariant,
   } = useProductContext(filledVariants && filledVariants[0]);
-  const { updateCart } = useCart();
+  const { updateCart, cart } = useCart();
   const t = useTranslations("ProductDetails");
+  const [overStock, setOverStock] = useState(false);
 
   const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
   const minQuantity = 1;
@@ -51,6 +52,10 @@ export const ProductForm = ({
       setSelectedVariant(filledVariants[0]);
     }
   }, []);
+
+  useEffect(() => {
+    setOverStock(false);
+  }, [cart, selectedVariant]);
 
   const isColorAvailable = (colorID: string) => {
     const isAvailable = filledVariants?.find((variant) => {
@@ -79,6 +84,9 @@ export const ProductForm = ({
     (product.enableVariants && (!selectedVariant || selectedVariant.stock === 0)) ||
       (!product.enableVariants && product.stock === 0),
   );
+
+  const cartItem =
+    cart && cart.find((item) => item.id === product.id && item.choosenVariantSlug === selectedVariant?.slug);
 
   return (
     <form className="mt-6">
@@ -176,13 +184,18 @@ export const ProductForm = ({
           )}
           onClick={(e) => {
             e.preventDefault();
-            updateCart([
-              {
-                id: product.id,
-                quantity: quantity,
-                choosenVariantSlug: selectedVariant?.slug ?? undefined,
-              },
-            ]);
+            if (quantity <= maxQuantity - (cartItem?.quantity ?? 0)) {
+              setOverStock(false);
+              updateCart([
+                {
+                  id: product.id,
+                  quantity: quantity,
+                  choosenVariantSlug: selectedVariant?.slug ?? undefined,
+                },
+              ]);
+            } else {
+              setOverStock(true);
+            }
           }}
         >
           {isProductAvailable ? t("add-to-cart") : t("product-unavailable")}
@@ -206,6 +219,13 @@ export const ProductForm = ({
           </button>
         </div>
       </div>
+      {overStock && (
+        <p className="mt-4 text-red-500">
+          {maxQuantity - (cartItem?.quantity ?? 0) > 0
+            ? `${t("stock-left")} ${maxQuantity - (cartItem?.quantity ?? 0)}`
+            : t("maximum-stock")}
+        </p>
+      )}
     </form>
   );
 };

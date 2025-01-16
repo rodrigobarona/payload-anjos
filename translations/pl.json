@@ -20,7 +20,9 @@
     "reviews": "Opinie",
     "sizing-chart": "Zobacz tabelę rozmiarów",
     "additional-details": "Dodatkowe szczegóły",
-    "add-to-favs": "Dodaj do ulubionych"
+    "add-to-favs": "Dodaj do ulubionych",
+    "stock-left": "Pozostało na stanie:",
+    "maximum-stock": "Masz już maksymalną ilość tego produktu w koszyku."
   },
   "ProductList": {
     "variants-singular": "wariant",

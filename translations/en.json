@@ -20,7 +20,9 @@
     "reviews": "Reviews",
     "sizing-chart": "See sizing chart",
     "additional-details": "Additional details",
-    "add-to-favs": "Add to favorites"
+    "add-to-favs": "Add to favorites",
+    "stock-left": "Stock left:",
+    "maximum-stock": "You already have maximum stock of this item in your cart."
   },
   "ProductList": {
     "variants-singular": "variant",
