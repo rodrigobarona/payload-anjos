@@ -13,6 +13,7 @@ import { Media, Product } from "@/payload-types";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import Image from "next/image";
 import { Currency } from "@/stores/Currency/types";
+import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 
 const products = [
   {
@@ -48,7 +49,7 @@ type ProductWithFilledVariants = Omit<Product, "variants"> & {
 export const SlideOver = () => {
   const { isOpen, setCartState, toggleCart } = useCartState();
 
-  const { cart, updateCart, removeFromCart } = useCart();
+  const { cart, updateCart, setCart, removeFromCart } = useCart();
 
   const [cartProducts, setCartProducts] = useState<ProductWithFilledVariants[]>([]);
   const [total, setTotal] = useState<
@@ -81,6 +82,26 @@ export const SlideOver = () => {
     };
     fetchCartProducts();
   }, [cart]);
+
+  const setCartQuantity = (quantity: number, productID: string, productVariantSlug: string | undefined) => {
+    setCart([
+      ...(cart?.filter((cartProduct) => cartProduct.id !== productID) ?? []),
+      {
+        id: productID,
+        quantity,
+        choosenVariantSlug: productVariantSlug,
+      },
+    ]);
+  };
+  const updateCartQuantity = (delta: number, productID: string, productVariantSlug: string | undefined) => {
+    updateCart([
+      {
+        id: productID,
+        quantity: delta,
+        choosenVariantSlug: productVariantSlug,
+      },
+    ]);
+  };
 
   return (
     <Dialog open={isOpen} onClose={toggleCart} className="relative z-[100]">
@@ -169,14 +190,27 @@ export const SlideOver = () => {
                                   </p>
                                 </div>
                                 <p>
-                                  {product.enableVariants && product.variant && product.variant.color?.label}
-                                </p>
-                                <p>
+                                  {product.enableVariants && product.variant && product.variant.color?.label},{" "}
                                   {product.enableVariants && product.variant && product.variant.size?.label}
                                 </p>
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
-                                <p className="text-gray-500">Qty {product.quantity}</p>
+                                <QuantityInput
+                                  quantity={product.quantity}
+                                  inputVariant="cart"
+                                  setQuantity={(quantity) => {
+                                    setCartQuantity(quantity, product.id, product.variant?.slug ?? undefined);
+                                  }}
+                                  updateQuantity={(delta) => {
+                                    updateCartQuantity(delta, product.id, product.variant?.slug ?? undefined);
+                                  }}
+                                  maxQuantity={
+                                    product.enableVariants
+                                      ? (product.variant?.stock ?? 0)
+                                      : (product.stock ?? 0)
+                                  }
+                                  minQuantity={1}
+                                />
 
                                 <div className="flex">
                                   <button

@@ -16,6 +16,7 @@ const useCartStore = create<CartState>((set) => ({
     if (canUseDOM) {
       window.localStorage.setItem("cart", JSON.stringify(cartToSet));
     }
+    console.log(cartToSet);
     set({ cart: cartToSet });
   },
 

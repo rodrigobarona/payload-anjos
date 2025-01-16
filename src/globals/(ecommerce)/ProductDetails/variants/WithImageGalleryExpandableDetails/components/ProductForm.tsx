@@ -9,6 +9,7 @@ import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useCart } from "@/stores/CartStore";
 import { useProductContext } from "../stores/ProductContext";
 import { useEffect } from "react";
+import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 
 export const ProductForm = ({
   product,
@@ -198,50 +199,13 @@ export const ProductForm = ({
         </button>
 
         <div className="flex">
-          <div className="flex w-fit items-center border border-gray-200 sm:ml-4">
-            <button
-              type="button"
-              className="cursor-pointer p-2"
-              disabled={quantity <= minQuantity}
-              onClick={handleDecreaseQuantity}
-            >
-              <MinusIcon width={20} height={20} />
-            </button>
-            <Input
-              type="number"
-              className={`mx-auto h-full w-full min-w-10 max-w-16 p-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
-              value={quantity}
-              min={1}
-              max={selectedVariant?.stock || product?.stock || 999}
-              onKeyDown={(e) => {
-                const key = e.key;
-
-                const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
-
-                if (!/^[0-9]$/.test(key) && !allowedKeys.includes(key)) {
-                  e.preventDefault();
-                }
-              }}
-              onChange={(e) => {
-                const quantityFromInput = Number(e.target.value);
-                if (quantityFromInput > maxQuantity) {
-                  setQuantity(maxQuantity);
-                } else if (quantityFromInput < minQuantity) {
-                  setQuantity(minQuantity);
-                } else {
-                  setQuantity(quantityFromInput);
-                }
-              }}
-            />
-            <button
-              className="cursor-pointer p-2"
-              type="button"
-              disabled={quantity >= maxQuantity}
-              onClick={handleIncreaseQuantity}
-            >
-              <PlusIcon width={20} height={20} />
-            </button>
-          </div>
+          <QuantityInput
+            maxQuantity={maxQuantity}
+            minQuantity={minQuantity}
+            setQuantity={setQuantity}
+            updateQuantity={updateQuantity}
+            quantity={quantity}
+          />
 
           <button
             type="button"
