@@ -88,6 +88,7 @@ export async function POST(req: Request) {
   const productsWithTotal = {
     filledProducts,
     total: totalFormatted,
+    totalQuantity: filledProducts.reduce((acc, product) => acc + (product?.quantity ?? 0), 0),
   };
 
   console.log(totalFormatted);

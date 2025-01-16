@@ -8,6 +8,7 @@ import { CMSLink } from "@/components/Link";
 import { useEffect, useState } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { useCartState } from "@/globals/(ecommerce)/Cart/stores/CartStateStore";
+import { useCart } from "@/stores/CartStore";
 
 export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | null }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);
@@ -21,6 +22,7 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
   };
 
   const { toggleCart } = useCartState();
+  const { cart } = useCart();
 
   useEffect(() => {
     let lastScrollValue = 0;
@@ -49,6 +51,11 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
     `${data.hideOnScroll && scrollDown ? "-translate-y-full md:-translate-y-full" : ""}`,
     // { ...(theme ? { "data-theme": theme } : {}) },
   );
+
+  const totalQuantity = cart?.reduce((acc, value) => {
+    return acc + value.quantity;
+  }, 0);
+
   return (
     <header className={classes} style={data.background ? { background: data.background } : {}}>
       <div
@@ -92,7 +99,12 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
               })}
           </div>
         </nav>
-        <button onClick={toggleCart} className="-m-2 cursor-pointer p-2">
+        <button onClick={toggleCart} className="relative -m-2 cursor-pointer p-2">
+          {totalQuantity && totalQuantity > 0 && (
+            <p className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-xs text-white">
+              {totalQuantity}
+            </p>
+          )}
           <ShoppingBagIcon color="white" width={24} height={24} />
         </button>
         <CMSLink className="ml-auto hidden md:flex" />

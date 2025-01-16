@@ -69,6 +69,7 @@ export const SlideOver = () => {
               currency: Currency;
               value: number;
             }[];
+            totalQuantity: number;
           };
         }>("/next/getCartProducts", cart);
         const { filledProducts, total } = data.productsWithTotal;
