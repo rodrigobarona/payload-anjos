@@ -35,7 +35,6 @@ const LoginForm = () => {
   const onSubmit = async (values: LoginFormData) => {
     try {
       const res = await axios.post("/api/customers/login", values);
-      console.log(res.status);
       if (res.status === 200 || res.status === 201) {
         router.replace("/account");
       }
