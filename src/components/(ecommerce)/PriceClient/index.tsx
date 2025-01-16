@@ -1,5 +1,6 @@
 "use client";
 import { useCurrency } from "@/stores/Currency";
+import { Currency } from "@/stores/Currency/types";
 import { formatPrice } from "@/utilities/formatPrices";
 import { useLocale } from "next-intl";
 
@@ -8,8 +9,7 @@ export const PriceClient = ({
 }: {
   pricing: {
     value: number;
-    currency: "USD" | "EUR" | "GBP" | "PLN";
-    id?: string | null;
+    currency: Currency;
   }[];
 }) => {
   const { currency } = useCurrency();

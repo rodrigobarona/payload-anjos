@@ -8,6 +8,7 @@ import { cn } from "@/utilities/cn";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useCart } from "@/stores/CartStore";
 import { useProductContext } from "../stores/ProductContext";
+import { useEffect } from "react";
 
 export const ProductForm = ({
   product,
@@ -41,6 +42,12 @@ export const ProductForm = ({
       setSelectedVariant(matchingVariant[0]);
     }
   };
+
+  useEffect(() => {
+    if (filledVariants) {
+      setSelectedVariant(filledVariants[0]);
+    }
+  }, []);
 
   const isColorAvailable = (colorID: string) => {
     const isAvailable = filledVariants?.find((variant) => {

@@ -5,6 +5,8 @@ import { NextRequest } from "next/server";
 import { Cart } from "@/stores/CartStore/types";
 import { FilledVariant } from "@/globals/(ecommerce)/ProductDetails/types";
 
+type Total = Record<string, number>;
+
 export async function POST(req: Request) {
   const payload = await getPayload({ config });
   const cart: Cart | undefined = await req.json();
@@ -25,6 +27,7 @@ export async function POST(req: Request) {
       images: true,
       variants: true,
       enableVariants: true,
+      enableVariantPrices: true,
       colors: true,
       sizes: true,
       pricing: true,
@@ -46,24 +49,48 @@ export async function POST(req: Request) {
 
         return {
           ...product,
-          images: [product.images[0]],
-          variants: [
-            {
-              ...variant,
-              color: product.colors?.find((color) => color.slug === variant.color),
-              size: product.sizes?.find((size) => size.slug === variant.size),
-              slug: variant.variantSlug,
-              stock: variant.stock,
-              image: typeof variant.image !== "string" ? variant.image : null,
-              pricing: variant.pricing,
-            },
-          ],
+          image: typeof product.images[0] !== "string" ? product.images[0] : null,
+          variant: {
+            ...variant,
+            color: product.colors?.find((color) => color.slug === variant.color),
+            size: product.sizes?.find((size) => size.slug === variant.size),
+            slug: variant.variantSlug,
+            stock: variant.stock,
+            image: typeof variant.image !== "string" ? variant.image : null,
+            pricing: variant.pricing,
+          },
           quantity: cartProduct ? cartProduct.quantity : 1,
         };
       });
   });
 
-  console.log(filledProducts);
+  const total = filledProducts.reduce<Total>((acc, product) => {
+    if (!product) return acc;
+    if (!product.enableVariantPrices) {
+      product.pricing?.forEach((price) => {
+        acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
+      });
+    } else if (product.enableVariantPrices) {
+      product.variants?.[0]?.pricing?.forEach((price) => {
+        acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
+      });
+    }
+    return acc;
+  }, {});
 
-  return Response.json({ status: 200, filledProducts });
+  const totalFormatted =
+    total &&
+    Object.entries(total).map(([currency, value]) => ({
+      currency,
+      value: parseFloat(value.toFixed(2)),
+    }));
+
+  const productsWithTotal = {
+    filledProducts,
+    total: totalFormatted,
+  };
+
+  console.log(totalFormatted);
+
+  return Response.json({ status: 200, productsWithTotal });
 }

@@ -15,7 +15,7 @@ export const ProductGallery = ({
   tabs: ReactNode;
   children: ReactNode;
 }) => {
-  const { quantity, selectedVariant, setQuantity } = useProductContext();
+  const { quantity, selectedVariant, setSelectedVariant, setQuantity } = useProductContext();
   const [selectedTab, setSelectedTab] = useState(0);
 
   const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
@@ -31,7 +31,6 @@ export const ProductGallery = ({
     }
   }, [selectedVariant, minQuantity, maxQuantity]);
 
-  const t = useTranslations("ProductDetails");
   return (
     <TabGroup
       defaultIndex={0}

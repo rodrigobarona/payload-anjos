@@ -9,9 +9,10 @@ import { useCart } from "@/stores/CartStore";
 import axios from "axios";
 import type { Where } from "payload";
 import { FilledVariant } from "@/globals/(ecommerce)/ProductDetails/types";
-import { Product } from "@/payload-types";
+import { Media, Product } from "@/payload-types";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import Image from "next/image";
+import { Currency } from "@/stores/Currency/types";
 
 const products = [
   {
@@ -39,7 +40,8 @@ const products = [
 ];
 
 type ProductWithFilledVariants = Omit<Product, "variants"> & {
-  variants: FilledVariant[] | undefined;
+  variant: FilledVariant | undefined;
+  image: Media | null;
   quantity: number;
 };
 
@@ -49,16 +51,29 @@ export const SlideOver = () => {
   const { cart, updateCart, removeFromCart } = useCart();
 
   const [cartProducts, setCartProducts] = useState<ProductWithFilledVariants[]>([]);
+  const [total, setTotal] = useState<
+    {
+      currency: Currency;
+      value: number;
+    }[]
+  >([]);
 
   useEffect(() => {
     const fetchCartProducts = async () => {
       try {
         const { data } = await axios.post<{
           status: number;
-          filledProducts: ProductWithFilledVariants[];
+          productsWithTotal: {
+            filledProducts: ProductWithFilledVariants[];
+            total: {
+              currency: Currency;
+              value: number;
+            }[];
+          };
         }>("/next/getCartProducts", cart);
-
-        setCartProducts(data.filledProducts);
+        const { filledProducts, total } = data.productsWithTotal;
+        setCartProducts(filledProducts);
+        setTotal(total);
       } catch (error) {
         console.error(error);
       }
@@ -102,16 +117,22 @@ export const SlideOver = () => {
                       <ul role="list" className="-my-6 divide-y divide-gray-200">
                         {cartProducts.map((product) => (
                           <li
-                            key={`${product.id}-${product.variants && product.variants[0].slug}`}
+                            key={`${product.id}-${product.variant && product.variant.slug}`}
                             className="flex py-6"
                           >
                             <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              {product.images &&
-                              typeof product.images[0] !== "string" &&
-                              product.images[0].url ? (
+                              {product.variant && product.variant.image && product.variant.image.url ? (
                                 <Image
-                                  alt={product.images[0].alt}
-                                  src={product.images[0].url}
+                                  alt={product.variant.image.alt}
+                                  src={product.variant.image.url}
+                                  width={96}
+                                  height={96}
+                                  className="size-full object-cover"
+                                />
+                              ) : product.image && product.image.url ? (
+                                <Image
+                                  alt={product.image.alt}
+                                  src={product.image.url}
                                   width={96}
                                   height={96}
                                   className="size-full object-cover"
@@ -129,9 +150,9 @@ export const SlideOver = () => {
                                     <PriceClient
                                       pricing={
                                         product.enableVariantPrices
-                                          ? ((product.variants &&
-                                              product.variants[0].pricing &&
-                                              product.variants[0].pricing.map((p) => ({
+                                          ? ((product.variant &&
+                                              product.variant.pricing &&
+                                              product.variant.pricing.map((p) => ({
                                                 ...p,
                                                 value: p.value * product.quantity,
                                               }))) ??
@@ -147,16 +168,10 @@ export const SlideOver = () => {
                                   </p>
                                 </div>
                                 <p>
-                                  {product.enableVariants &&
-                                    product.variants &&
-                                    product.variants.length > 0 &&
-                                    product.variants[0].color?.label}
+                                  {product.enableVariants && product.variant && product.variant.color?.label}
                                 </p>
                                 <p>
-                                  {product.enableVariants &&
-                                    product.variants &&
-                                    product.variants.length > 0 &&
-                                    product.variants[0].size?.label}
+                                  {product.enableVariants && product.variant && product.variant.size?.label}
                                 </p>
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
@@ -168,7 +183,7 @@ export const SlideOver = () => {
                                     onClick={() => {
                                       removeFromCart(
                                         product.id,
-                                        (product.variants && product.variants[0].slug) ?? undefined,
+                                        (product.variant && product.variant.slug) ?? undefined,
                                       );
                                     }}
                                     className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -188,7 +203,9 @@ export const SlideOver = () => {
                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <p>Subtotal</p>
-                    <p>$262.00</p>
+                    <p>
+                      <PriceClient pricing={total} />
+                    </p>
                   </div>
                   <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                   <div className="mt-6">
