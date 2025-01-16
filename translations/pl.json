@@ -41,5 +41,21 @@
     "checkout": "Do kasy",
     "or": "lub",
     "continue-shopping": "Kontynuuj zakupy"
+  },
+  "LoginForm": {
+    "title": "Zaloguj się na swoje konto",
+    "email": "Adres e-mail",
+    "password": "Hasło",
+    "submit": "Zaloguj się",
+    "forgot-password": "Zapomniałeś hasła?",
+    "no-account": "Nie masz konta?",
+    "register-now": "Zarejestruj się teraz!",
+    "errors": {
+      "email": "Nieprawidłowy adres e-mail",
+      "email-empty": "Adres e-mail nie może być pusty",
+      "password": "Hasło nie może być puste",
+      "auth": "Nieprawidłowy adres e-mail lub hasło",
+      "server-error": "Błąd wewnętrzny serwera. Skontaktuj się z nami."
+    }
   }
 }

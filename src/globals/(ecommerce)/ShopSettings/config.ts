@@ -33,6 +33,13 @@ export const ShopSettings: GlobalConfig = {
       hasMany: true,
       required: true,
     },
+    {
+      name: "enableOAuth",
+      type: "checkbox",
+      label: { en: "Enable OAuth", pl: "Włącz OAuth" },
+      defaultValue: false,
+      required: true,
+    },
   ],
   hooks: {
     afterChange: [revalidateGlobal],

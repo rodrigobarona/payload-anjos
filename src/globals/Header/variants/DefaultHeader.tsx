@@ -3,10 +3,10 @@ import { Logo } from "@/components/Logo/Logo";
 import { Header } from "@/payload-types";
 import { cn } from "@/utilities/cn";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { CMSLink } from "@/components/Link";
 import { useEffect, useState } from "react";
-import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { ShoppingBagIcon, UserIcon } from "@heroicons/react/24/outline";
 import { useCartState } from "@/globals/(ecommerce)/Cart/stores/CartStateStore";
 import { useCart } from "@/stores/CartStore";
 
@@ -102,6 +102,9 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
               })}
           </div>
         </nav>
+        <Link href="/account" className="-m-2 cursor-pointer p-2">
+          <UserIcon color="white" width={24} height={24} />
+        </Link>
         <button onClick={toggleCart} className="relative -m-2 cursor-pointer p-2">
           {totalQuantity && totalQuantity > 0 ? (
             <span className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-xs text-white">

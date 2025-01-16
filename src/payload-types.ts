@@ -2120,6 +2120,7 @@ export interface ShopSetting {
    * First currency is the default one
    */
   availableCurrencies: ('USD' | 'EUR' | 'GBP' | 'PLN')[];
+  enableOAuth: boolean;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2211,6 +2212,7 @@ export interface ProductListSelect<T extends boolean = true> {
  */
 export interface ShopSettingsSelect<T extends boolean = true> {
   availableCurrencies?: T;
+  enableOAuth?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

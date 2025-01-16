@@ -41,5 +41,21 @@
     "checkout": "Checkout",
     "or": "or",
     "continue-shopping": "Continue shopping"
+  },
+  "LoginForm": {
+    "title": "Sign in to your account",
+    "email": "Email address",
+    "password": "Password",
+    "submit": "Sign in",
+    "forgot-password": "Forgot password?",
+    "no-account": "Don't have an account?",
+    "register-now": "Register now!",
+    "errors": {
+      "email": "Invalid email address",
+      "email-empty": "Email address cannot be empty",
+      "password": "Password cannot be empty",
+      "auth": "Invalid email or password",
+      "server-error": "Internal server error. Please contact support."
+    }
   }
 }
