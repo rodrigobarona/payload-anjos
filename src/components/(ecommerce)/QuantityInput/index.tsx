@@ -29,9 +29,7 @@ export const QuantityInput = ({
       updateQuantity(-1);
     }
   };
-  console.log("max ", maxQuantity);
-  console.log("min", minQuantity);
-  console.log("actual", quantity);
+
   return (
     <div
       className={cn(
@@ -71,7 +69,6 @@ export const QuantityInput = ({
         }}
         onChange={(e) => {
           const quantityFromInput = Number(e.target.value);
-          console.log("quantityFromInput", quantityFromInput);
           if (quantityFromInput > maxQuantity) {
             setQuantity(maxQuantity);
           } else if (quantityFromInput < minQuantity) {

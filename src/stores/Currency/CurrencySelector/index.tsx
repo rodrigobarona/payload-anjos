@@ -5,16 +5,16 @@ import { useCurrency } from "..";
 import { Currency } from "../types";
 
 export const CurrencySelector = ({ currencyOptions }: { currencyOptions: string[] }) => {
-  const { setCurrency, currency } = useCurrency(
-    currencyOptions ? (currencyOptions[0] as Currency) : undefined,
-  );
+  const { setCurrency, currency } = useCurrency();
 
   const onCurrencyChange = (currencyToSet: Currency) => {
-    setCurrency(currencyToSet);
+    if (currencyToSet !== currency) {
+      setCurrency(currencyToSet);
+    }
   };
 
   return (
-    <Select onValueChange={onCurrencyChange} defaultValue={currency ?? ""}>
+    <Select onValueChange={onCurrencyChange} value={currency}>
       <SelectTrigger
         aria-label="Select a currency"
         className="w-auto gap-2 border-none bg-transparent pl-0 md:pl-3"

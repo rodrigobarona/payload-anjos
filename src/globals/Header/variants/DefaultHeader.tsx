@@ -57,7 +57,6 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
     `sticky flex w-full top-0 justify-center md:px-12 transition-transform z-50`,
 
     `${data.hideOnScroll && scrollDown ? "-translate-y-full md:-translate-y-full" : ""}`,
-    // { ...(theme ? { "data-theme": theme } : {}) },
   );
 
   return (

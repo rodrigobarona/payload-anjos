@@ -91,7 +91,5 @@ export async function POST(req: Request) {
     totalQuantity: filledProducts.reduce((acc, product) => acc + (product?.quantity ?? 0), 0),
   };
 
-  console.log(totalFormatted);
-
   return Response.json({ status: 200, productsWithTotal });
 }
