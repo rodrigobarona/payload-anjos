@@ -29,5 +29,15 @@
     "categories": "Kategorie",
     "products": "Produkty",
     "close-filters": "Zamknij filtry"
+  },
+  "Cart": {
+    "title": "Koszyk",
+    "close-panel": "Zamknij panel",
+    "remove": "Usuń",
+    "subtotal": "Suma częściowa",
+    "subtotal-info": "Koszt dostawy zostanie obliczony przy kasie.",
+    "checkout": "Do kasy",
+    "or": "lub",
+    "continue-shopping": "Kontynuuj zakupy"
   }
 }

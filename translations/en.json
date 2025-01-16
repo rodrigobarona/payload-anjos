@@ -29,5 +29,15 @@
     "categories": "Categories",
     "products": "Products",
     "close-filters": "Close filters"
+  },
+  "Cart": {
+    "title": "Shopping cart",
+    "close-panel": "Close panel",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "subtotal-info": "Shipping will be calculated at checkout.",
+    "checkout": "Checkout",
+    "or": "or",
+    "continue-shopping": "Continue shopping"
   }
 }

@@ -29,6 +29,7 @@ export async function POST(req: Request) {
       enableVariants: true,
       enableVariantPrices: true,
       colors: true,
+      slug: true,
       sizes: true,
       pricing: true,
     },
@@ -50,6 +51,7 @@ export async function POST(req: Request) {
         return {
           ...product,
           image: typeof product.images[0] !== "string" ? product.images[0] : null,
+          slug: product.slug,
           variant: {
             ...variant,
             color: product.colors?.find((color) => color.slug === variant.color),

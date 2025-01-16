@@ -11,6 +11,8 @@ import { useProductContext } from "../stores/ProductContext";
 import { useEffect } from "react";
 import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 
+// TODO - variant slug in query params to handle that on server + redirect to variant from cart/url
+
 export const ProductForm = ({
   product,
   filledVariants,
@@ -77,18 +79,6 @@ export const ProductForm = ({
     (product.enableVariants && (!selectedVariant || selectedVariant.stock === 0)) ||
       (!product.enableVariants && product.stock === 0),
   );
-
-  const handleIncreaseQuantity = () => {
-    if (quantity < maxQuantity) {
-      updateQuantity(1);
-    }
-  };
-
-  const handleDecreaseQuantity = () => {
-    if (quantity > minQuantity) {
-      updateQuantity(-1);
-    }
-  };
 
   return (
     <form className="mt-6">
