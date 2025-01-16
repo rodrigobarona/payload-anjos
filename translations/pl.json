@@ -57,5 +57,20 @@
       "auth": "Nieprawidłowy adres e-mail lub hasło",
       "server-error": "Błąd wewnętrzny serwera. Skontaktuj się z nami."
     }
+  },
+  "RegisterForm": {
+    "title": "Utwórz konto",
+    "email": "Adres e-mail",
+    "password": "Hasło",
+    "confirm-password": "Potwierdź hasło",
+    "submit": "Zarejestruj się",
+    "errors": {
+      "email": "Nieprawidłowy adres e-mail",
+      "email-empty": "Adres e-mail nie może być pusty",
+      "password": "Hasło nie może być puste",
+      "password-length": "Hasło musi mieć co najmniej 8 znaków",
+      "passwords-mismatch": "Hasła nie są takie same",
+      "server-error": "Wewnętrzny błąd serwera. Skontaktuj się z pomocą techniczną."
+    }
   }
 }

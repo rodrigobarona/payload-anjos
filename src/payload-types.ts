@@ -899,8 +899,8 @@ export interface AccordionBlock {
  */
 export interface Customer {
   id: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string | null;
+  lastName?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;

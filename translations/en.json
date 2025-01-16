@@ -57,5 +57,20 @@
       "auth": "Invalid email or password",
       "server-error": "Internal server error. Please contact support."
     }
+  },
+  "RegisterForm": {
+    "title": "Create an account",
+    "email": "Email address",
+    "password": "Password",
+    "confirm-password": "Confirm password",
+    "submit": "Sign up",
+    "errors": {
+      "email": "Invalid email address",
+      "email-empty": "Email address cannot be empty",
+      "password": "Password cannot be empty",
+      "password-length": "Password must be at least 8 characters long",
+      "passwords-mismatch": "Passwords do not match",
+      "server-error": "Internal server error. Please contact support."
+    }
   }
 }

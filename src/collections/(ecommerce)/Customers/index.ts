@@ -2,7 +2,9 @@ import { CollectionConfig } from "payload";
 
 export const Customers: CollectionConfig = {
   slug: "customers",
-  access: {},
+  access: {
+    create: () => true,
+  },
   labels: {
     singular: {
       en: "Customer",
@@ -22,7 +24,6 @@ export const Customers: CollectionConfig = {
         pl: "Imię",
       },
       type: "text",
-      required: true,
     },
     {
       name: "lastName",
@@ -31,7 +32,6 @@ export const Customers: CollectionConfig = {
         pl: "Nazwisko",
       },
       type: "text",
-      required: true,
     },
   ],
 };
