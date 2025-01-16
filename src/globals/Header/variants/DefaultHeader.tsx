@@ -102,19 +102,21 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
               })}
           </div>
         </nav>
-        <Link href="/account" className="-m-2 cursor-pointer p-2">
-          <UserIcon color="white" width={24} height={24} />
-        </Link>
-        <button onClick={toggleCart} className="relative -m-2 cursor-pointer p-2">
-          {totalQuantity && totalQuantity > 0 ? (
-            <span className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-xs text-white">
-              {totalQuantity}
-            </span>
-          ) : (
-            ""
-          )}
-          <ShoppingBagIcon color="white" width={24} height={24} />
-        </button>
+        <div className="flex gap-5">
+          <Link href="/account" className="-m-2 cursor-pointer p-2">
+            <UserIcon color="white" width={24} height={24} />
+          </Link>
+          <button onClick={toggleCart} className="relative -m-2 cursor-pointer p-2">
+            {totalQuantity && totalQuantity > 0 ? (
+              <span className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-xs text-white">
+                {totalQuantity}
+              </span>
+            ) : (
+              ""
+            )}
+            <ShoppingBagIcon color="white" width={24} height={24} />
+          </button>
+        </div>
         <CMSLink className="ml-auto hidden md:flex" />
         <div className="backdrop_blur absolute left-1/2 -z-30 h-full w-full -translate-x-1/2" />
       </div>
