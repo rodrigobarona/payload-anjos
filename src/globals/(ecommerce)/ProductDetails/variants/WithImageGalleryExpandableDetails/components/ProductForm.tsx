@@ -3,9 +3,9 @@ import { Product } from "@/payload-types";
 
 import { useTranslations } from "next-intl";
 import { FilledVariant } from "../../../types";
-import { Input, Radio, RadioGroup } from "@headlessui/react";
+import { Radio, RadioGroup } from "@headlessui/react";
 import { cn } from "@/utilities/cn";
-import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { HeartIcon } from "@heroicons/react/24/outline";
 import { useCart } from "@/stores/CartStore";
 import { useProductContext } from "../stores/ProductContext";
 import { useEffect } from "react";

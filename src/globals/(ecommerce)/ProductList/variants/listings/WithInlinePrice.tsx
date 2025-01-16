@@ -57,8 +57,6 @@ const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Lo
           const priceRange = getPriceRange(product.variants, product.enableVariantPrices ?? false);
 
           let pricingComponent: ReactNode;
-          console.log(priceRange);
-          console.log(product.pricing);
 
           if (priceRange?.length === 2) {
             pricingComponent = (

@@ -4,7 +4,6 @@ import { ReactNode, useEffect, useState } from "react";
 import { useProductContext } from "../stores/ProductContext";
 import { Product } from "@/payload-types";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 
 export const ProductGallery = ({
   product,
@@ -15,7 +14,7 @@ export const ProductGallery = ({
   tabs: ReactNode;
   children: ReactNode;
 }) => {
-  const { quantity, selectedVariant, setSelectedVariant, setQuantity } = useProductContext();
+  const { quantity, selectedVariant, setQuantity } = useProductContext();
   const [selectedTab, setSelectedTab] = useState(0);
 
   const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;

@@ -17,8 +17,8 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme?: string | 
 
   const toggleMenu = () => {
     setisMenuOpened((menuState) => !menuState);
-    document.body.classList.toggle("overflow-clip");
-    document.body.classList.toggle("overflow-y-clip");
+    document.documentElement.classList.toggle("overflow-clip");
+    document.documentElement.classList.toggle("overflow-y-clip");
   };
 
   const { toggleCart } = useCartState();

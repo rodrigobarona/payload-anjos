@@ -48,7 +48,7 @@ export default async function RootLayout({
 
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable, "twp")}
+      className={cn(GeistSans.variable, GeistMono.variable, "twp lg:overflow-y-scroll")}
       lang={locale}
       // data-thmee="light"
       // suppressHydrationWarning
@@ -58,7 +58,7 @@ export default async function RootLayout({
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body className="max-w-screen overflow-x-clip lg:overflow-y-auto">
+      <body className="max-w-screen overflow-x-clip">
         <Providers>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {/* <AdminBar
