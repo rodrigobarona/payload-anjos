@@ -18,5 +18,6 @@ export const PriceClient = ({
     pricing.length > 0
       ? (pricing.find((price) => price.currency === currency)?.value ?? pricing[0].value)
       : 0;
+
   return <>{formatPrice(price, currency, locale)}</>;
 };
