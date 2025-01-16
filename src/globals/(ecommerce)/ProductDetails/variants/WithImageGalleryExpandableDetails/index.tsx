@@ -17,9 +17,11 @@ import { ProductGallery } from "./components/ProductGallery";
 import { PriceWithContext } from "./components/PriceWithContext";
 
 export const WithImageGalleryExpandableDetails = ({
+  variant,
   product,
   productSettings,
 }: {
+  variant?: string;
   product: Product;
   productSettings: ProductDetail;
 }) => {
@@ -34,6 +36,9 @@ export const WithImageGalleryExpandableDetails = ({
     pricing: variant.pricing,
   }));
 
+  const selectedVariant =
+    filledVariants?.find((filledVariant) => filledVariant.slug === variant) ?? filledVariants?.[0];
+
   const t = useTranslations("ProductDetails");
 
   return (
@@ -44,6 +49,7 @@ export const WithImageGalleryExpandableDetails = ({
 
           <ProductGallery
             product={product}
+            selectedVariant={selectedVariant}
             tabs={product.images.map(
               (image) =>
                 typeof image !== "string" && (
@@ -91,7 +97,7 @@ export const WithImageGalleryExpandableDetails = ({
             <div className="mt-3">
               <h2 className="sr-only">{t("product-info")}</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                <PriceWithContext product={product} />
+                <PriceWithContext selectedVariant={selectedVariant} product={product} />
               </p>
             </div>
 
@@ -127,7 +133,11 @@ export const WithImageGalleryExpandableDetails = ({
               </div>
             )}
 
-            <ProductForm product={product} filledVariants={filledVariants} />
+            <ProductForm
+              product={product}
+              selectedVariant={selectedVariant}
+              filledVariants={filledVariants}
+            />
 
             <section aria-labelledby="details-heading" className="mt-12">
               <h2 id="details-heading" className="sr-only">

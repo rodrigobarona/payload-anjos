@@ -7,32 +7,45 @@ import { Radio, RadioGroup } from "@headlessui/react";
 import { cn } from "@/utilities/cn";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useCart } from "@/stores/CartStore";
-import { useProductContext } from "../stores/ProductContext";
 import { useEffect, useState } from "react";
 import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
-
-// TODO - variant slug in query params to handle that on server + redirect to variant from cart/url
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 
 export const ProductForm = ({
   product,
+  selectedVariant,
   filledVariants,
 }: {
   product: Product;
   filledVariants?: FilledVariant[];
+  selectedVariant?: FilledVariant;
 }) => {
-  const {
-    quantity = 1,
-    selectedVariant,
-    updateQuantity,
-    setQuantity,
-    setSelectedVariant,
-  } = useProductContext(filledVariants && filledVariants[0]);
+  const [quantity, setQuantity] = useState(1);
   const { updateCart, cart } = useCart();
   const t = useTranslations("ProductDetails");
   const [overStock, setOverStock] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
   const minQuantity = 1;
+
+  const updateQuantity = (delta: number) => {
+    setQuantity((prev) => prev + delta);
+  };
+
+  const setSelectedVariant = (slug?: string) => {
+    const params = new URLSearchParams(searchParams?.toString());
+
+    if (slug) {
+      params.set("variant", slug);
+    } else {
+      params.delete("variant");
+    }
+
+    router.replace(`?${params.toString()}`);
+  };
 
   const handleChangeColor = (id: string) => {
     const matchingVariant = filledVariants?.filter(
@@ -41,17 +54,17 @@ export const ProductForm = ({
     const closestVariant = matchingVariant?.find((variant) => variant.size?.id === selectedVariant?.size?.id);
 
     if (closestVariant) {
-      setSelectedVariant(closestVariant);
+      setSelectedVariant(closestVariant.slug ?? undefined);
     } else if (matchingVariant) {
-      setSelectedVariant(matchingVariant[0]);
+      setSelectedVariant(matchingVariant[0].slug ?? undefined);
     }
   };
 
   useEffect(() => {
-    if (filledVariants) {
-      setSelectedVariant(filledVariants[0]);
+    if (quantity > maxQuantity) {
+      setQuantity(maxQuantity);
     }
-  }, []);
+  }, [selectedVariant, maxQuantity]);
 
   useEffect(() => {
     setOverStock(false);
@@ -76,7 +89,7 @@ export const ProductForm = ({
   const handleChangeSize = (id: string) => {
     const matchingVariant = findAvailableSizeVariant(id);
     if (matchingVariant) {
-      setSelectedVariant(matchingVariant);
+      setSelectedVariant(matchingVariant.slug ?? undefined);
     }
   };
 

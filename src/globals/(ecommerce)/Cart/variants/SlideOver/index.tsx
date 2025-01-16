@@ -171,7 +171,11 @@ export const SlideOver = () => {
                               <div>
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                   <h3>
-                                    <a href={`/product/${product.slug}`}>{product.title}</a>
+                                    <a
+                                      href={`/product/${product.slug}${product.enableVariants && product?.variant?.slug ? `?variant=${product.variant.slug}` : ""}`}
+                                    >
+                                      {product.title}
+                                    </a>
                                   </h3>
                                   <p className="ml-4">
                                     <PriceClient
@@ -195,7 +199,10 @@ export const SlideOver = () => {
                                   </p>
                                 </div>
                                 <p>
-                                  {product.enableVariants && product.variant && product.variant.color?.label},{" "}
+                                  {product.enableVariants &&
+                                    product.variant &&
+                                    product.variant.color?.label &&
+                                    `${product.variant.color.label}${product.variant.size?.label ? ", " : ""}`}
                                   {product.enableVariants && product.variant && product.variant.size?.label}
                                 </p>
                               </div>

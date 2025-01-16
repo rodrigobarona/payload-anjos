@@ -1,10 +1,15 @@
 "use client";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import { Product } from "@/payload-types";
-import { useProductContext } from "../stores/ProductContext";
+import { FilledVariant } from "../../../types";
 
-export const PriceWithContext = ({ product }: { product: Product }) => {
-  const { selectedVariant } = useProductContext();
+export const PriceWithContext = ({
+  product,
+  selectedVariant,
+}: {
+  product: Product;
+  selectedVariant?: FilledVariant;
+}) => {
   return (
     <PriceClient
       pricing={

@@ -7,7 +7,7 @@ import { WithImageGalleryExpandableDetails } from "./variants/WithImageGalleryEx
 import { notFound } from "next/navigation";
 import { ProductBreadcrumbs } from "../../../components/(ecommerce)/ProductBreadcrumbs";
 
-export const ProductDetails = async ({ product }: { product: Product }) => {
+export const ProductDetails = async ({ variant, product }: { variant?: string; product: Product }) => {
   try {
     const locale = (await getLocale()) as Locale;
     const productDetailsData = await getCachedGlobal("productDetails", locale, 1)();
@@ -16,7 +16,11 @@ export const ProductDetails = async ({ product }: { product: Product }) => {
     switch (productDetailsData.type) {
       case "WithImageGalleryExpandableDetails":
         ProductDetailsComponent = (
-          <WithImageGalleryExpandableDetails productSettings={productDetailsData} product={product} />
+          <WithImageGalleryExpandableDetails
+            variant={variant}
+            productSettings={productDetailsData}
+            product={product}
+          />
         );
         break;
     }

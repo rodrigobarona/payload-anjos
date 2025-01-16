@@ -5,7 +5,13 @@ import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const ProductPage = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) => {
   try {
     const payload = await getPayload({ config });
     const locale = (await getLocale()) as Locale;
@@ -20,12 +26,13 @@ const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) =>
         },
       },
     });
+    const { variant } = await searchParams;
 
     if (docs.length === 0) {
       notFound();
     }
 
-    return <ProductDetails product={docs[0]} />;
+    return <ProductDetails variant={variant} product={docs[0]} />;
   } catch (error) {
     notFound();
   }
