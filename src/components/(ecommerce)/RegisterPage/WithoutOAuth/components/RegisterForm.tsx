@@ -57,11 +57,7 @@ export const RegisterForm = () => {
             <FormItem>
               <FormLabel>{t("email")}</FormLabel>
               <FormControl>
-                <Input
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 ring-offset-0 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  placeholder="john.doe@example.com"
-                  {...field}
-                />
+                <Input placeholder="john.doe@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -74,12 +70,7 @@ export const RegisterForm = () => {
             <FormItem>
               <FormLabel>{t("password")}</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 ring-offset-0 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  placeholder="••••••••••••"
-                  {...field}
-                />
+                <Input type="password" placeholder="••••••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -92,12 +83,7 @@ export const RegisterForm = () => {
             <FormItem>
               <FormLabel>{t("confirm-password")}</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 ring-offset-0 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  placeholder="••••••••••••"
-                  {...field}
-                />
+                <Input type="password" placeholder="••••••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -106,10 +92,7 @@ export const RegisterForm = () => {
 
         <p className="text-sm text-red-500">{form.formState.errors.root?.message ?? ""}</p>
 
-        <Button
-          type="submit"
-          className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
+        <Button type="submit" variant="tailwind">
           {t("submit")}
         </Button>
       </form>

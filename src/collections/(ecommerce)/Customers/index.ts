@@ -33,5 +33,21 @@ export const Customers: CollectionConfig = {
       },
       type: "text",
     },
+    {
+      name: "birthDate",
+      label: {
+        en: "Birth Date",
+        pl: "Data urodzenia",
+      },
+      type: "date",
+    },
+    {
+      name: "phone",
+      label: {
+        en: "Phone",
+        pl: "Telefon",
+      },
+      type: "text",
+    },
   ],
 };

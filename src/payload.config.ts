@@ -27,6 +27,7 @@ import { ProductSubCategories } from "./collections/(ecommerce)/ProductSubCatego
 import { ProductList } from "./globals/(ecommerce)/ProductList/config";
 import { ShopSettings } from "./globals/(ecommerce)/ShopSettings/config";
 import { Cart } from "./globals/(ecommerce)/Cart/config";
+import { Checkout } from "./globals/(ecommerce)/Checkout/config";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -93,7 +94,7 @@ export default buildConfig({
     ProductReviews,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, ProductDetails, ProductList, ShopSettings, Cart],
+  globals: [Header, Footer, ProductDetails, ProductList, ShopSettings, Cart, Checkout],
   plugins: [
     ...plugins,
     s3Storage({

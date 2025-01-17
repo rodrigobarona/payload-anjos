@@ -68,6 +68,7 @@ export interface Config {
     productList: ProductList;
     shopSettings: ShopSetting;
     cart: Cart;
+    checkout: Checkout;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -76,6 +77,7 @@ export interface Config {
     productList: ProductListSelect<false> | ProductListSelect<true>;
     shopSettings: ShopSettingsSelect<false> | ShopSettingsSelect<true>;
     cart: CartSelect<false> | CartSelect<true>;
+    checkout: CheckoutSelect<false> | CheckoutSelect<true>;
   };
   locale: 'en' | 'pl';
   user:
@@ -901,6 +903,8 @@ export interface Customer {
   id: string;
   firstName?: string | null;
   lastName?: string | null;
+  birthDate?: string | null;
+  phone?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1668,6 +1672,8 @@ export interface AdministratorsSelect<T extends boolean = true> {
 export interface CustomersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
+  birthDate?: T;
+  phone?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -2136,6 +2142,16 @@ export interface Cart {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "checkout".
+ */
+export interface Checkout {
+  id: string;
+  type: 'OneStepWithSummary';
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2222,6 +2238,16 @@ export interface ShopSettingsSelect<T extends boolean = true> {
  * via the `definition` "cart_select".
  */
 export interface CartSelect<T extends boolean = true> {
+  type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "checkout_select".
+ */
+export interface CheckoutSelect<T extends boolean = true> {
   type?: T;
   updatedAt?: T;
   createdAt?: T;
