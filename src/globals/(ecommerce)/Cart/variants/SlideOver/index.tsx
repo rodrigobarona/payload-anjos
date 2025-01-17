@@ -34,6 +34,7 @@ export const SlideOver = () => {
     }[]
   >([]);
 
+  // TODO: Little refactor + debouncing.
   useEffect(() => {
     const fetchCartProducts = async () => {
       try {

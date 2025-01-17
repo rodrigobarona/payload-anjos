@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import canUseDOM from "@/utilities/canUseDOM";
 import { Cart } from "./types";
-import { getPayload } from "payload";
 import axios from "axios";
+import debounce from "lodash.debounce";
 
 interface CartState {
   cart: Cart | null;
@@ -31,14 +31,32 @@ const fetchCartFromUserAccount = async (): Promise<Cart | null> => {
   }
 };
 
+const debouncedFetchCartFromUserAccount = debounce(fetchCartFromUserAccount, 1000);
+
+const debouncedSaveCartToUserAccount = debounce(saveCartToUserAccount, 1000);
+
 const useCartStore = create<CartState>((set, get) => ({
-  cart: canUseDOM ? (JSON.parse(window.localStorage.getItem("cart") ?? "[]") as Cart) : null,
+  cart: canUseDOM
+    ? (() => {
+        const cartData = window.localStorage.getItem("cart");
+        if (cartData && cartData.length > 1) {
+          try {
+            return cartData ? (JSON.parse(cartData) as Cart) : [];
+          } catch (error) {
+            console.error("Error parsing cart data from localStorage", error);
+            return [];
+          }
+        } else {
+          return [];
+        }
+      })()
+    : null,
 
   setCart: (cartToSet: Cart) => {
     if (canUseDOM) {
       window.localStorage.setItem("cart", JSON.stringify(cartToSet));
     }
-    saveCartToUserAccount(cartToSet);
+    debouncedSaveCartToUserAccount(cartToSet);
     set({ cart: cartToSet });
   },
 
@@ -50,7 +68,7 @@ const useCartStore = create<CartState>((set, get) => ({
         if (canUseDOM) {
           window.localStorage.setItem("cart", JSON.stringify(cartToSet));
         }
-        saveCartToUserAccount(cartToSet);
+        debouncedSaveCartToUserAccount(cartToSet);
         return { cart: cartToSet };
       }
 
@@ -74,7 +92,7 @@ const useCartStore = create<CartState>((set, get) => ({
       if (canUseDOM) {
         window.localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
-      saveCartToUserAccount(updatedCart);
+      debouncedSaveCartToUserAccount(updatedCart);
       return { cart: updatedCart };
     });
   },
@@ -91,7 +109,7 @@ const useCartStore = create<CartState>((set, get) => ({
       if (canUseDOM) {
         window.localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
-      saveCartToUserAccount(updatedCart ?? []);
+      debouncedSaveCartToUserAccount(updatedCart ?? []);
       return { cart: updatedCart };
     });
   },
@@ -100,11 +118,11 @@ const useCartStore = create<CartState>((set, get) => ({
     if (!canUseDOM) return;
 
     const cartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart") ?? "[]") as Cart;
-    const cartFromUserAccount = await fetchCartFromUserAccount();
+    const cartFromUserAccount = await debouncedFetchCartFromUserAccount();
 
     if (!cartFromUserAccount) {
       if (cartFromLocalStorage.length > 0) {
-        saveCartToUserAccount(cartFromLocalStorage);
+        debouncedSaveCartToUserAccount(cartFromLocalStorage);
       }
       return;
     }
