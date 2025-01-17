@@ -49,7 +49,7 @@ export default async function RootLayout({
 
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable, "twp lg:overflow-y-scroll")}
+      className={cn(GeistSans.variable, GeistMono.variable, "twp overflow-x-clip lg:overflow-y-scroll")}
       lang={locale}
       // data-thmee="light"
       // suppressHydrationWarning
