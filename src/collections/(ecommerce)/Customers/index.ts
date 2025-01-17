@@ -153,7 +153,7 @@ export const Customers: CollectionConfig = {
         pl: "Koszyk",
       },
       admin: {
-        // hidden: true,
+        hidden: true,
       },
     },
   ],
