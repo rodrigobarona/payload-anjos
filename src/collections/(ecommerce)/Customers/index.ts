@@ -145,5 +145,16 @@ export const Customers: CollectionConfig = {
         },
       ],
     },
+    {
+      name: "cart",
+      type: "json",
+      label: {
+        en: "Cart",
+        pl: "Koszyk",
+      },
+      admin: {
+        // hidden: true,
+      },
+    },
   ],
 };

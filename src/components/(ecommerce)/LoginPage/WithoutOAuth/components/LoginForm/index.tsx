@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { Link, useRouter } from "@/i18n/routing";
 import axios, { isAxiosError } from "axios";
 import { useTranslations } from "next-intl";
+import { useCart } from "@/stores/CartStore";
 
 export const LoginForm = () => {
   const { LoginFormSchemaResolver } = useLoginFormSchema();
@@ -31,11 +32,13 @@ export const LoginForm = () => {
 
   const t = useTranslations("LoginForm");
   const router = useRouter();
+  const { synchronizeCart } = useCart();
 
   const onSubmit = async (values: LoginFormData) => {
     try {
       const res = await axios.post("/api/customers/login", values);
       if (res.status === 200 || res.status === 201) {
+        synchronizeCart();
         router.replace("/account");
       }
     } catch (error) {

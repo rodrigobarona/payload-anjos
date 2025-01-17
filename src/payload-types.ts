@@ -918,6 +918,15 @@ export interface Customer {
         id?: string | null;
       }[]
     | null;
+  cart?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1700,6 +1709,7 @@ export interface CustomersSelect<T extends boolean = true> {
         default?: T;
         id?: T;
       };
+  cart?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
