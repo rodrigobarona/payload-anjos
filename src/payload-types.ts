@@ -904,7 +904,20 @@ export interface Customer {
   firstName?: string | null;
   lastName?: string | null;
   birthDate?: string | null;
-  phone?: string | null;
+  lastBuyerType?: ('individual' | 'company') | null;
+  shippings?:
+    | {
+        address: string;
+        city: string;
+        country: string;
+        region: string;
+        postalCode: string;
+        phone: string;
+        email: string;
+        default?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1673,7 +1686,20 @@ export interface CustomersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
   birthDate?: T;
-  phone?: T;
+  lastBuyerType?: T;
+  shippings?:
+    | T
+    | {
+        address?: T;
+        city?: T;
+        country?: T;
+        region?: T;
+        postalCode?: T;
+        phone?: T;
+        email?: T;
+        default?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;

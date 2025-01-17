@@ -1,3 +1,4 @@
+import { getCustomer } from "@/utilities/getCustomer";
 import { CheckoutForm } from "./components/CheckoutForm";
 import { OrderSummary } from "./components/OrderSummary";
 
@@ -15,12 +16,13 @@ const products = [
   // More products...
 ];
 
-export const OneStepWithSummary = () => {
+export const OneStepWithSummary = async () => {
+  const user = await getCustomer();
   return (
     <div className="bg-gray-50">
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="sr-only">Checkout</h2>
-        <CheckoutForm>
+        <CheckoutForm user={user}>
           <OrderSummary products={products} />
         </CheckoutForm>
       </div>

@@ -42,12 +42,108 @@ export const Customers: CollectionConfig = {
       type: "date",
     },
     {
-      name: "phone",
+      name: "lastBuyerType",
       label: {
-        en: "Phone",
-        pl: "Telefon",
+        en: "Last Buyer Type",
+        pl: "Ostatni typ kupującego",
       },
-      type: "text",
+      type: "select",
+      options: [
+        { value: "individual", label: { en: "Individual", pl: "Osoba fizyczna" } },
+        { value: "company", label: { en: "Company", pl: "Firma" } },
+      ],
+    },
+    {
+      name: "shippings",
+      type: "array",
+      label: {
+        en: "Shipping adresses",
+        pl: "Adresy dostaw",
+      },
+      labels: {
+        singular: {
+          en: "Shipping address",
+          pl: "Adres dostawy",
+        },
+        plural: {
+          en: "Shipping addresses",
+          pl: "Adresy dostaw",
+        },
+      },
+      fields: [
+        {
+          name: "address",
+          type: "text",
+          label: {
+            en: "Address",
+            pl: "Adres",
+          },
+          required: true,
+        },
+        {
+          name: "city",
+          type: "text",
+          label: {
+            en: "City",
+            pl: "Miasto",
+          },
+          required: true,
+        },
+        {
+          name: "country",
+          type: "text",
+          label: {
+            en: "Country",
+            pl: "Kraj",
+          },
+          required: true,
+        },
+        {
+          name: "region",
+          type: "text",
+          label: {
+            en: "Region",
+            pl: "Region",
+          },
+          required: true,
+        },
+        {
+          name: "postalCode",
+          type: "text",
+          label: {
+            en: "Postal Code",
+            pl: "Kod pocztowy",
+          },
+          required: true,
+        },
+        {
+          name: "phone",
+          type: "text",
+          label: {
+            en: "Phone",
+            pl: "Telefon",
+          },
+          required: true,
+        },
+        {
+          name: "email",
+          type: "text",
+          label: {
+            en: "Email",
+            pl: "Email",
+          },
+          required: true,
+        },
+        {
+          name: "default",
+          type: "checkbox",
+          label: {
+            en: "Default",
+            pl: "Domyślny",
+          },
+          defaultValue: false,
+        },
+      ],
     },
   ],
 };

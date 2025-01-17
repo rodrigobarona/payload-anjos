@@ -5,6 +5,7 @@ export const CheckoutFormSchemaServer = z.object({
   firstName: z.string().nonempty(),
   lastName: z.string().nonempty(),
   buyerType: z.string().nonempty(),
+  individualInvoice: z.boolean(),
   invoice: z
     .object({
       name: z.string().nonempty(),
@@ -36,6 +37,7 @@ export const useCheckoutFormSchema = () => {
     firstName: z.string().nonempty(),
     lastName: z.string().nonempty(),
     buyerType: z.string().nonempty(),
+    individualInvoice: z.boolean(),
     invoice: z
       .object({
         name: z.string().nonempty(),

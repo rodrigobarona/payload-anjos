@@ -12,6 +12,6 @@ export const getCustomer = async () => {
   if (user && user.collection === "customers") {
     return user;
   } else {
-    return false;
+    return undefined;
   }
 };
