@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useCartState } from "../../stores/CartStateStore";
@@ -14,6 +14,8 @@ import { Currency } from "@/stores/Currency/types";
 import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import debounce from "lodash.debounce";
+import { Cart } from "@/stores/CartStore/types";
 
 type ProductWithFilledVariants = Omit<Product, "variants"> & {
   variant: FilledVariant | undefined;
@@ -34,9 +36,8 @@ export const SlideOver = () => {
     }[]
   >([]);
 
-  // TODO: Little refactor + consider debouncing.
-  useEffect(() => {
-    const fetchCartProducts = async () => {
+  const fetchCartProducts = useCallback(
+    debounce(async (cartToCalculate: Cart | null) => {
       try {
         const { data } = await axios.post<{
           status: number;
@@ -48,15 +49,19 @@ export const SlideOver = () => {
             }[];
             totalQuantity: number;
           };
-        }>("/next/getCartProducts", cart);
+        }>("/next/getCartProducts", cartToCalculate);
         const { filledProducts, total } = data.productsWithTotal;
         setCartProducts(filledProducts);
         setTotal(total);
       } catch (error) {
         console.error(error);
       }
-    };
-    fetchCartProducts();
+    }, 300),
+    [],
+  );
+
+  useEffect(() => {
+    fetchCartProducts(cart);
   }, [cart]);
 
   const setCartQuantity = (quantity: number, productID: string, productVariantSlug: string | undefined) => {
@@ -116,107 +121,125 @@ export const SlideOver = () => {
                   <div className="mt-8">
                     <div className="flow-root">
                       <ul role="list" className="-my-6 divide-y divide-gray-200">
-                        {cartProducts.map((product) => (
-                          <li
-                            key={`${product.id}-${product.variant && product.variant.slug}`}
-                            className="flex py-6"
-                          >
-                            <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              {product.variant && product.variant.image && product.variant.image.url ? (
-                                <Image
-                                  alt={product.variant.image.alt}
-                                  src={product.variant.image.url}
-                                  width={96}
-                                  height={96}
-                                  className="size-full object-cover"
-                                />
-                              ) : product.image && product.image.url ? (
-                                <Image
-                                  alt={product.image.alt}
-                                  src={product.image.url}
-                                  width={96}
-                                  height={96}
-                                  className="size-full object-cover"
-                                />
-                              ) : null}
-                            </div>
+                        {cartProducts
+                          .filter((product) =>
+                            cart?.map((cartProduct) => cartProduct.id).includes(product.id),
+                          )
+                          .map((product) => (
+                            <li
+                              key={`${product.id}-${product.variant && product.variant.slug}`}
+                              className="flex py-6"
+                            >
+                              <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                {product.variant && product.variant.image && product.variant.image.url ? (
+                                  <Image
+                                    alt={product.variant.image.alt}
+                                    src={product.variant.image.url}
+                                    width={96}
+                                    height={96}
+                                    className="size-full object-cover"
+                                  />
+                                ) : product.image && product.image.url ? (
+                                  <Image
+                                    alt={product.image.alt}
+                                    src={product.image.url}
+                                    width={96}
+                                    height={96}
+                                    className="size-full object-cover"
+                                  />
+                                ) : null}
+                              </div>
 
-                            <div className="ml-4 flex flex-1 flex-col">
-                              <div>
-                                <div className="flex justify-between text-base font-medium text-gray-900">
-                                  <h3>
-                                    <a
-                                      href={`/product/${product.slug}${product.enableVariants && product?.variant?.slug ? `?variant=${product.variant.slug}` : ""}`}
-                                    >
-                                      {product.title}
-                                    </a>
-                                  </h3>
-                                  <p className="ml-4">
-                                    <PriceClient
-                                      pricing={
-                                        product.enableVariantPrices
-                                          ? ((product.variant &&
-                                              product.variant.pricing &&
-                                              product.variant.pricing.map((p) => ({
-                                                ...p,
-                                                value: p.value * product.quantity,
-                                              }))) ??
-                                            [])
-                                          : product.pricing
-                                            ? product.pricing.map((p) => ({
-                                                ...p,
-                                                value: p.value * product.quantity,
-                                              }))
-                                            : []
-                                      }
-                                    />
+                              <div className="ml-4 flex flex-1 flex-col">
+                                <div>
+                                  <div className="flex justify-between text-base font-medium text-gray-900">
+                                    <h3>
+                                      <a
+                                        href={`/product/${product.slug}${product.enableVariants && product?.variant?.slug ? `?variant=${product.variant.slug}` : ""}`}
+                                      >
+                                        {product.title}
+                                      </a>
+                                    </h3>
+                                    <p className="ml-4">
+                                      <PriceClient
+                                        pricing={
+                                          product.enableVariantPrices
+                                            ? ((product.variant &&
+                                                product.variant.pricing &&
+                                                product.variant.pricing.map((p) => ({
+                                                  ...p,
+                                                  value: p.value * product.quantity,
+                                                }))) ??
+                                              [])
+                                            : product.pricing
+                                              ? product.pricing.map((p) => ({
+                                                  ...p,
+                                                  value: p.value * product.quantity,
+                                                }))
+                                              : []
+                                        }
+                                      />
+                                    </p>
+                                  </div>
+                                  <p>
+                                    {product.enableVariants &&
+                                      product.variant &&
+                                      product.variant.color?.label &&
+                                      `${product.variant.color.label}${product.variant.size?.label ? ", " : ""}`}
+                                    {product.enableVariants && product.variant && product.variant.size?.label}
                                   </p>
                                 </div>
-                                <p>
-                                  {product.enableVariants &&
-                                    product.variant &&
-                                    product.variant.color?.label &&
-                                    `${product.variant.color.label}${product.variant.size?.label ? ", " : ""}`}
-                                  {product.enableVariants && product.variant && product.variant.size?.label}
-                                </p>
-                              </div>
 
-                              <div className="flex flex-1 items-end justify-between text-sm">
-                                <QuantityInput
-                                  quantity={product.quantity}
-                                  inputVariant="cart"
-                                  setQuantity={(quantity) => {
-                                    setCartQuantity(quantity, product.id, product.variant?.slug ?? undefined);
-                                  }}
-                                  updateQuantity={(delta) => {
-                                    updateCartQuantity(delta, product.id, product.variant?.slug ?? undefined);
-                                  }}
-                                  maxQuantity={
-                                    product.enableVariants
-                                      ? (product.variant?.stock ?? 0)
-                                      : (product.stock ?? 0)
-                                  }
-                                  minQuantity={1}
-                                />
-
-                                <div className="flex">
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      removeFromCart(
+                                <div className="flex flex-1 items-end justify-between text-sm">
+                                  <QuantityInput
+                                    quantity={
+                                      cart?.find(
+                                        (cartProduct) =>
+                                          cartProduct.id === product.id &&
+                                          cartProduct.choosenVariantSlug === product.variant?.slug,
+                                      )?.quantity ?? 1
+                                    }
+                                    inputVariant="cart"
+                                    setQuantity={(quantity) => {
+                                      setCartQuantity(
+                                        quantity,
                                         product.id,
-                                        (product.variant && product.variant.slug) ?? undefined,
+                                        product.variant?.slug ?? undefined,
                                       );
                                     }}
-                                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                                  >
-                                    {t("remove")}
-                                  </button>
+                                    updateQuantity={(delta) => {
+                                      updateCartQuantity(
+                                        delta,
+                                        product.id,
+                                        product.variant?.slug ?? undefined,
+                                      );
+                                    }}
+                                    maxQuantity={
+                                      product.enableVariants
+                                        ? (product.variant?.stock ?? 0)
+                                        : (product.stock ?? 0)
+                                    }
+                                    minQuantity={1}
+                                  />
+
+                                  <div className="flex">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        removeFromCart(
+                                          product.id,
+                                          (product.variant && product.variant.slug) ?? undefined,
+                                        );
+                                      }}
+                                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                                    >
+                                      {t("remove")}
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </li>
-                        ))}
+                            </li>
+                          ))}
                       </ul>
                     </div>
                   </div>

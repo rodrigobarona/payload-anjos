@@ -74,7 +74,7 @@ export async function POST(req: Request) {
           acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
         });
       } else if (product.enableVariantPrices) {
-        product.variants?.[0]?.pricing?.forEach((price) => {
+        product.variant?.pricing?.forEach((price) => {
           acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
         });
       }
