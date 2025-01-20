@@ -10,6 +10,12 @@ export const Cart: GlobalConfig = {
   access: {
     read: () => true,
   },
+  admin: {
+    group: {
+      en: "Shop settings",
+      pl: "Ustawienia sklepu",
+    },
+  },
   fields: [
     {
       name: "type",

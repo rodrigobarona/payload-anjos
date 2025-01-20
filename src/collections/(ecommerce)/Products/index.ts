@@ -15,8 +15,8 @@ export const Products: CollectionConfig = {
       pl: "Produkt",
     },
     plural: {
-      en: "Products",
-      pl: "Produkty",
+      en: "Products list",
+      pl: "Lista Produktów",
     },
   },
   access: {
@@ -42,6 +42,10 @@ export const Products: CollectionConfig = {
         path: `/product/${typeof data?.slug === "string" ? data.slug : ""}`,
         locale: req.locale,
       }),
+    group: {
+      en: "Products",
+      pl: "Produkty",
+    },
   },
   fields: [
     {

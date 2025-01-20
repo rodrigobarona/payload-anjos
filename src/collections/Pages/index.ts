@@ -23,6 +23,7 @@ import {
 import { Carousel } from "@/blocks/Carousel/config";
 import { Accordion } from "@/blocks/Accordion/config";
 import { Code } from "@/blocks/Code/config";
+import { en } from "payload/i18n/en";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -31,6 +32,16 @@ export const Pages: CollectionConfig<"pages"> = {
     delete: authenticated,
     read: authenticatedOrPublished,
     update: authenticated,
+  },
+  labels: {
+    singular: {
+      en: "Page",
+      pl: "Strona",
+    },
+    plural: {
+      en: "Pages",
+      pl: "Strony",
+    },
   },
   // This config controls what's populated by default when a page is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -56,6 +67,10 @@ export const Pages: CollectionConfig<"pages"> = {
         locale: req.locale,
       }),
     useAsTitle: "title",
+    group: {
+      en: "Page Settings",
+      pl: "Ustawienia strony",
+    },
   },
   fields: [
     {
@@ -122,6 +137,7 @@ export const Pages: CollectionConfig<"pages"> = {
         position: "sidebar",
       },
     },
+
     ...slugField(),
   ],
   hooks: {

@@ -5,6 +5,10 @@ export const ProductCategories: CollectionConfig = {
   slug: "productCategories",
   admin: {
     useAsTitle: "title",
+    group: {
+      en: "Products",
+      pl: "Produkty",
+    },
   },
   labels: {
     singular: {

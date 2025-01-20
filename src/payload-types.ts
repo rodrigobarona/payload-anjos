@@ -64,20 +64,22 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    shopSettings: ShopSetting;
     productDetails: ProductDetail;
     productList: ProductList;
-    shopSettings: ShopSetting;
     cart: Cart;
     checkout: Checkout;
+    inpost: Inpost;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    shopSettings: ShopSettingsSelect<false> | ShopSettingsSelect<true>;
     productDetails: ProductDetailsSelect<false> | ProductDetailsSelect<true>;
     productList: ProductListSelect<false> | ProductListSelect<true>;
-    shopSettings: ShopSettingsSelect<false> | ShopSettingsSelect<true>;
     cart: CartSelect<false> | CartSelect<true>;
     checkout: CheckoutSelect<false> | CheckoutSelect<true>;
+    inpost: InpostSelect<false> | InpostSelect<true>;
   };
   locale: 'en' | 'pl';
   user:
@@ -2135,6 +2137,20 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shopSettings".
+ */
+export interface ShopSetting {
+  id: string;
+  /**
+   * First currency is the default one
+   */
+  availableCurrencies: ('USD' | 'EUR' | 'GBP' | 'PLN')[];
+  enableOAuth: boolean;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "productDetails".
  */
 export interface ProductDetail {
@@ -2156,20 +2172,6 @@ export interface ProductList {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "shopSettings".
- */
-export interface ShopSetting {
-  id: string;
-  /**
-   * First currency is the default one
-   */
-  availableCurrencies: ('USD' | 'EUR' | 'GBP' | 'PLN')[];
-  enableOAuth: boolean;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cart".
  */
 export interface Cart {
@@ -2185,6 +2187,16 @@ export interface Cart {
 export interface Checkout {
   id: string;
   type: 'OneStepWithSummary';
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inpost".
+ */
+export interface Inpost {
+  id: string;
+  apiUrl: string;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2241,6 +2253,17 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shopSettings_select".
+ */
+export interface ShopSettingsSelect<T extends boolean = true> {
+  availableCurrencies?: T;
+  enableOAuth?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "productDetails_select".
  */
 export interface ProductDetailsSelect<T extends boolean = true> {
@@ -2262,17 +2285,6 @@ export interface ProductListSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "shopSettings_select".
- */
-export interface ShopSettingsSelect<T extends boolean = true> {
-  availableCurrencies?: T;
-  enableOAuth?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cart_select".
  */
 export interface CartSelect<T extends boolean = true> {
@@ -2287,6 +2299,16 @@ export interface CartSelect<T extends boolean = true> {
  */
 export interface CheckoutSelect<T extends boolean = true> {
   type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inpost_select".
+ */
+export interface InpostSelect<T extends boolean = true> {
+  apiUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

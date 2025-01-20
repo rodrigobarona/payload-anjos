@@ -8,6 +8,12 @@ export const Footer: GlobalConfig = {
   access: {
     read: () => true,
   },
+  admin: {
+    group: {
+      en: "Page Settings",
+      pl: "Ustawienia strony",
+    },
+  },
   fields: [
     {
       name: "attribution",

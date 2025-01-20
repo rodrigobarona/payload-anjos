@@ -11,7 +11,10 @@ export const ProductDetails: GlobalConfig = {
     read: () => true,
   },
   admin: {
-    group: "E-commerce",
+    group: {
+      en: "Shop settings",
+      pl: "Ustawienia sklepu",
+    },
   },
   fields: [
     {

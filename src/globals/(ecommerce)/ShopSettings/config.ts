@@ -4,14 +4,17 @@ import type { GlobalConfig } from "payload";
 export const ShopSettings: GlobalConfig = {
   slug: "shopSettings",
   label: {
-    en: "Shop settings",
-    pl: "Ustawienia sklepu",
+    en: "General",
+    pl: "Ogólne",
   },
   access: {
     read: () => true,
   },
   admin: {
-    group: "E-commerce",
+    group: {
+      en: "Shop settings",
+      pl: "Ustawienia sklepu",
+    },
   },
   fields: [
     {

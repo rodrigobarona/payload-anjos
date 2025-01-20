@@ -11,7 +11,13 @@ export const Customers: CollectionConfig = {
       pl: "Klient",
     },
     plural: {
-      en: "Customers",
+      en: "Customers list",
+      pl: "Lista Klientów",
+    },
+  },
+  admin: {
+    group: {
+      en: "Clients",
       pl: "Klienci",
     },
   },

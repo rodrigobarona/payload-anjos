@@ -3,6 +3,12 @@ import { CollectionConfig } from "payload";
 export const ProductReviews: CollectionConfig = {
   slug: "productReviews",
   access: {},
+  admin: {
+    group: {
+      en: "Products",
+      pl: "Produkty",
+    },
+  },
   labels: {
     singular: {
       en: "Product Review",
