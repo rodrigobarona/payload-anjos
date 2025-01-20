@@ -72,6 +72,15 @@ export const Customers: CollectionConfig = {
       },
       fields: [
         {
+          name: "name",
+          type: "text",
+          label: {
+            en: "Name",
+            pl: "Nazwa",
+          },
+          required: true,
+        },
+        {
           name: "address",
           type: "text",
           label: {

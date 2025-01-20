@@ -2,15 +2,17 @@
 
 import { ReactNode, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
-import { Radio, RadioGroup } from "@headlessui/react";
+import { Button, Radio, RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CheckoutFormData, useCheckoutFormSchema } from "@/schemas/checkoutForm.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Customer } from "@/payload-types";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const deliveryMethods = [
   { id: 1, title: "Standard", turnaround: "4–10 business days", price: "$5.00" },
@@ -31,18 +33,19 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
   const form = useForm<CheckoutFormData>({
     resolver: zodResolver(CheckoutFormSchemaResolver),
     defaultValues: {
-      firstName: user?.firstName ?? "",
-      lastName: user?.lastName ?? "",
       buyerType: user?.lastBuyerType ?? "individual",
       individualInvoice: false,
       invoice: {
         name: "",
         address: "",
         city: "",
+        country: "",
+        region: "",
         postalCode: "",
         tin: "",
       },
       shipping: {
+        name: defaultShippingAddress?.name ?? "",
         address: defaultShippingAddress?.address ?? "",
         city: defaultShippingAddress?.city ?? "",
         country: defaultShippingAddress?.country ?? "",
@@ -59,48 +62,87 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
   const onSubmit = async (values: CheckoutFormData) => {
     try {
       console.log(values);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  console.log(form.formState.errors);
+
+  const wantsInvoice = useWatch({ control: form.control, name: "individualInvoice" });
+  const isCompany = useWatch({ control: form.control, name: "buyerType" }) === "company";
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
         <div>
           <div className="mt-10 border-t border-gray-200 pt-10">
+            <h2 className="text-lg font-medium text-gray-900">You buy as</h2>
+            <FormField
+              control={form.control}
+              name="buyerType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Tabs defaultValue="individual" onValueChange={field.onChange} className="my-4">
+                      <TabsList className="w-full">
+                        <TabsTrigger className="w-1/2" value="individual">
+                          Private
+                        </TabsTrigger>
+                        <TabsTrigger className="w-1/2" value="company">
+                          Company
+                        </TabsTrigger>
+                      </TabsList>
+                    </Tabs>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <h2 className="text-lg font-medium text-gray-900">Shipping information</h2>
 
             <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>First Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="John" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Last Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Doe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
               {defaultShippingAddress ? (
-                <p>Block with selected address and ability to change it</p>
+                <div className="group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 ring-indigo-500 focus:outline-none">
+                  <span className="flex flex-1">
+                    <span className="flex w-full flex-col">
+                      <span className="block text-sm font-medium text-gray-900">
+                        {defaultShippingAddress.name}
+                      </span>
+                      <span className="mt-1 flex items-center text-sm text-gray-500">
+                        {defaultShippingAddress.address}
+                      </span>
+                      <span className="mt-1 text-sm font-medium text-gray-500">
+                        {defaultShippingAddress.postalCode}, {defaultShippingAddress.city},{" "}
+                        {defaultShippingAddress.country}
+                      </span>
+                      <span className="mt-1 flex items-center text-sm text-gray-500">
+                        {defaultShippingAddress.phone}
+                      </span>
+                      <span className="mt-1 flex items-center text-sm text-gray-500">
+                        {defaultShippingAddress.email}
+                      </span>
+                      <Button type="button" className="ml-auto mt-1 text-sm text-indigo-600">
+                        Change
+                      </Button>
+                    </span>
+                  </span>
+                </div>
               ) : (
                 <>
+                  <FormField
+                    control={form.control}
+                    name="shipping.name"
+                    render={({ field }) => (
+                      <FormItem className="sm:col-span-2">
+                        <FormLabel>Full Name or Company Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John Doe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="shipping.address"
@@ -200,6 +242,129 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input placeholder="Email" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </>
+              )}
+              <FormField
+                control={form.control}
+                name="individualInvoice"
+                render={({ field }) => (
+                  <FormItem className="rounded-mdp-4 flex flex-row items-start space-x-3 space-y-0 sm:col-span-2">
+                    <FormControl>
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>I want invoice on other address</FormLabel>
+                    </div>
+                  </FormItem>
+                )}
+              />
+              {wantsInvoice && (
+                <>
+                  <FormField
+                    control={form.control}
+                    name="invoice.name"
+                    render={({ field }) => (
+                      <FormItem className="sm:col-span-2">
+                        <FormLabel>Full Name or Company Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John Doe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {isCompany && (
+                    <FormField
+                      control={form.control}
+                      name="invoice.tin"
+                      render={({ field }) => (
+                        <FormItem className="sm:col-span-2">
+                          <FormLabel>Company TIN (NIP)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="123456789" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                  <FormField
+                    control={form.control}
+                    name="invoice.address"
+                    render={({ field }) => (
+                      <FormItem className="sm:col-span-2">
+                        <FormLabel>Address</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Address" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="invoice.city"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>City</FormLabel>
+                        <FormControl>
+                          <Input placeholder="City" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="invoice.country"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Country</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
+                                <SelectValue placeholder="Select a verified email to display" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="pl">Poland</SelectItem>
+                              <SelectItem value="uk">United Kingdom</SelectItem>
+                              <SelectItem value="us">USA</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="invoice.region"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>State / Province</FormLabel>
+                        <FormControl>
+                          <Input placeholder="State / Province" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="invoice.postalCode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Postal Code</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Postal Code" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

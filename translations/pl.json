@@ -72,5 +72,30 @@
       "passwords-mismatch": "Hasła nie są takie same",
       "server-error": "Wewnętrzny błąd serwera. Skontaktuj się z pomocą techniczną."
     }
+  },
+  "CheckoutForm": {
+    "errors": {
+      "invoice": {
+        "name": "Nazwa nie może być pusta",
+        "address": "Adres nie może być pusty",
+        "city": "Miasto nie może być puste",
+        "country": "Kraj nie może być pusty",
+        "region": "Region nie może być pusty",
+        "postalCode": "Kod pocztowy nie może być pusty",
+        "tin": "NIP nie może być pusty"
+      },
+      "shipping": {
+        "name": "Nazwa nie może być pusta",
+        "address": "Adres nie może być pusty",
+        "city": "Miasto nie może być puste",
+        "country": "Kraj nie może być pusty",
+        "region": "Region nie może być pusty",
+        "postalCode": "Kod pocztowy nie może być pusty",
+        "phone": "Nieprawidłowy numer telefonu",
+        "email": "Nieprawidłowy adres e-mail"
+      },
+      "deliveryMethod": "Musisz wybrać metodę dostawy",
+      "paymentMethod": "Musisz wybrać metodę płatności"
+    }
   }
 }

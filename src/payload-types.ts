@@ -907,6 +907,7 @@ export interface Customer {
   lastBuyerType?: ('individual' | 'company') | null;
   shippings?:
     | {
+        name: string;
         address: string;
         city: string;
         country: string;
@@ -1699,6 +1700,7 @@ export interface CustomersSelect<T extends boolean = true> {
   shippings?:
     | T
     | {
+        name?: T;
         address?: T;
         city?: T;
         country?: T;

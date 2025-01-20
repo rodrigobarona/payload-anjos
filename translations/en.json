@@ -72,5 +72,30 @@
       "passwords-mismatch": "Passwords do not match",
       "server-error": "Internal server error. Please contact support."
     }
+  },
+  "CheckoutForm": {
+    "errors": {
+      "invoice": {
+        "name": "Name cannot be empty",
+        "address": "Address cannot be empty",
+        "city": "City cannot be empty",
+        "country": "Country cannot be empty",
+        "region": "Region cannot be empty",
+        "postalCode": "Postal code cannot be empty",
+        "tin": "TIN cannot be empty"
+      },
+      "shipping": {
+        "name": "Name cannot be empty",
+        "address": "Address cannot be empty",
+        "city": "City cannot be empty",
+        "country": "Country cannot be empty",
+        "region": "Region cannot be empty",
+        "postalCode": "Postal code cannot be empty",
+        "phone": "Invalid phone number",
+        "email": "Invalid email address"
+      },
+      "deliveryMethod": "You must choose a delivery method",
+      "paymentMethod": "You must choose a payment method"
+    }
   }
 }
