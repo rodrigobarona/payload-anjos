@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/utilities/cn";
-import { useLocale } from "next-intl";
 import { memo, useEffect } from "react";
 
 export const InPostGeowidget = memo(
@@ -14,7 +13,10 @@ export const InPostGeowidget = memo(
     setPickupPoint: (event: CustomEvent) => void;
     className?: string;
   }) => {
-    const locale = useLocale();
+    const handleMapEvent = (event: CustomEvent) => {
+      console.log(event.detail);
+      setPickupPoint(event);
+    };
 
     useEffect(() => {
       const script = document.createElement("script");
@@ -33,11 +35,6 @@ export const InPostGeowidget = memo(
       };
     }, []);
 
-    const handleMapEvent = (event: CustomEvent) => {
-      console.log(event.detail);
-      setPickupPoint(event);
-    };
-
     useEffect(() => {
       document.addEventListener("onpointselect", handleMapEvent);
 
@@ -52,7 +49,7 @@ export const InPostGeowidget = memo(
         className={cn("flex-1", className)}
         onpoint="onpointselect"
         token={token}
-        language={["pl", "en", "uk"].includes(locale) ? locale : "en"}
+        language="pl"
         config="parcelCollect"
       />
     );

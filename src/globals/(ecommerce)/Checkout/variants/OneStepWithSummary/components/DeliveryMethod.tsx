@@ -48,8 +48,6 @@ export const DeliveryMethod = ({
       Logo = <></>;
   }
 
-  console.log(form.getValues());
-
   const pickupPointID = useWatch({ control: form.control, name: "shipping.pickupPointID" });
   const pickupPointAddress = useWatch({ control: form.control, name: "shipping.pickupPointAddress" });
   const deliveryMethod = useWatch({ control: form.control, name: "deliveryMethod" });
@@ -58,21 +56,24 @@ export const DeliveryMethod = ({
     case "inpost-pickup":
       Additional = (
         <div className="mt-2 flex h-fit w-full flex-row-reverse">
-          <Button
-            type="button"
-            onClick={() => setDialogOpen(true)}
-            variant="tailwind"
-            className="ml-auto w-fit"
-            {...props}
-          >
-            {t("choose-pickup")}
-          </Button>
+          {deliveryMethod === variant && (
+            <Button
+              type="button"
+              onClick={() => setDialogOpen(true)}
+              variant="tailwind"
+              className="ml-auto w-fit"
+              {...props}
+            >
+              {t("choose-pickup")}
+            </Button>
+          )}
+
           <div className={cn(dialogOpen ? "block" : "hidden")}>
             <div
               onClick={() => setDialogOpen(false)}
               className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
             ></div>
-            <div className="fixed left-[50%] top-[50%] z-50 flex h-[60dvh] w-[80vw] translate-x-[-50%] translate-y-[-50%] flex-col gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg">
+            <div className="fixed left-[50%] top-[50%] z-50 flex h-[75dvh] w-[95vw] max-w-screen-xl translate-x-[-50%] translate-y-[-50%] flex-col gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:w-[80vw] sm:rounded-lg">
               <h3 className="text-lg font-semibold leading-none tracking-tight">{t("choose-pickup")}</h3>
               <InPostGeowidget
                 token={geowidgetToken}
@@ -94,6 +95,7 @@ export const DeliveryMethod = ({
               </div>
             </div>
           </div>
+
           {pickupPointID && (
             <p className="mr-auto flex items-center text-sm">
               {pickupPointID}, {pickupPointAddress}
@@ -121,7 +123,7 @@ export const DeliveryMethod = ({
           {formatPrice(price, currency, locale)}
         </span>
       </span>
-      {deliveryMethod === variant && Additional}
+      {Additional}
     </div>
   );
 };

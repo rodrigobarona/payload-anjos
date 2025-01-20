@@ -2,9 +2,8 @@ import { getCustomer } from "@/utilities/getCustomer";
 import { CheckoutForm } from "./components/CheckoutForm";
 import { OrderSummary } from "./components/OrderSummary";
 import { getCachedGlobal } from "@/utilities/getGlobals";
-import { getLocale } from "next-intl/server";
+
 import { Locale } from "@/i18n/config";
-import { InPostGeowidget } from "@/components/(ecommerce)/InPostGeowidget";
 
 const products = [
   {
@@ -33,7 +32,6 @@ export const OneStepWithSummary = async ({ locale }: { locale: Locale }) => {
         <CheckoutForm geowidgetToken={geowidgetToken ?? undefined} deliveryMethods={deliveries} user={user}>
           <OrderSummary products={products} />
         </CheckoutForm>
-        {/* {geowidgetToken && <InPostGeowidget setPickupPoint={() => {}} token={geowidgetToken} />} */}
       </div>
     </div>
   );
