@@ -14,6 +14,7 @@ import { Customer } from "@/payload-types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslations } from "next-intl";
+import { DeliveryMethod } from "./DeliveryMethod";
 
 const deliveryMethods = [
   { id: 1, title: "Standard", turnaround: "4–10 business days", price: "$5.00" },
@@ -25,7 +26,17 @@ const paymentMethods = [
   { id: "etransfer", title: "eTransfer" },
 ];
 
-export const CheckoutForm = ({ user, children }: { user?: Customer; children: ReactNode }) => {
+export const CheckoutForm = ({
+  user,
+  deliveryMethods,
+  geowidgetToken,
+  children,
+}: {
+  user?: Customer;
+  deliveryMethods: { slug: string; title: string; turnaround: string; price: number }[];
+  geowidgetToken?: string;
+  children: ReactNode;
+}) => {
   const { CheckoutFormSchemaResolver } = useCheckoutFormSchema();
   const t = useTranslations("CheckoutForm.form");
 
@@ -54,6 +65,8 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
         postalCode: defaultShippingAddress?.postalCode ?? "",
         phone: defaultShippingAddress?.phone ?? "",
         email: defaultShippingAddress?.email ?? "",
+        pickupPointID: "",
+        pickupPointAddress: "",
       },
       deliveryMethod: "",
       paymentMethod: "",
@@ -391,12 +404,12 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     onChange={field.onChange}
                     className="mt-4 grid grid-cols-1 gap-y-3 sm:gap-x-4"
                   >
-                    {deliveryMethods.map((deliveryMethod) => (
+                    {deliveryMethods.map(({ slug, title, turnaround, price }) => (
                       <Radio
-                        key={deliveryMethod.id}
-                        value={deliveryMethod.title}
-                        aria-label={deliveryMethod.title}
-                        aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
+                        key={slug}
+                        value={slug}
+                        aria-label={title}
+                        aria-description={`${turnaround} for ${price}`}
                         className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
                       >
                         <CheckCircleIcon
@@ -407,19 +420,14 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                           aria-hidden="true"
                           className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
                         />
-                        <span className="flex flex-1">
-                          <span className="ml-3 grid w-full grid-cols-3 items-center justify-between">
-                            <span className="block text-sm font-medium text-gray-900">
-                              {deliveryMethod.title}
-                            </span>
-                            <span className="block items-center text-sm text-gray-500">
-                              {deliveryMethod.turnaround}
-                            </span>
-                            <span className="text-right text-sm font-medium text-gray-900">
-                              {deliveryMethod.price}
-                            </span>
-                          </span>
-                        </span>
+
+                        <DeliveryMethod
+                          geowidgetToken={geowidgetToken}
+                          variant={slug}
+                          title={title}
+                          turnaround={turnaround}
+                          price={price}
+                        />
                       </Radio>
                     ))}
                   </RadioGroup>

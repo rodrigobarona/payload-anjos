@@ -126,5 +126,11 @@
       "deliveryMethod": "Musisz wybrać metodę dostawy",
       "paymentMethod": "Musisz wybrać metodę płatności"
     }
+  },
+  "DeliveryMethods": {
+    "inpost-pickup": "Paczkomaty InPost",
+    "inpost-courier": "Kurier InPost",
+    "choose-pickup": "Wybierz paczkomat",
+    "close": "Zamknij"
   }
 }

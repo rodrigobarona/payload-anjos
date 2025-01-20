@@ -2196,7 +2196,16 @@ export interface Checkout {
  */
 export interface Inpost {
   id: string;
-  apiUrl: string;
+  enabled?: boolean | null;
+  parcelLockers?: boolean | null;
+  courier?: boolean | null;
+  clientId?: string | null;
+  /**
+   * Remember to pass matching keys for choosen environment
+   */
+  APIUrl?: ('https://api-shipx-pl.easypack24.net' | 'https://sandbox-api-shipx-pl.easypack24.net') | null;
+  shipXAPIKey?: string | null;
+  geowidgetToken?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2308,7 +2317,13 @@ export interface CheckoutSelect<T extends boolean = true> {
  * via the `definition` "inpost_select".
  */
 export interface InpostSelect<T extends boolean = true> {
-  apiUrl?: T;
+  enabled?: T;
+  parcelLockers?: T;
+  courier?: T;
+  clientId?: T;
+  APIUrl?: T;
+  shipXAPIKey?: T;
+  geowidgetToken?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

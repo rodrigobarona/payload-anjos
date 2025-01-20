@@ -126,5 +126,11 @@
       "deliveryMethod": "You must choose a delivery method",
       "paymentMethod": "You must choose a payment method"
     }
+  },
+  "DeliveryMethods": {
+    "inpost-pickup": "InPost lockers",
+    "inpost-courier": "InPost courier",
+    "choose-pickup": "Choose point",
+    "close": "Close"
   }
 }
