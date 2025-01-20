@@ -45,16 +45,6 @@ export const Posts: CollectionConfig<"posts"> = {
     read: authenticatedOrPublished,
     update: authenticated,
   },
-  labels: {
-    singular: {
-      en: "Post",
-      pl: "Post",
-    },
-    plural: {
-      en: "Posts",
-      pl: "Posty",
-    }
-  },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
   // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'posts'>
