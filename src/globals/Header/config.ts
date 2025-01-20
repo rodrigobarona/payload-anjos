@@ -15,6 +15,10 @@ export const Header: GlobalConfig = {
       pl: "Ustawienia strony",
     },
   },
+  label: {
+    en: "Header",
+    pl: "Nagłówek",
+  },
   fields: [
     {
       name: "navItems",

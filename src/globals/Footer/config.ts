@@ -8,6 +8,10 @@ export const Footer: GlobalConfig = {
   access: {
     read: () => true,
   },
+  label: {
+    en: "Footer",
+    pl: "Stopka",
+  },
   admin: {
     group: {
       en: "Page Settings",
