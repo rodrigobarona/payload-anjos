@@ -74,6 +74,35 @@
     }
   },
   "CheckoutForm": {
+    "form": {
+      "buy-as": "You are buying as",
+      "individual": "Individual",
+      "company": "Company",
+      "shipping-address": "Shipping address",
+      "other-invoice": "I want to receive an invoice with different data",
+      "full-name": "Full name or company name",
+      "full-name-placeholder": "John Doe",
+      "tin": "TIN",
+      "tin-placeholder": "123-456-78-90",
+      "address": "Address",
+      "address-placeholder": "123 Main St",
+      "city": "City",
+      "city-placeholder": "New York",
+      "country": "Country",
+      "country-placeholder": "United States",
+      "region": "Region",
+      "region-placeholder": "New York",
+      "email": "Email",
+      "email-placeholder": "john.doe@example.com",
+      "phone": "Phone",
+      "phone-placeholder": "+1 234 567 890",
+      "postal-code": "Postal code",
+      "postal-code-placeholder": "10001",
+      "delivery-method": "Delivery method",
+      "payment-method": "Payment method",
+      "change": "Change",
+      "invoice-data": "Invoice data"
+    },
     "errors": {
       "invoice": {
         "name": "Name cannot be empty",

@@ -10,6 +10,9 @@ export const ShopSettings: GlobalConfig = {
   access: {
     read: () => true,
   },
+  admin: {
+    group: "E-commerce",
+  },
   fields: [
     {
       name: "availableCurrencies",

@@ -10,6 +10,9 @@ export const ProductDetails: GlobalConfig = {
   access: {
     read: () => true,
   },
+  admin: {
+    group: "E-commerce",
+  },
   fields: [
     {
       name: "type",

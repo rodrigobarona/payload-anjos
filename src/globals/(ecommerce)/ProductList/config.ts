@@ -10,6 +10,9 @@ export const ProductList: GlobalConfig = {
   access: {
     read: () => true,
   },
+  admin: {
+    group: "E-commerce",
+  },
   fields: [
     {
       name: "filters",

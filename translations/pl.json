@@ -74,6 +74,35 @@
     }
   },
   "CheckoutForm": {
+    "form": {
+      "buy-as": "Kupujesz jako",
+      "individual": "Osoba prywatna",
+      "company": "Firma",
+      "shipping-address": "Adres dostawy",
+      "other-invoice": "Chcę otrzymać fakturę na inne dane",
+      "full-name": "Imię i nazwisko lub nazwa firmy",
+      "full-name-placeholder": "Jan Kowalski",
+      "tin": "NIP",
+      "tin-placeholder": "123-456-78-90",
+      "address": "Adres",
+      "address-placeholder": "ul. Przykładowa 1",
+      "city": "Miasto",
+      "city-placeholder": "Warszawa",
+      "country": "Kraj",
+      "country-placeholder": "Polska",
+      "region": "Region",
+      "region-placeholder": "Mazowieckie",
+      "email": "Adres e-mail",
+      "email-placeholder": "jan.kowalski@example.pl",
+      "phone": "Numer telefonu",
+      "phone-placeholder": "+48 123 456 789",
+      "postal-code": "Kod pocztowy",
+      "postal-code-placeholder": "00-000",
+      "delivery-method": "Metoda dostawy",
+      "payment-method": "Metoda płatności",
+      "change": "Zmień",
+      "invoice-data": "Dane do faktury"
+    },
     "errors": {
       "invoice": {
         "name": "Nazwa nie może być pusta",

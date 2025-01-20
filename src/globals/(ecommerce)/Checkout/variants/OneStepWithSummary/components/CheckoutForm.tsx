@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Customer } from "@/payload-types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useTranslations } from "next-intl";
 
 const deliveryMethods = [
   { id: 1, title: "Standard", turnaround: "4–10 business days", price: "$5.00" },
@@ -25,8 +26,8 @@ const paymentMethods = [
 ];
 
 export const CheckoutForm = ({ user, children }: { user?: Customer; children: ReactNode }) => {
-  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0]);
   const { CheckoutFormSchemaResolver } = useCheckoutFormSchema();
+  const t = useTranslations("CheckoutForm.form");
 
   const defaultShippingAddress = user?.shippings?.find((shippingAddress) => shippingAddress.default);
 
@@ -66,7 +67,7 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
       console.log(error);
     }
   };
-
+  console.log(form.getValues());
   console.log(form.formState.errors);
 
   const wantsInvoice = useWatch({ control: form.control, name: "individualInvoice" });
@@ -77,7 +78,7 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
       <form onSubmit={form.handleSubmit(onSubmit)} className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
         <div>
           <div className="mt-10 border-t border-gray-200 pt-10">
-            <h2 className="text-lg font-medium text-gray-900">You buy as</h2>
+            <h2 className="text-lg font-medium text-gray-900">{t("buy-as")}</h2>
             <FormField
               control={form.control}
               name="buyerType"
@@ -87,10 +88,10 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     <Tabs defaultValue="individual" onValueChange={field.onChange} className="my-4">
                       <TabsList className="w-full">
                         <TabsTrigger className="w-1/2" value="individual">
-                          Private
+                          {t("individual")}
                         </TabsTrigger>
                         <TabsTrigger className="w-1/2" value="company">
-                          Company
+                          {t("company")}
                         </TabsTrigger>
                       </TabsList>
                     </Tabs>
@@ -99,7 +100,7 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                 </FormItem>
               )}
             />
-            <h2 className="text-lg font-medium text-gray-900">Shipping information</h2>
+            <h2 className="text-lg font-medium text-gray-900">{t("shipping-address")}</h2>
 
             <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
               {defaultShippingAddress ? (
@@ -123,7 +124,7 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                         {defaultShippingAddress.email}
                       </span>
                       <Button type="button" className="ml-auto mt-1 text-sm text-indigo-600">
-                        Change
+                        {t("change")}
                       </Button>
                     </span>
                   </span>
@@ -135,9 +136,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="shipping.name"
                     render={({ field }) => (
                       <FormItem className="sm:col-span-2">
-                        <FormLabel>Full Name or Company Name</FormLabel>
+                        <FormLabel>{t("full-name")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="John Doe" {...field} />
+                          <Input placeholder={t("full-name-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -148,9 +149,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="shipping.address"
                     render={({ field }) => (
                       <FormItem className="sm:col-span-2">
-                        <FormLabel>Address</FormLabel>
+                        <FormLabel>{t("address")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Address" {...field} />
+                          <Input placeholder={t("address-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -161,9 +162,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="shipping.city"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>City</FormLabel>
+                        <FormLabel>{t("city")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="City" {...field} />
+                          <Input placeholder={t("city-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -174,12 +175,12 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="shipping.country"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Country</FormLabel>
+                        <FormLabel>{t("country")}</FormLabel>
                         <FormControl>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                               <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
-                                <SelectValue placeholder="Select a verified email to display" />
+                                <SelectValue placeholder={t("country-placeholder")} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
@@ -199,9 +200,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="shipping.region"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>State / Province</FormLabel>
+                        <FormLabel>{t("region")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="State / Province" {...field} />
+                          <Input placeholder={t("region-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -212,9 +213,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="shipping.postalCode"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Postal Code</FormLabel>
+                        <FormLabel>{t("postal-code")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Postal Code" {...field} />
+                          <Input placeholder={t("postal-code-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -226,9 +227,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="shipping.phone"
                     render={({ field }) => (
                       <FormItem className="sm:col-span-2">
-                        <FormLabel>Phone</FormLabel>
+                        <FormLabel>{t("phone")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Phone" {...field} />
+                          <Input placeholder={t("phone-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -239,9 +240,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="shipping.email"
                     render={({ field }) => (
                       <FormItem className="sm:col-span-2">
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>{t("email")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Email" {...field} />
+                          <Input placeholder={t("email-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -249,30 +250,33 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                   />
                 </>
               )}
-              <FormField
-                control={form.control}
-                name="individualInvoice"
-                render={({ field }) => (
-                  <FormItem className="rounded-mdp-4 flex flex-row items-start space-x-3 space-y-0 sm:col-span-2">
-                    <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>I want invoice on other address</FormLabel>
-                    </div>
-                  </FormItem>
-                )}
-              />
-              {wantsInvoice && (
+              {!isCompany && (
+                <FormField
+                  control={form.control}
+                  name="individualInvoice"
+                  render={({ field }) => (
+                    <FormItem className="rounded-mdp-4 flex flex-row items-start space-x-3 space-y-0 sm:col-span-2">
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>{t("other-invoice")}</FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )}
+              {(wantsInvoice || isCompany) && (
                 <>
+                  <h2 className="text-lg font-medium text-gray-900 sm:col-span-2">{t("invoice-data")}</h2>
                   <FormField
                     control={form.control}
                     name="invoice.name"
                     render={({ field }) => (
                       <FormItem className="sm:col-span-2">
-                        <FormLabel>Full Name or Company Name</FormLabel>
+                        <FormLabel>{t("full-name")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="John Doe" {...field} />
+                          <Input placeholder={t("full-name-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -284,9 +288,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                       name="invoice.tin"
                       render={({ field }) => (
                         <FormItem className="sm:col-span-2">
-                          <FormLabel>Company TIN (NIP)</FormLabel>
+                          <FormLabel>{t("tin")}</FormLabel>
                           <FormControl>
-                            <Input placeholder="123456789" {...field} />
+                            <Input placeholder={t("tin-placeholder")} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -298,9 +302,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="invoice.address"
                     render={({ field }) => (
                       <FormItem className="sm:col-span-2">
-                        <FormLabel>Address</FormLabel>
+                        <FormLabel>{t("address")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Address" {...field} />
+                          <Input placeholder={t("address-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -311,9 +315,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="invoice.city"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>City</FormLabel>
+                        <FormLabel>{t("city")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="City" {...field} />
+                          <Input placeholder={t("city-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -324,12 +328,12 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="invoice.country"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Country</FormLabel>
+                        <FormLabel>{t("country")}</FormLabel>
                         <FormControl>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                               <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
-                                <SelectValue placeholder="Select a verified email to display" />
+                                <SelectValue placeholder={t("country-placeholder")} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
@@ -349,9 +353,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="invoice.region"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>State / Province</FormLabel>
+                        <FormLabel>{t("region")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="State / Province" {...field} />
+                          <Input placeholder={t("region-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -362,9 +366,9 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
                     name="invoice.postalCode"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Postal Code</FormLabel>
+                        <FormLabel>{t("postal-code")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Postal Code" {...field} />
+                          <Input placeholder={t("postal-code-placeholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -377,134 +381,51 @@ export const CheckoutForm = ({ user, children }: { user?: Customer; children: Re
 
           <div className="mt-10 border-t border-gray-200 pt-10">
             <fieldset>
-              <legend className="text-lg font-medium text-gray-900">Delivery method</legend>
-
-              <RadioGroup
-                value={selectedDeliveryMethod}
-                onChange={setSelectedDeliveryMethod}
-                className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
-              >
-                {deliveryMethods.map((deliveryMethod) => (
-                  <Radio
-                    key={deliveryMethod.id}
-                    value={deliveryMethod}
-                    aria-label={deliveryMethod.title}
-                    aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
-                    className="group relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
+              <legend className="text-lg font-medium text-gray-900">{t("delivery-method")}</legend>
+              <FormField
+                control={form.control}
+                name="deliveryMethod"
+                render={({ field }) => (
+                  <RadioGroup
+                    value={field.value}
+                    onChange={field.onChange}
+                    className="mt-4 grid grid-cols-1 gap-y-3 sm:gap-x-4"
                   >
-                    <span className="flex flex-1">
-                      <span className="flex flex-col">
-                        <span className="block text-sm font-medium text-gray-900">
-                          {deliveryMethod.title}
+                    {deliveryMethods.map((deliveryMethod) => (
+                      <Radio
+                        key={deliveryMethod.id}
+                        value={deliveryMethod.title}
+                        aria-label={deliveryMethod.title}
+                        aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
+                        className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
+                      >
+                        <CheckCircleIcon
+                          aria-hidden="true"
+                          className="size-5 text-indigo-600 group-[&:not([data-checked])]:opacity-0"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
+                        />
+                        <span className="flex flex-1">
+                          <span className="ml-3 grid w-full grid-cols-3 items-center justify-between">
+                            <span className="block text-sm font-medium text-gray-900">
+                              {deliveryMethod.title}
+                            </span>
+                            <span className="block items-center text-sm text-gray-500">
+                              {deliveryMethod.turnaround}
+                            </span>
+                            <span className="text-right text-sm font-medium text-gray-900">
+                              {deliveryMethod.price}
+                            </span>
+                          </span>
                         </span>
-                        <span className="mt-1 flex items-center text-sm text-gray-500">
-                          {deliveryMethod.turnaround}
-                        </span>
-                        <span className="mt-6 text-sm font-medium text-gray-900">{deliveryMethod.price}</span>
-                      </span>
-                    </span>
-                    <CheckCircleIcon
-                      aria-hidden="true"
-                      className="size-5 text-indigo-600 group-[&:not([data-checked])]:hidden"
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
-                    />
-                  </Radio>
-                ))}
-              </RadioGroup>
+                      </Radio>
+                    ))}
+                  </RadioGroup>
+                )}
+              />
             </fieldset>
-          </div>
-
-          {/* Payment */}
-          <div className="mt-10 border-t border-gray-200 pt-10">
-            <h2 className="text-lg font-medium text-gray-900">Payment</h2>
-
-            <fieldset className="mt-4">
-              <legend className="sr-only">Payment type</legend>
-              <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                {paymentMethods.map((paymentMethod, paymentMethodIdx) => (
-                  <div key={paymentMethod.id} className="flex items-center">
-                    <input
-                      defaultChecked={paymentMethodIdx === 0}
-                      id={paymentMethod.id}
-                      name="payment-type"
-                      type="radio"
-                      className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
-                    />
-                    <label
-                      htmlFor={paymentMethod.id}
-                      className="ml-3 block text-sm/6 font-medium text-gray-700"
-                    >
-                      {paymentMethod.title}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </fieldset>
-
-            <div className="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
-              <div className="col-span-4">
-                <label htmlFor="card-number" className="block text-sm/6 font-medium text-gray-700">
-                  Card number
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="card-number"
-                    name="card-number"
-                    type="text"
-                    autoComplete="cc-number"
-                    className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-
-              <div className="col-span-4">
-                <label htmlFor="name-on-card" className="block text-sm/6 font-medium text-gray-700">
-                  Name on card
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="name-on-card"
-                    name="name-on-card"
-                    type="text"
-                    autoComplete="cc-name"
-                    className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-
-              <div className="col-span-3">
-                <label htmlFor="expiration-date" className="block text-sm/6 font-medium text-gray-700">
-                  Expiration date (MM/YY)
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="expiration-date"
-                    name="expiration-date"
-                    type="text"
-                    autoComplete="cc-exp"
-                    className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="cvc" className="block text-sm/6 font-medium text-gray-700">
-                  CVC
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="cvc"
-                    name="cvc"
-                    type="text"
-                    autoComplete="csc"
-                    className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         {children}
