@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { Button, Radio, RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
@@ -15,6 +15,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslations } from "next-intl";
 import { DeliveryMethod } from "./DeliveryMethod";
+import debounce from "lodash.debounce";
+import axios from "axios";
+import { Cart } from "@/stores/CartStore/types";
+import { useCart } from "@/stores/CartStore";
+import { Currency } from "@/stores/Currency/types";
+import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Cart/variants/SlideOver";
 
 const deliveryMethods = [
   { id: 1, title: "Standard", turnaround: "4–10 business days", price: "$5.00" },
@@ -26,14 +32,31 @@ const paymentMethods = [
   { id: "etransfer", title: "eTransfer" },
 ];
 
+type FilledCourier = {
+  slug: string;
+  title: string;
+  turnaround: string;
+  pricing:
+    | {
+        value: number;
+        currency: string;
+        id?: string | null;
+      }[]
+    | undefined;
+};
+
 export const CheckoutForm = ({
   user,
-  deliveryMethods,
+  // deliveryMethods,
   geowidgetToken,
   children,
 }: {
   user?: Customer;
-  deliveryMethods: { slug: string; title: string; turnaround: string; price: number }[];
+  deliveryMethods: {
+    slug: string;
+    title: string;
+    turnaround: string;
+  }[];
   geowidgetToken?: string;
   children: ReactNode;
 }) => {
@@ -60,7 +83,7 @@ export const CheckoutForm = ({
         name: defaultShippingAddress?.name ?? "",
         address: defaultShippingAddress?.address ?? "",
         city: defaultShippingAddress?.city ?? "",
-        country: defaultShippingAddress?.country ?? "",
+        country: defaultShippingAddress?.country ?? "pl",
         region: defaultShippingAddress?.region ?? "",
         postalCode: defaultShippingAddress?.postalCode ?? "",
         phone: defaultShippingAddress?.phone ?? "",
@@ -80,11 +103,53 @@ export const CheckoutForm = ({
       console.log(error);
     }
   };
-  console.log(form.getValues());
-  console.log(form.formState.errors);
 
   const wantsInvoice = useWatch({ control: form.control, name: "individualInvoice" });
   const isCompany = useWatch({ control: form.control, name: "buyerType" }) === "company";
+  const selectedCountry = useWatch({ control: form.control, name: "shipping.country" });
+
+  const [checkoutProducts, setCheckoutProducts] = useState<ProductWithFilledVariants[]>();
+  const [totalPrice, setTotalPrice] = useState<
+    {
+      currency: Currency;
+      value: number;
+    }[]
+  >();
+  const [deliveryMethods, setDeliveryMethods] = useState<FilledCourier[]>([]);
+  const { cart } = useCart();
+
+  const fetchCartProducts = useCallback(
+    debounce(async (cartToCalculate: Cart | null) => {
+      try {
+        const { data } = await axios.post<{
+          status: number;
+          productsWithTotalAndCouriers: {
+            filledProducts: ProductWithFilledVariants[];
+            total: {
+              currency: Currency;
+              value: number;
+            }[];
+            totalQuantity: number;
+            couriers: FilledCourier[];
+          };
+        }>("/next/checkout", { cart: cartToCalculate, selectedCountry });
+        const { filledProducts, total, couriers } = data.productsWithTotalAndCouriers;
+        setCheckoutProducts(filledProducts);
+        setDeliveryMethods(couriers);
+        setTotalPrice(total);
+      } catch (error) {
+        console.error(error);
+      }
+    }, 300),
+    [],
+  );
+
+  useEffect(() => {
+    fetchCartProducts(cart);
+  }, [cart]);
+
+  console.log(form.getValues());
+  console.log(form.formState.errors);
 
   return (
     <Form {...form}>
@@ -404,12 +469,12 @@ export const CheckoutForm = ({
                     onChange={field.onChange}
                     className="mt-4 grid grid-cols-1 gap-y-3 sm:gap-x-4"
                   >
-                    {deliveryMethods.map(({ slug, title, turnaround, price }) => (
+                    {deliveryMethods.map(({ slug, title, turnaround, pricing }) => (
                       <Radio
                         key={slug}
                         value={slug}
                         aria-label={title}
-                        aria-description={`${turnaround} for ${price}`}
+                        aria-description={`${turnaround} for price`}
                         className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
                       >
                         <CheckCircleIcon
@@ -426,7 +491,7 @@ export const CheckoutForm = ({
                           variant={slug}
                           title={title}
                           turnaround={turnaround}
-                          price={price}
+                          pricing={pricing}
                         />
                       </Radio>
                     ))}

@@ -1,16 +1,13 @@
-import { draftMode } from "next/headers";
 import { getPayload } from "payload";
 import config from "@payload-config";
-import { NextRequest } from "next/server";
 import { Cart } from "@/stores/CartStore/types";
-import { FilledVariant } from "@/globals/(ecommerce)/ProductDetails/types";
 
 type Total = Record<string, number>;
 
 export async function POST(req: Request) {
   try {
     const payload = await getPayload({ config });
-    const cart: Cart | undefined = await req.json();
+    const { cart }: { cart: Cart | undefined } = await req.json();
     if (!cart) {
       return Response.json({ status: 200 });
     }
@@ -40,9 +37,6 @@ export async function POST(req: Request) {
     const filledProducts = products.flatMap((product) => {
       if (!product.variants || product.variants.length === 0) {
         const cartProduct = cart.find((cartProduct) => cartProduct.id === product.id);
-        console.log(cartProduct?.quantity);
-        console.log(product.slug);
-        console.log(product.stock);
         return cartProduct
           ? [
               {
@@ -94,7 +88,6 @@ export async function POST(req: Request) {
       if (!product) return acc;
       if (!product.enableVariantPrices) {
         product.pricing?.forEach((price) => {
-          console.log(price);
           acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
         });
       } else if (product.enableVariantPrices && product.enableVariants) {

@@ -17,7 +17,7 @@ import { useTranslations } from "next-intl";
 import debounce from "lodash.debounce";
 import { Cart } from "@/stores/CartStore/types";
 
-type ProductWithFilledVariants = Omit<Product, "variants" | "pricing"> & {
+export type ProductWithFilledVariants = Omit<Product, "variants" | "pricing"> & {
   variant: FilledVariant | undefined;
   image: Media | null;
   quantity: number;
@@ -54,7 +54,7 @@ export const SlideOver = () => {
             }[];
             totalQuantity: number;
           };
-        }>("/next/getCartProducts", cartToCalculate);
+        }>("/next/getCartProducts", { cart: cartToCalculate });
         const { filledProducts, total } = data.productsWithTotal;
         setCartProducts(filledProducts);
         setTotal(total);

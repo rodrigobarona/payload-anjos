@@ -1,17 +1,13 @@
 import { authenticated } from "@/access/authenticated";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
 import type { GlobalConfig } from "payload";
-import { countryList } from "../utils/countryList";
-import { currencyField } from "@/fields/currencyField";
-import { weightRangesField } from "@/fields/weightRangesField";
-import { freeShippingField } from "@/fields/freeShippingField";
-import { countryPickerField } from "@/fields/countryPickerField";
+import { courierFields } from "@/fields/courierFields";
 
-export const InPost: GlobalConfig = {
-  slug: "inpost",
+export const InPostPickup: GlobalConfig = {
+  slug: "inpost-pickup",
   label: {
-    en: "InPost",
-    pl: "InPost",
+    en: "InPost Pickup",
+    pl: "InPost Paczkomaty",
   },
   access: {
     read: () => true,
@@ -31,59 +27,9 @@ export const InPost: GlobalConfig = {
             en: "Parcel lockers 24/7",
             pl: "Paczkomaty 24/7",
           },
-          fields: [
-            {
-              name: "parcelLockers",
-              type: "checkbox",
-              label: {
-                en: "Enable Parcel lockers",
-                pl: "Włącz Paczkomaty 24/7",
-              },
-            },
-            {
-              name: "parcelLockerZones",
-              type: "array",
-              label: {
-                en: "Delivery zones",
-                pl: "Strefy dostaw",
-              },
-              labels: {
-                plural: {
-                  en: "Delivery zones",
-                  pl: "Strefy dostaw",
-                },
-                singular: {
-                  en: "Delivery zone",
-                  pl: "Strefa dostaw",
-                },
-              },
+          fields: courierFields,
+        },
 
-              fields: [countryPickerField, freeShippingField, weightRangesField],
-              admin: {
-                condition: (data) => data.parcelLockers,
-                components: {
-                  RowLabel: "@/components/(ecommerce)/RowLabels/DeliveryZonesRowLabel#DeliveryZonesRowLabel",
-                },
-              },
-            },
-          ],
-        },
-        {
-          label: {
-            en: "InPost Courier",
-            pl: "Kurier InPost",
-          },
-          fields: [
-            {
-              name: "courier",
-              type: "checkbox",
-              label: {
-                en: "Enable InPost Courier",
-                pl: "Włącz Kuriera InPost",
-              },
-            },
-          ],
-        },
         {
           label: {
             en: "API Keys",
@@ -104,7 +50,7 @@ export const InPost: GlobalConfig = {
               },
               required: true,
               admin: {
-                condition: (data) => data.parcelLockers || data.courier,
+                condition: (data) => data.enabled,
               },
             },
             {
@@ -138,7 +84,7 @@ export const InPost: GlobalConfig = {
                 },
               ],
               admin: {
-                condition: (data) => data.parcelLockers || data.courier,
+                condition: (data) => data.enabled,
                 description: {
                   en: "Remember to pass matching keys for choosen environment",
                   pl: "Pamiętaj o przekazaniu odpowiednich kluczy dla wybranego środowiska",
@@ -159,7 +105,7 @@ export const InPost: GlobalConfig = {
               },
               required: true,
               admin: {
-                condition: (data) => data.parcelLockers || data.courier,
+                condition: (data) => data.enabled,
               },
             },
             {
@@ -176,7 +122,7 @@ export const InPost: GlobalConfig = {
               },
               required: true,
               admin: {
-                condition: (data) => data.parcelLockers || data.courier,
+                condition: (data) => data.enabled,
               },
             },
           ],

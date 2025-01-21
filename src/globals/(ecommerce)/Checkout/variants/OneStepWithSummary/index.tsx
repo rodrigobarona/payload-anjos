@@ -4,6 +4,7 @@ import { OrderSummary } from "./components/OrderSummary";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 
 import { Locale } from "@/i18n/config";
+import { getCouriersArray } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 
 const products = [
   {
@@ -21,22 +22,20 @@ const products = [
 
 export const OneStepWithSummary = async ({ locale }: { locale: Locale }) => {
   const user = await getCustomer();
-  const { geowidgetToken } = await getCachedGlobal("inpost", locale, 1)();
-  // const { price, label } = await getCachedGlobal("dpd", locale, 1)();
 
-  // Pobieram kazdego kuriera z globalnych ustawien recznie, bo nie ma endpointu do pobrania wszystkich dostaw
+  const { geowidgetToken } = await getCachedGlobal("inpost-pickup", locale, 1)();
 
-  // tworze taka tablice dla metod dostaw, wylaczajac te ktore sa disabled, a potem przekazuje do CheckoutForm (klienta)
-  // utworzyc customowy endpoint do obliczania kosztow dostawy? (zaleznie od wagi, wielkosci, itp)
+  const deliveryMethods = await getCouriersArray(locale);
 
-  const deliveries = [
-    { slug: "inpost-pickup", title: "InPost Paczkomaty", price: 16, turnaround: "1-2 dni robocze" },
-  ];
   return (
     <div className="bg-gray-50">
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="sr-only">Checkout</h2>
-        <CheckoutForm geowidgetToken={geowidgetToken ?? undefined} deliveryMethods={deliveries} user={user}>
+        <CheckoutForm
+          geowidgetToken={geowidgetToken ?? undefined}
+          deliveryMethods={deliveryMethods}
+          user={user}
+        >
           <OrderSummary products={products} />
         </CheckoutForm>
       </div>

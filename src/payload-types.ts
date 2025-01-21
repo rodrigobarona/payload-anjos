@@ -69,7 +69,8 @@ export interface Config {
     productList: ProductList;
     cart: Cart;
     checkout: Checkout;
-    inpost: Inpost;
+    'inpost-pickup': InpostPickup;
+    'inpost-courier': InpostCourier;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -79,7 +80,8 @@ export interface Config {
     productList: ProductListSelect<false> | ProductListSelect<true>;
     cart: CartSelect<false> | CartSelect<true>;
     checkout: CheckoutSelect<false> | CheckoutSelect<true>;
-    inpost: InpostSelect<false> | InpostSelect<true>;
+    'inpost-pickup': InpostPickupSelect<false> | InpostPickupSelect<true>;
+    'inpost-courier': InpostCourierSelect<false> | InpostCourierSelect<true>;
   };
   locale: 'en' | 'pl';
   user:
@@ -2192,12 +2194,19 @@ export interface Checkout {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "inpost".
+ * via the `definition` "inpost-pickup".
  */
-export interface Inpost {
+export interface InpostPickup {
   id: string;
-  parcelLockers?: boolean | null;
-  parcelLockerZones?:
+  enabled?: boolean | null;
+  settings: {
+    label: string;
+    /**
+     * You can provide typical delivery time or any other information
+     */
+    description?: string | null;
+  };
+  deliveryZones?:
     | {
         countries: (
           | 'ad'
@@ -2268,7 +2277,6 @@ export interface Inpost {
         id?: string | null;
       }[]
     | null;
-  courier?: boolean | null;
   clientId?: string | null;
   /**
    * Remember to pass matching keys for choosen environment
@@ -2276,6 +2284,100 @@ export interface Inpost {
   APIUrl?: ('https://api-shipx-pl.easypack24.net' | 'https://sandbox-api-shipx-pl.easypack24.net') | null;
   shipXAPIKey?: string | null;
   geowidgetToken?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inpost-courier".
+ */
+export interface InpostCourier {
+  id: string;
+  enabled?: boolean | null;
+  settings: {
+    label: string;
+    /**
+     * You can provide typical delivery time or any other information
+     */
+    description?: string | null;
+  };
+  deliveryZones?:
+    | {
+        countries: (
+          | 'ad'
+          | 'al'
+          | 'at'
+          | 'ba'
+          | 'be'
+          | 'bg'
+          | 'by'
+          | 'ch'
+          | 'cy'
+          | 'cz'
+          | 'de'
+          | 'dk'
+          | 'ee'
+          | 'es'
+          | 'fi'
+          | 'fr'
+          | 'gb'
+          | 'gr'
+          | 'hr'
+          | 'hu'
+          | 'ie'
+          | 'is'
+          | 'it'
+          | 'li'
+          | 'lt'
+          | 'lu'
+          | 'lv'
+          | 'mc'
+          | 'md'
+          | 'me'
+          | 'mk'
+          | 'mt'
+          | 'nl'
+          | 'no'
+          | 'pl'
+          | 'pt'
+          | 'ro'
+          | 'rs'
+          | 'ru'
+          | 'se'
+          | 'si'
+          | 'sk'
+          | 'sm'
+          | 'ua'
+          | 'va'
+        )[];
+        freeShipping?:
+          | {
+              value: number;
+              currency: string;
+              id?: string | null;
+            }[]
+          | null;
+        range?:
+          | {
+              weightFrom: number;
+              weightTo: number;
+              pricing: {
+                value: number;
+                currency: string;
+                id?: string | null;
+              }[];
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  clientId?: string | null;
+  /**
+   * Remember to pass matching keys for choosen environment
+   */
+  APIUrl?: ('https://api-shipx-pl.easypack24.net' | 'https://sandbox-api-shipx-pl.easypack24.net') | null;
+  shipXAPIKey?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2384,11 +2486,17 @@ export interface CheckoutSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "inpost_select".
+ * via the `definition` "inpost-pickup_select".
  */
-export interface InpostSelect<T extends boolean = true> {
-  parcelLockers?: T;
-  parcelLockerZones?:
+export interface InpostPickupSelect<T extends boolean = true> {
+  enabled?: T;
+  settings?:
+    | T
+    | {
+        label?: T;
+        description?: T;
+      };
+  deliveryZones?:
     | T
     | {
         countries?: T;
@@ -2415,11 +2523,56 @@ export interface InpostSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  courier?: T;
   clientId?: T;
   APIUrl?: T;
   shipXAPIKey?: T;
   geowidgetToken?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inpost-courier_select".
+ */
+export interface InpostCourierSelect<T extends boolean = true> {
+  enabled?: T;
+  settings?:
+    | T
+    | {
+        label?: T;
+        description?: T;
+      };
+  deliveryZones?:
+    | T
+    | {
+        countries?: T;
+        freeShipping?:
+          | T
+          | {
+              value?: T;
+              currency?: T;
+              id?: T;
+            };
+        range?:
+          | T
+          | {
+              weightFrom?: T;
+              weightTo?: T;
+              pricing?:
+                | T
+                | {
+                    value?: T;
+                    currency?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  clientId?: T;
+  APIUrl?: T;
+  shipXAPIKey?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

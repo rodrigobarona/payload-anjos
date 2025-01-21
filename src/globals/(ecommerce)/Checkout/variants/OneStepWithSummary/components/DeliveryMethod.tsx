@@ -10,19 +10,23 @@ import { CheckoutFormData } from "@/schemas/checkoutForm.schema";
 import { useFormContext, useWatch } from "react-hook-form";
 import { X } from "lucide-react";
 import { cn } from "@/utilities/cn";
+import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 
 export const DeliveryMethod = ({
   title,
   turnaround,
-  price,
+  pricing,
   variant,
   geowidgetToken,
   ...props
 }: {
   title: string;
   turnaround: string;
-
-  price: number;
+  pricing?: {
+    value: number;
+    currency: string;
+    id?: string | null;
+  }[];
   variant: string;
   geowidgetToken?: string;
   [key: string]: any;
@@ -39,6 +43,17 @@ export const DeliveryMethod = ({
         <Image
           src="/paczkomat.png"
           alt={t("inpost-pickup")}
+          width={359}
+          height={277}
+          className="block aspect-[31/24] max-h-12 w-fit"
+        />
+      );
+      break;
+    case "inpost-courier":
+      Logo = (
+        <Image
+          src="/inpost_courier.png"
+          alt={t("inpost-courier")}
           width={359}
           height={277}
           className="block aspect-[31/24] max-h-12 w-fit"
@@ -108,9 +123,6 @@ export const DeliveryMethod = ({
       Additional = <></>;
   }
 
-  const locale = useLocale();
-  const { currency } = useCurrency();
-
   return (
     <div className="ml-3 flex flex-1 flex-col">
       <span className="flex flex-1 items-center gap-3">
@@ -120,7 +132,7 @@ export const DeliveryMethod = ({
           <span className="block items-center text-sm text-gray-500">{turnaround}</span>
         </div>
         <span className="ml-auto text-right text-sm font-medium text-gray-900">
-          {formatPrice(price, currency, locale)}
+          <PriceClient pricing={pricing ?? []} />
         </span>
       </span>
       {Additional}

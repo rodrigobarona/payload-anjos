@@ -314,4 +314,6 @@ export const countryList = [
       pl: "Watykan",
     },
   },
-];
+] as const;
+
+export type Country = (typeof countryList)[number]["value"];
