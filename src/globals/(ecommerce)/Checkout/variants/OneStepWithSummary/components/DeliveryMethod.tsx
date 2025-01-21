@@ -67,7 +67,6 @@ export const DeliveryMethod = ({
               {t("choose-pickup")}
             </Button>
           )}
-
           <div className={cn(dialogOpen ? "block" : "hidden")}>
             <div
               onClick={() => setDialogOpen(false)}

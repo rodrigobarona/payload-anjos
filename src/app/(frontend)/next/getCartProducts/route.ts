@@ -31,14 +31,36 @@ export async function POST(req: Request) {
         enableVariantPrices: true,
         colors: true,
         slug: true,
+        stock: true,
         sizes: true,
         pricing: true,
       },
     });
 
     const filledProducts = products.flatMap((product) => {
+      if (!product.variants || product.variants.length === 0) {
+        const cartProduct = cart.find((cartProduct) => cartProduct.id === product.id);
+        console.log(cartProduct?.quantity);
+        console.log(product.slug);
+        console.log(product.stock);
+        return cartProduct
+          ? [
+              {
+                ...product,
+                image: typeof product.images[0] !== "string" ? product.images[0] : null,
+                slug: product.slug,
+                enableVariantPrices: product.enableVariantPrices,
+                variant: null as any, // Type assertion
+                stock: product.stock,
+                pricing: product.pricing,
+                quantity: cartProduct.quantity,
+              },
+            ]
+          : [];
+      }
+
       return product.variants
-        ?.filter((variant) => {
+        .filter((variant) => {
           return cart.some((cartProduct) => {
             return cartProduct.id === product.id && cartProduct.choosenVariantSlug === variant.variantSlug;
           });
@@ -53,6 +75,7 @@ export async function POST(req: Request) {
             ...product,
             image: typeof product.images[0] !== "string" ? product.images[0] : null,
             slug: product.slug,
+            enableVariantPrices: product.enableVariantPrices,
             variant: {
               ...variant,
               color: product.colors?.find((color) => color.slug === variant.color),
@@ -71,9 +94,10 @@ export async function POST(req: Request) {
       if (!product) return acc;
       if (!product.enableVariantPrices) {
         product.pricing?.forEach((price) => {
+          console.log(price);
           acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
         });
-      } else if (product.enableVariantPrices) {
+      } else if (product.enableVariantPrices && product.enableVariants) {
         product.variant?.pricing?.forEach((price) => {
           acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
         });
