@@ -9,6 +9,6 @@ export const countryPickerField: Field = {
     pl: "Kraje",
   },
   hasMany: true,
-  options: countryList,
+  options: [...countryList],
   required: true,
 };
