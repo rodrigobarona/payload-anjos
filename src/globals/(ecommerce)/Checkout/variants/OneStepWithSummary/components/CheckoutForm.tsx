@@ -21,6 +21,7 @@ import { Cart } from "@/stores/CartStore/types";
 import { useCart } from "@/stores/CartStore";
 import { Currency } from "@/stores/Currency/types";
 import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Cart/variants/SlideOver";
+import { OrderSummary } from "./OrderSummary";
 
 const deliveryMethods = [
   { id: 1, title: "Standard", turnaround: "4–10 business days", price: "$5.00" },
@@ -39,7 +40,7 @@ type FilledCourier = {
   pricing:
     | {
         value: number;
-        currency: string;
+        currency: Currency;
         id?: string | null;
       }[]
     | undefined;
@@ -49,7 +50,6 @@ export const CheckoutForm = ({
   user,
   // deliveryMethods,
   geowidgetToken,
-  children,
 }: {
   user?: Customer;
   deliveryMethods: {
@@ -58,7 +58,6 @@ export const CheckoutForm = ({
     turnaround: string;
   }[];
   geowidgetToken?: string;
-  children: ReactNode;
 }) => {
   const { CheckoutFormSchemaResolver } = useCheckoutFormSchema();
   const t = useTranslations("CheckoutForm.form");
@@ -107,6 +106,7 @@ export const CheckoutForm = ({
   const wantsInvoice = useWatch({ control: form.control, name: "individualInvoice" });
   const isCompany = useWatch({ control: form.control, name: "buyerType" }) === "company";
   const selectedCountry = useWatch({ control: form.control, name: "shipping.country" });
+  const selectedDelivery = useWatch({ control: form.control, name: "deliveryMethod" });
 
   const [checkoutProducts, setCheckoutProducts] = useState<ProductWithFilledVariants[]>();
   const [totalPrice, setTotalPrice] = useState<
@@ -148,8 +148,6 @@ export const CheckoutForm = ({
     fetchCartProducts(cart);
   }, [cart]);
 
-  console.log(form.getValues());
-  console.log(form.formState.errors);
 
   return (
     <Form {...form}>
@@ -501,7 +499,11 @@ export const CheckoutForm = ({
             </fieldset>
           </div>
         </div>
-        {children}
+        <OrderSummary
+          products={checkoutProducts}
+          totalPrice={totalPrice}
+          shippingCost={deliveryMethods.find((method) => method.slug === selectedDelivery)?.pricing}
+        />
       </form>
     </Form>
   );

@@ -1,8 +1,68 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { Link } from "@/i18n/routing";
+import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Cart/variants/SlideOver";
+import Image from "next/image";
+import { Currency } from "@/stores/Currency/types";
+import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
+import { useCart } from "@/stores/CartStore";
 
-export const OrderSummary = ({ products }) => {
+const mergeAmounts = (
+  arr1: { currency: Currency; value: number }[] | undefined,
+  arr2: { currency: Currency; value: number }[] | undefined,
+) => {
+  const merged = new Map<Currency, number>();
+
+  arr1?.forEach((item) => {
+    merged.set(item.currency, (merged.get(item.currency) ?? 0) + item.value);
+  });
+
+  arr2?.forEach((item) => {
+    merged.set(item.currency, (merged.get(item.currency) ?? 0) + item.value);
+  });
+
+  return Array.from(merged).map(([currency, value]) => ({ currency, value }));
+};
+
+export const OrderSummary = ({
+  products,
+  totalPrice,
+  shippingCost,
+}: {
+  products?: ProductWithFilledVariants[];
+  totalPrice?: {
+    currency: Currency;
+    value: number;
+  }[];
+  shippingCost?: {
+    currency: Currency;
+    value: number;
+  }[];
+}) => {
+  const totalPriceWithShipping = mergeAmounts(totalPrice, shippingCost);
+  const { cart, updateCart, setCart, removeFromCart } = useCart();
+
+  const setCartQuantity = (quantity: number, productID: string, productVariantSlug: string | undefined) => {
+    setCart([
+      ...(cart?.filter((cartProduct) => cartProduct.id !== productID) ?? []),
+      {
+        id: productID,
+        quantity,
+        choosenVariantSlug: productVariantSlug,
+      },
+    ]);
+  };
+
+  const updateCartQuantity = (delta: number, productID: string, productVariantSlug: string | undefined) => {
+    updateCart([
+      {
+        id: productID,
+        quantity: delta,
+        choosenVariantSlug: productVariantSlug,
+      },
+    ]);
+  };
   return (
     <div className="mt-10 lg:mt-0">
       <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
@@ -10,82 +70,132 @@ export const OrderSummary = ({ products }) => {
       <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
         <h3 className="sr-only">Items in your cart</h3>
         <ul role="list" className="divide-y divide-gray-200">
-          {products.map((product) => (
-            <li key={product.id} className="flex px-4 py-6 sm:px-6">
-              <div className="shrink-0">
-                <img alt={product.imageAlt} src={product.imageSrc} className="w-20 rounded-md" />
-              </div>
-
-              <div className="ml-6 flex flex-1 flex-col">
-                <div className="flex">
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-sm">
-                      <Link href={product.href} className="font-medium text-gray-700 hover:text-gray-800">
-                        {product.title}
-                      </Link>
-                    </h4>
-                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                    <p className="mt-1 text-sm text-gray-500">{product.size}</p>
-                  </div>
-
-                  <div className="ml-4 flow-root shrink-0">
-                    <button
-                      type="button"
-                      className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
-                    >
-                      <span className="sr-only">Remove</span>
-                      <TrashIcon aria-hidden="true" className="size-5" />
-                    </button>
-                  </div>
+          {products &&
+            products.map((product) => (
+              <li key={`${product.id}-${product.variant?.slug}`} className="flex px-4 py-6 sm:px-6">
+                <div className="shrink-0">
+                  {product.variant && product.variant.image && product.variant.image.url ? (
+                    <Image
+                      alt={product.variant.image.alt}
+                      src={product.variant.image.url}
+                      width={96}
+                      height={96}
+                      className="w-20 rounded-md"
+                    />
+                  ) : product.image && product.image.url ? (
+                    <Image
+                      alt={product.image.alt}
+                      src={product.image.url}
+                      width={96}
+                      height={96}
+                      className="w-20 rounded-md"
+                    />
+                  ) : null}
                 </div>
 
-                <div className="flex flex-1 items-end justify-between pt-2">
-                  <p className="mt-1 text-sm font-medium text-gray-900">{product.price}</p>
+                <div className="ml-6 flex flex-1 flex-col">
+                  <div className="flex">
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-sm">
+                        <Link
+                          className="font-medium text-gray-700 hover:text-gray-800"
+                          href={`/product/${product.slug}${product.enableVariants && product?.variant?.slug ? `?variant=${product.variant.slug}` : ""}`}
+                        >
+                          {product.title}
+                        </Link>
+                      </h4>
+                      <p className="mt-1 text-sm text-gray-500">
+                        {product.enableVariants &&
+                          product.variant &&
+                          product.variant.color?.label &&
+                          `${product.variant.color.label}${product.variant.size?.label ? ", " : ""}`}
+                        {product.enableVariants && product.variant && product.variant.size?.label}
+                      </p>
+                    </div>
 
-                  <div className="ml-4">
-                    <div className="grid grid-cols-1">
-                      <select
-                        id="quantity"
-                        name="quantity"
-                        aria-label="Quantity"
-                        className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    <div className="ml-4 flow-root shrink-0">
+                      <button
+                        type="button"
+                        className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
+                        onClick={() => {
+                          removeFromCart(product.id, (product.variant && product.variant.slug) ?? undefined);
+                        }}
                       >
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                        <option value={6}>6</option>
-                        <option value={7}>7</option>
-                        <option value={8}>8</option>
-                      </select>
-                      <ChevronDownIcon
-                        aria-hidden="true"
-                        className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                        <span className="sr-only">Remove</span>
+                        <TrashIcon aria-hidden="true" className="size-5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 items-end justify-between pt-2">
+                    <p className="mt-1 text-sm font-medium text-gray-900">
+                      <PriceClient
+                        pricing={
+                          product.enableVariantPrices
+                            ? ((product.variant &&
+                                product.variant.pricing &&
+                                product.variant.pricing.map((p) => ({
+                                  ...p,
+                                  value: p.value * product.quantity,
+                                }))) ??
+                              [])
+                            : product.pricing
+                              ? product.pricing.map((p) => ({
+                                  ...p,
+                                  value: p.value * product.quantity,
+                                }))
+                              : []
+                        }
                       />
+                    </p>
+
+                    <div className="ml-4">
+                      <div className="grid grid-cols-1">
+                        <QuantityInput
+                          quantity={
+                            cart?.find(
+                              (cartProduct) =>
+                                cartProduct.id === product.id &&
+                                cartProduct.choosenVariantSlug === product.variant?.slug,
+                            )?.quantity ?? 1
+                          }
+                          inputVariant="cart"
+                          setQuantity={(quantity) => {
+                            setCartQuantity(quantity, product.id, product.variant?.slug ?? undefined);
+                          }}
+                          updateQuantity={(delta) => {
+                            updateCartQuantity(delta, product.id, product.variant?.slug ?? undefined);
+                          }}
+                          maxQuantity={
+                            product.enableVariants ? (product.variant?.stock ?? 0) : (product.stock ?? 0)
+                          }
+                          minQuantity={1}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          ))}
+              </li>
+            ))}
         </ul>
         <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex items-center justify-between">
             <dt className="text-sm">Subtotal</dt>
-            <dd className="text-sm font-medium text-gray-900">$64.00</dd>
+            <dd className="text-sm font-medium text-gray-900">
+              <PriceClient pricing={totalPrice ?? []} />
+            </dd>
           </div>
           <div className="flex items-center justify-between">
             <dt className="text-sm">Shipping</dt>
-            <dd className="text-sm font-medium text-gray-900">$5.00</dd>
-          </div>
-          <div className="flex items-center justify-between">
-            <dt className="text-sm">Taxes</dt>
-            <dd className="text-sm font-medium text-gray-900">$5.52</dd>
+            <dd className="text-sm font-medium text-gray-900">
+              <PriceClient pricing={shippingCost ?? []} />
+            </dd>
           </div>
           <div className="flex items-center justify-between border-t border-gray-200 pt-6">
             <dt className="text-base font-medium">Total</dt>
-            <dd className="text-base font-medium text-gray-900">$75.52</dd>
+            <dd className="text-base font-medium text-gray-900">
+              <PriceClient pricing={totalPriceWithShipping} />
+            </dd>
           </div>
         </dl>
 

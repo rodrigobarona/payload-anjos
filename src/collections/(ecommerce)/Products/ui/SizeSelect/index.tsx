@@ -35,7 +35,6 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
     }
   }, [variantType]);
 
-  console.log(value);
 
   return variantType !== "colors" ? (
     <div className="twp my-auto h-fit flex-1">

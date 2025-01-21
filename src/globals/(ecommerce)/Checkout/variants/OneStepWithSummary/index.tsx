@@ -35,9 +35,7 @@ export const OneStepWithSummary = async ({ locale }: { locale: Locale }) => {
           geowidgetToken={geowidgetToken ?? undefined}
           deliveryMethods={deliveryMethods}
           user={user}
-        >
-          <OrderSummary products={products} />
-        </CheckoutForm>
+        />
       </div>
     </div>
   );

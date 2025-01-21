@@ -16,7 +16,6 @@ export const PayloadRedirects = async ({ disableNotFound, url, locale }: Props) 
   const redirects = await getCachedRedirects()();
 
   const redirectItem = redirects.find((redirect) => redirect.from === url);
-  console.log(redirectItem);
 
   if (redirectItem) {
     if (redirectItem.to?.url) {
