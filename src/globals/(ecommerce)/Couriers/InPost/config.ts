@@ -2,6 +2,10 @@ import { authenticated } from "@/access/authenticated";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
 import type { GlobalConfig } from "payload";
 import { countryList } from "../utils/countryList";
+import { currencyField } from "@/fields/currencyField";
+import { weightRangesField } from "@/fields/weightRangesField";
+import { freeShippingField } from "@/fields/freeShippingField";
+import { countryPickerField } from "@/fields/countryPickerField";
 
 export const InPost: GlobalConfig = {
   slug: "inpost",
@@ -53,49 +57,13 @@ export const InPost: GlobalConfig = {
                   pl: "Strefa dostaw",
                 },
               },
-              fields: [
-                {
-                  name: "countries",
-                  type: "select",
-                  label: {
-                    en: "Countries",
-                    pl: "Kraje",
-                  },
-                  hasMany: true,
-                  options: countryList,
-                  required: true,
-                },
-                {
-                  name: "pricing",
-                  type: "array",
-                  label: {
-                    en: "Pricing",
-                    pl: "Cennik",
-                  },
-                  labels: {
-                    plural: {
-                      en: "Pricing",
-                      pl: "Cennik",
-                    },
-                    singular: {
-                      en: "Price",
-                      pl: "Cena",
-                    },
-                  },
-                  fields: [
-                    {
-                      name: "weightFrom",
-                      type: "number",
-                    },
-                    {
-                      name: "weightTo",
-                      type: "number",
-                    },
-                  ],
-                },
-              ],
+
+              fields: [countryPickerField, freeShippingField, weightRangesField],
               admin: {
                 condition: (data) => data.parcelLockers,
+                components: {
+                  RowLabel: "@/components/(ecommerce)/RowLabels/DeliveryZonesRowLabel#DeliveryZonesRowLabel",
+                },
               },
             },
           ],

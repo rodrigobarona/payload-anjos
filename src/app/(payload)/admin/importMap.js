@@ -33,11 +33,14 @@ import { OptionLabel as OptionLabel_b17ed890d8122f86250bc87431a6fb22 } from '@/c
 import { SizeSelect as SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a } from '@/collections/(ecommerce)/Products/ui/SizeSelect'
 import { ColorSelect as ColorSelect_619c98d2f17f9cadf7e7c184dc78c786 } from '@/collections/(ecommerce)/Products/ui/ColorSelect'
 import { CurrencySelect as CurrencySelect_6647ec830145e25b548d2199ccda14d1 } from '@/components/(ecommerce)/CurrencySelect'
+import { PriceRowLabel as PriceRowLabel_67fe256c61a1e173af7f14df0f613a3b } from '@/components/(ecommerce)/RowLabels/PriceRowLabel'
 import { VariantLabel as VariantLabel_6170ecd94cb5bd935fdb53d797d0bb39 } from '@/collections/(ecommerce)/Products/ui/RowLabels/VariantLabel'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { RowLabel as RowLabel_17c6ef4bfe47bfa29d923fb5718170b7 } from '@/globals/Header/RowLabel'
 import { RowLabel as RowLabel_e5f2ea2a3ff3620de63526e885e3b034 } from '@/globals/Footer/RowLabel'
+import { WeightRangeRowLabel as WeightRangeRowLabel_408d0e590e7be77eda1e9250fd393637 } from '@/components/(ecommerce)/RowLabels/WeightRangeRowLabel'
+import { DeliveryZonesRowLabel as DeliveryZonesRowLabel_0d2e9891c92e5d6a59a49ed2697b12d5 } from '@/components/(ecommerce)/RowLabels/DeliveryZonesRowLabel'
 import { AdminLogoIcon as AdminLogoIcon_b44db66c75684c15f88e108165ed4089 } from '@/components/AdminLogoIcon/AdminLogoIcon'
 import { AdminLogoBig as AdminLogoBig_06da07c1f0ebe9eb350437b211008391 } from '@/components/AdminLogoBig/AdminLogoBig'
 
@@ -77,11 +80,14 @@ export const importMap = {
   "@/collections/(ecommerce)/Products/ui/SizeSelect#SizeSelect": SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a,
   "@/collections/(ecommerce)/Products/ui/ColorSelect#ColorSelect": ColorSelect_619c98d2f17f9cadf7e7c184dc78c786,
   "@/components/(ecommerce)/CurrencySelect#CurrencySelect": CurrencySelect_6647ec830145e25b548d2199ccda14d1,
+  "@/components/(ecommerce)/RowLabels/PriceRowLabel#PriceRowLabel": PriceRowLabel_67fe256c61a1e173af7f14df0f613a3b,
   "@/collections/(ecommerce)/Products/ui/RowLabels/VariantLabel#VariantLabel": VariantLabel_6170ecd94cb5bd935fdb53d797d0bb39,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@/globals/Header/RowLabel#RowLabel": RowLabel_17c6ef4bfe47bfa29d923fb5718170b7,
   "@/globals/Footer/RowLabel#RowLabel": RowLabel_e5f2ea2a3ff3620de63526e885e3b034,
+  "@/components/(ecommerce)/RowLabels/WeightRangeRowLabel#WeightRangeRowLabel": WeightRangeRowLabel_408d0e590e7be77eda1e9250fd393637,
+  "@/components/(ecommerce)/RowLabels/DeliveryZonesRowLabel#DeliveryZonesRowLabel": DeliveryZonesRowLabel_0d2e9891c92e5d6a59a49ed2697b12d5,
   "@/components/AdminLogoIcon/AdminLogoIcon#AdminLogoIcon": AdminLogoIcon_b44db66c75684c15f88e108165ed4089,
   "@/components/AdminLogoBig/AdminLogoBig#AdminLogoBig": AdminLogoBig_06da07c1f0ebe9eb350437b211008391
 }

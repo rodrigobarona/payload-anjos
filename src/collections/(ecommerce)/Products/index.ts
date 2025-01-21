@@ -473,6 +473,9 @@ export const Products: CollectionConfig = {
                   },
                   admin: {
                     condition: (data) => data.enableVariantPrices,
+                    components: {
+                      RowLabel: "@/components/(ecommerce)/RowLabels/PriceRowLabel#PriceRowLabel",
+                    },
                   },
                   fields: [
                     {
@@ -614,6 +617,9 @@ export const Products: CollectionConfig = {
               },
               admin: {
                 condition: (data) => !data.enableVariantPrices,
+                components: {
+                  RowLabel: "@/components/(ecommerce)/RowLabels/PriceRowLabel#PriceRowLabel",
+                },
               },
               fields: [
                 {

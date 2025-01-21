@@ -2246,10 +2246,22 @@ export interface Inpost {
           | 'ua'
           | 'va'
         )[];
-        pricing?:
+        freeShipping?:
           | {
-              weightFrom?: number | null;
-              weightTo?: number | null;
+              value: number;
+              currency: string;
+              id?: string | null;
+            }[]
+          | null;
+        range?:
+          | {
+              weightFrom: number;
+              weightTo: number;
+              pricing: {
+                value: number;
+                currency: string;
+                id?: string | null;
+              }[];
               id?: string | null;
             }[]
           | null;
@@ -2380,11 +2392,25 @@ export interface InpostSelect<T extends boolean = true> {
     | T
     | {
         countries?: T;
-        pricing?:
+        freeShipping?:
+          | T
+          | {
+              value?: T;
+              currency?: T;
+              id?: T;
+            };
+        range?:
           | T
           | {
               weightFrom?: T;
               weightTo?: T;
+              pricing?:
+                | T
+                | {
+                    value?: T;
+                    currency?: T;
+                    id?: T;
+                  };
               id?: T;
             };
         id?: T;
