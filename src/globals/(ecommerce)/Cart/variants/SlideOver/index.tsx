@@ -17,10 +17,15 @@ import { useTranslations } from "next-intl";
 import debounce from "lodash.debounce";
 import { Cart } from "@/stores/CartStore/types";
 
-type ProductWithFilledVariants = Omit<Product, "variants"> & {
+type ProductWithFilledVariants = Omit<Product, "variants" | "pricing"> & {
   variant: FilledVariant | undefined;
   image: Media | null;
   quantity: number;
+  pricing: {
+    value: number;
+    currency: Currency;
+    id?: string | null;
+  }[];
 };
 
 export const SlideOver = () => {

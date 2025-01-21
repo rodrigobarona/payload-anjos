@@ -15,6 +15,7 @@ import { ProductForm } from "./components/ProductForm";
 
 import { ProductGallery } from "./components/ProductGallery";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { Currency } from "@/stores/Currency/types";
 
 export const WithImageGalleryExpandableDetails = ({
   variant,
@@ -33,7 +34,10 @@ export const WithImageGalleryExpandableDetails = ({
     slug: variant.variantSlug,
     stock: variant.stock,
     image: typeof variant.image !== "string" ? variant.image : null,
-    pricing: variant.pricing,
+    pricing: variant.pricing as
+      | { value: number; currency: Currency; id?: string | null }[]
+      | null
+      | undefined,
   }));
 
   const selectedVariant =

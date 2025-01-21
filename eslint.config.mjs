@@ -1,6 +1,6 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-
+import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
 });
 
 const eslintConfig = [
@@ -22,8 +23,11 @@ const eslintConfig = [
     "prettier",
   ),
   {
-    $schema: "https://json.schemastore.org/eslintrc.json",
-    parserOptions: { project: "tsconfig.json" },
+    languageOptions: {
+      parserOptions: {
+        project: "tsconfig.json",
+      },
+    },
     rules: {
       "@typescript-eslint/ban-ts-comment": "warn",
       "@typescript-eslint/no-empty-object-type": "warn",

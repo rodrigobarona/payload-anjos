@@ -32,6 +32,7 @@ import { SlugComponent as SlugComponent_92cc057d0a2abb4f6cf0307edf59f986 } from 
 import { OptionLabel as OptionLabel_b17ed890d8122f86250bc87431a6fb22 } from '@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel'
 import { SizeSelect as SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a } from '@/collections/(ecommerce)/Products/ui/SizeSelect'
 import { ColorSelect as ColorSelect_619c98d2f17f9cadf7e7c184dc78c786 } from '@/collections/(ecommerce)/Products/ui/ColorSelect'
+import { CurrencySelect as CurrencySelect_6647ec830145e25b548d2199ccda14d1 } from '@/components/(ecommerce)/CurrencySelect'
 import { VariantLabel as VariantLabel_6170ecd94cb5bd935fdb53d797d0bb39 } from '@/collections/(ecommerce)/Products/ui/RowLabels/VariantLabel'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
@@ -75,6 +76,7 @@ export const importMap = {
   "@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel#OptionLabel": OptionLabel_b17ed890d8122f86250bc87431a6fb22,
   "@/collections/(ecommerce)/Products/ui/SizeSelect#SizeSelect": SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a,
   "@/collections/(ecommerce)/Products/ui/ColorSelect#ColorSelect": ColorSelect_619c98d2f17f9cadf7e7c184dc78c786,
+  "@/components/(ecommerce)/CurrencySelect#CurrencySelect": CurrencySelect_6647ec830145e25b548d2199ccda14d1,
   "@/collections/(ecommerce)/Products/ui/RowLabels/VariantLabel#VariantLabel": VariantLabel_6170ecd94cb5bd935fdb53d797d0bb39,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,

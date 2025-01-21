@@ -1,3 +1,4 @@
+"use client";
 import { useCurrency } from "@/stores/Currency";
 import { formatPrice } from "@/utilities/formatPrices";
 import { Button } from "@/components/ui/button";
@@ -76,7 +77,7 @@ export const DeliveryMethod = ({
               <h3 className="text-lg font-semibold leading-none tracking-tight">{t("choose-pickup")}</h3>
               <InPostGeowidget
                 token={geowidgetToken}
-                setPickupPoint={(event) => {
+                onPointSelect={(event) => {
                   form.setValue("shipping.pickupPointID", event.detail.name);
                   form.setValue(
                     "shipping.pickupPointAddress",

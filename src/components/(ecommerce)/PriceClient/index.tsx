@@ -9,7 +9,7 @@ export const PriceClient = ({
 }: {
   pricing: {
     value: number;
-    currency: Currency;
+    currency: Currency | string;
   }[];
 }) => {
   const { currency } = useCurrency();

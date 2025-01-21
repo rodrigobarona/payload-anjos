@@ -1,6 +1,7 @@
 import { authenticated } from "@/access/authenticated";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
 import type { GlobalConfig } from "payload";
+import { countryList } from "../utils/countryList";
 
 export const InPost: GlobalConfig = {
   slug: "inpost",
@@ -23,38 +24,94 @@ export const InPost: GlobalConfig = {
       tabs: [
         {
           label: {
-            en: "General",
-            pl: "Ogólne",
+            en: "Parcel lockers 24/7",
+            pl: "Paczkomaty 24/7",
           },
           fields: [
-            {
-              name: "enabled",
-              type: "checkbox",
-              label: {
-                en: "Enable InPost",
-                pl: "Włącz InPost",
-              },
-            },
             {
               name: "parcelLockers",
               type: "checkbox",
               label: {
-                en: "Parcel lockers",
-                pl: "Paczkomaty",
-              },
-              admin: {
-                condition: (data) => data.enabled,
+                en: "Enable Parcel lockers",
+                pl: "Włącz Paczkomaty 24/7",
               },
             },
+            {
+              name: "parcelLockerZones",
+              type: "array",
+              label: {
+                en: "Delivery zones",
+                pl: "Strefy dostaw",
+              },
+              labels: {
+                plural: {
+                  en: "Delivery zones",
+                  pl: "Strefy dostaw",
+                },
+                singular: {
+                  en: "Delivery zone",
+                  pl: "Strefa dostaw",
+                },
+              },
+              fields: [
+                {
+                  name: "countries",
+                  type: "select",
+                  label: {
+                    en: "Countries",
+                    pl: "Kraje",
+                  },
+                  hasMany: true,
+                  options: countryList,
+                  required: true,
+                },
+                {
+                  name: "pricing",
+                  type: "array",
+                  label: {
+                    en: "Pricing",
+                    pl: "Cennik",
+                  },
+                  labels: {
+                    plural: {
+                      en: "Pricing",
+                      pl: "Cennik",
+                    },
+                    singular: {
+                      en: "Price",
+                      pl: "Cena",
+                    },
+                  },
+                  fields: [
+                    {
+                      name: "weightFrom",
+                      type: "number",
+                    },
+                    {
+                      name: "weightTo",
+                      type: "number",
+                    },
+                  ],
+                },
+              ],
+              admin: {
+                condition: (data) => data.parcelLockers,
+              },
+            },
+          ],
+        },
+        {
+          label: {
+            en: "InPost Courier",
+            pl: "Kurier InPost",
+          },
+          fields: [
             {
               name: "courier",
               type: "checkbox",
               label: {
-                en: "Courier",
-                pl: "Kurier",
-              },
-              admin: {
-                condition: (data) => data.enabled,
+                en: "Enable InPost Courier",
+                pl: "Włącz Kuriera InPost",
               },
             },
           ],
@@ -79,7 +136,7 @@ export const InPost: GlobalConfig = {
               },
               required: true,
               admin: {
-                condition: (data) => data.enabled,
+                condition: (data) => data.parcelLockers || data.courier,
               },
             },
             {
@@ -113,7 +170,7 @@ export const InPost: GlobalConfig = {
                 },
               ],
               admin: {
-                condition: (data) => data.enabled,
+                condition: (data) => data.parcelLockers || data.courier,
                 description: {
                   en: "Remember to pass matching keys for choosen environment",
                   pl: "Pamiętaj o przekazaniu odpowiednich kluczy dla wybranego środowiska",
@@ -134,7 +191,7 @@ export const InPost: GlobalConfig = {
               },
               required: true,
               admin: {
-                condition: (data) => data.enabled,
+                condition: (data) => data.parcelLockers || data.courier,
               },
             },
             {
@@ -151,7 +208,7 @@ export const InPost: GlobalConfig = {
               },
               required: true,
               admin: {
-                condition: (data) => data.enabled,
+                condition: (data) => data.parcelLockers || data.courier,
               },
             },
           ],

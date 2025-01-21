@@ -1032,7 +1032,7 @@ export interface Product {
         pricing?:
           | {
               value: number;
-              currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
+              currency: string;
               id?: string | null;
             }[]
           | null;
@@ -1057,7 +1057,7 @@ export interface Product {
   pricing?:
     | {
         value: number;
-        currency: 'USD' | 'EUR' | 'GBP' | 'PLN';
+        currency: string;
         id?: string | null;
       }[]
     | null;
@@ -2196,8 +2196,66 @@ export interface Checkout {
  */
 export interface Inpost {
   id: string;
-  enabled?: boolean | null;
   parcelLockers?: boolean | null;
+  parcelLockerZones?:
+    | {
+        countries: (
+          | 'ad'
+          | 'al'
+          | 'at'
+          | 'ba'
+          | 'be'
+          | 'bg'
+          | 'by'
+          | 'ch'
+          | 'cy'
+          | 'cz'
+          | 'de'
+          | 'dk'
+          | 'ee'
+          | 'es'
+          | 'fi'
+          | 'fr'
+          | 'gb'
+          | 'gr'
+          | 'hr'
+          | 'hu'
+          | 'ie'
+          | 'is'
+          | 'it'
+          | 'li'
+          | 'lt'
+          | 'lu'
+          | 'lv'
+          | 'mc'
+          | 'md'
+          | 'me'
+          | 'mk'
+          | 'mt'
+          | 'nl'
+          | 'no'
+          | 'pl'
+          | 'pt'
+          | 'ro'
+          | 'rs'
+          | 'ru'
+          | 'se'
+          | 'si'
+          | 'sk'
+          | 'sm'
+          | 'ua'
+          | 'va'
+        )[];
+        pricing?:
+          | {
+              weightFrom?: number | null;
+              weightTo?: number | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   courier?: boolean | null;
   clientId?: string | null;
   /**
@@ -2317,8 +2375,20 @@ export interface CheckoutSelect<T extends boolean = true> {
  * via the `definition` "inpost_select".
  */
 export interface InpostSelect<T extends boolean = true> {
-  enabled?: T;
   parcelLockers?: T;
+  parcelLockerZones?:
+    | T
+    | {
+        countries?: T;
+        pricing?:
+          | T
+          | {
+              weightFrom?: T;
+              weightTo?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   courier?: T;
   clientId?: T;
   APIUrl?: T;
