@@ -30,6 +30,7 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { SlugComponent as SlugComponent_92cc057d0a2abb4f6cf0307edf59f986 } from '@/fields/slug/SlugComponent'
 import { OrderProductsRowLabel as OrderProductsRowLabel_a44d89da141f836d5aed2b72298ee5d6 } from '@/components/(ecommerce)/RowLabels/OrderProductsRowLabel'
+import { PrintLabelButton as PrintLabelButton_588166e812fcac7e0b0906b7b92ffd82 } from '@/collections/(ecommerce)/Orders/components/PrintLabelButton'
 import { OptionLabel as OptionLabel_b17ed890d8122f86250bc87431a6fb22 } from '@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel'
 import { SizeSelect as SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a } from '@/collections/(ecommerce)/Products/ui/SizeSelect'
 import { ColorSelect as ColorSelect_619c98d2f17f9cadf7e7c184dc78c786 } from '@/collections/(ecommerce)/Products/ui/ColorSelect'
@@ -78,6 +79,7 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_92cc057d0a2abb4f6cf0307edf59f986,
   "@/components/(ecommerce)/RowLabels/OrderProductsRowLabel#OrderProductsRowLabel": OrderProductsRowLabel_a44d89da141f836d5aed2b72298ee5d6,
+  "@/collections/(ecommerce)/Orders/components/PrintLabelButton#PrintLabelButton": PrintLabelButton_588166e812fcac7e0b0906b7b92ffd82,
   "@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel#OptionLabel": OptionLabel_b17ed890d8122f86250bc87431a6fb22,
   "@/collections/(ecommerce)/Products/ui/SizeSelect#SizeSelect": SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a,
   "@/collections/(ecommerce)/Products/ui/ColorSelect#ColorSelect": ColorSelect_619c98d2f17f9cadf7e7c184dc78c786,

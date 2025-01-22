@@ -286,7 +286,17 @@ export const Orders: CollectionConfig = {
               name: "printLabel",
               label: { en: "Printing Labels", pl: "Drukowanie etykiet" },
               type: "group",
-              fields: [],
+              fields: [
+                {
+                  name: "printLabelButton",
+                  type: "ui",
+                  admin: {
+                    components: {
+                      Field: "@/collections/(ecommerce)/Orders/components/PrintLabelButton#PrintLabelButton",
+                    },
+                  },
+                },
+              ],
             },
             {
               name: "shippingAddress",
@@ -331,6 +341,7 @@ export const Orders: CollectionConfig = {
                       admin: {
                         width: "50%",
                         readOnly: true,
+                        condition: (data) => data.orderDetails.shipping === "inpost-pickup",
                       },
                     },
                     {
@@ -343,6 +354,7 @@ export const Orders: CollectionConfig = {
                       admin: {
                         width: "50%",
                         readOnly: true,
+                        condition: (data) => data.orderDetails.shipping === "inpost-pickup",
                       },
                     },
                   ],
