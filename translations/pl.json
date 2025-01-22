@@ -105,7 +105,8 @@
       "payment-method": "Metoda płatności",
       "change": "Zmień",
       "invoice-data": "Dane do faktury",
-      "no-shipping": "Brak dostępnych metod dostawy. Skontaktuj się z nami."
+      "no-shipping": "Brak dostępnych metod dostawy. Skontaktuj się z nami.",
+      "internal-server-error": "Wystąpił niezidentyfikowany błąd. Skontaktuj się z nami."
     },
     "errors": {
       "invoice": {

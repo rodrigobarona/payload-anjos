@@ -105,7 +105,8 @@
       "payment-method": "Payment method",
       "change": "Change",
       "invoice-data": "Invoice data",
-      "no-shipping": "No shipping methods available, please contact support."
+      "no-shipping": "No shipping methods available, please contact support.",
+      "internal-server-error": "An unexpected error occurred. Please contact support."
     },
     "contries": {
       "pl": "Poland",

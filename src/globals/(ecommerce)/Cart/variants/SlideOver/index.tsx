@@ -190,11 +190,12 @@ export const SlideOver = () => {
                                     </p>
                                   </div>
                                   <p>
-                                    {product.enableVariants &&
-                                      product.variant &&
-                                      product.variant.color?.label &&
-                                      `${product.variant.color.label}${product.variant.size?.label ? ", " : ""}`}
-                                    {product.enableVariants && product.variant && product.variant.size?.label}
+                                    {[
+                                      product.enableVariants && product.variant?.color?.label,
+                                      product.enableVariants && product.variant?.size?.label,
+                                    ]
+                                      .filter(Boolean)
+                                      .join(", ")}
                                   </p>
                                 </div>
 

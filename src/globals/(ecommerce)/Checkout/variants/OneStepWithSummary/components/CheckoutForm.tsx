@@ -22,6 +22,8 @@ import { Currency } from "@/stores/Currency/types";
 import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Cart/variants/SlideOver";
 import { OrderSummary } from "./OrderSummary";
 import { Locale } from "@/i18n/config";
+import { useCurrency } from "@/stores/Currency";
+import { useRouter } from "@/i18n/routing";
 
 type FilledCourier = {
   slug: string;
@@ -88,6 +90,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
 
   const { cart } = useCart();
   const locale = useLocale() as Locale;
+  const currency = useCurrency();
 
   /**
    * Fetches products from the cart, calculates the total price and available couriers with their prices. Basically, it's getting all checkout needed data.
@@ -109,7 +112,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
             totalQuantity: number;
             couriers: FilledCourier[];
           };
-        }>("/next/checkout", { cart: cartToCalculate, countryToCalculate, locale });
+        }>("/next/checkout", { cart: cartToCalculate, selectedCountry: countryToCalculate, locale });
         const { filledProducts, total, couriers } = data.productsWithTotalAndCouriers;
         setCheckoutProducts(filledProducts);
         setDeliveryMethods(couriers);
@@ -125,11 +128,25 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
     fetchCartProducts(cart, selectedCountry);
   }, [cart, selectedCountry]);
 
+  const router = useRouter();
+
   const onSubmit = async (values: CheckoutFormData) => {
     try {
-      // redirect to payment route!
       console.log(values);
+      const { data } = await axios.post<{ status: number; url?: string }>("/next/payment", {
+        cart,
+        selectedCountry,
+        checkoutData: values,
+        locale,
+        currency: currency.currency,
+      });
+      if (data.status === 200 && data.url) {
+        router.push(data.url);
+      } else {
+        form.setError("root", { message: t("internal-server-error") });
+      }
     } catch (error) {
+      form.setError("root", { message: t("internal-server-error") });
       console.log(error);
     }
   };
@@ -490,6 +507,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
           products={checkoutProducts}
           totalPrice={totalPrice}
           shippingCost={deliveryMethods.find((method) => method.slug === selectedDelivery)?.pricing}
+          errorMessage={form.formState.errors.root?.message}
         />
       </form>
     </Form>

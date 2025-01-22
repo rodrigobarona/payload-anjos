@@ -1,3 +1,4 @@
+import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { CollectionConfig } from "payload";
 
 export const Customers: CollectionConfig = {
@@ -106,11 +107,12 @@ export const Customers: CollectionConfig = {
         },
         {
           name: "country",
-          type: "text",
+          type: "select",
           label: {
             en: "Country",
             pl: "Kraj",
           },
+          options: [...countryList],
           required: true,
         },
         {

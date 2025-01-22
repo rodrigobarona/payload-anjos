@@ -71,6 +71,7 @@ export interface Config {
     checkout: Checkout;
     'inpost-pickup': InpostPickup;
     'inpost-courier': InpostCourier;
+    paywalls: Paywall;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -82,6 +83,7 @@ export interface Config {
     checkout: CheckoutSelect<false> | CheckoutSelect<true>;
     'inpost-pickup': InpostPickupSelect<false> | InpostPickupSelect<true>;
     'inpost-courier': InpostCourierSelect<false> | InpostCourierSelect<true>;
+    paywalls: PaywallsSelect<false> | PaywallsSelect<true>;
   };
   locale: 'en' | 'pl';
   user:
@@ -914,7 +916,52 @@ export interface Customer {
         name: string;
         address: string;
         city: string;
-        country: string;
+        country:
+          | 'ad'
+          | 'al'
+          | 'at'
+          | 'ba'
+          | 'be'
+          | 'bg'
+          | 'by'
+          | 'ch'
+          | 'cy'
+          | 'cz'
+          | 'de'
+          | 'dk'
+          | 'ee'
+          | 'es'
+          | 'fi'
+          | 'fr'
+          | 'gb'
+          | 'gr'
+          | 'hr'
+          | 'hu'
+          | 'ie'
+          | 'is'
+          | 'it'
+          | 'li'
+          | 'lt'
+          | 'lu'
+          | 'lv'
+          | 'mc'
+          | 'md'
+          | 'me'
+          | 'mk'
+          | 'mt'
+          | 'nl'
+          | 'no'
+          | 'pl'
+          | 'pt'
+          | 'ro'
+          | 'rs'
+          | 'ru'
+          | 'se'
+          | 'si'
+          | 'sk'
+          | 'sm'
+          | 'ua'
+          | 'va';
         region: string;
         postalCode: string;
         phone: string;
@@ -2383,6 +2430,20 @@ export interface InpostCourier {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "paywalls".
+ */
+export interface Paywall {
+  id: string;
+  paywall: 'stripe' | 'autopay';
+  stripe?: {
+    secret: string;
+    public?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2573,6 +2634,22 @@ export interface InpostCourierSelect<T extends boolean = true> {
   clientId?: T;
   APIUrl?: T;
   shipXAPIKey?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "paywalls_select".
+ */
+export interface PaywallsSelect<T extends boolean = true> {
+  paywall?: T;
+  stripe?:
+    | T
+    | {
+        secret?: T;
+        public?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

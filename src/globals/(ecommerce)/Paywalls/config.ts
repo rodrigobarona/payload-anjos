@@ -1,0 +1,93 @@
+import { authenticated } from "@/access/authenticated";
+import { revalidateGlobal } from "@/hooks/revalidateGlobal";
+import type { GlobalConfig } from "payload";
+
+export const Paywalls: GlobalConfig = {
+  slug: "paywalls",
+  label: {
+    en: "Paywalls",
+    pl: "Bramki płatności",
+  },
+  access: {
+    read: () => true,
+  },
+  admin: {
+    group: {
+      en: "Payments settings",
+      pl: "Ustawienia płatności",
+    },
+  },
+  fields: [
+    {
+      name: "paywall",
+      label: {
+        en: "Paywall",
+        pl: "Bramka płatności",
+      },
+      type: "select",
+      options: [
+        {
+          label: {
+            en: "Stripe",
+            pl: "Stripe",
+          },
+          value: "stripe",
+        },
+        {
+          label: {
+            en: "Autopay",
+            pl: "Autopay",
+          },
+          value: "autopay",
+        },
+      ],
+      defaultValue: "stripe",
+      required: true,
+    },
+    {
+      name: "stripe",
+      label: {
+        en: "Stripe configuration",
+        pl: "Konfiguracja Stripe",
+      },
+      type: "group",
+      admin: {
+        condition: (data) => {
+          return data.paywall === "stripe";
+        },
+      },
+      fields: [
+        {
+          name: "secret",
+          type: "text",
+          label: {
+            en: "Secret API Key",
+            pl: "Prywatny klucz API",
+          },
+          access: {
+            read: authenticated,
+            create: authenticated,
+            update: authenticated,
+          },
+          required: true,
+        },
+        {
+          name: "public",
+          type: "text",
+          label: {
+            en: "Public API Key",
+            pl: "Publiczny klucz API",
+          },
+          access: {
+            read: authenticated,
+            create: authenticated,
+            update: authenticated,
+          },
+        },
+      ],
+    },
+  ],
+  hooks: {
+    afterChange: [revalidateGlobal],
+  },
+};

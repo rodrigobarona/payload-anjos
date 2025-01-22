@@ -36,6 +36,7 @@ export const OrderSummary = ({
   products,
   totalPrice,
   shippingCost,
+  errorMessage,
 }: {
   products?: ProductWithFilledVariants[];
   totalPrice?: {
@@ -46,6 +47,7 @@ export const OrderSummary = ({
     currency: Currency;
     value: number;
   }[];
+  errorMessage?: string;
 }) => {
   const totalPriceWithShipping = mergeAmounts(totalPrice, shippingCost);
   const { cart, updateCart, setCart, removeFromCart } = useCart();
@@ -115,11 +117,12 @@ export const OrderSummary = ({
                         </Link>
                       </h4>
                       <p className="mt-1 text-sm text-gray-500">
-                        {product.enableVariants &&
-                          product.variant &&
-                          product.variant.color?.label &&
-                          `${product.variant.color.label}${product.variant.size?.label ? ", " : ""}`}
-                        {product.enableVariants && product.variant && product.variant.size?.label}
+                        {[
+                          product.enableVariants && product.variant?.color?.label,
+                          product.enableVariants && product.variant?.size?.label,
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
                       </p>
                     </div>
 
@@ -218,6 +221,7 @@ export const OrderSummary = ({
           </button>
         </div>
       </div>
+      {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
     </div>
   );
 };
