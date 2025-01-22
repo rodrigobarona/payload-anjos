@@ -26,7 +26,7 @@ const buttonVariants = cva(
         outline: "border border-border bg-background hover:bg-card hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         tailwind:
-          "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+          "flex w-full justify-center rounded-md bg-main-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-main-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-main-600",
       },
     },
   },

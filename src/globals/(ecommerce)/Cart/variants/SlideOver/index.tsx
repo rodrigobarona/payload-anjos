@@ -236,7 +236,7 @@ export const SlideOver = () => {
                                           (product.variant && product.variant.slug) ?? undefined,
                                         );
                                       }}
-                                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      className="hover:text-main-500 text-main-600 font-medium"
                                     >
                                       {t("remove")}
                                     </button>
@@ -261,7 +261,7 @@ export const SlideOver = () => {
                   <div className="mt-6">
                     <Link
                       href="/checkout"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                      className="bg-main-600 hover:bg-main-700 flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm"
                     >
                       {t("checkout")}
                     </Link>
@@ -272,7 +272,7 @@ export const SlideOver = () => {
                       <button
                         type="button"
                         onClick={() => setCartState(false)}
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                        className="hover:text-main-500 text-main-600 font-medium"
                       >
                         {t("continue-shopping")}
                         <span aria-hidden="true"> &rarr;</span>

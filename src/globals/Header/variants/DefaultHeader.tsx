@@ -109,7 +109,7 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
           {!disableCart && (
             <button onClick={toggleCart} className="relative -m-2 cursor-pointer p-2">
               {totalQuantity && totalQuantity > 0 ? (
-                <span className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-xs text-white">
+                <span className="bg-main-600 absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full text-xs text-white">
                   {totalQuantity}
                 </span>
               ) : (

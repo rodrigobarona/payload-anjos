@@ -148,7 +148,7 @@ export const ProductForm = ({
         <div className="mt-8">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium text-gray-900">{t("size")}</h2>
-            <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+            <a href="#" className="hover:text-main-500 text-main-600 text-sm font-medium">
               {t("sizing-chart")}
             </a>
           </div>
@@ -176,7 +176,7 @@ export const ProductForm = ({
                         matchingVariant
                           ? "focus:outline-hidden cursor-pointer"
                           : "cursor-not-allowed opacity-25",
-                        "flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-indigo-600 data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-indigo-500 data-[focus]:ring-offset-2 data-[checked]:hover:bg-indigo-700 sm:flex-1",
+                        "data-[focus]:ring-main-500 data-[checked]:bg-main-600 data-[checked]:hover:bg-main-700 flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-offset-2 sm:flex-1",
                       )}
                     >
                       {size.label}
@@ -193,7 +193,7 @@ export const ProductForm = ({
           type="submit"
           disabled={!isProductAvailable}
           className={cn(
-            "focus:outline-hidden col-span-2 row-start-2 flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full",
+            "focus:outline-hidden focus:ring-main-500 bg-main-600 hover:bg-main-700 col-span-2 row-start-2 flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full",
             !isProductAvailable && "cursor-not-allowed opacity-25",
           )}
           onClick={(e) => {

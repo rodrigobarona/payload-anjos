@@ -26,7 +26,7 @@ export const LoginPageWithoutOAuth = () => {
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             {t("no-account")}{" "}
-            <Link href="/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <Link href="/register" className="hover:text-main-500 text-main-600 font-semibold">
               {t("register-now")}
             </Link>
           </p>

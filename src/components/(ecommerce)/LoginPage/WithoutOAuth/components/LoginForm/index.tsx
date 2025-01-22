@@ -90,7 +90,7 @@ export const LoginForm = () => {
           ""
         )}
         <div className="ml-auto text-sm/6">
-          <Link href="/forgot-password" className="font-semibold text-indigo-600 hover:text-indigo-500">
+          <Link href="/forgot-password" className="hover:text-main-500 text-main-600 font-semibold">
             {t("forgot-password")}
           </Link>
         </div>

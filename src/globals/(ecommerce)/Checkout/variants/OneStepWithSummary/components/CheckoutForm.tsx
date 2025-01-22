@@ -180,7 +180,7 @@ export const CheckoutForm = ({
 
             <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
               {defaultShippingAddress ? (
-                <div className="group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 ring-indigo-500 focus:outline-none">
+                <div className="ring-main-500 group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 focus:outline-none">
                   <span className="flex flex-1">
                     <span className="flex w-full flex-col">
                       <span className="block text-sm font-medium text-gray-900">
@@ -199,7 +199,7 @@ export const CheckoutForm = ({
                       <span className="mt-1 flex items-center text-sm text-gray-500">
                         {defaultShippingAddress.email}
                       </span>
-                      <Button type="button" className="ml-auto mt-1 text-sm text-indigo-600">
+                      <Button type="button" className="text-main-600 ml-auto mt-1 text-sm">
                         {t("change")}
                       </Button>
                     </span>
@@ -255,7 +255,7 @@ export const CheckoutForm = ({
                         <FormControl>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
+                              <SelectTrigger className="focus:outline-main-600 w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
                                 <SelectValue placeholder={t("country-placeholder")} />
                               </SelectTrigger>
                             </FormControl>
@@ -408,7 +408,7 @@ export const CheckoutForm = ({
                         <FormControl>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
+                              <SelectTrigger className="focus:outline-main-600 w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
                                 <SelectValue placeholder={t("country-placeholder")} />
                               </SelectTrigger>
                             </FormControl>
@@ -473,15 +473,15 @@ export const CheckoutForm = ({
                         value={slug}
                         aria-label={title}
                         aria-description={`${turnaround} for price`}
-                        className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
+                        className="data-[focus]:ring-main-500 group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2"
                       >
                         <CheckCircleIcon
                           aria-hidden="true"
-                          className="size-5 text-indigo-600 group-[&:not([data-checked])]:opacity-0"
+                          className="text-main-600 size-5 group-[&:not([data-checked])]:opacity-0"
                         />
                         <span
                           aria-hidden="true"
-                          className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
+                          className="group-data-[checked]:border-main-500 pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border"
                         />
 
                         <DeliveryMethod

@@ -206,7 +206,7 @@ export const OrderSummary = ({
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <button
             type="submit"
-            className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+            className="focus:ring-main-500 bg-main-600 hover:bg-main-700 w-full rounded-md border border-transparent px-4 py-3 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50"
           >
             {t("confirm")}
           </button>

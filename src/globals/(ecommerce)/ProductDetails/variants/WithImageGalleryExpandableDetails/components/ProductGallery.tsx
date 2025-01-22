@@ -40,7 +40,7 @@ export const ProductGallery = ({
         <TabList className="grid grid-cols-4 gap-6">
           {/* This has to be on client and recieve state */}
           {product.enableVariants && selectedVariant?.image && (
-            <Tab className="focus:ring-3 focus:outline-hidden group relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:ring-indigo-500/50 focus:ring-offset-4">
+            <Tab className="focus:ring-3 focus:outline-hidden focus:ring-main-500/50 group relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:ring-offset-4">
               <span className="sr-only">{selectedVariant.image.alt}</span>
               <span className="absolute inset-0 overflow-hidden rounded-md">
                 <Image
@@ -53,7 +53,7 @@ export const ProductGallery = ({
               </span>
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 group-data-[selected]:ring-indigo-500"
+                className="group-data-[selected]:ring-main-500 pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2"
               />
             </Tab>
           )}
