@@ -59,6 +59,14 @@ export const Orders: CollectionConfig = {
               ],
             },
             {
+              name: "extractedFromStock",
+              type: "checkbox",
+              admin: {
+                hidden: true,
+                readOnly: true,
+              },
+            },
+            {
               name: "products",
               type: "array",
               label: { en: "Products", pl: "Produkty" },

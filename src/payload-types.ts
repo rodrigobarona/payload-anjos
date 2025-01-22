@@ -1000,6 +1000,7 @@ export interface Order {
   id: string;
   customer?: (string | null) | Customer;
   date?: string | null;
+  extractedFromStock?: boolean | null;
   products?:
     | {
         product?: (string | null) | Product;
@@ -1939,6 +1940,7 @@ export interface CustomersSelect<T extends boolean = true> {
 export interface OrdersSelect<T extends boolean = true> {
   customer?: T;
   date?: T;
+  extractedFromStock?: T;
   products?:
     | T
     | {

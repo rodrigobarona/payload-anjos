@@ -69,8 +69,8 @@ export const getStripePaymentURL = async (
         },
       ],
       client_reference_id: orderID,
-      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/payment/success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/payment/cancel`,
+      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/payment/success?orderID=${orderID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/payment/failed?orderID=${orderID}`,
     });
 
     return session.url;
