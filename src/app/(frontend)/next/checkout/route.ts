@@ -1,89 +1,3 @@
-// import { Cart } from "@/stores/CartStore/types";
-// import { getPayload } from "payload";
-// import config from "@payload-config";
-// import { CourierSlugs, getCouriersArray } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
-// import { getLocale } from "next-intl/server";
-// import { Locale } from "@/i18n/config";
-// import { Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
-// import { Currency } from "@/stores/Currency/types";
-
-// export async function POST(req: Request) {
-//   try {
-//     const {
-//       selectedCountry = "pl",
-//       cart,
-//       currency,
-//     }: { selectedCountry: Country; cart: Cart | undefined; currency: Currency } = await req.json();
-//     const payload = await getPayload({ config });
-//     const locale = (await getLocale()) as Locale;
-
-//     let totalWeight = 0;
-
-//     let totalPrice = 0;
-
-//     if (cart) {
-//       const { docs } = await payload.find({
-//         collection: "products",
-//         where: {
-//           id: {
-//             in: cart.map((product) => product.id),
-//           },
-//         },
-//         select: {
-//           title: true,
-//           variants: true,
-//           enableVariantWeights: true,
-//           weight: true,
-//           pricing: true,
-//         },
-//       });
-
-//       totalWeight = docs.reduce((acc, product) => {
-//         if (product.enableVariantWeights && product.variants) {
-//           const variantWeight = product.variants
-//             .filter((variant) =>
-//               cart.some(
-//                 (cartProduct) =>
-//                   cartProduct.id === product.id && cartProduct.choosenVariantSlug === variant.variantSlug,
-//               ),
-//             )
-//             .reduce((varAcc, variant) => varAcc + (variant.weight ?? 0), 0);
-
-//           return acc + variantWeight;
-//         }
-
-//         return acc + (product.weight ?? 0);
-//       }, 0);
-
-//       const totalPrice = docs.reduce((acc, product) => {
-//         if (product.variants) {
-//           const variantPrice = product.variants
-//             .filter((variant) =>
-//               cart.some(
-//                 (cartProduct) =>
-//                   cartProduct.id === product.id && cartProduct.choosenVariantSlug === variant.variantSlug,
-//               ),
-//             )
-//             .reduce((varAcc, variant) => {
-//               const price = variant.pricing?.find((pricing) => pricing.currency === currency)?.value ?? 0;
-//               return varAcc + price;
-//             }, 0);
-
-//           return acc + variantPrice;
-//         }
-
-//         const basePrice = product.pricing?.find((pricing) => pricing.currency === currency)?.value ?? 0;
-//         return acc + basePrice;
-//       }, 0);
-//     }
-
-//     const couriers = await getCouriersArray(locale, true);
-//     couriers.map((couriers) => {
-//       const deliveryZone = couriers.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry));
-//     });
-//   } catch (error) {}
-// }
-
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { Cart } from "@/stores/CartStore/types";
@@ -215,38 +129,41 @@ export async function POST(req: Request) {
       }));
 
     const couriers = await getCouriersArray(locale, true);
-    const filledCouriers = couriers.map((courier) => {
-      const deliveryZone = courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry));
-      const deliveryZoneWithRange = {
-        ...deliveryZone,
-        range: deliveryZone?.range?.find(
-          (range) => range.weightFrom <= totalWeight && range.weightTo >= totalWeight,
-        ),
-      };
-      const calculatedPrice = deliveryZoneWithRange?.range?.pricing.map((prices) => {
-        const freeShippingValue = deliveryZoneWithRange.freeShipping?.find(
-          (freeShipping) => freeShipping.currency === prices.currency,
-        )?.value;
-        const totalPriceInCurrency = totalFormatted.find(
-          (price) => price.currency === prices.currency,
-        )?.value;
-        if (!freeShippingValue || !totalPriceInCurrency) {
-          return prices;
-        } else {
-          return {
-            ...prices,
-            value: totalPriceInCurrency >= freeShippingValue ? 0 : prices.value,
-          };
-        }
-      });
+    const filledCouriers = couriers
+      .filter((courier) => courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry)))
+      .map((courier) => {
+        const deliveryZone = courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry));
+        const deliveryZoneWithRange = {
+          ...deliveryZone,
+          range: deliveryZone?.range?.find(
+            (range) => range.weightFrom <= totalWeight && range.weightTo >= totalWeight,
+          ),
+        };
 
-      return {
-        slug: courier.slug,
-        title: courier.title,
-        turnaround: courier.turnaround,
-        pricing: calculatedPrice,
-      };
-    });
+        const calculatedPrice = deliveryZoneWithRange?.range?.pricing.map((prices) => {
+          const freeShippingValue = deliveryZoneWithRange.freeShipping?.find(
+            (freeShipping) => freeShipping.currency === prices.currency,
+          )?.value;
+          const totalPriceInCurrency = totalFormatted.find(
+            (price) => price.currency === prices.currency,
+          )?.value;
+          if (!freeShippingValue || !totalPriceInCurrency) {
+            return prices;
+          } else {
+            return {
+              ...prices,
+              value: totalPriceInCurrency >= freeShippingValue ? 0 : prices.value,
+            };
+          }
+        });
+
+        return {
+          slug: courier.slug,
+          title: courier.title,
+          turnaround: courier.turnaround,
+          pricing: calculatedPrice,
+        };
+      });
 
     const productsWithTotalAndCouriers = {
       filledProducts: filledProducts,
@@ -255,7 +172,7 @@ export async function POST(req: Request) {
       totalQuantity: filledProducts.reduce((acc, product) => acc + (product?.quantity ?? 0), 0),
     };
 
-    console.log(totalWeight);
+    // console.log(totalWeight);
 
     return Response.json({ status: 200, productsWithTotalAndCouriers });
   } catch (error) {

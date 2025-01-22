@@ -104,7 +104,8 @@
       "delivery-method": "Metoda dostawy",
       "payment-method": "Metoda płatności",
       "change": "Zmień",
-      "invoice-data": "Dane do faktury"
+      "invoice-data": "Dane do faktury",
+      "no-shipping": "Brak dostępnych metod dostawy. Skontaktuj się z nami."
     },
     "errors": {
       "invoice": {

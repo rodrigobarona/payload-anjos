@@ -23,16 +23,6 @@ import { Currency } from "@/stores/Currency/types";
 import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Cart/variants/SlideOver";
 import { OrderSummary } from "./OrderSummary";
 
-const deliveryMethods = [
-  { id: 1, title: "Standard", turnaround: "4–10 business days", price: "$5.00" },
-  { id: 2, title: "Express", turnaround: "2–5 business days", price: "$16.00" },
-];
-const paymentMethods = [
-  { id: "credit-card", title: "Credit card" },
-  { id: "paypal", title: "PayPal" },
-  { id: "etransfer", title: "eTransfer" },
-];
-
 type FilledCourier = {
   slug: string;
   title: string;
@@ -46,19 +36,7 @@ type FilledCourier = {
     | undefined;
 };
 
-export const CheckoutForm = ({
-  user,
-  // deliveryMethods,
-  geowidgetToken,
-}: {
-  user?: Customer;
-  deliveryMethods: {
-    slug: string;
-    title: string;
-    turnaround: string;
-  }[];
-  geowidgetToken?: string;
-}) => {
+export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowidgetToken?: string }) => {
   const { CheckoutFormSchemaResolver } = useCheckoutFormSchema();
   const t = useTranslations("CheckoutForm.form");
 
@@ -96,6 +74,7 @@ export const CheckoutForm = ({
 
   const onSubmit = async (values: CheckoutFormData) => {
     try {
+      // redirect to payment route!
       console.log(values);
     } catch (error) {
       console.log(error);
@@ -117,11 +96,10 @@ export const CheckoutForm = ({
   const [deliveryMethods, setDeliveryMethods] = useState<FilledCourier[]>([]);
   const { cart } = useCart();
 
-  console.log(form.formState.errors);
-
   const fetchCartProducts = useCallback(
     debounce(async (cartToCalculate: Cart | null) => {
       try {
+        console.log(selectedCountry);
         const { data } = await axios.post<{
           status: number;
           productsWithTotalAndCouriers: {
@@ -137,17 +115,19 @@ export const CheckoutForm = ({
         const { filledProducts, total, couriers } = data.productsWithTotalAndCouriers;
         setCheckoutProducts(filledProducts);
         setDeliveryMethods(couriers);
+        console.log(couriers);
+        console.log(selectedCountry);
         setTotalPrice(total);
       } catch (error) {
         console.error(error);
       }
     }, 300),
-    [],
+    [selectedCountry],
   );
 
   useEffect(() => {
     fetchCartProducts(cart);
-  }, [cart]);
+  }, [cart, selectedCountry]);
 
   return (
     <Form {...form}>
@@ -493,6 +473,7 @@ export const CheckoutForm = ({
                         />
                       </Radio>
                     ))}
+                    {deliveryMethods.length === 0 && <p>{t("no-shipping")}</p>}
                     <FormMessage />
                   </RadioGroup>
                 )}
