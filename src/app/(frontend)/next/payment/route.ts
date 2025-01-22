@@ -11,6 +11,7 @@ import { CheckoutFormData } from "@/schemas/checkoutForm.schema";
 import { Currency } from "@/stores/Currency/types";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getStripePaymentURL } from "@/lib/paywalls/getStripePaymentURL";
+import { getCustomer } from "@/utilities/getCustomer";
 
 export async function POST(req: Request) {
   try {
@@ -57,8 +58,7 @@ export async function POST(req: Request) {
     });
 
     const filledProducts = getFilledProducts(products, cart);
-    // would be useful for other than stripe paywalls, total does not include shipping cost!
-    // const total = getTotal(filledProducts);
+    const total = getTotal(filledProducts);
     const totalWeight = getTotalWeight(filledProducts, cart);
     const couriers = await getCouriersArray(locale, true);
 
@@ -76,6 +76,75 @@ export async function POST(req: Request) {
 
     let redirectURL: string | null = null;
 
+    const user = await getCustomer();
+
+    const order = await payload.create({
+      collection: "orders",
+      data: {
+        customer: user?.id,
+        products: filledProducts.map((product) => ({
+          id: product.id,
+          product: product.id,
+          productName: product.title,
+          quantity: product.quantity,
+          hasVariant: product.enableVariants && product.variant ? true : false,
+          variantSlug: product.variant.variantSlug ?? undefined,
+          color: product.variant.color?.label ?? undefined,
+          size: product.variant.size?.label ?? undefined,
+        })),
+        date: new Date().toISOString(),
+        invoice: {
+          address:
+            checkoutData.individualInvoice && checkoutData.invoice
+              ? checkoutData.invoice.address
+              : checkoutData.shipping.address,
+          city:
+            checkoutData.individualInvoice && checkoutData.invoice
+              ? checkoutData.invoice.city
+              : checkoutData.shipping.city,
+          country:
+            checkoutData.individualInvoice && checkoutData.invoice
+              ? (checkoutData.invoice.country as Country)
+              : (checkoutData.shipping.country as Country),
+          isCompany: checkoutData.buyerType === "company",
+          name:
+            checkoutData.individualInvoice && checkoutData.invoice
+              ? checkoutData.invoice.name
+              : checkoutData.shipping.name,
+          postalCode:
+            checkoutData.individualInvoice && checkoutData.invoice
+              ? checkoutData.invoice.postalCode
+              : checkoutData.shipping.postalCode,
+          region:
+            checkoutData.individualInvoice && checkoutData.invoice
+              ? checkoutData.invoice.region
+              : checkoutData.shipping.region,
+          tin: checkoutData.buyerType === "company" ? checkoutData.invoice?.tin : undefined,
+        },
+        orderDetails: {
+          shipping: courier.slug,
+          shippingCost,
+          status: "pending",
+          total: total.find((price) => price.currency === currency)?.value,
+          currency: currency,
+        },
+        shippingAddress: {
+          name: checkoutData.shipping.name,
+          address: checkoutData.shipping.address,
+          city: checkoutData.shipping.city,
+          country: checkoutData.shipping.country as Country,
+          region: checkoutData.shipping.region,
+          postalCode: checkoutData.shipping.postalCode,
+          email: checkoutData.shipping.email,
+          phone: checkoutData.shipping.phone,
+          pickupPointAddress: checkoutData.shipping.pickupPointAddress,
+          pickupPointID: checkoutData.shipping.pickupPointID,
+        },
+      },
+    });
+
+    // TODO: Handle stock changes
+
     try {
       switch (paywalls.paywall) {
         case "stripe":
@@ -86,6 +155,7 @@ export async function POST(req: Request) {
             currency,
             locale,
             paywalls?.stripe?.secret ?? "",
+            order.id,
           );
           break;
 

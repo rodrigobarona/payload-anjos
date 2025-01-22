@@ -82,7 +82,7 @@ export const DeliveryMethod = ({
                 {t("choose-pickup")}
               </Button>
             </DialogTrigger>
-            <DialogContent className="flex h-[75dvh] w-[95vw] max-w-none flex-col sm:w-[80vw]">
+            <DialogContent className="flex h-[75dvh] w-[95vw] max-w-screen-xl flex-col sm:w-[80vw]">
               <DialogHeader>
                 <DialogTitle>
                   <h3 className="text-lg font-semibold leading-none tracking-tight">{t("choose-pickup")}</h3>

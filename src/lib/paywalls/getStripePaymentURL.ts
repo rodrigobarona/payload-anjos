@@ -10,8 +10,9 @@ export const getStripePaymentURL = async (
   currency: Currency,
   locale: Locale,
   apiKey: string,
+  orderID: string,
 ) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");
+  const stripe = new Stripe(apiKey);
 
   const stripeMappedProducts = filledProducts.map((product) => {
     const productPrice = product.enableVariantPrices
@@ -67,6 +68,7 @@ export const getStripePaymentURL = async (
           },
         },
       ],
+      client_reference_id: orderID,
       success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/payment/success`,
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/payment/cancel`,
     });

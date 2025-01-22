@@ -18,6 +18,7 @@ export interface Config {
     categories: Category;
     administrators: Administrator;
     customers: Customer;
+    orders: Order;
     products: Product;
     productCategories: ProductCategory;
     productSubCategories: ProductSubCategory;
@@ -46,6 +47,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     administrators: AdministratorsSelect<false> | AdministratorsSelect<true>;
     customers: CustomersSelect<false> | CustomersSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     productCategories: ProductCategoriesSelect<false> | ProductCategoriesSelect<true>;
     productSubCategories: ProductSubCategoriesSelect<false> | ProductSubCategoriesSelect<true>;
@@ -992,6 +994,159 @@ export interface Customer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  customer?: (string | null) | Customer;
+  date?: string | null;
+  products?:
+    | {
+        product?: (string | null) | Product;
+        productName?: string | null;
+        hasVariant?: boolean | null;
+        color?: string | null;
+        size?: string | null;
+        variantSlug?: string | null;
+        quantity?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  invoice?: {
+    isCompany?: boolean | null;
+    name?: string | null;
+    tin?: string | null;
+    address?: string | null;
+    city?: string | null;
+    country?:
+      | (
+          | 'ad'
+          | 'al'
+          | 'at'
+          | 'ba'
+          | 'be'
+          | 'bg'
+          | 'by'
+          | 'ch'
+          | 'cy'
+          | 'cz'
+          | 'de'
+          | 'dk'
+          | 'ee'
+          | 'es'
+          | 'fi'
+          | 'fr'
+          | 'gb'
+          | 'gr'
+          | 'hr'
+          | 'hu'
+          | 'ie'
+          | 'is'
+          | 'it'
+          | 'li'
+          | 'lt'
+          | 'lu'
+          | 'lv'
+          | 'mc'
+          | 'md'
+          | 'me'
+          | 'mk'
+          | 'mt'
+          | 'nl'
+          | 'no'
+          | 'pl'
+          | 'pt'
+          | 'ro'
+          | 'rs'
+          | 'ru'
+          | 'se'
+          | 'si'
+          | 'sk'
+          | 'sm'
+          | 'ua'
+          | 'va'
+        )
+      | null;
+    region?: string | null;
+    postalCode?: string | null;
+  };
+  printLabel?: {};
+  shippingAddress?: {
+    name?: string | null;
+    address?: string | null;
+    pickupPointID?: string | null;
+    pickupPointAddress?: string | null;
+    city?: string | null;
+    country?:
+      | (
+          | 'ad'
+          | 'al'
+          | 'at'
+          | 'ba'
+          | 'be'
+          | 'bg'
+          | 'by'
+          | 'ch'
+          | 'cy'
+          | 'cz'
+          | 'de'
+          | 'dk'
+          | 'ee'
+          | 'es'
+          | 'fi'
+          | 'fr'
+          | 'gb'
+          | 'gr'
+          | 'hr'
+          | 'hu'
+          | 'ie'
+          | 'is'
+          | 'it'
+          | 'li'
+          | 'lt'
+          | 'lu'
+          | 'lv'
+          | 'mc'
+          | 'md'
+          | 'me'
+          | 'mk'
+          | 'mt'
+          | 'nl'
+          | 'no'
+          | 'pl'
+          | 'pt'
+          | 'ro'
+          | 'rs'
+          | 'ru'
+          | 'se'
+          | 'si'
+          | 'sk'
+          | 'sm'
+          | 'ua'
+          | 'va'
+        )
+      | null;
+    region?: string | null;
+    postalCode?: string | null;
+    email?: string | null;
+    phone?: string | null;
+  };
+  orderDetails?: {
+    total?: number | null;
+    currency?: string | null;
+    shippingCost?: number | null;
+    shipping?: string | null;
+    transactionID?: string | null;
+    status?: ('pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled' | 'returned') | null;
+    shippingDate?: string | null;
+    trackingNumber?: string | null;
+    orderNote?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
  */
 export interface Product {
@@ -1281,6 +1436,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'customers';
         value: string | Customer;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: string | Order;
       } | null)
     | ({
         relationTo: 'products';
@@ -1772,6 +1931,68 @@ export interface CustomersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  customer?: T;
+  date?: T;
+  products?:
+    | T
+    | {
+        product?: T;
+        productName?: T;
+        hasVariant?: T;
+        color?: T;
+        size?: T;
+        variantSlug?: T;
+        quantity?: T;
+        id?: T;
+      };
+  invoice?:
+    | T
+    | {
+        isCompany?: T;
+        name?: T;
+        tin?: T;
+        address?: T;
+        city?: T;
+        country?: T;
+        region?: T;
+        postalCode?: T;
+      };
+  printLabel?: T | {};
+  shippingAddress?:
+    | T
+    | {
+        name?: T;
+        address?: T;
+        pickupPointID?: T;
+        pickupPointAddress?: T;
+        city?: T;
+        country?: T;
+        region?: T;
+        postalCode?: T;
+        email?: T;
+        phone?: T;
+      };
+  orderDetails?:
+    | T
+    | {
+        total?: T;
+        currency?: T;
+        shippingCost?: T;
+        shipping?: T;
+        transactionID?: T;
+        status?: T;
+        shippingDate?: T;
+        trackingNumber?: T;
+        orderNote?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2435,6 +2656,9 @@ export interface InpostCourier {
 export interface Paywall {
   id: string;
   paywall: 'stripe' | 'autopay';
+  /**
+   * If you want to use test environment, you can also provide test keys here.
+   */
   stripe?: {
     secret: string;
     public?: string | null;

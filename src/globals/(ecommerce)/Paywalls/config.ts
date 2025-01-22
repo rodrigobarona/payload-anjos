@@ -55,6 +55,10 @@ export const Paywalls: GlobalConfig = {
         condition: (data) => {
           return data.paywall === "stripe";
         },
+        description: {
+          pl: "Jeśli chcesz korzystać ze środowiska testowego, podaj tu odpowiadające klucze.",
+          en: "If you want to use test environment, you can also provide test keys here.",
+        },
       },
       fields: [
         {

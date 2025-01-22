@@ -31,6 +31,7 @@ import { Checkout } from "./globals/(ecommerce)/Checkout/config";
 import { InPostPickup } from "./globals/(ecommerce)/Couriers/InPostPickup/config";
 import { InPostCourier } from "./globals/(ecommerce)/Couriers/InPostCourier/config";
 import { Paywalls } from "./globals/(ecommerce)/Paywalls/config";
+import { Orders } from "./collections/(ecommerce)/Orders";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -91,6 +92,7 @@ export default buildConfig({
     Categories,
     Administrators,
     Customers,
+    Orders,
     Products,
     ProductCategories,
     ProductSubCategories,
