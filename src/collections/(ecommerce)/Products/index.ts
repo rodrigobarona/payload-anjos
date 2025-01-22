@@ -382,6 +382,7 @@ export const Products: CollectionConfig = {
                     {
                       name: "size",
                       type: "text",
+                      index: true,
                       label: {
                         en: "Size",
                         pl: "Rozmiar",
@@ -396,6 +397,7 @@ export const Products: CollectionConfig = {
                     },
                     {
                       name: "color",
+                      index: true,
                       type: "text",
                       label: {
                         en: "Color",
@@ -483,6 +485,7 @@ export const Products: CollectionConfig = {
                       fields: [
                         {
                           name: "value",
+                          index: true,
                           type: "number",
                           label: {
                             en: "Price",
@@ -537,11 +540,13 @@ export const Products: CollectionConfig = {
                     pl: "Kategoria",
                   },
                   type: "relationship",
+                  index: true,
                   relationTo: "productCategories",
                   required: true,
                 },
                 {
                   name: "subcategories",
+                  index: true,
                   type: "relationship",
                   label: {
                     en: "Subcategories",
@@ -628,6 +633,7 @@ export const Products: CollectionConfig = {
                     {
                       name: "value",
                       type: "number",
+                      index: true,
                       label: {
                         en: "Price",
                         pl: "Cena",
@@ -641,6 +647,7 @@ export const Products: CollectionConfig = {
             },
             {
               name: "bought",
+              index: true,
               label: {
                 en: "Bought",
                 pl: "Kupiono",
