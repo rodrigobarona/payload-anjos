@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useCartState } from "../../stores/CartStateStore";
+import { useCartState } from "../../../../../stores/CartStateStore";
 import { useCart } from "@/stores/CartStore";
 import axios from "axios";
 import { FilledVariant } from "@/globals/(ecommerce)/ProductDetails/types";
@@ -57,7 +57,7 @@ export const SlideOver = () => {
             }[];
             totalQuantity: number;
           };
-        }>("/next/getCartProducts", { cart: cartToCalculate, locale });
+        }>("/next/cartProducts", { cart: cartToCalculate, locale });
         const { filledProducts, total } = data.productsWithTotal;
         setCartProducts(filledProducts);
         setTotal(total);

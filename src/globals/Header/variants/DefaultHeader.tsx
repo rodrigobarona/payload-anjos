@@ -7,7 +7,7 @@ import { Link } from "@/i18n/routing";
 import { CMSLink } from "@/components/Link";
 import { useEffect, useState } from "react";
 import { ShoppingBagIcon, UserIcon } from "@heroicons/react/24/outline";
-import { useCartState } from "@/globals/(ecommerce)/Cart/stores/CartStateStore";
+import { useCartState } from "@/stores/CartStateStore";
 import { useCart } from "@/stores/CartStore";
 
 export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart?: boolean }) => {

@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import type { Footer, ShopSetting } from "@/payload-types";
 
-// import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
 import { CMSLink } from "@/components/Link";
 import { Logo } from "@/components/Logo/Logo";
 import RichText from "@/components/RichText";
@@ -26,7 +25,6 @@ export async function Footer() {
         </Link>
 
         <div className="flex flex-col-reverse items-start gap-4 md:flex-row md:items-center">
-          {/* <ThemeSelector /> */}
           <CurrencySelector currencyOptions={shopSettings.availableCurrencies} />
           <LocaleSwitch />
           <nav className="flex flex-col gap-4 md:flex-row">

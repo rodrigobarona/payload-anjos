@@ -1,7 +1,6 @@
 "use client";
 
-import { ReactNode, useCallback, useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/16/solid";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Radio, RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { useForm, useWatch } from "react-hook-form";
@@ -73,15 +72,6 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
     },
   });
 
-  const onSubmit = async (values: CheckoutFormData) => {
-    try {
-      // redirect to payment route!
-      console.log(values);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const wantsInvoice = useWatch({ control: form.control, name: "individualInvoice" });
   const isCompany = useWatch({ control: form.control, name: "buyerType" }) === "company";
   const selectedCountry = useWatch({ control: form.control, name: "shipping.country" });
@@ -95,11 +85,18 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
     }[]
   >();
   const [deliveryMethods, setDeliveryMethods] = useState<FilledCourier[]>([]);
+
   const { cart } = useCart();
   const locale = useLocale() as Locale;
 
+  /**
+   * Fetches products from the cart, calculates the total price and available couriers with their prices. Basically, it's getting all checkout needed data.
+   * @param cartToCalculate - Actual cart to calculate the total price and available couriers.
+   * @param countryToCalculate - Country to get available couriers.
+   * @returns void
+   */
   const fetchCartProducts = useCallback(
-    debounce(async (cartToCalculate: Cart | null) => {
+    debounce(async (cartToCalculate: Cart | null, countryToCalculate: string) => {
       try {
         const { data } = await axios.post<{
           status: number;
@@ -112,7 +109,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
             totalQuantity: number;
             couriers: FilledCourier[];
           };
-        }>("/next/checkout", { cart: cartToCalculate, selectedCountry, locale });
+        }>("/next/checkout", { cart: cartToCalculate, countryToCalculate, locale });
         const { filledProducts, total, couriers } = data.productsWithTotalAndCouriers;
         setCheckoutProducts(filledProducts);
         setDeliveryMethods(couriers);
@@ -121,12 +118,21 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
         console.error(error);
       }
     }, 300),
-    [selectedCountry],
+    [],
   );
 
   useEffect(() => {
-    fetchCartProducts(cart);
+    fetchCartProducts(cart, selectedCountry);
   }, [cart, selectedCountry]);
+
+  const onSubmit = async (values: CheckoutFormData) => {
+    try {
+      // redirect to payment route!
+      console.log(values);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Form {...form}>

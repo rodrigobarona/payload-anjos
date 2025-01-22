@@ -1,26 +1,8 @@
 import { getCustomer } from "@/utilities/getCustomer";
 import { CheckoutForm } from "./components/CheckoutForm";
-import { OrderSummary } from "./components/OrderSummary";
 import { getCachedGlobal } from "@/utilities/getGlobals";
-
 import { Locale } from "@/i18n/config";
-import { getCouriersArray } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
-
-const products = [
-  {
-    id: 1,
-    title: "Basic Tee",
-    href: "#",
-    price: "$32.00",
-    color: "Black",
-    size: "Large",
-    imageSrc: "https://tailwindui.com/plus/img/ecommerce-images/checkout-page-02-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-  // More products...
-];
 
 export const OneStepWithSummary = async ({ locale }: { locale: Locale }) => {
   const user = await getCustomer();

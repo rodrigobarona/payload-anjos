@@ -9,6 +9,12 @@ import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 import { useCart } from "@/stores/CartStore";
 import { useTranslations } from "next-intl";
 
+/**
+ * This function merges two arrays of objects with currency and value, summing up the values with the same currency.
+ * @param arr1 - array of objects with currency and value
+ * @param arr2 - array of objects with currency and value
+ * @returns - merged array of objects with currency and value
+ */
 const mergeAmounts = (
   arr1: { currency: Currency; value: number }[] | undefined,
   arr2: { currency: Currency; value: number }[] | undefined,
