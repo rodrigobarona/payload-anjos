@@ -10,22 +10,23 @@ import { useTheme } from "@/providers/Theme";
 
 interface HeaderClientProps {
   data: Header;
+  disableCart?: boolean;
 }
 
-export const HeaderClient = ({ data }: HeaderClientProps) => {
+export const HeaderClient = ({ data, disableCart }: HeaderClientProps) => {
   // const { theme } = useTheme();
 
   let header: ReactNode = null;
 
   switch (data.type) {
     case "default":
-      header = <DefaultHeader data={data} />;
+      header = <DefaultHeader disableCart={disableCart} data={data} />;
       break;
     case "floating":
       header = <FloatingHeader data={data} />;
       break;
     default:
-      header = <DefaultHeader data={data} />;
+      header = <DefaultHeader disableCart={disableCart} data={data} />;
       break;
   }
 

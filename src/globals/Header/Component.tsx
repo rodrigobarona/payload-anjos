@@ -5,9 +5,9 @@ import type { Header } from "@/payload-types";
 import { getLocale } from "next-intl/server";
 import { Locale } from "@/i18n/config";
 
-export async function Header() {
+export async function Header({ disableCart }: { disableCart?: boolean }) {
   const locale = (await getLocale()) as Locale;
   const headerData: Header = await getCachedGlobal("header", locale, 1)();
 
-  return <HeaderClient data={headerData} />;
+  return <HeaderClient data={headerData} disableCart={disableCart}/>;
 }

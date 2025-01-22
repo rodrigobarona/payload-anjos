@@ -8,7 +8,7 @@ import { routing } from "@/i18n/routing";
 import { cn } from "src/utilities/cn";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { AdminBar } from "@/components/AdminBar";
 import { Footer } from "@/globals/Footer/Component";
@@ -34,7 +34,7 @@ export default async function RootLayout({
   children,
 }: {
   params: Promise<{ locale: string }>;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const { isEnabled } = await draftMode();
   const { locale } = await params;
@@ -68,9 +68,6 @@ export default async function RootLayout({
               }}
             /> */}
             {isEnabled && <LivePreviewListener />}
-            <SynchronizeCart />
-            <Cart />
-            <Header />
             {children}
             <Footer />
           </NextIntlClientProvider>
