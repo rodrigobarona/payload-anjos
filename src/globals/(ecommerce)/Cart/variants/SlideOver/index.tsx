@@ -264,6 +264,7 @@ export const SlideOver = () => {
                   <div className="mt-6">
                     <Link
                       href="/checkout"
+                      onClick={() => setCartState(false)}
                       className="bg-main-600 hover:bg-main-700 flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm"
                     >
                       {t("checkout")}
