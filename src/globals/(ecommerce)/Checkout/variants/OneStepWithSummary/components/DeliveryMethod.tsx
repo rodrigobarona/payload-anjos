@@ -71,52 +71,54 @@ export const DeliveryMethod = ({
   switch (variant) {
     case "inpost-pickup":
       Additional = (
-        <div className="mt-2 flex h-fit w-full flex-row-reverse">
+        <>
           {deliveryMethod === variant && (
-            <Button
-              type="button"
-              onClick={() => setDialogOpen(true)}
-              variant="tailwind"
-              className="ml-auto w-fit"
-              {...props}
-            >
-              {t("choose-pickup")}
-            </Button>
-          )}
-          <div className={cn(dialogOpen ? "block" : "hidden")}>
-            <div
-              onClick={() => setDialogOpen(false)}
-              className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-            ></div>
-            <div className="fixed left-[50%] top-[50%] z-50 flex h-[75dvh] w-[95vw] max-w-screen-xl translate-x-[-50%] translate-y-[-50%] flex-col gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:w-[80vw] sm:rounded-lg">
-              <h3 className="text-lg font-semibold leading-none tracking-tight">{t("choose-pickup")}</h3>
-              <InPostGeowidget
-                token={geowidgetToken}
-                onPointSelect={(event) => {
-                  form.setValue("shipping.pickupPointID", event.detail.name);
-                  form.setValue(
-                    "shipping.pickupPointAddress",
-                    `${event.detail.address_details.street} ${event.detail.address_details.building_number}, ${event.detail.address_details.post_code} ${event.detail.address_details.city}`,
-                  );
-                  setDialogOpen(false);
-                }}
-              />
-              <div
-                className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
-                onClick={() => setDialogOpen(false)}
+            <div className="mt-2 flex h-fit w-full flex-row-reverse">
+              <Button
+                type="button"
+                onClick={() => setDialogOpen(true)}
+                variant="tailwind"
+                className="ml-auto w-fit"
+                {...props}
               >
-                <X className="h-4 w-4" />
-                <span className="sr-only">{t("close")}</span>
+                {t("choose-pickup")}
+              </Button>
+              <div className={cn(dialogOpen ? "block" : "hidden")}>
+                <div
+                  onClick={() => setDialogOpen(false)}
+                  className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+                ></div>
+                <div className="fixed left-[50%] top-[50%] z-50 flex h-[75dvh] w-[95vw] max-w-screen-xl translate-x-[-50%] translate-y-[-50%] flex-col gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:w-[80vw] sm:rounded-lg">
+                  <h3 className="text-lg font-semibold leading-none tracking-tight">{t("choose-pickup")}</h3>
+                  <InPostGeowidget
+                    token={geowidgetToken}
+                    onPointSelect={(event) => {
+                      form.setValue("shipping.pickupPointID", event.detail.name);
+                      form.setValue(
+                        "shipping.pickupPointAddress",
+                        `${event.detail.address_details.street} ${event.detail.address_details.building_number}, ${event.detail.address_details.post_code} ${event.detail.address_details.city}`,
+                      );
+                      setDialogOpen(false);
+                    }}
+                  />
+                  <div
+                    className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+                    onClick={() => setDialogOpen(false)}
+                  >
+                    <X className="h-4 w-4" />
+                    <span className="sr-only">{t("close")}</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          {pickupPointID && (
-            <p className="mr-auto flex items-center text-sm">
-              {pickupPointID}, {pickupPointAddress}
-            </p>
+              {pickupPointID && (
+                <p className="mr-auto flex items-center text-sm">
+                  {pickupPointID}, {pickupPointAddress}
+                </p>
+              )}
+            </div>
           )}
-        </div>
+        </>
       );
       break;
     default:

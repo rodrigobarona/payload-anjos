@@ -28,7 +28,6 @@ export const CheckoutFormSchemaServer = z.object({
     pickupPointAddress: z.string().optional(),
   }),
   deliveryMethod: z.string().nonempty(),
-  paymentMethod: z.string().nonempty(),
 });
 
 export type CheckoutFormData = z.infer<typeof CheckoutFormSchemaServer>;
@@ -64,7 +63,6 @@ export const useCheckoutFormSchema = () => {
         pickupPointAddress: z.string().optional(),
       }),
       deliveryMethod: z.string().nonempty(t("deliveryMethod")),
-      paymentMethod: z.string().nonempty(t("paymentMethod")),
     })
     .superRefine((data, ctx) => {
       if (

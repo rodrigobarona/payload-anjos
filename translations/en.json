@@ -73,6 +73,9 @@
       "server-error": "Internal server error. Please contact support."
     }
   },
+  "CheckoutFormServer": {
+    "checkout": "Checkout"
+  },
   "CheckoutForm": {
     "form": {
       "buy-as": "You are buying as",
@@ -103,6 +106,16 @@
       "change": "Change",
       "invoice-data": "Invoice data"
     },
+    "contries": {
+      "pl": "Poland",
+      "us": "United States",
+      "de": "Germany",
+      "fr": "France",
+      "gb": "United Kingdom",
+      "es": "Spain",
+      "it": "Italy",
+      "other": "Other"
+    },
     "errors": {
       "invoice": {
         "name": "Name cannot be empty",
@@ -132,5 +145,14 @@
     "inpost-courier": "InPost courier",
     "choose-pickup": "Choose point",
     "close": "Close"
+  },
+  "OrderSummary": {
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "confirm": "Confirm order",
+    "remove": "Remove",
+    "items-in-cart": "Items in your cart",
+    "order-summary": "Order summary"
   }
 }

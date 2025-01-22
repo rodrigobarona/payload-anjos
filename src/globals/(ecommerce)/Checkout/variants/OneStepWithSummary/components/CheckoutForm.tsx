@@ -91,7 +91,6 @@ export const CheckoutForm = ({
         pickupPointAddress: "",
       },
       deliveryMethod: "",
-      paymentMethod: "",
     },
   });
 
@@ -117,6 +116,8 @@ export const CheckoutForm = ({
   >();
   const [deliveryMethods, setDeliveryMethods] = useState<FilledCourier[]>([]);
   const { cart } = useCart();
+
+  console.log(form.formState.errors);
 
   const fetchCartProducts = useCallback(
     debounce(async (cartToCalculate: Cart | null) => {
@@ -147,7 +148,6 @@ export const CheckoutForm = ({
   useEffect(() => {
     fetchCartProducts(cart);
   }, [cart]);
-
 
   return (
     <Form {...form}>
@@ -493,6 +493,7 @@ export const CheckoutForm = ({
                         />
                       </Radio>
                     ))}
+                    <FormMessage />
                   </RadioGroup>
                 )}
               />

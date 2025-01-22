@@ -73,6 +73,9 @@
       "server-error": "Wewnętrzny błąd serwera. Skontaktuj się z pomocą techniczną."
     }
   },
+  "CheckoutFormServer": {
+    "checkout": "Do kasy"
+  },
   "CheckoutForm": {
     "form": {
       "buy-as": "Kupujesz jako",
@@ -132,5 +135,14 @@
     "inpost-courier": "Kurier InPost",
     "choose-pickup": "Wybierz paczkomat",
     "close": "Zamknij"
+  },
+  "OrderSummary": {
+    "subtotal": "Suma częściowa",
+    "shipping": "Dostawa",
+    "total": "Razem",
+    "confirm": "Złóż zamówienie",
+    "remove": "Usuń",
+    "items-in-cart": "Items in your cart",
+    "order-summary": "Podsumowanie zamówienia"
   }
 }
