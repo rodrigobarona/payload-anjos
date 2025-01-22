@@ -13,9 +13,10 @@ import Image from "next/image";
 import { Currency } from "@/stores/Currency/types";
 import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import debounce from "lodash.debounce";
 import { Cart } from "@/stores/CartStore/types";
+import { Locale } from "@/i18n/config";
 
 export type ProductWithFilledVariants = Omit<Product, "variants" | "pricing"> & {
   variant: FilledVariant | undefined;
@@ -41,6 +42,8 @@ export const SlideOver = () => {
     }[]
   >([]);
 
+  const locale = useLocale() as Locale;
+
   const fetchCartProducts = useCallback(
     debounce(async (cartToCalculate: Cart | null) => {
       try {
@@ -54,7 +57,7 @@ export const SlideOver = () => {
             }[];
             totalQuantity: number;
           };
-        }>("/next/getCartProducts", { cart: cartToCalculate });
+        }>("/next/getCartProducts", { cart: cartToCalculate, locale });
         const { filledProducts, total } = data.productsWithTotal;
         setCartProducts(filledProducts);
         setTotal(total);

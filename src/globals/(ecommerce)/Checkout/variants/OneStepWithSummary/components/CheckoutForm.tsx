@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Customer } from "@/payload-types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { DeliveryMethod } from "./DeliveryMethod";
 import debounce from "lodash.debounce";
 import axios from "axios";
@@ -22,6 +22,7 @@ import { useCart } from "@/stores/CartStore";
 import { Currency } from "@/stores/Currency/types";
 import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Cart/variants/SlideOver";
 import { OrderSummary } from "./OrderSummary";
+import { Locale } from "@/i18n/config";
 
 type FilledCourier = {
   slug: string;
@@ -95,11 +96,11 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
   >();
   const [deliveryMethods, setDeliveryMethods] = useState<FilledCourier[]>([]);
   const { cart } = useCart();
+  const locale = useLocale() as Locale;
 
   const fetchCartProducts = useCallback(
     debounce(async (cartToCalculate: Cart | null) => {
       try {
-        console.log(selectedCountry);
         const { data } = await axios.post<{
           status: number;
           productsWithTotalAndCouriers: {
@@ -111,12 +112,10 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
             totalQuantity: number;
             couriers: FilledCourier[];
           };
-        }>("/next/checkout", { cart: cartToCalculate, selectedCountry });
+        }>("/next/checkout", { cart: cartToCalculate, selectedCountry, locale });
         const { filledProducts, total, couriers } = data.productsWithTotalAndCouriers;
         setCheckoutProducts(filledProducts);
         setDeliveryMethods(couriers);
-        console.log(couriers);
-        console.log(selectedCountry);
         setTotalPrice(total);
       } catch (error) {
         console.error(error);

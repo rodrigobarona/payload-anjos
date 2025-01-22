@@ -1,13 +1,14 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { Cart } from "@/stores/CartStore/types";
+import { Locale } from "@/i18n/config";
 
 type Total = Record<string, number>;
 
 export async function POST(req: Request) {
   try {
     const payload = await getPayload({ config });
-    const { cart }: { cart: Cart | undefined } = await req.json();
+    const { cart, locale }: { cart: Cart | undefined; locale: Locale } = await req.json();
     if (!cart) {
       return Response.json({ status: 200 });
     }
@@ -19,6 +20,7 @@ export async function POST(req: Request) {
           in: cart.map((product) => product.id),
         },
       },
+      locale,
       select: {
         title: true,
         price: true,
