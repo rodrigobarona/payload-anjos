@@ -288,6 +288,14 @@ export const Orders: CollectionConfig = {
               type: "group",
               fields: [
                 {
+                  name: "packageNumber",
+                  type: "text",
+                  admin: {
+                    readOnly: true,
+                    hidden: true,
+                  },
+                },
+                {
                   name: "printLabelButton",
                   type: "ui",
                   admin: {

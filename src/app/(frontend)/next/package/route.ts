@@ -1,14 +1,12 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
-import { getInpostPickupLabel } from "@/lib/couriers/getInpostPickupLabel";
+import { createInpostPickupPackage } from "@/lib/couriers/packages/createInpostPickupPackage";
 import { isAxiosError } from "axios";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   try {
     const payload = await getPayload({ config });
-    const { searchParams } = new URL(req.url);
-    const orderID = searchParams.get("orderID");
-    const dimension = searchParams.get("dimension");
+    const { orderID, dimension } = await req.json();
 
     if (!orderID) {
       return Response.json("Cannot find order ID", { status: 400 });
@@ -23,24 +21,19 @@ export async function GET(req: Request) {
       return Response.json("Cannot find order", { status: 400 });
     }
 
-    let file: ArrayBuffer | null | undefined = null;
+    let packageID: string | null | undefined = null;
 
     switch (order.orderDetails?.shipping) {
       case "inpost-pickup":
-        file = await getInpostPickupLabel(order, dimension ?? "small");
+        packageID = await createInpostPickupPackage(order, dimension ?? "small");
         break;
     }
 
-    if (!file) {
-      return Response.json("No file found", { status: 400 });
+    if (!packageID) {
+      return Response.json("Cannot create package", { status: 400 });
     }
 
-    return new Response(file, {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="${orderID}.pdf"`,
-      },
-    });
+    return Response.json(`${packageID}`, { status: 200 });
   } catch (error) {
     if (isAxiosError(error)) {
       console.log();

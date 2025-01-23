@@ -1073,7 +1073,9 @@ export interface Order {
     region?: string | null;
     postalCode?: string | null;
   };
-  printLabel?: {};
+  printLabel?: {
+    packageNumber?: string | null;
+  };
   shippingAddress: {
     name: string;
     address: string;
@@ -1964,7 +1966,11 @@ export interface OrdersSelect<T extends boolean = true> {
         region?: T;
         postalCode?: T;
       };
-  printLabel?: T | {};
+  printLabel?:
+    | T
+    | {
+        packageNumber?: T;
+      };
   shippingAddress?:
     | T
     | {

@@ -1,18 +1,24 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Select } from "@payloadcms/ui";
+import { cn } from "@/utilities/cn";
+import { Select, useField, useForm } from "@payloadcms/ui";
 import axios from "axios";
 import { useState } from "react";
 
 export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const [error, setError] = useState("");
   const [dimension, setDimension] = useState("small");
+
+  const { value } = useField<string>({ path: "printLabel.packageNumber" });
 
   const handleDimensionChange = (option: { value: string }) => {
     setDimension(option.value);
   };
+
+  const form = useForm();
 
   const inPostDimensions = [
     {
@@ -27,16 +33,37 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
       label: "C (41 x 38 x 64 cm)",
       value: "large",
     },
-    {
-      label: "[Courier only] D (50 x 50 x 80 cm)",
-      value: "xlarge",
-    },
   ];
 
-  const generateShippingLabel = async () => {
-    setIsLoading(true);
+  console.log(value);
+
+  const createPackage = async () => {
     try {
-      const response = await axios.get(`/next/courierLabel?orderID=${orderID}&dimension=${dimension}`, {
+      setIsLoading(true);
+      const { data } = await axios.post<string>(`/next/package`, {
+        orderID,
+        dimension,
+      });
+
+      await form.submit({ skipValidation: true, overrides: { printLabel: { packageNumber: data } } });
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.data) {
+        const errorData = JSON.stringify(error.response.data);
+        console.log("Error:", errorData);
+        setError(errorData || "Error downloading file");
+      } else {
+        console.log("Unknown error:", error);
+        setError("Unknown error occurred");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getShippingLabel = async () => {
+    setIsDownloading(true);
+    try {
+      const response = await axios.get(`/next/printLabel?orderID=${orderID}`, {
         responseType: "blob",
       });
 
@@ -60,25 +87,62 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
         setError("Unknown error occurred");
       }
     } finally {
-      setIsLoading(false);
+      setIsDownloading(false);
+    }
+  };
+
+  const handleResetPackage = async () => {
+    try {
+      await form.submit({ skipValidation: true, overrides: { printLabel: { packageNumber: "" } } });
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
     <>
-      <div className="twp flex h-[38px] w-full gap-4">
-        <Select
-          value={{
-            value: dimension,
-            label: inPostDimensions.find((option) => option.value === dimension)?.label,
-          }}
-          onChange={handleDimensionChange}
-          options={inPostDimensions}
-          className="h-full min-h-full w-3/4"
-        />
-        <Button className="twp h-full flex-1 text-base" onClick={generateShippingLabel}>
-          {isLoading ? "Generowanie..." : "Pobierz etykietę"}
+      <div className="twp flex w-full flex-col gap-4 md:flex-row lg:flex-col xl:flex-row">
+        <div className="min-h-[38px] md:w-2/3 lg:w-full xl:w-2/3">
+          <Select
+            value={{
+              value: dimension,
+              label: inPostDimensions.find((option) => option.value === dimension)?.label,
+            }}
+            onChange={handleDimensionChange}
+            options={inPostDimensions}
+            className="min-h-[38px]"
+          />
+          <p className="mt-3">
+            InPost nalicza opłaty za generowanie przesyłek. Sprawdź dane klienta i gabaryt przed utworzeniem
+            przesyłki.
+          </p>
+        </div>
+        <Button
+          disabled={Boolean(value) && value.length > 0}
+          className={cn(
+            "twp min-h-[38px] flex-1 text-base md:w-1/6 lg:w-full xl:w-1/6",
+            (value.length > 0 || isLoading) && "pointer-events-none cursor-not-allowed opacity-50",
+          )}
+          onClick={createPackage}
+        >
+          {isLoading ? "Generowanie..." : "Utwórz przesyłkę"}
         </Button>
+        <div className="flex flex-col md:w-1/6 lg:w-full xl:w-1/6">
+          <Button
+            disabled={!value}
+            className={cn(
+              "twp max-h-[38px] min-h-[38px] flex-1 text-base",
+              (!value || isDownloading) && "pointer-events-none cursor-not-allowed opacity-50",
+            )}
+            onClick={getShippingLabel}
+          >
+            {isDownloading ? "Pobieranie..." : "Pobierz etykietę"}
+          </Button>
+
+          <Button variant="link" onClick={handleResetPackage} disabled={!value} className="mt-2 pl-0">
+            Resetuj przesyłkę
+          </Button>
+        </div>
       </div>
       <p className="twp mt-3 text-red-600">{error}</p>
     </>

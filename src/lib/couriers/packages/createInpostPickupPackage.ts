@@ -1,18 +1,22 @@
 import { Locale } from "@/i18n/config";
 import { Order } from "@/payload-types";
+import { getPayload } from "payload";
+import config from "@payload-config";
 import { getCachedGlobal } from "@/utilities/getGlobals";
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import { getLocale } from "next-intl/server";
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const getInpostPickupLabel = async (order: Order, dimension: string) => {
+export const createInpostPickupPackage = async (order: Order, dimension: string) => {
   const locale = (await getLocale()) as Locale;
   const inpostPickupSettings = await getCachedGlobal("inpost-pickup", locale, 1)();
   const fulfilment = await getCachedGlobal("fulfilment", locale, 1)();
   const { APIUrl, shipXAPIKey, clientId } = inpostPickupSettings;
   const { shopAddress } = fulfilment;
   const { shippingAddress } = order;
+
+  const payload = await getPayload({ config });
 
   const addressParts = shopAddress.address.split(" ");
   const building_number = addressParts[addressParts.length - 1];
@@ -62,7 +66,8 @@ export const getInpostPickupLabel = async (order: Order, dimension: string) => {
       },
     },
   );
-  const packageID = data.id;
+
+  const packageID: string = data.id;
 
   const checkShipmentStatus = async (maxAttempts = 10): Promise<string> => {
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
@@ -71,7 +76,20 @@ export const getInpostPickupLabel = async (order: Order, dimension: string) => {
           Authorization: `Bearer ${shipXAPIKey}`,
         },
       });
-      if (shipmentData.status === "confirmed") {
+      if (shipmentData.status === "confirmed" && shipmentData.tracking_number) {
+        await payload.update({
+          id: order.id,
+          collection: "orders",
+          data: {
+            orderDetails: {
+              trackingNumber: shipmentData.tracking_number,
+            },
+            printLabel: {
+              packageNumber: packageID,
+            },
+          },
+        });
+
         return packageID;
       }
 
@@ -83,12 +101,5 @@ export const getInpostPickupLabel = async (order: Order, dimension: string) => {
 
   await checkShipmentStatus();
 
-  const { data: label } = await axios.get(`${APIUrl}/v1/shipments/${packageID}/label?type=A6`, {
-    headers: {
-      Authorization: `Bearer ${shipXAPIKey}`,
-    },
-    responseType: "arraybuffer",
-  });
-
-  return label;
+  return packageID;
 };
