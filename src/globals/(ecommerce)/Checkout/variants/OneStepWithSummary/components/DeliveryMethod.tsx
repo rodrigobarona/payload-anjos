@@ -40,7 +40,7 @@ export const DeliveryMethod = ({
           alt={t("inpost-pickup")}
           width={359}
           height={277}
-          className="block aspect-[31/24] max-h-12 w-fit"
+          className="block aspect-[31/24] max-h-12 w-fit max-w-[62px]"
         />
       );
       break;
@@ -51,7 +51,7 @@ export const DeliveryMethod = ({
           alt={t("inpost-courier")}
           width={359}
           height={277}
-          className="block aspect-[31/24] max-h-12 w-fit"
+          className="block aspect-[31/24] max-h-12 w-fit max-w-[62px]"
         />
       );
       break;
@@ -105,10 +105,10 @@ export const DeliveryMethod = ({
   }
 
   return (
-    <div className="ml-3 flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col">
       <span className="flex flex-1 items-center gap-3">
         {Logo}
-        <div>
+        <div className="flex-1">
           <span className="block text-sm font-medium text-gray-900">{title}</span>
           <span className="block items-center text-sm text-gray-500">{turnaround}</span>
         </div>

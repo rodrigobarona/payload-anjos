@@ -477,10 +477,6 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                         aria-description={`${turnaround} for price`}
                         className="data-[focus]:ring-main-500 group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2"
                       >
-                        <CheckCircleIcon
-                          aria-hidden="true"
-                          className="text-main-600 size-5 group-[&:not([data-checked])]:opacity-0"
-                        />
                         <span
                           aria-hidden="true"
                           className="group-data-[checked]:border-main-500 pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border"
