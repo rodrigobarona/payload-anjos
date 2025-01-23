@@ -1075,6 +1075,11 @@ export interface Order {
   };
   printLabel?: {
     packageNumber?: string | null;
+    width?: number | null;
+    height?: number | null;
+    length?: number | null;
+    weight?: number | null;
+    dimension?: string | null;
   };
   shippingAddress: {
     name: string;
@@ -1970,6 +1975,11 @@ export interface OrdersSelect<T extends boolean = true> {
     | T
     | {
         packageNumber?: T;
+        width?: T;
+        height?: T;
+        length?: T;
+        weight?: T;
+        dimension?: T;
       };
   shippingAddress?:
     | T

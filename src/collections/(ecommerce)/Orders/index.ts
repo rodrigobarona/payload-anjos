@@ -296,11 +296,64 @@ export const Orders: CollectionConfig = {
                   },
                 },
                 {
-                  name: "printLabelButton",
+                  name: "pickupShipmentMenu",
                   type: "ui",
                   admin: {
+                    condition: (data) => data.orderDetails.shipping === "inpost-pickup",
                     components: {
-                      Field: "@/collections/(ecommerce)/Orders/components/PrintLabelButton#PrintLabelButton",
+                      Field:
+                        "@/collections/(ecommerce)/Orders/components/inpost-pickup/PickupShipmentMenu#PickupShipmentMenu",
+                    },
+                  },
+                },
+                {
+                  name: "width",
+                  type: "number",
+                  admin: {
+                    hidden: true,
+                  },
+                  defaultValue: 0,
+                },
+                {
+                  name: "height",
+                  type: "number",
+                  admin: {
+                    hidden: true,
+                  },
+                  defaultValue: 0,
+                },
+                {
+                  name: "length",
+                  type: "number",
+                  admin: {
+                    hidden: true,
+                  },
+                  defaultValue: 0,
+                },
+                {
+                  name: "weight",
+                  type: "number",
+                  admin: {
+                    hidden: true,
+                  },
+                  defaultValue: 0,
+                },
+                {
+                  name: "dimension",
+                  type: "text",
+                  admin: {
+                    hidden: true,
+                  },
+                  defaultValue: "small",
+                },
+                {
+                  name: "courierShipmentMenu",
+                  type: "ui",
+                  admin: {
+                    condition: (data) => data.orderDetails.shipping !== "inpost-pickup",
+                    components: {
+                      Field:
+                        "@/collections/(ecommerce)/Orders/components/couriers/CourierShipmentMenu#CourierShipmentMenu",
                     },
                   },
                 },

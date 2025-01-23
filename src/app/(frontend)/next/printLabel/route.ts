@@ -1,5 +1,6 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { headers as getHeaders } from "next/headers";
 import { isAxiosError } from "axios";
 import { getInpostPickupLabel } from "@/lib/couriers/labels/getInpostPickupLabel";
 
@@ -8,6 +9,13 @@ export async function GET(req: Request) {
     const payload = await getPayload({ config });
     const { searchParams } = new URL(req.url);
     const orderID = searchParams.get("orderID");
+
+    const headers = await getHeaders();
+    const { user } = await payload.auth({ headers });
+
+    if (!user || user?.collection !== "administrators") {
+      return Response.json("Unauthorized", { status: 401 });
+    }
 
     if (!orderID) {
       return Response.json("Cannot find order ID", { status: 400 });

@@ -6,12 +6,13 @@ import { cn } from "@/utilities/cn";
 import { Select, useField, useForm, useTranslation } from "@payloadcms/ui";
 import axios from "axios";
 import { useState } from "react";
+import { getShippingLabel } from "../../utils/getShippingLabel";
 
-export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
+export const PickupShipmentMenuClient = ({ orderID }: { orderID: string }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [error, setError] = useState("");
-  const [dimension, setDimension] = useState("small");
+  const { value: dimension, setValue: setDimension } = useField<string>({ path: "printLabel.dimension" });
 
   const { value } = useField<string>({ path: "printLabel.packageNumber" });
 
@@ -61,37 +62,6 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
     }
   };
 
-  const getShippingLabel = async () => {
-    setIsDownloading(true);
-    try {
-      const response = await axios.get(`/next/printLabel?orderID=${orderID}`, {
-        responseType: "blob",
-      });
-
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${orderID}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.data instanceof Blob) {
-        const text = await error.response.data.text();
-        const errorData = JSON.parse(text);
-        console.log("Error:", errorData);
-        setError(errorData || "Error downloading file");
-      } else {
-        console.log("Unknown error:", error);
-        setError("Unknown error occurred");
-      }
-    } finally {
-      setIsDownloading(false);
-    }
-  };
-
   const handleResetPackage = async () => {
     try {
       await form.submit({ skipValidation: true, overrides: { printLabel: { packageNumber: "" } } });
@@ -132,7 +102,7 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
               "twp max-h-[38px] min-h-[38px] flex-1 text-base",
               (!value || isDownloading) && "pointer-events-none cursor-not-allowed opacity-50",
             )}
-            onClick={getShippingLabel}
+            onClick={() => getShippingLabel({ setIsDownloading, setError, orderID })}
           >
             {isDownloading ? t("custom:downloadingLabel") : t("custom:downloadLabel")}
           </Button>
