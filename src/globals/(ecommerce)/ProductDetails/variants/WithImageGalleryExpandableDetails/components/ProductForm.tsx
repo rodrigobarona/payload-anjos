@@ -45,7 +45,7 @@ export const ProductForm = ({
       params.delete("variant");
     }
 
-    router.replace(`?${params.toString()}`);
+    router.replace(`?${params.toString()}`, { scroll: false });
   };
 
   useEffect(() => {

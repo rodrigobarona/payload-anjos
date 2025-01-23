@@ -34,6 +34,7 @@ import { Paywalls } from "./globals/(ecommerce)/Paywalls/config";
 import { Orders } from "./collections/(ecommerce)/Orders";
 import { Fulfilment } from "./globals/(ecommerce)/Fulfilment";
 import { customTranslationsObject } from "./admin/translations/custom-translations";
+import { InPostCourierCOD } from "./globals/(ecommerce)/Couriers/InPostCourierCOD/config";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -112,6 +113,7 @@ export default buildConfig({
     Checkout,
     InPostPickup,
     InPostCourier,
+    InPostCourierCOD,
     Paywalls,
     Fulfilment,
   ],

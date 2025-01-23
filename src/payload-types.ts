@@ -73,6 +73,7 @@ export interface Config {
     checkout: Checkout;
     'inpost-pickup': InpostPickup;
     'inpost-courier': InpostCourier;
+    'inpost-courier-cod': InpostCourierCod;
     paywalls: Paywall;
     fulfilment: Fulfilment;
   };
@@ -86,6 +87,7 @@ export interface Config {
     checkout: CheckoutSelect<false> | CheckoutSelect<true>;
     'inpost-pickup': InpostPickupSelect<false> | InpostPickupSelect<true>;
     'inpost-courier': InpostCourierSelect<false> | InpostCourierSelect<true>;
+    'inpost-courier-cod': InpostCourierCodSelect<false> | InpostCourierCodSelect<true>;
     paywalls: PaywallsSelect<false> | PaywallsSelect<true>;
     fulfilment: FulfilmentSelect<false> | FulfilmentSelect<true>;
   };
@@ -2668,6 +2670,100 @@ export interface InpostCourier {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inpost-courier-cod".
+ */
+export interface InpostCourierCod {
+  id: string;
+  enabled?: boolean | null;
+  settings: {
+    label: string;
+    /**
+     * You can provide typical delivery time or any other information
+     */
+    description?: string | null;
+  };
+  deliveryZones?:
+    | {
+        countries: (
+          | 'ad'
+          | 'al'
+          | 'at'
+          | 'ba'
+          | 'be'
+          | 'bg'
+          | 'by'
+          | 'ch'
+          | 'cy'
+          | 'cz'
+          | 'de'
+          | 'dk'
+          | 'ee'
+          | 'es'
+          | 'fi'
+          | 'fr'
+          | 'gb'
+          | 'gr'
+          | 'hr'
+          | 'hu'
+          | 'ie'
+          | 'is'
+          | 'it'
+          | 'li'
+          | 'lt'
+          | 'lu'
+          | 'lv'
+          | 'mc'
+          | 'md'
+          | 'me'
+          | 'mk'
+          | 'mt'
+          | 'nl'
+          | 'no'
+          | 'pl'
+          | 'pt'
+          | 'ro'
+          | 'rs'
+          | 'ru'
+          | 'se'
+          | 'si'
+          | 'sk'
+          | 'sm'
+          | 'ua'
+          | 'va'
+        )[];
+        freeShipping?:
+          | {
+              value: number;
+              currency: string;
+              id?: string | null;
+            }[]
+          | null;
+        range?:
+          | {
+              weightFrom: number;
+              weightTo: number;
+              pricing: {
+                value: number;
+                currency: string;
+                id?: string | null;
+              }[];
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  clientId?: string | null;
+  /**
+   * Remember to pass matching keys for choosen environment
+   */
+  APIUrl?: ('https://api-shipx-pl.easypack24.net' | 'https://sandbox-api-shipx-pl.easypack24.net') | null;
+  shipXAPIKey?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "paywalls".
  */
 export interface Paywall {
@@ -2902,6 +2998,52 @@ export interface InpostPickupSelect<T extends boolean = true> {
  * via the `definition` "inpost-courier_select".
  */
 export interface InpostCourierSelect<T extends boolean = true> {
+  enabled?: T;
+  settings?:
+    | T
+    | {
+        label?: T;
+        description?: T;
+      };
+  deliveryZones?:
+    | T
+    | {
+        countries?: T;
+        freeShipping?:
+          | T
+          | {
+              value?: T;
+              currency?: T;
+              id?: T;
+            };
+        range?:
+          | T
+          | {
+              weightFrom?: T;
+              weightTo?: T;
+              pricing?:
+                | T
+                | {
+                    value?: T;
+                    currency?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  clientId?: T;
+  APIUrl?: T;
+  shipXAPIKey?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inpost-courier-cod_select".
+ */
+export interface InpostCourierCodSelect<T extends boolean = true> {
   enabled?: T;
   settings?:
     | T
