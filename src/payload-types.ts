@@ -74,6 +74,7 @@ export interface Config {
     'inpost-pickup': InpostPickup;
     'inpost-courier': InpostCourier;
     paywalls: Paywall;
+    fulfilment: Fulfilment;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -86,6 +87,7 @@ export interface Config {
     'inpost-pickup': InpostPickupSelect<false> | InpostPickupSelect<true>;
     'inpost-courier': InpostCourierSelect<false> | InpostCourierSelect<true>;
     paywalls: PaywallsSelect<false> | PaywallsSelect<true>;
+    fulfilment: FulfilmentSelect<false> | FulfilmentSelect<true>;
   };
   locale: 'en' | 'pl';
   user:
@@ -1072,65 +1074,62 @@ export interface Order {
     postalCode?: string | null;
   };
   printLabel?: {};
-  shippingAddress?: {
-    name?: string | null;
-    address?: string | null;
+  shippingAddress: {
+    name: string;
+    address: string;
     pickupPointID?: string | null;
     pickupPointAddress?: string | null;
-    city?: string | null;
-    country?:
-      | (
-          | 'ad'
-          | 'al'
-          | 'at'
-          | 'ba'
-          | 'be'
-          | 'bg'
-          | 'by'
-          | 'ch'
-          | 'cy'
-          | 'cz'
-          | 'de'
-          | 'dk'
-          | 'ee'
-          | 'es'
-          | 'fi'
-          | 'fr'
-          | 'gb'
-          | 'gr'
-          | 'hr'
-          | 'hu'
-          | 'ie'
-          | 'is'
-          | 'it'
-          | 'li'
-          | 'lt'
-          | 'lu'
-          | 'lv'
-          | 'mc'
-          | 'md'
-          | 'me'
-          | 'mk'
-          | 'mt'
-          | 'nl'
-          | 'no'
-          | 'pl'
-          | 'pt'
-          | 'ro'
-          | 'rs'
-          | 'ru'
-          | 'se'
-          | 'si'
-          | 'sk'
-          | 'sm'
-          | 'ua'
-          | 'va'
-        )
-      | null;
-    region?: string | null;
-    postalCode?: string | null;
-    email?: string | null;
-    phone?: string | null;
+    city: string;
+    country:
+      | 'ad'
+      | 'al'
+      | 'at'
+      | 'ba'
+      | 'be'
+      | 'bg'
+      | 'by'
+      | 'ch'
+      | 'cy'
+      | 'cz'
+      | 'de'
+      | 'dk'
+      | 'ee'
+      | 'es'
+      | 'fi'
+      | 'fr'
+      | 'gb'
+      | 'gr'
+      | 'hr'
+      | 'hu'
+      | 'ie'
+      | 'is'
+      | 'it'
+      | 'li'
+      | 'lt'
+      | 'lu'
+      | 'lv'
+      | 'mc'
+      | 'md'
+      | 'me'
+      | 'mk'
+      | 'mt'
+      | 'nl'
+      | 'no'
+      | 'pl'
+      | 'pt'
+      | 'ro'
+      | 'rs'
+      | 'ru'
+      | 'se'
+      | 'si'
+      | 'sk'
+      | 'sm'
+      | 'ua'
+      | 'va';
+    region: string;
+    postalCode: string;
+    email: string;
+    phone: string;
   };
   orderDetails?: {
     total?: number | null;
@@ -2670,6 +2669,70 @@ export interface Paywall {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "fulfilment".
+ */
+export interface Fulfilment {
+  id: string;
+  shopAddress: {
+    name: string;
+    address: string;
+    city: string;
+    country:
+      | 'ad'
+      | 'al'
+      | 'at'
+      | 'ba'
+      | 'be'
+      | 'bg'
+      | 'by'
+      | 'ch'
+      | 'cy'
+      | 'cz'
+      | 'de'
+      | 'dk'
+      | 'ee'
+      | 'es'
+      | 'fi'
+      | 'fr'
+      | 'gb'
+      | 'gr'
+      | 'hr'
+      | 'hu'
+      | 'ie'
+      | 'is'
+      | 'it'
+      | 'li'
+      | 'lt'
+      | 'lu'
+      | 'lv'
+      | 'mc'
+      | 'md'
+      | 'me'
+      | 'mk'
+      | 'mt'
+      | 'nl'
+      | 'no'
+      | 'pl'
+      | 'pt'
+      | 'ro'
+      | 'rs'
+      | 'ru'
+      | 'se'
+      | 'si'
+      | 'sk'
+      | 'sm'
+      | 'ua'
+      | 'va';
+    region: string;
+    postalCode: string;
+    email: string;
+    phone: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2875,6 +2938,27 @@ export interface PaywallsSelect<T extends boolean = true> {
     | {
         secret?: T;
         public?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "fulfilment_select".
+ */
+export interface FulfilmentSelect<T extends boolean = true> {
+  shopAddress?:
+    | T
+    | {
+        name?: T;
+        address?: T;
+        city?: T;
+        country?: T;
+        region?: T;
+        postalCode?: T;
+        email?: T;
+        phone?: T;
       };
   updatedAt?: T;
   createdAt?: T;

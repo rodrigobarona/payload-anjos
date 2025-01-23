@@ -316,6 +316,7 @@ export const Orders: CollectionConfig = {
                   admin: {
                     readOnly: true,
                   },
+                  required: true,
                 },
                 {
                   name: "address",
@@ -327,6 +328,7 @@ export const Orders: CollectionConfig = {
                   admin: {
                     readOnly: true,
                   },
+                  required: true,
                 },
                 {
                   type: "row",
@@ -373,6 +375,7 @@ export const Orders: CollectionConfig = {
                         width: "50%",
                         readOnly: true,
                       },
+                      required: true,
                     },
                     {
                       name: "country",
@@ -386,6 +389,7 @@ export const Orders: CollectionConfig = {
                         width: "50%",
                         readOnly: true,
                       },
+                      required: true,
                     },
                   ],
                 },
@@ -403,6 +407,7 @@ export const Orders: CollectionConfig = {
                         width: "50%",
                         readOnly: true,
                       },
+                      required: true,
                     },
                     {
                       name: "postalCode",
@@ -415,6 +420,7 @@ export const Orders: CollectionConfig = {
                         width: "50%",
                         readOnly: true,
                       },
+                      required: true,
                     },
                   ],
                 },
@@ -432,6 +438,7 @@ export const Orders: CollectionConfig = {
                         width: "50%",
                         readOnly: true,
                       },
+                      required: true,
                     },
                     {
                       name: "phone",
@@ -444,6 +451,7 @@ export const Orders: CollectionConfig = {
                         width: "50%",
                         readOnly: true,
                       },
+                      required: true,
                     },
                   ],
                 },
