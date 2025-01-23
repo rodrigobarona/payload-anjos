@@ -1,7 +1,4 @@
 import { Locale } from "@/i18n/config";
-import { Order } from "@/payload-types";
-import { getPayload } from "payload";
-import config from "@payload-config";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import axios from "axios";
 import { getLocale } from "next-intl/server";

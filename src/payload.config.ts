@@ -33,6 +33,7 @@ import { InPostCourier } from "./globals/(ecommerce)/Couriers/InPostCourier/conf
 import { Paywalls } from "./globals/(ecommerce)/Paywalls/config";
 import { Orders } from "./collections/(ecommerce)/Orders";
 import { Fulfilment } from "./globals/(ecommerce)/Fulfilment";
+import { customTranslationsObject } from "./admin/translations/custom-translations";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -76,6 +77,7 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { en, pl },
     fallbackLanguage: "en",
+    translations: customTranslationsObject,
   },
   localization: {
     locales: ["en", "pl"],
@@ -111,7 +113,7 @@ export default buildConfig({
     InPostPickup,
     InPostCourier,
     Paywalls,
-    Fulfilment
+    Fulfilment,
   ],
   plugins: [
     ...plugins,

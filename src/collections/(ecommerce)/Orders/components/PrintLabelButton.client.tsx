@@ -1,8 +1,9 @@
 "use client";
 
+import { CustomTranslationsKeys, CustomTranslationsObject } from "@/admin/translations/custom-translations";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utilities/cn";
-import { Select, useField, useForm } from "@payloadcms/ui";
+import { Select, useField, useForm, useTranslation } from "@payloadcms/ui";
 import axios from "axios";
 import { useState } from "react";
 
@@ -14,6 +15,8 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
 
   const { value } = useField<string>({ path: "printLabel.packageNumber" });
 
+  const { t } = useTranslation<CustomTranslationsObject, CustomTranslationsKeys>();
+
   const handleDimensionChange = (option: { value: string }) => {
     setDimension(option.value);
   };
@@ -22,20 +25,18 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
 
   const inPostDimensions = [
     {
-      label: "A (8 x 38 x 64 cm)",
+      label: "A (8 x 38 x 64 cm), 25kg limit",
       value: "small",
     },
     {
-      label: "B (19 x 38 x 64 cm)",
+      label: "B (19 x 38 x 64 cm), 25kg limit",
       value: "medium",
     },
     {
-      label: "C (41 x 38 x 64 cm)",
+      label: "C (41 x 38 x 64 cm), 25kg limit",
       value: "large",
     },
   ];
-
-  console.log(value);
 
   const createPackage = async () => {
     try {
@@ -112,10 +113,7 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
             options={inPostDimensions}
             className="min-h-[38px]"
           />
-          <p className="mt-3">
-            InPost nalicza opłaty za generowanie przesyłek. Sprawdź dane klienta i gabaryt przed utworzeniem
-            przesyłki.
-          </p>
+          <p className="mt-3">{t("custom:inPostMessage")}</p>
         </div>
         <Button
           disabled={Boolean(value) && value.length > 0}
@@ -125,7 +123,7 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
           )}
           onClick={createPackage}
         >
-          {isLoading ? "Generowanie..." : "Utwórz przesyłkę"}
+          {isLoading ? t("custom:generating") : t("custom:createPackage")}
         </Button>
         <div className="flex flex-col md:w-1/6 lg:w-full xl:w-1/6">
           <Button
@@ -136,11 +134,11 @@ export const PrintLabelButtonClient = ({ orderID }: { orderID: string }) => {
             )}
             onClick={getShippingLabel}
           >
-            {isDownloading ? "Pobieranie..." : "Pobierz etykietę"}
+            {isDownloading ? t("custom:downloadingLabel") : t("custom:downloadLabel")}
           </Button>
 
           <Button variant="link" onClick={handleResetPackage} disabled={!value} className="mt-2 pl-0">
-            Resetuj przesyłkę
+            {t("custom:resetPackage")}
           </Button>
         </div>
       </div>
