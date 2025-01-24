@@ -8,60 +8,25 @@ import { CheckoutFormData } from "@/schemas/checkoutForm.schema";
 import { useFormContext, useWatch } from "react-hook-form";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { FilledCourier } from "./CheckoutForm";
 
 export const DeliveryMethod = ({
-  title,
-  turnaround,
-  pricing,
-  variant,
+  deliveryMethod,
   geowidgetToken,
 }: {
-  title: string;
-  turnaround: string;
-  pricing?: {
-    value: number;
-    currency: string;
-    id?: string | null;
-  }[];
-  variant: string;
+  deliveryMethod: FilledCourier;
   geowidgetToken?: string;
 }) => {
-  let Logo: ReactNode;
   let Additional: ReactNode;
   const t = useTranslations("DeliveryMethods");
   const [dialogOpen, setDialogOpen] = useState(false);
   const form = useFormContext<CheckoutFormData>();
 
-  switch (variant) {
-    case "inpost-pickup":
-      Logo = (
-        <Image
-          src="/paczkomat.png"
-          alt={t("inpost-pickup")}
-          width={359}
-          height={277}
-          className="block aspect-[31/24] max-h-12 w-fit max-w-[62px]"
-        />
-      );
-      break;
-    case "inpost-courier":
-      Logo = (
-        <Image
-          src="/inpost_courier.png"
-          alt={t("inpost-courier")}
-          width={359}
-          height={277}
-          className="block aspect-[31/24] max-h-12 w-fit max-w-[62px]"
-        />
-      );
-      break;
-    default:
-      Logo = null;
-  }
+  const { title, turnaround, pricing, slug, icon } = deliveryMethod;
 
   const pickupPointID = useWatch({ control: form.control, name: "shipping.pickupPointID" });
   const pickupPointAddress = useWatch({ control: form.control, name: "shipping.pickupPointAddress" });
-  const deliveryMethod = useWatch({ control: form.control, name: "deliveryMethod" });
+  const selectedDeliveryMethod = useWatch({ control: form.control, name: "deliveryMethod" });
 
   const onPointSelect = (event: CustomEvent) => {
     form.setValue("shipping.pickupPointID", event.detail.name);
@@ -72,9 +37,9 @@ export const DeliveryMethod = ({
     setDialogOpen(false);
   };
 
-  switch (variant) {
+  switch (slug) {
     case "inpost-pickup":
-      Additional = deliveryMethod === variant && (
+      Additional = selectedDeliveryMethod === slug && (
         <div className="mt-2 flex flex-row-reverse">
           <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
             <DialogTrigger asChild>
@@ -107,7 +72,15 @@ export const DeliveryMethod = ({
   return (
     <div className="flex flex-1 flex-col">
       <span className="flex flex-1 items-center gap-3">
-        {Logo}
+        {icon && icon.url && (
+          <Image
+            src={icon.url}
+            alt={icon.alt}
+            width={icon.width ?? 359}
+            height={icon.height ?? 277}
+            className="block aspect-[31/24] max-h-12 w-fit max-w-[62px]"
+          />
+        )}
         <div className="flex-1">
           <span className="block text-sm font-medium text-gray-900">{title}</span>
           <span className="block items-center text-sm text-gray-500">{turnaround}</span>

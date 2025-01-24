@@ -9,7 +9,7 @@ import { Dimensions } from "@/app/(frontend)/next/package/route";
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const createInpostCourierPackage = async (order: Order, dimensions: Dimensions) => {
+export const createInpostCODCourierPackage = async (order: Order, dimensions: Dimensions) => {
   const locale = (await getLocale()) as Locale;
   const inpostCourierSettings = await getCachedGlobal("inpost-courier", locale, 1)();
   const fulfilment = await getCachedGlobal("fulfilment", locale, 1)();
@@ -81,6 +81,10 @@ export const createInpostCourierPackage = async (order: Order, dimensions: Dimen
       ],
       insurance: {
         amount: order.orderDetails?.totalWithShipping ?? 0 * 2,
+        currency: order.orderDetails?.currency ?? "PLN",
+      },
+      cod: {
+        amount: order.orderDetails?.totalWithShipping ?? 0,
         currency: order.orderDetails?.currency ?? "PLN",
       },
       service: "inpost_courier_standard",

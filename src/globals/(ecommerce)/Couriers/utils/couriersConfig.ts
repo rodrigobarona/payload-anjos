@@ -1,50 +1,53 @@
+import { Dimensions } from "@/app/(frontend)/next/package/route";
 import { Locale } from "@/i18n/config";
-import { InpostCourier } from "@/payload-types";
+import { getInpostLabel } from "@/lib/couriers/labels/getInpostLabel";
+import { createInpostCODCourierPackage } from "@/lib/couriers/packages/createInpostCODCourierPackage";
+import { createInpostCourierPackage } from "@/lib/couriers/packages/createInpostCourierPackage";
+import { createInpostPickupPackage } from "@/lib/couriers/packages/createInpostPickupPackage";
+import { Order } from "@/payload-types";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 
+export const createCouriers = (locale: Locale) =>
+  [
+    {
+      key: "inpost-pickup",
+      getSettings: () => getCachedGlobal("inpost-pickup", locale, 1)(),
+      createPackage: (order: Order, dimension: string, _dimensions?: Dimensions) =>
+        createInpostPickupPackage(order, dimension),
+      getLabel: (packageID: string) => getInpostLabel(packageID, "inpost-pickup"),
+    },
+    {
+      key: "inpost-courier",
+      getSettings: () => getCachedGlobal("inpost-courier", locale, 1)(),
+      createPackage: (order: Order, _dimension: string, dimensions: Dimensions) =>
+        createInpostCourierPackage(order, dimensions),
+      getLabel: (packageID: string) => getInpostLabel(packageID, "inpost-courier"),
+    },
+    {
+      key: "inpost-courier-cod",
+      getSettings: () => getCachedGlobal("inpost-courier-cod", locale, 1)(),
+      createPackage: (order: Order, _dimension: string, dimensions: Dimensions) =>
+        createInpostCODCourierPackage(order, dimensions),
+      getLabel: (packageID: string) => getInpostLabel(packageID, "inpost-courier-cod"),
+    },
+  ] as const;
+
 export const getCouriersArray = async (locale: Locale, withZones?: boolean) => {
-  const deliveryMethods: {
-    slug: string;
-    title: string;
-    turnaround: string;
-    deliveryZones: InpostCourier["deliveryZones"] | null | undefined;
-  }[] = [];
-
-  // INPOST PACZKOMATY
-  const {
-    settings: parcelLockerSettings,
-    enabled: parcelLockers,
-    deliveryZones: parcelLockerDeliveryZones,
-  } = await getCachedGlobal("inpost-pickup", locale, 1)();
-  if (parcelLockers && parcelLockerSettings) {
-    deliveryMethods.push({
-      slug: "inpost-pickup",
-      title: parcelLockerSettings.label,
-      turnaround: parcelLockerSettings.description ?? "",
-      deliveryZones: withZones ? parcelLockerDeliveryZones : undefined,
-    });
-  }
-
-  // INPOST KURIER
-  const {
-    settings: courierSettings,
-    enabled: courier,
-    deliveryZones: courierDeliveryZones,
-  } = await getCachedGlobal("inpost-courier", locale, 1)();
-  if (courier && courierSettings) {
-    deliveryMethods.push({
-      slug: "inpost-courier",
-      title: courierSettings.label,
-      turnaround: courierSettings.description ?? "",
-      deliveryZones: withZones ? courierDeliveryZones : undefined,
-    });
-  }
-
-  // ADD OTHER COURIER INTEGRATIONS HERE, AND PUT THEM INTO deliveryMethods.
+  const couriers = createCouriers(locale);
+  const deliveryMethods = await Promise.all(
+    couriers.map(async (courier) => {
+      const { settings, enabled, deliveryZones, icon } = await courier.getSettings();
+      return enabled && settings
+        ? {
+            slug: courier.key,
+            title: settings.label,
+            turnaround: settings.description ?? "",
+            icon: icon,
+            deliveryZones: withZones ? deliveryZones : undefined,
+          }
+        : null;
+    }),
+  ).then((methods) => methods.filter(Boolean));
 
   return deliveryMethods;
 };
-
-// ADD OTHER COURIER SLUGS HERE
-export const courierSlugsList = ["inpost-pickup", "inpost-courier"] as const;
-export type CourierSlugs = typeof courierSlugsList;

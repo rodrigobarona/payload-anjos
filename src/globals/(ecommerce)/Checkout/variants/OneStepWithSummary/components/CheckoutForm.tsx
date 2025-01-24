@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CheckoutFormData, useCheckoutFormSchema } from "@/schemas/checkoutForm.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Customer } from "@/payload-types";
+import { Customer, Media } from "@/payload-types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useLocale, useTranslations } from "next-intl";
@@ -25,10 +25,11 @@ import { Locale } from "@/i18n/config";
 import { useCurrency } from "@/stores/Currency";
 import { useRouter } from "@/i18n/routing";
 
-type FilledCourier = {
+export type FilledCourier = {
   slug: string;
   title: string;
   turnaround: string;
+  icon?: Media;
   pricing:
     | {
         value: number;
@@ -182,7 +183,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
 
             <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
               {defaultShippingAddress ? (
-                <div className="ring-main-500 group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 focus:outline-none">
+                <div className="group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 ring-main-500 focus:outline-none">
                   <span className="flex flex-1">
                     <span className="flex w-full flex-col">
                       <span className="block text-sm font-medium text-gray-900">
@@ -201,7 +202,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                       <span className="mt-1 flex items-center text-sm text-gray-500">
                         {defaultShippingAddress.email}
                       </span>
-                      <Button type="button" className="text-main-600 ml-auto mt-1 text-sm">
+                      <Button type="button" className="ml-auto mt-1 text-sm text-main-600">
                         {t("change")}
                       </Button>
                     </span>
@@ -257,7 +258,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                         <FormControl>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger className="focus:outline-main-600 w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
+                              <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-main-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
                                 <SelectValue placeholder={t("country-placeholder")} />
                               </SelectTrigger>
                             </FormControl>
@@ -410,7 +411,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                         <FormControl>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger className="focus:outline-main-600 w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
+                              <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-main-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
                                 <SelectValue placeholder={t("country-placeholder")} />
                               </SelectTrigger>
                             </FormControl>
@@ -469,26 +470,20 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                     onChange={field.onChange}
                     className="mt-4 grid grid-cols-1 gap-y-3 sm:gap-x-4"
                   >
-                    {deliveryMethods.map(({ slug, title, turnaround, pricing }) => (
+                    {deliveryMethods.map((deliveryMethod) => (
                       <Radio
-                        key={slug}
-                        value={slug}
-                        aria-label={title}
-                        aria-description={`${turnaround} for price`}
-                        className="data-[focus]:ring-main-500 group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2"
+                        key={deliveryMethod.slug}
+                        value={deliveryMethod.slug}
+                        aria-label={deliveryMethod.title}
+                        aria-description={`${deliveryMethod.turnaround} for price`}
+                        className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-main-500"
                       >
                         <span
                           aria-hidden="true"
-                          className="group-data-[checked]:border-main-500 pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border"
+                          className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-main-500"
                         />
 
-                        <DeliveryMethod
-                          geowidgetToken={geowidgetToken}
-                          variant={slug}
-                          title={title}
-                          turnaround={turnaround}
-                          pricing={pricing}
-                        />
+                        <DeliveryMethod geowidgetToken={geowidgetToken} deliveryMethod={deliveryMethod} />
                       </Radio>
                     ))}
                     {deliveryMethods.length === 0 && <p>{t("no-shipping")}</p>}

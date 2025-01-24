@@ -538,6 +538,33 @@ export const Orders: CollectionConfig = {
               },
             },
             {
+              name: "shippingCost",
+              type: "number",
+              label: {
+                en: "Shipping Cost",
+                pl: "Koszt dostawy",
+              },
+              admin: {
+                readOnly: true,
+              },
+            },
+          ],
+        },
+        {
+          type: "row",
+          fields: [
+            {
+              name: "totalWithShipping",
+              type: "number",
+              label: {
+                en: "Total (with shipping)",
+                pl: "Suma (z kosztami dostawy)",
+              },
+              admin: {
+                readOnly: true,
+              },
+            },
+            {
               name: "currency",
               label: {
                 en: "Currency",
@@ -549,17 +576,6 @@ export const Orders: CollectionConfig = {
               },
             },
           ],
-        },
-        {
-          name: "shippingCost",
-          type: "number",
-          label: {
-            en: "Shipping Cost",
-            pl: "Koszt dostawy",
-          },
-          admin: {
-            readOnly: true,
-          },
         },
         {
           name: "shipping",

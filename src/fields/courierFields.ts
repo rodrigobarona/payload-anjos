@@ -48,4 +48,16 @@ export const courierFields: Field[] = [
       },
     },
   },
+  {
+    name: "icon",
+    type: "upload",
+    label: {
+      en: "Icon",
+      pl: "Ikona",
+    },
+    relationTo: "media",
+    admin: {
+      condition: (data) => data.enabled,
+    },
+  },
 ];

@@ -1142,8 +1142,9 @@ export interface Order {
   };
   orderDetails?: {
     total?: number | null;
-    currency?: string | null;
     shippingCost?: number | null;
+    totalWithShipping?: number | null;
+    currency?: string | null;
     shipping?: string | null;
     transactionID?: string | null;
     status?: ('pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled' | 'returned') | null;
@@ -2001,8 +2002,9 @@ export interface OrdersSelect<T extends boolean = true> {
     | T
     | {
         total?: T;
-        currency?: T;
         shippingCost?: T;
+        totalWithShipping?: T;
+        currency?: T;
         shipping?: T;
         transactionID?: T;
         status?: T;
@@ -2564,6 +2566,7 @@ export interface InpostPickup {
         id?: string | null;
       }[]
     | null;
+  icon?: (string | null) | Media;
   clientId?: string | null;
   /**
    * Remember to pass matching keys for choosen environment
@@ -2659,6 +2662,7 @@ export interface InpostCourier {
         id?: string | null;
       }[]
     | null;
+  icon?: (string | null) | Media;
   clientId?: string | null;
   /**
    * Remember to pass matching keys for choosen environment
@@ -2753,6 +2757,7 @@ export interface InpostCourierCod {
         id?: string | null;
       }[]
     | null;
+  icon?: (string | null) | Media;
   clientId?: string | null;
   /**
    * Remember to pass matching keys for choosen environment
@@ -2985,6 +2990,7 @@ export interface InpostPickupSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  icon?: T;
   clientId?: T;
   APIUrl?: T;
   shipXAPIKey?: T;
@@ -3032,6 +3038,7 @@ export interface InpostCourierSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  icon?: T;
   clientId?: T;
   APIUrl?: T;
   shipXAPIKey?: T;
@@ -3078,6 +3085,7 @@ export interface InpostCourierCodSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  icon?: T;
   clientId?: T;
   APIUrl?: T;
   shipXAPIKey?: T;

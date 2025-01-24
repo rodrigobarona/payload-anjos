@@ -52,9 +52,13 @@ export async function POST(req: Request) {
 
     const couriers = await getCouriersArray(locale, true);
     const filledCouriers = couriers
-      .filter((courier) => courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry)))
+      .filter(
+        (courier) =>
+          courier && courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry)),
+      )
       .map((courier) => {
-        const deliveryZone = courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry));
+        const deliveryZone =
+          courier && courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry));
         const deliveryZoneWithRange = {
           ...deliveryZone,
           range: deliveryZone?.range?.find(
@@ -77,12 +81,15 @@ export async function POST(req: Request) {
           }
         });
 
-        return {
-          slug: courier.slug,
-          title: courier.title,
-          turnaround: courier.turnaround,
-          pricing: calculatedPrice,
-        };
+        if (courier) {
+          return {
+            slug: courier.slug,
+            title: courier.title,
+            turnaround: courier.turnaround,
+            icon: courier.icon,
+            pricing: calculatedPrice,
+          };
+        }
       });
 
     const productsWithTotalAndCouriers = {

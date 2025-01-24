@@ -2,7 +2,9 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { headers as getHeaders } from "next/headers";
 import { isAxiosError } from "axios";
-import { getInpostPickupLabel } from "@/lib/couriers/labels/getInpostPickupLabel";
+import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+import { getLocale } from "next-intl/server";
+import { Locale } from "@/i18n/config";
 
 export async function GET(req: Request) {
   try {
@@ -30,11 +32,12 @@ export async function GET(req: Request) {
       return Response.json("Cannot find order", { status: 400 });
     }
 
-    let file: ArrayBuffer | null | undefined = null;
+    const locale = (await getLocale()) as Locale;
 
-    if (order.orderDetails?.shipping?.includes("inpost")) {
-      file = await getInpostPickupLabel(order.printLabel?.packageNumber ?? "");
-    }
+    const courier = createCouriers(locale).find((c) => c.key === order.orderDetails?.shipping);
+    const file: ArrayBuffer | null | undefined = courier
+      ? await courier.getLabel(order.printLabel?.packageNumber ?? "")
+      : null;
 
     if (!file) {
       return Response.json("Cannot find file, check if printing labels is configured properly.", {

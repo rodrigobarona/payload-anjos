@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     const totalWeight = getTotalWeight(filledProducts, cart);
     const couriers = await getCouriersArray(locale, true);
 
-    const courier = couriers.find((courier) => courier.slug === checkoutData.deliveryMethod);
+    const courier = couriers.find((courier) => courier?.slug === checkoutData.deliveryMethod);
     const shippingCost = courier?.deliveryZones
       ?.find((zone) => zone.countries.includes(selectedCountry))
       ?.range?.find((range) => range.weightFrom <= totalWeight && range.weightTo >= totalWeight)
@@ -162,6 +162,7 @@ export async function POST(req: Request) {
           shippingCost,
           status: "pending",
           total: total.find((price) => price.currency === currency)?.value,
+          totalWithShipping: total.find((price) => price.currency === currency)?.value ?? 0 + shippingCost,
           currency: currency,
         },
         shippingAddress: {
@@ -175,6 +176,9 @@ export async function POST(req: Request) {
           phone: checkoutData.shipping.phone,
           pickupPointAddress: checkoutData.shipping.pickupPointAddress,
           pickupPointID: checkoutData.shipping.pickupPointID,
+        },
+        printLabel: {
+          weight: totalWeight / 1000,
         },
       },
     });
