@@ -7,10 +7,10 @@ import { SlideOver } from "./variants/SlideOver";
 export const Cart = async () => {
   try {
     const locale = (await getLocale()) as Locale;
-    const cartData = await getCachedGlobal("cart", locale, 1)();
+    const { cart } = await getCachedGlobal("shopLayout", locale, 1)();
 
     let CartComponent: ReactNode = null;
-    switch (cartData.type) {
+    switch (cart.type) {
       case "slideOver":
         CartComponent = <SlideOver />;
         break;

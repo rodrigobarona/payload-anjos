@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
@@ -10,11 +10,8 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import React, { ReactNode } from "react";
 
-import { AdminBar } from "@/components/AdminBar";
 import { Footer } from "@/globals/Footer/Component";
-import { Header } from "@/globals/Header/Component";
 import { Providers } from "@/providers";
-import { InitTheme } from "@/providers/Theme/InitTheme";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import { draftMode } from "next/headers";
 
@@ -22,8 +19,6 @@ import "./globals.css";
 import { getServerSideURL } from "@/utilities/getURL";
 import { Locale } from "@/i18n/config";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
-import { Cart } from "@/globals/(ecommerce)/Cart/Component";
-import SynchronizeCart from "@/components/(ecommerce)/Cart/SynchronizeCart";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

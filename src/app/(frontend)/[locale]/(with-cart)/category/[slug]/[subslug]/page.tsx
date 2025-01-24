@@ -1,4 +1,4 @@
-import { ProductList } from "@/globals/(ecommerce)/ProductList/Component";
+import { ProductList } from "@/globals/(ecommerce)/Layout/ProductList/Component";
 import { Locale } from "@/i18n/config";
 import config from "@payload-config";
 import { getLocale } from "next-intl/server";

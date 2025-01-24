@@ -5,7 +5,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Tab, TabPanel } from "@h
 
 import { StarIcon } from "@heroicons/react/20/solid";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { Product, ProductDetail } from "@/payload-types";
+import { Product, ShopLayout } from "@/payload-types";
 import Image from "next/image";
 import RichText from "@/components/RichText";
 import { useTranslations } from "next-intl";
@@ -24,7 +24,7 @@ export const WithImageGalleryExpandableDetails = ({
 }: {
   variant?: string;
   product: Product;
-  productSettings: ProductDetail;
+  productSettings: ShopLayout["productDetails"];
 }) => {
   const filledVariants: FilledVariant[] | undefined = product.variants?.map((variant) => ({
     color: product.colors?.find((color) => {
@@ -93,7 +93,7 @@ export const WithImageGalleryExpandableDetails = ({
                     </span>
                     <span
                       aria-hidden="true"
-                      className="group-data-[selected]:ring-main-500 pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2"
+                      className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 group-data-[selected]:ring-main-500"
                     />
                   </Tab>
                 ),
@@ -170,7 +170,7 @@ export const WithImageGalleryExpandableDetails = ({
                     <Disclosure key={detail.id} as="div">
                       <h3>
                         <DisclosureButton className="group relative flex w-full items-center justify-between py-6 text-left">
-                          <span className="group-data-[open]:text-main-600 text-sm font-medium text-gray-900">
+                          <span className="text-sm font-medium text-gray-900 group-data-[open]:text-main-600">
                             {detail.title}
                           </span>
                           <span className="ml-6 flex items-center">
@@ -180,7 +180,7 @@ export const WithImageGalleryExpandableDetails = ({
                             />
                             <MinusIcon
                               aria-hidden="true"
-                              className="text-main-400 group-hover:text-main-500 hidden size-6 group-data-[open]:block"
+                              className="hidden size-6 text-main-400 group-hover:text-main-500 group-data-[open]:block"
                             />
                           </span>
                         </DisclosureButton>

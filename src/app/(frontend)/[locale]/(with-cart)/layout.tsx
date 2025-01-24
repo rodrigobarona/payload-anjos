@@ -1,5 +1,5 @@
 import SynchronizeCart from "@/components/(ecommerce)/Cart/SynchronizeCart";
-import { Cart } from "@/globals/(ecommerce)/Cart/Component";
+import { Cart } from "@/globals/(ecommerce)/Layout/Cart/Component";
 import { Header } from "@/globals/Header/Component";
 import { ReactNode } from "react";
 

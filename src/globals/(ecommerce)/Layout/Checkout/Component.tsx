@@ -7,10 +7,10 @@ import { OneStepWithSummary } from "./variants/OneStepWithSummary";
 
 export const Checkout = async ({ locale }: { locale: Locale }) => {
   try {
-    const checkoutData = await getCachedGlobal("checkout", locale, 1)();
+    const { checkout } = await getCachedGlobal("shopLayout", locale, 1)();
 
     let CheckoutComponent: ReactNode = null;
-    switch (checkoutData.type) {
+    switch (checkout.type) {
       case "OneStepWithSummary":
         CheckoutComponent = <OneStepWithSummary locale={locale} />;
         break;

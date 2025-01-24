@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useCartState } from "../../../../../stores/CartStateStore";
+import { useCartState } from "@/stores/CartStateStore";
 import { useCart } from "@/stores/CartStore";
 import axios from "axios";
-import { FilledVariant } from "@/globals/(ecommerce)/ProductDetails/types";
+import { FilledVariant } from "@/globals/(ecommerce)/Layout/ProductDetails/types";
 import { Media, Product } from "@/payload-types";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import Image from "next/image";
@@ -240,7 +240,7 @@ export const SlideOver = () => {
                                           (product.variant && product.variant.slug) ?? undefined,
                                         );
                                       }}
-                                      className="hover:text-main-500 text-main-600 font-medium"
+                                      className="font-medium text-main-600 hover:text-main-500"
                                     >
                                       {t("remove")}
                                     </button>
@@ -266,7 +266,7 @@ export const SlideOver = () => {
                     <Link
                       href="/checkout"
                       onClick={() => setCartState(false)}
-                      className="bg-main-600 hover:bg-main-700 flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm"
+                      className="flex items-center justify-center rounded-md border border-transparent bg-main-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-main-700"
                     >
                       {t("checkout")}
                     </Link>
@@ -277,7 +277,7 @@ export const SlideOver = () => {
                       <button
                         type="button"
                         onClick={() => setCartState(false)}
-                        className="hover:text-main-500 text-main-600 font-medium"
+                        className="font-medium text-main-600 hover:text-main-500"
                       >
                         {t("continue-shopping")}
                         <span aria-hidden="true"> &rarr;</span>

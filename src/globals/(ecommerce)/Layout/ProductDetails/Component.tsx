@@ -5,20 +5,20 @@ import { getLocale } from "next-intl/server";
 import { ReactNode } from "react";
 import { WithImageGalleryExpandableDetails } from "./variants/WithImageGalleryExpandableDetails";
 import { notFound } from "next/navigation";
-import { ProductBreadcrumbs } from "../../../components/(ecommerce)/ProductBreadcrumbs";
+import { ProductBreadcrumbs } from "../../../../components/(ecommerce)/ProductBreadcrumbs";
 
 export const ProductDetails = async ({ variant, product }: { variant?: string; product: Product }) => {
   try {
     const locale = (await getLocale()) as Locale;
-    const productDetailsData = await getCachedGlobal("productDetails", locale, 1)();
+    const { productDetails } = await getCachedGlobal("shopLayout", locale, 1)();
 
     let ProductDetailsComponent: ReactNode = null;
-    switch (productDetailsData.type) {
+    switch (productDetails.type) {
       case "WithImageGalleryExpandableDetails":
         ProductDetailsComponent = (
           <WithImageGalleryExpandableDetails
             variant={variant}
-            productSettings={productDetailsData}
+            productSettings={productDetails}
             product={product}
           />
         );

@@ -67,10 +67,7 @@ export interface Config {
     header: Header;
     footer: Footer;
     shopSettings: ShopSetting;
-    productDetails: ProductDetail;
-    productList: ProductList;
-    cart: Cart;
-    checkout: Checkout;
+    shopLayout: ShopLayout;
     'inpost-pickup': InpostPickup;
     'inpost-courier': InpostCourier;
     'inpost-courier-cod': InpostCourierCod;
@@ -81,10 +78,7 @@ export interface Config {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     shopSettings: ShopSettingsSelect<false> | ShopSettingsSelect<true>;
-    productDetails: ProductDetailsSelect<false> | ProductDetailsSelect<true>;
-    productList: ProductListSelect<false> | ProductListSelect<true>;
-    cart: CartSelect<false> | CartSelect<true>;
-    checkout: CheckoutSelect<false> | CheckoutSelect<true>;
+    shopLayout: ShopLayoutSelect<false> | ShopLayoutSelect<true>;
     'inpost-pickup': InpostPickupSelect<false> | InpostPickupSelect<true>;
     'inpost-courier': InpostCourierSelect<false> | InpostCourierSelect<true>;
     'inpost-courier-cod': InpostCourierCodSelect<false> | InpostCourierCodSelect<true>;
@@ -2442,42 +2436,24 @@ export interface ShopSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "productDetails".
+ * via the `definition` "shopLayout".
  */
-export interface ProductDetail {
+export interface ShopLayout {
   id: string;
-  type: 'WithImageGalleryExpandableDetails';
-  reviewsEnabled: boolean;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "productList".
- */
-export interface ProductList {
-  id: string;
-  filters?: ('none' | 'withSidebar' | 'sortOnly') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cart".
- */
-export interface Cart {
-  id: string;
-  type: 'slideOver';
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "checkout".
- */
-export interface Checkout {
-  id: string;
-  type: 'OneStepWithSummary';
+  productDetails: {
+    type: 'WithImageGalleryExpandableDetails';
+    reviewsEnabled: boolean;
+  };
+  productList: {
+    filters: 'none' | 'withSidebar' | 'sortOnly';
+  };
+  cart: {
+    type: 'slideOver';
+  };
+  checkout: {
+    type: 'OneStepWithSummary';
+  };
+  clientPanel?: {};
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2912,41 +2888,31 @@ export interface ShopSettingsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "productDetails_select".
+ * via the `definition` "shopLayout_select".
  */
-export interface ProductDetailsSelect<T extends boolean = true> {
-  type?: T;
-  reviewsEnabled?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "productList_select".
- */
-export interface ProductListSelect<T extends boolean = true> {
-  filters?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cart_select".
- */
-export interface CartSelect<T extends boolean = true> {
-  type?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "checkout_select".
- */
-export interface CheckoutSelect<T extends boolean = true> {
-  type?: T;
+export interface ShopLayoutSelect<T extends boolean = true> {
+  productDetails?:
+    | T
+    | {
+        type?: T;
+        reviewsEnabled?: T;
+      };
+  productList?:
+    | T
+    | {
+        filters?: T;
+      };
+  cart?:
+    | T
+    | {
+        type?: T;
+      };
+  checkout?:
+    | T
+    | {
+        type?: T;
+      };
+  clientPanel?: T | {};
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

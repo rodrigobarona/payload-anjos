@@ -5,7 +5,6 @@ import sharp from "sharp"; // sharp-import
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
-
 import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
@@ -16,7 +15,6 @@ import { Header } from "./globals/Header/config";
 import { plugins } from "./plugins";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { getServerSideURL } from "@/utilities/getURL";
-import { ProductDetails } from "@/globals/(ecommerce)/ProductDetails/config";
 import { en } from "payload/i18n/en";
 import { pl } from "payload/i18n/pl";
 import { Products } from "./collections/(ecommerce)/Products";
@@ -24,10 +22,8 @@ import { ProductReviews } from "./collections/(ecommerce)/ProductReviews";
 import { Customers } from "./collections/(ecommerce)/Customers";
 import { ProductCategories } from "./collections/(ecommerce)/ProductCategories";
 import { ProductSubCategories } from "./collections/(ecommerce)/ProductSubCategories";
-import { ProductList } from "./globals/(ecommerce)/ProductList/config";
+
 import { ShopSettings } from "./globals/(ecommerce)/ShopSettings/config";
-import { Cart } from "./globals/(ecommerce)/Cart/config";
-import { Checkout } from "./globals/(ecommerce)/Checkout/config";
 import { InPostPickup } from "./globals/(ecommerce)/Couriers/InPostPickup/config";
 import { InPostCourier } from "./globals/(ecommerce)/Couriers/InPostCourier/config";
 import { Paywalls } from "./globals/(ecommerce)/Paywalls/config";
@@ -35,6 +31,7 @@ import { Orders } from "./collections/(ecommerce)/Orders";
 import { Fulfilment } from "./globals/(ecommerce)/Fulfilment";
 import { customTranslationsObject } from "./admin/translations/custom-translations";
 import { InPostCourierCOD } from "./globals/(ecommerce)/Couriers/InPostCourierCOD/config";
+import { ShopLayout } from "./globals/(ecommerce)/Layout/config";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -107,10 +104,7 @@ export default buildConfig({
     Header,
     Footer,
     ShopSettings,
-    ProductDetails,
-    ProductList,
-    Cart,
-    Checkout,
+    ShopLayout,
     InPostPickup,
     InPostCourier,
     InPostCourierCOD,

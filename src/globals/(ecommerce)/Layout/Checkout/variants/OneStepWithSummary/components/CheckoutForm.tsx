@@ -19,7 +19,7 @@ import axios from "axios";
 import { Cart } from "@/stores/CartStore/types";
 import { useCart } from "@/stores/CartStore";
 import { Currency } from "@/stores/Currency/types";
-import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Cart/variants/SlideOver";
+import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Layout/Cart/variants/SlideOver";
 import { OrderSummary } from "./OrderSummary";
 import { Locale } from "@/i18n/config";
 import { useCurrency } from "@/stores/Currency";

@@ -30,10 +30,10 @@ export const ProductList = async ({
 }) => {
   try {
     const locale = (await getLocale()) as Locale;
-    const productListData = await getCachedGlobal("productList", locale, 1)();
+    const { productList } = await getCachedGlobal("shopLayout", locale, 1)();
 
     let ProductDetailsComponent: typeof WithSidebar | typeof None = None;
-    switch (productListData.filters) {
+    switch (productList.filters) {
       case "withSidebar":
         ProductDetailsComponent = WithSidebar;
         break;

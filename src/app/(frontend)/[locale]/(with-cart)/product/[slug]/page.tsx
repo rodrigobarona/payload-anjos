@@ -1,4 +1,4 @@
-import { ProductDetails } from "@/globals/(ecommerce)/ProductDetails/Component";
+import { ProductDetails } from "@/globals/(ecommerce)/Layout/ProductDetails/Component";
 import { Locale } from "@/i18n/config";
 import config from "@payload-config";
 import { getLocale } from "next-intl/server";
