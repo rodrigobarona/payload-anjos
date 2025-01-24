@@ -12,6 +12,7 @@ export const createCouriers = (locale: Locale) =>
     {
       key: "inpost-pickup",
       getSettings: () => getCachedGlobal("inpost-pickup", locale, 1)(),
+      prepaid: true,
       createPackage: (order: Order, dimension: string, _dimensions?: Dimensions) =>
         createInpostPickupPackage(order, dimension),
       getLabel: (packageID: string) => getInpostLabel(packageID, "inpost-pickup"),
@@ -19,6 +20,7 @@ export const createCouriers = (locale: Locale) =>
     {
       key: "inpost-courier",
       getSettings: () => getCachedGlobal("inpost-courier", locale, 1)(),
+      prepaid: true,
       createPackage: (order: Order, _dimension: string, dimensions: Dimensions) =>
         createInpostCourierPackage(order, dimensions),
       getLabel: (packageID: string) => getInpostLabel(packageID, "inpost-courier"),
@@ -26,6 +28,7 @@ export const createCouriers = (locale: Locale) =>
     {
       key: "inpost-courier-cod",
       getSettings: () => getCachedGlobal("inpost-courier-cod", locale, 1)(),
+      prepaid: false,
       createPackage: (order: Order, _dimension: string, dimensions: Dimensions) =>
         createInpostCODCourierPackage(order, dimensions),
       getLabel: (packageID: string) => getInpostLabel(packageID, "inpost-courier-cod"),

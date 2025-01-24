@@ -35,6 +35,7 @@ export async function GET(req: Request) {
     const locale = (await getLocale()) as Locale;
 
     const courier = createCouriers(locale).find((c) => c.key === order.orderDetails?.shipping);
+
     const file: ArrayBuffer | null | undefined = courier
       ? await courier.getLabel(order.printLabel?.packageNumber ?? "")
       : null;

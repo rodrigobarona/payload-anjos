@@ -2,7 +2,7 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { Cart } from "@/stores/CartStore/types";
 import { Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
-import { getCouriersArray } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+import { createCouriers, getCouriersArray } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 import { Locale } from "@/i18n/config";
 import { getFilledProducts } from "@/lib/getFilledProducts";
 import { getTotal } from "@/lib/getTotal";
@@ -60,10 +60,14 @@ export async function POST(req: Request) {
     const filledProducts = getFilledProducts(products, cart);
     const total = getTotal(filledProducts);
     const totalWeight = getTotalWeight(filledProducts, cart);
-    const couriers = await getCouriersArray(locale, true);
+    const couriers = createCouriers(locale);
 
-    const courier = couriers.find((courier) => courier?.slug === checkoutData.deliveryMethod);
-    const shippingCost = courier?.deliveryZones
+    const courier = couriers.find((courier) => courier?.key === checkoutData.deliveryMethod);
+    if (!courier) {
+      return Response.json({ status: 400, message: "Courier not found" });
+    }
+    const courierData = await courier.getSettings();
+    const shippingCost = courierData.deliveryZones
       ?.find((zone) => zone.countries.includes(selectedCountry))
       ?.range?.find((range) => range.weightFrom <= totalWeight && range.weightTo >= totalWeight)
       ?.pricing.find((pricing) => pricing.currency === currency)?.value;
@@ -158,11 +162,11 @@ export async function POST(req: Request) {
           tin: checkoutData.buyerType === "company" ? checkoutData.invoice?.tin : undefined,
         },
         orderDetails: {
-          shipping: courier.slug,
+          shipping: courier.key,
           shippingCost,
           status: "pending",
           total: total.find((price) => price.currency === currency)?.value,
-          totalWithShipping: total.find((price) => price.currency === currency)?.value ?? 0 + shippingCost,
+          totalWithShipping: (total.find((price) => price.currency === currency)?.value ?? 0) + shippingCost,
           currency: currency,
         },
         shippingAddress: {
@@ -185,13 +189,20 @@ export async function POST(req: Request) {
 
     // TODO: Handle stock changes
 
+    if (courier.prepaid === false) {
+      return Response.json({
+        status: 200,
+        url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/payment/success?orderID=${order.id}`,
+      });
+    }
+
     try {
       switch (paywalls.paywall) {
         case "stripe":
           redirectURL = await getStripePaymentURL(
             filledProducts,
             shippingCost,
-            courier.title,
+            courierData.settings.label,
             currency,
             locale,
             paywalls?.stripe?.secret ?? "",
