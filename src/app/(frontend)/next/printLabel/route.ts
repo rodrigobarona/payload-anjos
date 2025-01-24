@@ -32,10 +32,14 @@ export async function GET(req: Request) {
 
     let file: ArrayBuffer | null | undefined = null;
 
-    switch (order.orderDetails?.shipping) {
-      case "inpost-pickup":
-        file = await getInpostPickupLabel(order.printLabel?.packageNumber ?? "");
-        break;
+    if (order.orderDetails?.shipping?.includes("inpost")) {
+      file = await getInpostPickupLabel(order.printLabel?.packageNumber ?? "");
+    }
+
+    if (!file) {
+      return Response.json("Cannot find file, check if printing labels is configured properly.", {
+        status: 400,
+      });
     }
 
     return new Response(file, {

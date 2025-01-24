@@ -374,9 +374,7 @@ export const Orders: CollectionConfig = {
                     en: "Name",
                     pl: "Nazwa",
                   },
-                  admin: {
-                    readOnly: true,
-                  },
+
                   required: true,
                 },
                 {
@@ -386,9 +384,7 @@ export const Orders: CollectionConfig = {
                     en: "Address",
                     pl: "Adres",
                   },
-                  admin: {
-                    readOnly: true,
-                  },
+
                   required: true,
                 },
                 {
@@ -403,7 +399,7 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
+
                         condition: (data) => data.orderDetails.shipping === "inpost-pickup",
                       },
                     },
@@ -416,7 +412,7 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
+
                         condition: (data) => data.orderDetails.shipping === "inpost-pickup",
                       },
                     },
@@ -434,7 +430,6 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                       required: true,
                     },
@@ -448,7 +443,6 @@ export const Orders: CollectionConfig = {
                       options: [...countryList],
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                       required: true,
                     },
@@ -466,7 +460,6 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                       required: true,
                     },
@@ -479,7 +472,6 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                       required: true,
                     },
@@ -497,7 +489,6 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                       required: true,
                     },
@@ -510,7 +501,6 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                       required: true,
                     },

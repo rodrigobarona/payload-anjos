@@ -23,6 +23,10 @@ export const createInpostCourierPackage = async (order: Order, dimension: Dimens
   const building_number = addressParts[addressParts.length - 1];
   const street = addressParts.slice(0, -1).join(" ");
 
+  const shippingAddressParts = shippingAddress.address.split(" ");
+  const shippingBuildingNumber = addressParts[addressParts.length - 1];
+  const shippingStreet = addressParts.slice(0, -1).join(" ");
+
   if (!shippingAddress) {
     throw new Error("No shipping address found");
   }
@@ -51,6 +55,13 @@ export const createInpostCourierPackage = async (order: Order, dimension: Dimens
             }),
         email: shippingAddress.email,
         phone: shippingAddress.phone,
+        address: {
+          street: shippingStreet,
+          building_number: shippingBuildingNumber,
+          city: shippingAddress.city,
+          post_code: shippingAddress.postalCode,
+          country_code: shippingAddress.country.toUpperCase(),
+        },
       },
       parcels: [
         {
@@ -87,6 +98,7 @@ export const createInpostCourierPackage = async (order: Order, dimension: Dimens
           Authorization: `Bearer ${shipXAPIKey}`,
         },
       });
+      console.log(shipmentData);
       if (shipmentData.status === "confirmed" && shipmentData.tracking_number) {
         await payload.update({
           id: order.id,

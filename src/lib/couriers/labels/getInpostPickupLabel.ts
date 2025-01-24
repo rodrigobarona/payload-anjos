@@ -14,6 +14,8 @@ export const getInpostPickupLabel = async (packageID: string) => {
     },
     responseType: "arraybuffer",
   });
+  console.log(packageID);
+  console.log(data);
 
   return data;
 };
