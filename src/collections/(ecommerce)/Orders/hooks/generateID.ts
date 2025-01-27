@@ -27,8 +27,8 @@ export const generateID: CollectionBeforeValidateHook<Order> = async ({ data }) 
       });
 
       if (existing.docs.length === 0) {
-        data.id = newID;
         uniqueFound = true;
+        return { ...data, id: newID };
       }
 
       attempts++;
@@ -38,8 +38,6 @@ export const generateID: CollectionBeforeValidateHook<Order> = async ({ data }) 
       throw new Error("Could not generate unique ID");
     }
   }
-
-  console.log(data);
 
   return data;
 };

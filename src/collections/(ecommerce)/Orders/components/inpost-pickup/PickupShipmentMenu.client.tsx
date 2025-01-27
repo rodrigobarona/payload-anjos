@@ -86,10 +86,10 @@ export const PickupShipmentMenuClient = ({ orderID }: { orderID: string }) => {
           <p className="mt-3">{t("custom:inPostMessage")}</p>
         </div>
         <Button
-          disabled={Boolean(value) && value.length > 0}
+          disabled={Boolean(value) && value?.length > 0}
           className={cn(
             "twp min-h-[38px] flex-1 text-base md:w-1/6 lg:w-full xl:w-1/6",
-            (value.length > 0 || isLoading) && "pointer-events-none cursor-not-allowed opacity-50",
+            (value?.length > 0 || isLoading) && "pointer-events-none cursor-not-allowed opacity-50",
           )}
           onClick={createPackage}
         >
