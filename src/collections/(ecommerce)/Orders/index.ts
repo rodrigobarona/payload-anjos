@@ -636,6 +636,13 @@ export const Orders: CollectionConfig = {
             },
             {
               label: {
+                en: "Unpaid",
+                pl: "Nieopłacone",
+              },
+              value: "unpaid",
+            },
+            {
+              label: {
                 en: "Processing",
                 pl: "W trakcie realizacji",
               },

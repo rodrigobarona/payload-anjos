@@ -32,6 +32,9 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
+    customers: {
+      orders: 'orders';
+    };
     productCategories: {
       subcategories: 'productSubCategories';
       products: 'products';
@@ -970,6 +973,10 @@ export interface Customer {
         id?: string | null;
       }[]
     | null;
+  orders?: {
+    docs?: (string | Order)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   cart?:
     | {
         [k: string]: unknown;
@@ -1141,7 +1148,7 @@ export interface Order {
     currency?: string | null;
     shipping?: string | null;
     transactionID?: string | null;
-    status: 'pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled' | 'returned';
+    status: 'pending' | 'paid' | 'unpaid' | 'processing' | 'shipped' | 'completed' | 'cancelled' | 'returned';
     shippingDate?: string | null;
     trackingNumber?: string | null;
     orderNote?: string | null;
@@ -1925,6 +1932,7 @@ export interface CustomersSelect<T extends boolean = true> {
         default?: T;
         id?: T;
       };
+  orders?: T;
   cart?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -167,6 +167,7 @@
     "orders": {
       "pending": "<yellow>Pending</yellow>",
       "paid": "<green>Paid</green>",
+      "unpaid": "<red>Unpaid</red>",
       "processing": "<yellow>Processing</yellow>",
       "shipped": "<green>Shipped</green>",
       "completed": "<green>Completed</green>",

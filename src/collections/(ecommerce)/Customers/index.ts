@@ -25,39 +25,55 @@ export const Customers: CollectionConfig = {
   auth: true,
   fields: [
     {
-      name: "firstName",
-      label: {
-        en: "First Name",
-        pl: "Imię",
-      },
-      type: "text",
+      type: "row",
+      fields: [
+        {
+          name: "firstName",
+          label: {
+            en: "First Name",
+            pl: "Imię",
+          },
+          type: "text",
+        },
+        {
+          name: "lastName",
+          label: {
+            en: "Last Name",
+            pl: "Nazwisko",
+          },
+          type: "text",
+        },
+      ],
     },
     {
-      name: "lastName",
-      label: {
-        en: "Last Name",
-        pl: "Nazwisko",
-      },
-      type: "text",
-    },
-    {
-      name: "birthDate",
-      label: {
-        en: "Birth Date",
-        pl: "Data urodzenia",
-      },
-      type: "date",
-    },
-    {
-      name: "lastBuyerType",
-      label: {
-        en: "Last Buyer Type",
-        pl: "Ostatni typ kupującego",
-      },
-      type: "select",
-      options: [
-        { value: "individual", label: { en: "Individual", pl: "Osoba fizyczna" } },
-        { value: "company", label: { en: "Company", pl: "Firma" } },
+      type: "row",
+      fields: [
+        {
+          name: "birthDate",
+          label: {
+            en: "Birth Date",
+            pl: "Data urodzenia",
+          },
+          type: "date",
+          admin: {
+            width: "50%",
+          },
+        },
+        {
+          name: "lastBuyerType",
+          label: {
+            en: "Last Buyer Type",
+            pl: "Ostatni typ kupującego",
+          },
+          type: "select",
+          admin: {
+            width: "50%",
+          },
+          options: [
+            { value: "individual", label: { en: "Individual", pl: "Osoba fizyczna" } },
+            { value: "company", label: { en: "Company", pl: "Firma" } },
+          ],
+        },
       ],
     },
     {
@@ -75,6 +91,12 @@ export const Customers: CollectionConfig = {
         plural: {
           en: "Shipping addresses",
           pl: "Adresy dostaw",
+        },
+      },
+      admin: {
+        components: {
+          RowLabel:
+            "@/collections/(ecommerce)/Customers/ui/RowLabels/ShippingAddressRowLabel#ShippingAddressRowLabel",
         },
       },
       fields: [
@@ -97,59 +119,80 @@ export const Customers: CollectionConfig = {
           required: true,
         },
         {
-          name: "city",
-          type: "text",
-          label: {
-            en: "City",
-            pl: "Miasto",
-          },
-          required: true,
+          type: "row",
+          fields: [
+            {
+              name: "city",
+              type: "text",
+              label: {
+                en: "City",
+                pl: "Miasto",
+              },
+              admin: {
+                width: "50%",
+              },
+              required: true,
+            },
+            {
+              name: "country",
+              type: "select",
+              label: {
+                en: "Country",
+                pl: "Kraj",
+              },
+              admin: {
+                width: "50%",
+              },
+              options: [...countryList],
+              required: true,
+            },
+          ],
         },
         {
-          name: "country",
-          type: "select",
-          label: {
-            en: "Country",
-            pl: "Kraj",
-          },
-          options: [...countryList],
-          required: true,
+          type: "row",
+          fields: [
+            {
+              name: "region",
+              type: "text",
+              label: {
+                en: "Region",
+                pl: "Region",
+              },
+              required: true,
+            },
+            {
+              name: "postalCode",
+              type: "text",
+              label: {
+                en: "Postal Code",
+                pl: "Kod pocztowy",
+              },
+              required: true,
+            },
+          ],
         },
         {
-          name: "region",
-          type: "text",
-          label: {
-            en: "Region",
-            pl: "Region",
-          },
-          required: true,
-        },
-        {
-          name: "postalCode",
-          type: "text",
-          label: {
-            en: "Postal Code",
-            pl: "Kod pocztowy",
-          },
-          required: true,
-        },
-        {
-          name: "phone",
-          type: "text",
-          label: {
-            en: "Phone",
-            pl: "Telefon",
-          },
-          required: true,
-        },
-        {
-          name: "email",
-          type: "text",
-          label: {
-            en: "Email",
-            pl: "Email",
-          },
-          required: true,
+          type: "row",
+          fields: [
+            {
+              name: "phone",
+              type: "text",
+              label: {
+                en: "Phone",
+                pl: "Telefon",
+              },
+              required: true,
+            },
+            {
+              name: "email",
+              type: "text",
+              label: {
+                en: "Email",
+                pl: "Email",
+              },
+              required: true,
+            },
+          ],
         },
         {
           name: "default",
@@ -161,6 +204,16 @@ export const Customers: CollectionConfig = {
           defaultValue: false,
         },
       ],
+    },
+    {
+      name: "orders",
+      label: {
+        en: "Client Orders",
+        pl: "Zamówienia klienta",
+      },
+      type: "join",
+      collection: "orders",
+      on: "customer",
     },
     {
       name: "cart",

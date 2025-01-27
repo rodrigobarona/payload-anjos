@@ -32,11 +32,12 @@ export const WithSidebarOrders = async () => {
   });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="no-prose flex flex-col gap-4">
+      <h2 className="mb-8 text-xl font-bold">Orders</h2>
       {orders.docs.map((order) => (
         <Link href={`/account/orders/${order.id}`} key={order.id}>
-          <Card className="flex flex-col bg-gray-50 sm:flex-row">
-            <div className="flex flex-col gap-2 bg-gray-100 p-4 sm:w-1/3 sm:pr-8">
+          <Card className="flex flex-col overflow-clip rounded-[6px] border bg-transparent sm:flex-row">
+            <div className="r flex flex-col gap-2 bg-gray-50 p-4 sm:w-1/3 sm:pr-8">
               {t.rich(order.orderDetails.status, {
                 yellow: (chunks) => <p className="font-medium text-yellow-600">{chunks}</p>,
                 green: (chunks) => <p className="font-medium text-green-600">{chunks}</p>,
@@ -75,7 +76,7 @@ export const WithSidebarOrders = async () => {
                       width={image.width ?? 50}
                       height={image.height ?? 50}
                       title={`${product.productName} ${product.color} ${product.size} x ${product.quantity}`}
-                      className="aspect-square w-20 rounded-xl border object-cover shadow-sm"
+                      className="aspect-square w-20 rounded-[6px] border object-cover shadow-sm"
                     />
                   )
                 );

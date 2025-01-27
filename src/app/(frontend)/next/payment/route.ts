@@ -187,6 +187,16 @@ export async function POST(req: Request) {
       }
     });
 
+    if (user) {
+      payload.update({
+        collection: "customers",
+        id: user.id,
+        data: {
+          lastBuyerType: checkoutData.buyerType as "individual" | "company",
+        },
+      });
+    }
+
     // TODO: Handle stock changes
 
     if (courier.prepaid === false) {
