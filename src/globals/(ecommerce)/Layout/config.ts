@@ -181,6 +181,36 @@ export const ShopLayout: GlobalConfig = {
               required: true,
               defaultValue: "withSidebar",
             },
+            {
+              name: "help",
+              type: "group",
+              label: {
+                en: "Help page",
+                pl: "Strona pomocy",
+              },
+              fields: [
+                {
+                  name: "title",
+                  type: "text",
+                  label: {
+                    en: "Title",
+                    pl: "Tytuł",
+                  },
+                  localized: true,
+                  required: true,
+                },
+                {
+                  name: "content",
+                  type: "richText",
+                  label: {
+                    en: "Content",
+                    pl: "Treść",
+                  },
+                  localized: true,
+                  required: true,
+                },
+              ],
+            },
           ],
         },
       ],

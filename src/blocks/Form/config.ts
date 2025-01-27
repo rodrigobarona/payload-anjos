@@ -6,7 +6,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
-import { defaultLexical } from "@/fields/defaultLexical";
+import { noBlocksLexical } from "@/fields/noBlocksLexical";
 
 export const FormBlock: Block = {
   slug: "formBlock",
@@ -30,7 +30,7 @@ export const FormBlock: Block = {
         condition: (_, { enableIntro }) => Boolean(enableIntro),
       },
       localized: true,
-      editor: defaultLexical,
+      editor: noBlocksLexical,
       label: "Intro Content",
     },
   ],

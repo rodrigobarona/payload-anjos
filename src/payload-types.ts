@@ -2456,6 +2456,24 @@ export interface ShopLayout {
   };
   clientPanel: {
     type: 'withSidebar';
+    help: {
+      title: string;
+      content: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+    };
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2919,6 +2937,12 @@ export interface ShopLayoutSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        help?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

@@ -1,10 +1,8 @@
-import { Order } from "@/payload-types";
-import type { CollectionBeforeValidateHook } from "payload";
-import { getPayload } from "payload";
+import { FieldHook, getPayload } from "payload";
 import config from "@payload-config";
 
-export const generateID: CollectionBeforeValidateHook<Order> = async ({ data }) => {
-  if (data && !data.id) {
+export const generateFieldID: FieldHook = async ({ value }) => {
+  if (!value) {
     const payload = await getPayload({ config });
     let attempts = 0;
     let uniqueFound = false;
@@ -16,7 +14,7 @@ export const generateID: CollectionBeforeValidateHook<Order> = async ({ data }) 
         limit: 1,
       });
 
-      const lastID = lastOrder.docs[0]?.id ?? "000000000";
+      const lastID = lastOrder.docs[0]?.id ?? "00000000";
       const newID = (parseInt(lastID) + 1).toString().padStart(8, "0");
 
       const existing = await payload.find({
@@ -27,7 +25,7 @@ export const generateID: CollectionBeforeValidateHook<Order> = async ({ data }) 
       });
 
       if (existing.docs.length === 0) {
-        data.id = newID;
+        value = newID;
         uniqueFound = true;
       }
 
@@ -38,8 +36,5 @@ export const generateID: CollectionBeforeValidateHook<Order> = async ({ data }) 
       throw new Error("Could not generate unique ID");
     }
   }
-
-  console.log(data);
-
-  return data;
+  return value;
 };

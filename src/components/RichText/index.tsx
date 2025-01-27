@@ -20,6 +20,8 @@ import { cn } from "@/utilities/cn";
 
 // import { JSXConverters } from "payloadcms-lexical-ext";
 import { CarouselBlock } from "@/blocks/Carousel/Component";
+import { AccordionBlock } from "@/blocks/Accordion/Component";
+import { FormBlock } from "@/blocks/Form/Component";
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -50,6 +52,8 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         disableInnerContainer={true}
       />
     ),
+    accordion: ({ node }) => <AccordionBlock {...node.fields} />,
+    formBlock: ({ node }) => <FormBlock {...node.fields} />,
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
     carousel: ({ node }) => <CarouselBlock {...node.fields} />,
@@ -71,7 +75,7 @@ export default function RichText(props: Props) {
         {
           container: enableGutter,
           "max-w-none": !enableGutter,
-          "prose mx-auto md:prose-md dark:prose-invert": enableProse,
+          "md:prose-md prose mx-auto dark:prose-invert": enableProse,
         },
         className,
       )}

@@ -2,6 +2,7 @@ import type { Block, Field } from "payload";
 
 import { marginFields, paddingFields } from "@/fields/spacingFields";
 import { defaultLexical } from "@/fields/defaultLexical";
+import { noBlocksLexical } from "@/fields/noBlocksLexical";
 
 const faqFields: Field[] = [
   {
@@ -14,7 +15,7 @@ const faqFields: Field[] = [
     name: "content",
     type: "richText",
     localized: true,
-    editor: defaultLexical,
+    editor: noBlocksLexical,
     required: true,
   },
 ];
@@ -29,7 +30,7 @@ export const Accordion: Block = {
       name: "title",
       type: "richText",
       localized: true,
-      editor: defaultLexical,
+      editor: noBlocksLexical,
     },
     {
       name: "items",

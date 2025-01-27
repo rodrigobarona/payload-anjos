@@ -23,7 +23,7 @@ export const AccordionBlock = ({
   return (
     <section
       className={cn(
-        "container",
+        "not-prose container px-0",
         spacingTopClasses[spacingTop || "medium"],
         spacingBottomClasses[spacingBottom || "medium"],
         paddingTopClasses[paddingTop || "medium"],
@@ -34,7 +34,7 @@ export const AccordionBlock = ({
       <Accordion type="single" collapsible>
         {items.map((item, index) => (
           <AccordionItem key={item.id ?? index} value={item.id ?? index.toString()}>
-            <AccordionTrigger>{item.title}</AccordionTrigger>
+            <AccordionTrigger className="text-base">{item.title}</AccordionTrigger>
             <AccordionContent>
               <RichText data={item.content} />
             </AccordionContent>

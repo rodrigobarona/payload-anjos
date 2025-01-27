@@ -1,6 +1,6 @@
+import { ClientHelp } from "@/globals/(ecommerce)/Layout/ClientPanel/Help/Component";
+
 const HelpPage = () => {
-  return (
-    <div>HelpPage</div>
-  )
-}
-export default HelpPage
+  return <ClientHelp />;
+};
+export default HelpPage;

@@ -82,41 +82,6 @@ export async function POST(req: Request) {
 
     const user = await getCustomer();
 
-    filledProducts.forEach((product) => {
-      if (product.enableVariants && product.variant && product.variants) {
-        const variant = product.variant;
-        if (variant.stock) {
-          const newStock = variant.stock - product.quantity;
-          payload.update({
-            collection: "products",
-            id: product.id,
-            data: {
-              variants: product.variants?.map((v) => {
-                if (v.variantSlug === variant.variantSlug) {
-                  return {
-                    ...v,
-                    stock: newStock,
-                  };
-                }
-                return v;
-              }),
-            },
-          });
-        }
-      } else {
-        if (product.stock) {
-          const newStock = product.stock - product.quantity;
-          payload.update({
-            collection: "products",
-            id: product.id,
-            data: {
-              stock: newStock,
-            },
-          });
-        }
-      }
-    });
-
     const order = await payload.create({
       collection: "orders",
       data: {
@@ -185,6 +150,41 @@ export async function POST(req: Request) {
           weight: totalWeight / 1000,
         },
       },
+    });
+
+    filledProducts.forEach((product) => {
+      if (product.enableVariants && product.variant && product.variants) {
+        const variant = product.variant;
+        if (variant.stock) {
+          const newStock = variant.stock - product.quantity;
+          payload.update({
+            collection: "products",
+            id: product.id,
+            data: {
+              variants: product.variants?.map((v) => {
+                if (v.variantSlug === variant.variantSlug) {
+                  return {
+                    ...v,
+                    stock: newStock,
+                  };
+                }
+                return v;
+              }),
+            },
+          });
+        }
+      } else {
+        if (product.stock) {
+          const newStock = product.stock - product.quantity;
+          payload.update({
+            collection: "products",
+            id: product.id,
+            data: {
+              stock: newStock,
+            },
+          });
+        }
+      }
     });
 
     // TODO: Handle stock changes

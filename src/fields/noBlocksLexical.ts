@@ -10,14 +10,13 @@ import { LinkFeature, lexicalEditor, BlocksFeature } from "@payloadcms/richtext-
 import { Carousel } from "@/blocks/Carousel/config";
 import { MediaBlock } from "@/blocks/MediaBlock/config";
 import { FormBlock } from "@/blocks/Form/config";
-import { Accordion } from "@/blocks/Accordion/config";
 
-export const defaultLexical: Config["editor"] = lexicalEditor({
+export const noBlocksLexical: Config["editor"] = lexicalEditor({
   features: ({ defaultFeatures }) => {
     return [
       ...defaultFeatures,
       BlocksFeature({
-        blocks: [Carousel, FormBlock, Accordion],
+        blocks: [Carousel],
       }),
       LinkFeature({
         enabledCollections: ["pages", "posts"],
