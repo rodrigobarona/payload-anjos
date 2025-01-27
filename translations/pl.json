@@ -146,5 +146,13 @@
     "remove": "Usuń",
     "items-in-cart": "Items in your cart",
     "order-summary": "Podsumowanie zamówienia"
+  },
+  "Account": {
+    "navigation": {
+      "orders": "Zamówienia",
+      "settings": "Ustawienia",
+      "orders-data": "Dane do zamówień",
+      "help": "Pomoc"
+    }
   }
 }

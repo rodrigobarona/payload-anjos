@@ -133,7 +133,6 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
 
   const onSubmit = async (values: CheckoutFormData) => {
     try {
-      console.log(values);
       const { data } = await axios.post<{ status: number; url?: string }>("/next/payment", {
         cart,
         selectedCountry,

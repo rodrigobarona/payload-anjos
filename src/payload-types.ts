@@ -2453,7 +2453,9 @@ export interface ShopLayout {
   checkout: {
     type: 'OneStepWithSummary';
   };
-  clientPanel?: {};
+  clientPanel: {
+    type: 'withSidebar';
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2912,7 +2914,11 @@ export interface ShopLayoutSelect<T extends boolean = true> {
     | {
         type?: T;
       };
-  clientPanel?: T | {};
+  clientPanel?:
+    | T
+    | {
+        type?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -15,7 +15,7 @@ import { Providers } from "@/providers";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import { draftMode } from "next/headers";
 
-import "./globals.css";
+import "../globals.css";
 import { getServerSideURL } from "@/utilities/getURL";
 import { Locale } from "@/i18n/config";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
@@ -78,5 +78,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: "@payloadcms",
+  },
+  robots: {
+    index: !(process.env.NEXT_PUBLIC_ROBOTS_INDEX === "false"),
+    follow: !(process.env.NEXT_PUBLIC_ROBOTS_INDEX === "false"),
   },
 };

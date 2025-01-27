@@ -161,7 +161,27 @@ export const ShopLayout: GlobalConfig = {
             pl: "Panel klienta",
           },
           name: "clientPanel",
-          fields: [],
+          fields: [
+            {
+              name: "type",
+              type: "select",
+              options: [
+                {
+                  label: {
+                    en: "With sidebar",
+                    pl: "Z bocznym panelem",
+                  },
+                  value: "withSidebar",
+                },
+              ],
+              label: {
+                en: "Type of client panel",
+                pl: "Rodzaj panelu klienta",
+              },
+              required: true,
+              defaultValue: "withSidebar",
+            },
+          ],
         },
       ],
     },

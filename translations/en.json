@@ -156,5 +156,13 @@
     "remove": "Remove",
     "items-in-cart": "Items in your cart",
     "order-summary": "Order summary"
+  },
+  "Account": {
+    "navigation": {
+      "orders": "Orders",
+      "settings": "Settings",
+      "orders-data": "Data for orders",
+      "help": "Help"
+    }
   }
 }
