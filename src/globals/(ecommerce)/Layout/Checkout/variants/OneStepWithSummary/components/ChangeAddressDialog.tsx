@@ -4,18 +4,15 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Customer } from "@/payload-types";
 import { CheckoutFormData } from "@/schemas/checkoutForm.schema";
 import { cn } from "@/utilities/cn";
 import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Dispatch, SetStateAction } from "react";
 
 export const ChangeAddressDialog = ({
   open,
