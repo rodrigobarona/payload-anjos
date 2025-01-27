@@ -1,4 +1,4 @@
-export const formatDateTime = (timestamp: string): string => {
+export const formatDateTime = (timestamp: string, format?: "EU" | "US"): string => {
   const now = new Date();
   let date = now;
   if (timestamp) date = new Date(timestamp);
@@ -16,5 +16,5 @@ export const formatDateTime = (timestamp: string): string => {
   // const MinMin = (minutes < 10) ? `0${minutes}` : minutes;
   // const SS = (seconds < 10) ? `0${seconds}` : seconds;
 
-  return `${MM}/${DD}/${YYYY}`;
+  return format === "EU" ? `${DD}/${MM}/${YYYY}` : `${MM}/${DD}/${YYYY}`;
 };

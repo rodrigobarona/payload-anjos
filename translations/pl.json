@@ -153,6 +153,15 @@
       "settings": "Ustawienia",
       "orders-data": "Dane do zamówień",
       "help": "Pomoc"
+    },
+    "orders": {
+      "pending": "<yellow>Oczekujące</yellow>",
+      "paid": "<green>Zapłacone</green>",
+      "processing": "<yellow>Realizowane</yellow>",
+      "shipped": "<green>Wysłane</green>",
+      "completed": "<green>Zrealizowane</green>",
+      "cancelled": "<red>Anulowane</red>",
+      "returned": "<red>Zwrócone</red>"
     }
   }
 }

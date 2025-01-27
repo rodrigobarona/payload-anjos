@@ -163,6 +163,15 @@
       "settings": "Settings",
       "orders-data": "Data for orders",
       "help": "Help"
+    },
+    "orders": {
+      "pending": "<yellow>Pending</yellow>",
+      "paid": "<green>Paid</green>",
+      "processing": "<yellow>Processing</yellow>",
+      "shipped": "<green>Shipped</green>",
+      "completed": "<green>Completed</green>",
+      "cancelled": "<red>Cancelled</red>",
+      "returned": "<red>Returned</red>"
     }
   }
 }

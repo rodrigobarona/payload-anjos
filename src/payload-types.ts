@@ -1134,14 +1134,14 @@ export interface Order {
     email: string;
     phone: string;
   };
-  orderDetails?: {
+  orderDetails: {
     total?: number | null;
     shippingCost?: number | null;
     totalWithShipping?: number | null;
     currency?: string | null;
     shipping?: string | null;
     transactionID?: string | null;
-    status?: ('pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled' | 'returned') | null;
+    status: 'pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled' | 'returned';
     shippingDate?: string | null;
     trackingNumber?: string | null;
     orderNote?: string | null;
@@ -1941,6 +1941,7 @@ export interface CustomersSelect<T extends boolean = true> {
  * via the `definition` "orders_select".
  */
 export interface OrdersSelect<T extends boolean = true> {
+  id?: T;
   customer?: T;
   date?: T;
   extractedFromStock?: T;

@@ -1,5 +1,6 @@
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { CollectionConfig } from "payload";
+import { generateID } from "./hooks/generateID";
 
 export const Orders: CollectionConfig = {
   slug: "orders",
@@ -9,6 +10,9 @@ export const Orders: CollectionConfig = {
       en: "Orders",
       pl: "Zamówienia",
     },
+  },
+  hooks: {
+    beforeOperation: [generateID],
   },
   labels: {
     singular: {
@@ -21,6 +25,7 @@ export const Orders: CollectionConfig = {
     },
   },
   fields: [
+    { name: "id", type: "text", admin: { readOnly: true } },
     {
       type: "tabs",
       tabs: [
@@ -657,6 +662,8 @@ export const Orders: CollectionConfig = {
               value: "returned",
             },
           ],
+          required: true,
+          defaultValue: "pending",
         },
         {
           name: "shippingDate",
