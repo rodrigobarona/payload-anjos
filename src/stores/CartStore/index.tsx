@@ -6,7 +6,7 @@ import debounce from "lodash.debounce";
 
 interface CartState {
   cart: Cart | null;
-  setCart: (cartToSet: Cart) => void;
+  setCart: (cartToSet: Cart | null) => void;
   updateCart: (cartToSet: Cart) => void;
   removeFromCart: (productId: string, variantSlug?: string) => void;
   synchronizeCart: () => Promise<void>;

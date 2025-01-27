@@ -89,7 +89,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
   >();
   const [deliveryMethods, setDeliveryMethods] = useState<FilledCourier[]>([]);
 
-  const { cart } = useCart();
+  const { cart, setCart } = useCart();
   const locale = useLocale() as Locale;
   const currency = useCurrency();
 
@@ -141,6 +141,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
         currency: currency.currency,
       });
       if (data.status === 200 && data.url) {
+        setCart(null);
         router.push(data.url);
       } else {
         form.setError("root", { message: t("internal-server-error") });
