@@ -161,8 +161,17 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
 
   return (
     <>
-      <AddNewAddressDialog open={addShippingDialogOpen} setOpen={setAddShippingDialogOpen} />
-      {shippingAddresses && (
+      {user && (
+        <AddNewAddressDialog
+          open={addShippingDialogOpen}
+          setOpen={setAddShippingDialogOpen}
+          user={user}
+          setShipping={(shipping) => {
+            form.setValue("shipping", shipping);
+          }}
+        />
+      )}
+      {user && shippingAddresses && (
         <ChangeAddressDialog
           open={shippingDialogOpen}
           setOpen={setShippingDialogOpen}

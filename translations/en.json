@@ -115,7 +115,8 @@
     },
     "add-address-dialog": {
       "add-address": "Add new address",
-      "save": "Save"
+      "save": "Save",
+      "saving": "Saving..."
     },
     "contries": {
       "pl": "Poland",

@@ -115,7 +115,8 @@
     },
     "add-address-dialog": {
       "add-address": "Dodaj nowy adres",
-      "save": "Zapisz"
+      "save": "Zapisz",
+      "saving": "Zapisywanie..."
     },
     "contries": {
       "pl": "Polska",

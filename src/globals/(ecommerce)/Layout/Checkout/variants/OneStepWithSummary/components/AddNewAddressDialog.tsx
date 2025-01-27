@@ -1,48 +1,87 @@
 "use client";
+import { ShippingAddressForm } from "@/components/(ecommerce)/ShippingAddressForm";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Form } from "@/components/ui/form";
 import { Customer } from "@/payload-types";
-import { CheckoutFormData } from "@/schemas/checkoutForm.schema";
-import { cn } from "@/utilities/cn";
+import { CheckoutFormData, useCheckoutFormSchema } from "@/schemas/checkoutForm.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const AddNewAddressDialog = ({
   open,
   setOpen,
-  //   shippingAddresses,
-  //   selectedID,
-  //   setShipping,
+  user,
+  setShipping,
 }: {
   open: boolean;
+  user: Customer;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  //   shippingAddresses: NonNullable<Customer["shippings"]>;
-  //   selectedID?: string;
-  //   setShipping: (shipping: CheckoutFormData["shipping"]) => void;
+  setShipping: (shipping: CheckoutFormData["shipping"]) => void;
 }) => {
-  const form = useForm();
+  const { ShippingFormSchemaResolver } = useCheckoutFormSchema();
+  const form = useForm<{ shipping: CheckoutFormData["shipping"] }>({
+    resolver: zodResolver(ShippingFormSchemaResolver),
+    defaultValues: {
+      shipping: {
+        name: "",
+        address: "",
+        city: "",
+        country: "",
+        region: "",
+        postalCode: "",
+        phone: "",
+        email: "",
+      },
+    },
+  });
+
+  const t = useTranslations("CheckoutForm.add-address-dialog");
+
+  const onSubmit = async (values: { shipping: CheckoutFormData["shipping"] }) => {
+    try {
+      const { data } = await axios.patch<{
+        doc: Customer;
+      }>(
+        `/api/customers/${user?.id}`,
+        {
+          shippings: [...(user.shippings || []), values.shipping],
+        },
+        {
+          withCredentials: true,
+        },
+      );
+      if (data.doc.shippings) {
+        setShipping({
+          ...data.doc.shippings[data.doc.shippings.length - 1],
+          id: data.doc.shippings[data.doc.shippings.length - 1].id ?? undefined,
+        });
+        setOpen(false);
+      }
+    } catch (error) {
+      form.setError("root", {
+        message: "Internal server error",
+      });
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogTrigger>Open</DialogTrigger>
       <DialogContent className="max-w-screen-sm">
         <DialogHeader>
-          <DialogTitle className="mb-4">Change address</DialogTitle>
+          <DialogTitle className="mb-4">{t("add-address")}</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-6 md:grid-cols-2">TEST</div>
-        <DialogFooter>
-          <DialogClose className="w-full">
-            <Button variant="tailwind">Save</Button>
-          </DialogClose>
-        </DialogFooter>
+        <Form {...form}>
+          <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <ShippingAddressForm />
+            <Button variant="tailwind" type="submit" className="col-span-2 mt-4">
+              {form.formState.isSubmitting ? t("saving") : t("save")}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
