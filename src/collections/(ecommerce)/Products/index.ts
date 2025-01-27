@@ -115,6 +115,11 @@ export const Products: CollectionConfig = {
                   pl: "Szczegóły",
                 },
               },
+              admin: {
+                components: {
+                  RowLabel: "@/collections/(ecommerce)/Products/ui/RowLabels/DetailLabel#DetailLabel",
+                },
+              },
               fields: [
                 {
                   name: "title",

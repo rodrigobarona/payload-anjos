@@ -33,6 +33,7 @@ import { ShippingAddressRowLabel as ShippingAddressRowLabel_b3d6dcafebb3c6e91e67
 import { OrderProductsRowLabel as OrderProductsRowLabel_a44d89da141f836d5aed2b72298ee5d6 } from '@/components/(ecommerce)/RowLabels/OrderProductsRowLabel'
 import { PickupShipmentMenu as PickupShipmentMenu_b3ca5dfccb96837001fe943ce509dd7f } from '@/collections/(ecommerce)/Orders/components/inpost-pickup/PickupShipmentMenu'
 import { CourierShipmentMenu as CourierShipmentMenu_a2a60c116f7b67b23eaabdaa4a46011f } from '@/collections/(ecommerce)/Orders/components/couriers/CourierShipmentMenu'
+import { DetailLabel as DetailLabel_f27e148de9d6ca6e35ba83e1caf063b6 } from '@/collections/(ecommerce)/Products/ui/RowLabels/DetailLabel'
 import { OptionLabel as OptionLabel_b17ed890d8122f86250bc87431a6fb22 } from '@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel'
 import { SizeSelect as SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a } from '@/collections/(ecommerce)/Products/ui/SizeSelect'
 import { ColorSelect as ColorSelect_619c98d2f17f9cadf7e7c184dc78c786 } from '@/collections/(ecommerce)/Products/ui/ColorSelect'
@@ -84,6 +85,7 @@ export const importMap = {
   "@/components/(ecommerce)/RowLabels/OrderProductsRowLabel#OrderProductsRowLabel": OrderProductsRowLabel_a44d89da141f836d5aed2b72298ee5d6,
   "@/collections/(ecommerce)/Orders/components/inpost-pickup/PickupShipmentMenu#PickupShipmentMenu": PickupShipmentMenu_b3ca5dfccb96837001fe943ce509dd7f,
   "@/collections/(ecommerce)/Orders/components/couriers/CourierShipmentMenu#CourierShipmentMenu": CourierShipmentMenu_a2a60c116f7b67b23eaabdaa4a46011f,
+  "@/collections/(ecommerce)/Products/ui/RowLabels/DetailLabel#DetailLabel": DetailLabel_f27e148de9d6ca6e35ba83e1caf063b6,
   "@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel#OptionLabel": OptionLabel_b17ed890d8122f86250bc87431a6fb22,
   "@/collections/(ecommerce)/Products/ui/SizeSelect#SizeSelect": SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a,
   "@/collections/(ecommerce)/Products/ui/ColorSelect#ColorSelect": ColorSelect_619c98d2f17f9cadf7e7c184dc78c786,
