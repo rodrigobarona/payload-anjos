@@ -24,6 +24,9 @@ import { OrderSummary } from "./OrderSummary";
 import { Locale } from "@/i18n/config";
 import { useCurrency } from "@/stores/Currency";
 import { useRouter } from "@/i18n/routing";
+import { ShippingAddressForm } from "@/components/(ecommerce)/ShippingAddressForm";
+import { ChangeAddressDialog } from "./ChangeAddressDialog";
+import { AddNewAddressDialog } from "./AddNewAddressDialog";
 
 export type FilledCourier = {
   slug: string;
@@ -44,6 +47,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
   const t = useTranslations("CheckoutForm.form");
 
   const defaultShippingAddress = user?.shippings?.find((shippingAddress) => shippingAddress.default);
+  const shippingAddresses = user?.shippings && user.shippings.length > 0 && user.shippings;
 
   const form = useForm<CheckoutFormData>({
     resolver: zodResolver(CheckoutFormSchemaResolver),
@@ -60,6 +64,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
         tin: "",
       },
       shipping: {
+        id: defaultShippingAddress?.id ?? "",
         name: defaultShippingAddress?.name ?? "",
         address: defaultShippingAddress?.address ?? "",
         city: defaultShippingAddress?.city ?? "",
@@ -74,11 +79,13 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
       deliveryMethod: "",
     },
   });
+  const [shippingDialogOpen, setShippingDialogOpen] = useState(false);
+  const [addShippingDialogOpen, setAddShippingDialogOpen] = useState(false);
 
   const wantsInvoice = useWatch({ control: form.control, name: "individualInvoice" });
   const isCompany = useWatch({ control: form.control, name: "buyerType" }) === "company";
-  const selectedCountry = useWatch({ control: form.control, name: "shipping.country" });
   const selectedDelivery = useWatch({ control: form.control, name: "deliveryMethod" });
+  const shipping = useWatch({ control: form.control, name: "shipping" });
 
   const [checkoutProducts, setCheckoutProducts] = useState<ProductWithFilledVariants[]>();
   const [totalPrice, setTotalPrice] = useState<
@@ -126,8 +133,8 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
   );
 
   useEffect(() => {
-    fetchCartProducts(cart, selectedCountry);
-  }, [cart, selectedCountry]);
+    fetchCartProducts(cart, shipping.country);
+  }, [cart, shipping.country]);
 
   const router = useRouter();
 
@@ -135,7 +142,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
     try {
       const { data } = await axios.post<{ status: number; url?: string }>("/next/payment", {
         cart,
-        selectedCountry,
+        selectedCountry: shipping.country,
         checkoutData: values,
         locale,
         currency: currency.currency,
@@ -153,354 +160,251 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
-        <div>
-          <div className="mt-10 border-t border-gray-200 pt-10">
-            <h2 className="text-lg font-medium text-gray-900">{t("buy-as")}</h2>
-            <FormField
-              control={form.control}
-              name="buyerType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Tabs defaultValue="individual" onValueChange={field.onChange} className="my-4">
-                      <TabsList className="w-full">
-                        <TabsTrigger className="w-1/2" value="individual">
-                          {t("individual")}
-                        </TabsTrigger>
-                        <TabsTrigger className="w-1/2" value="company">
-                          {t("company")}
-                        </TabsTrigger>
-                      </TabsList>
-                    </Tabs>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <h2 className="text-lg font-medium text-gray-900">{t("shipping-address")}</h2>
+    <>
+      <AddNewAddressDialog open={addShippingDialogOpen} setOpen={setAddShippingDialogOpen} />
+      {shippingAddresses && (
+        <ChangeAddressDialog
+          open={shippingDialogOpen}
+          setOpen={setShippingDialogOpen}
+          setAddShippingDialogOpen={setAddShippingDialogOpen}
+          shippingAddresses={shippingAddresses}
+          selectedID={shipping.id}
+          setShipping={(shipping) => {
+            form.setValue("shipping", shipping);
+          }}
+        />
+      )}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
+        >
+          <div>
+            <div className="mt-10 border-t border-gray-200 pt-10">
+              <h2 className="text-lg font-medium text-gray-900">{t("buy-as")}</h2>
+              <FormField
+                control={form.control}
+                name="buyerType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Tabs defaultValue="individual" onValueChange={field.onChange} className="my-4">
+                        <TabsList className="w-full">
+                          <TabsTrigger className="w-1/2" value="individual">
+                            {t("individual")}
+                          </TabsTrigger>
+                          <TabsTrigger className="w-1/2" value="company">
+                            {t("company")}
+                          </TabsTrigger>
+                        </TabsList>
+                      </Tabs>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <h2 className="text-lg font-medium text-gray-900">{t("shipping-address")}</h2>
 
-            <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-              {defaultShippingAddress ? (
-                <div className="group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 ring-main-500 focus:outline-none">
-                  <span className="flex flex-1">
-                    <span className="flex w-full flex-col">
-                      <span className="block text-sm font-medium text-gray-900">
-                        {defaultShippingAddress.name}
+              <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                {shippingAddresses ? (
+                  <div className="group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 ring-main-500 focus:outline-none">
+                    <span className="flex flex-1">
+                      <span className="flex w-full flex-col">
+                        <span className="block text-sm font-medium text-gray-900">{shipping.name}</span>
+                        <span className="mt-1 flex items-center text-sm text-gray-500">
+                          {shipping.address}
+                        </span>
+                        <span className="mt-1 text-sm font-medium text-gray-500">
+                          {shipping.postalCode}, {shipping.city}, {shipping.country}
+                        </span>
+                        <span className="mt-1 flex items-center text-sm text-gray-500">{shipping.phone}</span>
+                        <span className="mt-1 flex items-center text-sm text-gray-500">{shipping.email}</span>
+                        <Button
+                          type="button"
+                          onClick={() => setShippingDialogOpen(true)}
+                          className="ml-auto mt-1 text-sm text-main-600"
+                        >
+                          {t("change")}
+                        </Button>
                       </span>
-                      <span className="mt-1 flex items-center text-sm text-gray-500">
-                        {defaultShippingAddress.address}
-                      </span>
-                      <span className="mt-1 text-sm font-medium text-gray-500">
-                        {defaultShippingAddress.postalCode}, {defaultShippingAddress.city},{" "}
-                        {defaultShippingAddress.country}
-                      </span>
-                      <span className="mt-1 flex items-center text-sm text-gray-500">
-                        {defaultShippingAddress.phone}
-                      </span>
-                      <span className="mt-1 flex items-center text-sm text-gray-500">
-                        {defaultShippingAddress.email}
-                      </span>
-                      <Button type="button" className="ml-auto mt-1 text-sm text-main-600">
-                        {t("change")}
-                      </Button>
                     </span>
-                  </span>
-                </div>
-              ) : (
-                <>
+                  </div>
+                ) : (
+                  <ShippingAddressForm />
+                )}
+                {!isCompany && (
                   <FormField
                     control={form.control}
-                    name="shipping.name"
+                    name="individualInvoice"
                     render={({ field }) => (
-                      <FormItem className="sm:col-span-2">
-                        <FormLabel>{t("full-name")}</FormLabel>
+                      <FormItem className="rounded-mdp-4 flex flex-row items-start space-x-3 space-y-0 sm:col-span-2">
                         <FormControl>
-                          <Input placeholder={t("full-name-placeholder")} {...field} />
+                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                         </FormControl>
-                        <FormMessage />
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>{t("other-invoice")}</FormLabel>
+                        </div>
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="shipping.address"
-                    render={({ field }) => (
-                      <FormItem className="sm:col-span-2">
-                        <FormLabel>{t("address")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("address-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="shipping.city"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("city")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("city-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="shipping.country"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("country")}</FormLabel>
-                        <FormControl>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-main-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
-                                <SelectValue placeholder={t("country-placeholder")} />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="pl">Poland</SelectItem>
-                              <SelectItem value="uk">United Kingdom</SelectItem>
-                              <SelectItem value="us">USA</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="shipping.region"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("region")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("region-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="shipping.postalCode"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("postal-code")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("postal-code-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="shipping.phone"
-                    render={({ field }) => (
-                      <FormItem className="sm:col-span-2">
-                        <FormLabel>{t("phone")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("phone-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="shipping.email"
-                    render={({ field }) => (
-                      <FormItem className="sm:col-span-2">
-                        <FormLabel>{t("email")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("email-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
-              )}
-              {!isCompany && (
-                <FormField
-                  control={form.control}
-                  name="individualInvoice"
-                  render={({ field }) => (
-                    <FormItem className="rounded-mdp-4 flex flex-row items-start space-x-3 space-y-0 sm:col-span-2">
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>{t("other-invoice")}</FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              )}
-              {(wantsInvoice || isCompany) && (
-                <>
-                  <h2 className="text-lg font-medium text-gray-900 sm:col-span-2">{t("invoice-data")}</h2>
-                  <FormField
-                    control={form.control}
-                    name="invoice.name"
-                    render={({ field }) => (
-                      <FormItem className="sm:col-span-2">
-                        <FormLabel>{t("full-name")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("full-name-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  {isCompany && (
+                )}
+                {(wantsInvoice || isCompany) && (
+                  <>
+                    <h2 className="text-lg font-medium text-gray-900 sm:col-span-2">{t("invoice-data")}</h2>
                     <FormField
                       control={form.control}
-                      name="invoice.tin"
+                      name="invoice.name"
                       render={({ field }) => (
                         <FormItem className="sm:col-span-2">
-                          <FormLabel>{t("tin")}</FormLabel>
+                          <FormLabel>{t("full-name")}</FormLabel>
                           <FormControl>
-                            <Input placeholder={t("tin-placeholder")} {...field} />
+                            <Input placeholder={t("full-name-placeholder")} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                  )}
-                  <FormField
-                    control={form.control}
-                    name="invoice.address"
-                    render={({ field }) => (
-                      <FormItem className="sm:col-span-2">
-                        <FormLabel>{t("address")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("address-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="invoice.city"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("city")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("city-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="invoice.country"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("country")}</FormLabel>
-                        <FormControl>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    {isCompany && (
+                      <FormField
+                        control={form.control}
+                        name="invoice.tin"
+                        render={({ field }) => (
+                          <FormItem className="sm:col-span-2">
+                            <FormLabel>{t("tin")}</FormLabel>
                             <FormControl>
-                              <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-main-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
-                                <SelectValue placeholder={t("country-placeholder")} />
-                              </SelectTrigger>
+                              <Input placeholder={t("tin-placeholder")} {...field} />
                             </FormControl>
-                            <SelectContent>
-                              <SelectItem value="pl">Poland</SelectItem>
-                              <SelectItem value="uk">United Kingdom</SelectItem>
-                              <SelectItem value="us">USA</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     )}
-                  />
+                    <FormField
+                      control={form.control}
+                      name="invoice.address"
+                      render={({ field }) => (
+                        <FormItem className="sm:col-span-2">
+                          <FormLabel>{t("address")}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t("address-placeholder")} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="invoice.city"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("city")}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t("city-placeholder")} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="invoice.country"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("country")}</FormLabel>
+                          <FormControl>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-main-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
+                                  <SelectValue placeholder={t("country-placeholder")} />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="pl">Poland</SelectItem>
+                                <SelectItem value="uk">United Kingdom</SelectItem>
+                                <SelectItem value="us">USA</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={form.control}
-                    name="invoice.region"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("region")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("region-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="invoice.postalCode"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("postal-code")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("postal-code-placeholder")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
-              )}
+                    <FormField
+                      control={form.control}
+                      name="invoice.region"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("region")}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t("region-placeholder")} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="invoice.postalCode"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("postal-code")}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t("postal-code-placeholder")} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-10 border-t border-gray-200 pt-10">
+              <fieldset>
+                <legend className="text-lg font-medium text-gray-900">{t("delivery-method")}</legend>
+                <FormField
+                  control={form.control}
+                  name="deliveryMethod"
+                  render={({ field }) => (
+                    <RadioGroup
+                      value={field.value}
+                      onChange={field.onChange}
+                      className="mt-4 grid grid-cols-1 gap-y-3 sm:gap-x-4"
+                    >
+                      {deliveryMethods.map((deliveryMethod) => (
+                        <Radio
+                          key={deliveryMethod.slug}
+                          value={deliveryMethod.slug}
+                          aria-label={deliveryMethod.title}
+                          aria-description={`${deliveryMethod.turnaround} for price`}
+                          className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-main-500"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-main-500"
+                          />
+
+                          <DeliveryMethod geowidgetToken={geowidgetToken} deliveryMethod={deliveryMethod} />
+                        </Radio>
+                      ))}
+                      {deliveryMethods.length === 0 && <p>{t("no-shipping")}</p>}
+                      <FormMessage />
+                    </RadioGroup>
+                  )}
+                />
+              </fieldset>
             </div>
           </div>
-
-          <div className="mt-10 border-t border-gray-200 pt-10">
-            <fieldset>
-              <legend className="text-lg font-medium text-gray-900">{t("delivery-method")}</legend>
-              <FormField
-                control={form.control}
-                name="deliveryMethod"
-                render={({ field }) => (
-                  <RadioGroup
-                    value={field.value}
-                    onChange={field.onChange}
-                    className="mt-4 grid grid-cols-1 gap-y-3 sm:gap-x-4"
-                  >
-                    {deliveryMethods.map((deliveryMethod) => (
-                      <Radio
-                        key={deliveryMethod.slug}
-                        value={deliveryMethod.slug}
-                        aria-label={deliveryMethod.title}
-                        aria-description={`${deliveryMethod.turnaround} for price`}
-                        className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-main-500"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-main-500"
-                        />
-
-                        <DeliveryMethod geowidgetToken={geowidgetToken} deliveryMethod={deliveryMethod} />
-                      </Radio>
-                    ))}
-                    {deliveryMethods.length === 0 && <p>{t("no-shipping")}</p>}
-                    <FormMessage />
-                  </RadioGroup>
-                )}
-              />
-            </fieldset>
-          </div>
-        </div>
-        <OrderSummary
-          products={checkoutProducts}
-          totalPrice={totalPrice}
-          shippingCost={deliveryMethods.find((method) => method.slug === selectedDelivery)?.pricing}
-          errorMessage={form.formState.errors.root?.message}
-        />
-      </form>
-    </Form>
+          <OrderSummary
+            products={checkoutProducts}
+            totalPrice={totalPrice}
+            shippingCost={deliveryMethods.find((method) => method.slug === selectedDelivery)?.pricing}
+            errorMessage={form.formState.errors.root?.message}
+          />
+        </form>
+      </Form>
+    </>
   );
 };

@@ -108,6 +108,15 @@
       "no-shipping": "No shipping methods available, please contact support.",
       "internal-server-error": "An unexpected error occurred. Please contact support."
     },
+    "change-address-dialog": {
+      "change-address": "Change your address",
+      "add-new": "Add new address",
+      "save": "Save"
+    },
+    "add-address-dialog": {
+      "add-address": "Add new address",
+      "save": "Save"
+    },
     "contries": {
       "pl": "Poland",
       "us": "United States",

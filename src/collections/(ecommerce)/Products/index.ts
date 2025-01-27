@@ -398,7 +398,6 @@ export const Products: CollectionConfig = {
                         },
                         condition: (_, siblingData) => siblingData.variantsType !== "colors",
                       },
-                      // required: true,
                     },
                     {
                       name: "color",
@@ -414,7 +413,6 @@ export const Products: CollectionConfig = {
                         },
                         condition: (_, siblingData) => siblingData.variantsType !== "sizes",
                       },
-                      // required: true,
                     },
                   ],
                 },
@@ -514,7 +512,7 @@ export const Products: CollectionConfig = {
             pl: "Szczegóły produktu",
           },
           admin: {
-            // todo: not working condition
+            // todo: not working condition, waiting for payload team to fix conditional tabs.
             // condition: (data) => {
             //   return !data.enableVariants && !data.enableVariantPrices;
             // },

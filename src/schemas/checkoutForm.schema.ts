@@ -16,6 +16,7 @@ export const CheckoutFormSchemaServer = z.object({
     })
     .optional(),
   shipping: z.object({
+    id: z.string().optional(),
     name: z.string().nonempty(),
     address: z.string().nonempty(),
     city: z.string().nonempty(),
@@ -51,6 +52,7 @@ export const useCheckoutFormSchema = () => {
         })
         .optional(),
       shipping: z.object({
+        id: z.string().optional(),
         name: z.string().nonempty(t("shipping.name")),
         address: z.string().nonempty(t("shipping.address")),
         city: z.string().nonempty(t("shipping.city")),

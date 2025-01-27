@@ -108,6 +108,25 @@
       "no-shipping": "Brak dostępnych metod dostawy. Skontaktuj się z nami.",
       "internal-server-error": "Wystąpił niezidentyfikowany błąd. Skontaktuj się z nami."
     },
+    "change-address-dialog": {
+      "change-address": "Zmień swój adres",
+      "add-new": "Dodaj nowy adres",
+      "save": "Zapisz"
+    },
+    "add-address-dialog": {
+      "add-address": "Dodaj nowy adres",
+      "save": "Zapisz"
+    },
+    "contries": {
+      "pl": "Polska",
+      "us": "Stany Zjednoczone",
+      "de": "Niemcy",
+      "fr": "Francja",
+      "gb": "Wielka Brytania",
+      "es": "Hiszpania",
+      "it": "Włochy",
+      "other": "Inny"
+    },
     "errors": {
       "invoice": {
         "name": "Nazwa nie może być pusta",
