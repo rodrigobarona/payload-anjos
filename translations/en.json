@@ -183,6 +183,11 @@
       "completed": "<green>Completed</green>",
       "cancelled": "<red>Cancelled</red>",
       "returned": "<red>Returned</red>"
+    },
+    "orders-data": {
+      "title": "Data for orders",
+      "add-new": "Add new address",
+      "set-as-default": "Set as default"
     }
   }
 }

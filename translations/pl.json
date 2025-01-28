@@ -183,6 +183,11 @@
       "completed": "<green>Zrealizowane</green>",
       "cancelled": "<red>Anulowane</red>",
       "returned": "<red>Zwrócone</red>"
+    },
+    "orders-data": {
+      "title": "Dane do zamówień",
+      "add-new": "Dodaj nowy adres",
+      "set-as-default": "Ustaw jako domyślny"
     }
   }
 }
