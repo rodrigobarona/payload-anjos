@@ -230,7 +230,8 @@
     },
     "settings": {
       "title": "Account settings",
-      "name": "Name",
+      "firstName": "First Name",
+      "lastName": "Last Name",
       "birthDate": "Birth date",
       "email": "Email address",
       "password": "Password",

@@ -230,7 +230,8 @@
     },
     "settings": {
       "title": "Ustawienia konta",
-      "name": "Imię nazwisko lub nazwa firmy",
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
       "birthDate": "Data urodzenia",
       "email": "Adres e-mail",
       "password": "Hasło",
