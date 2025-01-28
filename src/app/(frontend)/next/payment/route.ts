@@ -205,7 +205,7 @@ export async function POST(req: Request) {
     if (courier.prepaid === false) {
       return Response.json({
         status: 200,
-        url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/payment/success?orderID=${order.id}`,
+        url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/order/${order.id}`,
       });
     }
 
