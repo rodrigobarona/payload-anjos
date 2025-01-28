@@ -166,6 +166,36 @@ export const Orders: CollectionConfig = {
                     },
                   ],
                 },
+                {
+                  type: "row",
+                  fields: [
+                    {
+                      name: "price",
+                      type: "number",
+                      label: {
+                        en: "Price per unit",
+                        pl: "Cena za sztukę",
+                      },
+                      admin: {
+                        readOnly: true,
+                        condition: (_, siblingData) => siblingData.hasVariant,
+                      },
+                      required: true,
+                    },
+                    {
+                      name: "priceTotal",
+                      type: "number",
+                      label: {
+                        en: "Price Total",
+                        pl: "Cena całkowita",
+                      },
+                      admin: {
+                        readOnly: true,
+                      },
+                      required: true,
+                    },
+                  ],
+                },
               ],
             },
           ],
@@ -549,6 +579,7 @@ export const Orders: CollectionConfig = {
               admin: {
                 readOnly: true,
               },
+              required: true,
             },
             {
               name: "shippingCost",
@@ -560,6 +591,7 @@ export const Orders: CollectionConfig = {
               admin: {
                 readOnly: true,
               },
+              required: true,
             },
           ],
         },
@@ -576,6 +608,7 @@ export const Orders: CollectionConfig = {
               admin: {
                 readOnly: true,
               },
+              required: true,
             },
             {
               name: "currency",
@@ -587,6 +620,7 @@ export const Orders: CollectionConfig = {
               admin: {
                 readOnly: true,
               },
+              required: true,
             },
           ],
         },

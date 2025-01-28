@@ -96,6 +96,9 @@ export async function POST(req: Request) {
           variantSlug: product.variant.variantSlug ?? undefined,
           color: product.variant.color?.label ?? undefined,
           size: product.variant.size?.label ?? undefined,
+          price: product.pricing?.find((price) => price.currency === currency)?.value ?? 0,
+          priceTotal:
+            product.pricing?.find((price) => price.currency === currency)?.value ?? 0 * product.quantity,
         })),
         date: new Date().toISOString(),
         invoice: {
@@ -130,7 +133,7 @@ export async function POST(req: Request) {
           shipping: courier.key,
           shippingCost,
           status: "pending",
-          total: total.find((price) => price.currency === currency)?.value,
+          total: total.find((price) => price.currency === currency)?.value ?? 0,
           totalWithShipping: (total.find((price) => price.currency === currency)?.value ?? 0) + shippingCost,
           currency: currency,
         },

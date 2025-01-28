@@ -1015,6 +1015,8 @@ export interface Order {
         size?: string | null;
         variantSlug?: string | null;
         quantity?: number | null;
+        price?: number | null;
+        priceTotal: number;
         id?: string | null;
       }[]
     | null;
@@ -1142,10 +1144,10 @@ export interface Order {
     phone: string;
   };
   orderDetails: {
-    total?: number | null;
-    shippingCost?: number | null;
-    totalWithShipping?: number | null;
-    currency?: string | null;
+    total: number;
+    shippingCost: number;
+    totalWithShipping: number;
+    currency: string;
     shipping?: string | null;
     transactionID?: string | null;
     status: 'pending' | 'paid' | 'unpaid' | 'processing' | 'shipped' | 'completed' | 'cancelled' | 'returned';
@@ -1963,6 +1965,8 @@ export interface OrdersSelect<T extends boolean = true> {
         size?: T;
         variantSlug?: T;
         quantity?: T;
+        price?: T;
+        priceTotal?: T;
         id?: T;
       };
   invoice?:
