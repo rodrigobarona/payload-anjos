@@ -118,14 +118,53 @@
       "save": "Zapisz",
       "saving": "Zapisywanie..."
     },
-    "contries": {
-      "pl": "Polska",
-      "us": "Stany Zjednoczone",
+    "countries": {
+      "ad": "Andora",
+      "al": "Albania",
+      "at": "Austria",
+      "ba": "Bośnia i Hercegowina",
+      "be": "Belgia",
+      "bg": "Bułgaria",
+      "by": "Białoruś",
+      "ch": "Szwajcaria",
+      "cy": "Cypr",
+      "cz": "Czechy",
       "de": "Niemcy",
+      "dk": "Dania",
+      "ee": "Estonia",
+      "es": "Hiszpania",
+      "fi": "Finlandia",
       "fr": "Francja",
       "gb": "Wielka Brytania",
-      "es": "Hiszpania",
+      "gr": "Grecja",
+      "hr": "Chorwacja",
+      "hu": "Węgry",
+      "ie": "Irlandia",
+      "is": "Islandia",
       "it": "Włochy",
+      "li": "Liechtenstein",
+      "lt": "Litwa",
+      "lu": "Luksemburg",
+      "lv": "Łotwa",
+      "mc": "Monako",
+      "md": "Mołdawia",
+      "me": "Czarnogóra",
+      "mk": "Macedonia Północna",
+      "mt": "Malta",
+      "nl": "Holandia",
+      "no": "Norwegia",
+      "pl": "Polska",
+      "pt": "Portugalia",
+      "ro": "Rumunia",
+      "rs": "Serbia",
+      "ru": "Rosja",
+      "se": "Szwecja",
+      "si": "Słowenia",
+      "sk": "Słowacja",
+      "sm": "San Marino",
+      "ua": "Ukraina",
+      "va": "Watykan",
+      "us": "Stany Zjednoczone",
       "other": "Inny"
     },
     "errors": {
@@ -189,5 +228,52 @@
       "add-new": "Dodaj nowy adres",
       "set-as-default": "Ustaw jako domyślny"
     }
+  },
+  "Order": {
+    "thank-you": "Dziękujemy!",
+    "pending": {
+      "title": "Twoje zamówienie oczekuje na realizację.",
+      "subtitle": "Proszę poczekać na przetworzenie płatności. Zamówienie {orderID}"
+    },
+    "paid": {
+      "title": "Otrzymaliśmy płatność.",
+      "subtitle": "Wkrótce rozpoczniemy realizację Twojego zamówienia {orderID}."
+    },
+    "unpaid": {
+      "title": "Płatność nie powiodła się.",
+      "subtitle": "Spróbuj ponownie lub skontaktuj się z obsługą, jeśli masz problemy. Zamówienie {orderID}"
+    },
+    "processing": {
+      "title": "Realizujemy Twoje zamówienie.",
+      "subtitle": "Zamówienie {orderID} zostanie wkrótce wysłane."
+    },
+    "shipped": {
+      "title": "W drodze!",
+      "subtitle": "Twoje zamówienie {orderID} zostało wysłane."
+    },
+    "completed": {
+      "title": "Zakończone!",
+      "subtitle": "Otrzymałeś zamówienie {orderID}."
+    },
+    "cancelled": {
+      "title": "Anulowane.",
+      "subtitle": "Zamówienie {orderID} zostało anulowane."
+    },
+    "returned": {
+      "title": "Zwrócone.",
+      "subtitle": "Zamówienie {orderID} zostało zwrócone."
+    },
+    "tracking-number": "Numer śledzenia: ",
+    "your-order": "Twoje zamówienie",
+    "items": "Produkty",
+    "quantity": "Ilość",
+    "price": "Cena",
+    "your-information": "Twoje dane",
+    "shipping-address": "Adres dostawy",
+    "shipping-method": "Metoda dostawy",
+    "summary": "Podsumowanie",
+    "subtotal": "Suma częściowa",
+    "shipping": "Dostawa",
+    "total": "Razem"
   }
 }

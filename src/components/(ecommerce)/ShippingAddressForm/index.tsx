@@ -8,6 +8,7 @@ import { useFormContext } from "react-hook-form";
 export const ShippingAddressForm = () => {
   const form = useFormContext();
   const t = useTranslations("CheckoutForm.form");
+  const c = useTranslations("CheckoutForm.countries");
   return (
     <>
       <FormField
@@ -63,9 +64,9 @@ export const ShippingAddressForm = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="pl">Poland</SelectItem>
-                  <SelectItem value="uk">United Kingdom</SelectItem>
-                  <SelectItem value="us">USA</SelectItem>
+                  <SelectItem value="pl">{c("pl")}</SelectItem>
+                  <SelectItem value="gb">{c("gb")}</SelectItem>
+                  <SelectItem value="us">{c("us")}</SelectItem>
                 </SelectContent>
               </Select>
             </FormControl>

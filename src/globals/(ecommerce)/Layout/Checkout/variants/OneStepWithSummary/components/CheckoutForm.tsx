@@ -27,6 +27,7 @@ import { useRouter } from "@/i18n/routing";
 import { ShippingAddressForm } from "@/components/(ecommerce)/ShippingAddressForm";
 import { ChangeAddressDialog } from "./ChangeAddressDialog";
 import { AddNewAddressDialog } from "./AddNewAddressDialog";
+import { Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 
 export type FilledCourier = {
   slug: string;
@@ -45,6 +46,7 @@ export type FilledCourier = {
 export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowidgetToken?: string }) => {
   const { CheckoutFormSchemaResolver } = useCheckoutFormSchema();
   const t = useTranslations("CheckoutForm.form");
+  const c = useTranslations("CheckoutForm.countries");
 
   const defaultShippingAddress = user?.shippings?.find((shippingAddress) => shippingAddress.default);
   const shippingAddresses = user?.shippings && user.shippings.length > 0 && user.shippings;
@@ -224,7 +226,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                           {shipping.address}
                         </span>
                         <span className="mt-1 text-sm font-medium text-gray-500">
-                          {shipping.postalCode}, {shipping.city}, {shipping.country}
+                          {shipping.postalCode}, {shipping.city}, {c(shipping.country as Country)}
                         </span>
                         <span className="mt-1 flex items-center text-sm text-gray-500">{shipping.phone}</span>
                         <span className="mt-1 flex items-center text-sm text-gray-500">{shipping.email}</span>
@@ -328,9 +330,9 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="pl">Poland</SelectItem>
-                                <SelectItem value="uk">United Kingdom</SelectItem>
-                                <SelectItem value="us">USA</SelectItem>
+                                <SelectItem value="pl">{c("pl")}</SelectItem>
+                                <SelectItem value="gb">{c("gb")}</SelectItem>
+                                <SelectItem value="us">{c("us")}</SelectItem>
                               </SelectContent>
                             </Select>
                           </FormControl>

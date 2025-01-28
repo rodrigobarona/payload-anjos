@@ -1,6 +1,7 @@
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { CollectionConfig } from "payload";
 import { generateID } from "./hooks/generateID";
+import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 
 export const Orders: CollectionConfig = {
   slug: "orders",
@@ -626,7 +627,7 @@ export const Orders: CollectionConfig = {
         },
         {
           name: "shipping",
-          type: "text",
+          type: "select",
           label: {
             en: "Choosen Shipping Method",
             pl: "Wybrana metoda dostawy",
@@ -634,6 +635,7 @@ export const Orders: CollectionConfig = {
           admin: {
             readOnly: true,
           },
+          options: courierSelectOptions,
         },
         {
           name: "transactionID",

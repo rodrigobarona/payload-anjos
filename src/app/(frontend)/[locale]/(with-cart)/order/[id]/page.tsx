@@ -5,6 +5,9 @@ import { Media } from "@/payload-types";
 import RichText from "@/components/RichText";
 import { formatPrice } from "@/utilities/formatPrices";
 import { Link } from "@/i18n/routing";
+import Image from "next/image";
+import { getCachedGlobal } from "@/utilities/getGlobals";
+import { getTranslations } from "next-intl/server";
 
 const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: string }> }) => {
   const { locale, id } = await params;
@@ -14,6 +17,8 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
     id,
     locale,
   });
+
+  const t = await getTranslations("Order");
 
   const filledProducts =
     order.products &&
@@ -30,26 +35,34 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
         };
       }),
     ));
+
+  const courier =
+    order.orderDetails.shipping && (await getCachedGlobal(order.orderDetails.shipping, locale, 1)());
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div className="max-w-xl">
-          <h1 className="text-base font-medium text-indigo-600">Thank you!</h1>
-          <p className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">It's on the way!</p>
+          <h1 className="text-base font-medium text-indigo-600">{t("thank-you")}</h1>
+          <p className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+            {t(`${order.orderDetails.status}.title`)}
+          </p>
           <p className="mt-2 text-base text-gray-500">
-            Your order #{order.id} has shipped and will be with you soon.
+            {t(`${order.orderDetails.status}.subtitle`, { orderID: order.id })}
           </p>
 
-          <dl className="mt-12 text-sm font-medium">
-            <dt className="text-gray-900">Tracking number</dt>
-            <dd className="mt-2 text-indigo-600">{order.orderDetails.trackingNumber}</dd>
-          </dl>
+          {order.orderDetails.trackingNumber && (
+            <dl className="mt-12 text-sm font-medium">
+              <dt className="text-gray-900">{t("tracking-number")}</dt>
+              <dd className="mt-2 text-indigo-600">{order.orderDetails.trackingNumber}</dd>
+            </dl>
+          )}
         </div>
 
         <div className="mt-10 border-t border-gray-200">
-          <h2 className="sr-only">Your order</h2>
+          <h2 className="sr-only">{t("your-order")}</h2>
 
-          <h3 className="sr-only">Items</h3>
+          <h3 className="sr-only">{t("items")}</h3>
           {filledProducts?.map((product) => {
             const selectedVariant = product.variants?.find(
               (variant) => variant.variantSlug === product.variantSlug,
@@ -60,13 +73,14 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                   | undefined)
               : (product.images[0] as Media);
 
-            console.log(productImage);
             return (
-              <div key={product.id} className="flex space-x-6 border-b border-gray-200 py-10">
-                <img
+              <div key={product.id} className="flex space-x-6 border-b border-gray-200 py-6">
+                <Image
                   alt={productImage?.alt ?? ""}
                   src={productImage?.url ?? ""}
-                  className="size-20 flex-none rounded-lg bg-gray-100 object-cover sm:size-40"
+                  width={productImage?.width ?? 160}
+                  height={productImage?.height ?? 160}
+                  className="size-20 flex-none rounded-lg bg-gray-100 object-cover sm:size-28"
                 />
                 <div className="flex flex-auto flex-col">
                   <div>
@@ -77,6 +91,9 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                         {product.title}
                       </Link>
                     </h4>
+                    <p className="mt-2 text-sm text-gray-500">
+                      {product.color}, {product.size}
+                    </p>
                     {product.description && (
                       <RichText data={product.description} className="mt-2 text-sm text-gray-600" />
                     )}
@@ -84,11 +101,11 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                   <div className="mt-6 flex flex-1 items-end">
                     <dl className="flex space-x-4 divide-x divide-gray-200 text-sm sm:space-x-6">
                       <div className="flex">
-                        <dt className="font-medium text-gray-900">Quantity</dt>
+                        <dt className="font-medium text-gray-900">{t("quantity")}</dt>
                         <dd className="ml-2 text-gray-700">{product.quantity}</dd>
                       </div>
                       <div className="flex pl-4 sm:pl-6">
-                        <dt className="font-medium text-gray-900">Price</dt>
+                        <dt className="font-medium text-gray-900">{t("price")}</dt>
                         <dd className="ml-2 text-gray-700">
                           {formatPrice(product.priceTotal, order.orderDetails.currency, locale)}
                         </dd>
@@ -101,12 +118,12 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
           })}
 
           <div className="sm:ml-40 sm:pl-6">
-            <h3 className="sr-only">Your information</h3>
+            <h3 className="sr-only">{t("your-information")}</h3>
 
-            <h4 className="sr-only">Shipping</h4>
-            <dl className="grid grid-cols-2 gap-x-6 border-t border-gray-200 py-10 text-sm">
+            <h4 className="sr-only">{t("shipping")}</h4>
+            <dl className="grid grid-cols-2 gap-x-6 border-gray-200 py-10 text-sm">
               <div>
-                <dt className="font-medium text-gray-900">Shipping address</dt>
+                <dt className="font-medium text-gray-900">{t("shipping-address")}</dt>
                 <dd className="mt-2 text-gray-700">
                   <address className="not-italic">
                     <span className="block">{order.shippingAddress.name}</span>
@@ -120,19 +137,19 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                 </dd>
               </div>
               <div>
-                <dt className="font-medium text-gray-900">Shipping method</dt>
+                <dt className="font-medium text-gray-900">{t("shipping-method")}</dt>
                 <dd className="mt-2 text-gray-700">
-                  <p>{order.orderDetails.shipping}</p>
-                  <p>Takes up to 3 working days</p>
+                  <p>{courier?.settings.label}</p>
+                  <p>{courier?.settings.description}</p>
                 </dd>
               </div>
             </dl>
 
-            <h3 className="sr-only">Summary</h3>
+            <h3 className="sr-only">{t("summary")}</h3>
 
             <dl className="space-y-6 border-t border-gray-200 pt-10 text-sm">
               <div className="flex justify-between">
-                <dt className="font-medium text-gray-900">Subtotal</dt>
+                <dt className="font-medium text-gray-900">{t("subtotal")}</dt>
                 <dd className="text-gray-700">
                   {formatPrice(order.orderDetails.total, order.orderDetails.currency, locale)}
                 </dd>
@@ -147,13 +164,13 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                 <dd className="text-gray-700">-$18.00 (50%)</dd>
               </div> */}
               <div className="flex justify-between">
-                <dt className="font-medium text-gray-900">Shipping</dt>
+                <dt className="font-medium text-gray-900">{t("shipping")}</dt>
                 <dd className="text-gray-700">
                   {formatPrice(order.orderDetails.shippingCost, order.orderDetails.currency, locale)}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="font-medium text-gray-900">Total</dt>
+                <dt className="font-medium text-gray-900">{t("total")}</dt>
                 <dd className="text-gray-900">
                   {formatPrice(order.orderDetails.totalWithShipping, order.orderDetails.currency, locale)}
                 </dd>

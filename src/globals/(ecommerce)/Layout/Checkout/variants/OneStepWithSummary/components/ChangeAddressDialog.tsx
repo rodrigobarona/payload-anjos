@@ -30,6 +30,7 @@ export const ChangeAddressDialog = ({
   setShipping: (shipping: CheckoutFormData["shipping"]) => void;
 }) => {
   const t = useTranslations("CheckoutForm.change-address-dialog");
+  const c = useTranslations("CheckoutForm.countries");
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent className="max-w-screen-sm">
@@ -65,7 +66,7 @@ export const ChangeAddressDialog = ({
                   <span className="block text-left text-sm font-medium text-gray-900">{shipping.name}</span>
                   <span className="mt-1 flex items-center text-sm text-gray-500">{shipping.address}</span>
                   <span className="mt-1 text-left text-sm font-medium text-gray-500">
-                    {shipping.postalCode}, {shipping.city}, {shipping.country}
+                    {shipping.postalCode}, {shipping.city}, {c(shipping.country)}
                   </span>
                   <span className="mt-1 flex items-center text-sm text-gray-500">{shipping.phone}</span>
                   <span className="mt-1 flex items-center text-sm text-gray-500">{shipping.email}</span>

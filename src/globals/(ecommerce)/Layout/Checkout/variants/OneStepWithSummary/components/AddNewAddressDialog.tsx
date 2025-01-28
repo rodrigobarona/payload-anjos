@@ -30,7 +30,7 @@ export const AddNewAddressDialog = ({
         name: "",
         address: "",
         city: "",
-        country: "",
+        country: "pl",
         region: "",
         postalCode: "",
         phone: "",

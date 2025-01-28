@@ -118,14 +118,53 @@
       "save": "Save",
       "saving": "Saving..."
     },
-    "contries": {
-      "pl": "Poland",
-      "us": "United States",
+    "countries": {
+      "ad": "Andorra",
+      "al": "Albania",
+      "at": "Austria",
+      "ba": "Bosnia and Herzegovina",
+      "be": "Belgium",
+      "bg": "Bulgaria",
+      "by": "Belarus",
+      "ch": "Switzerland",
+      "cy": "Cyprus",
+      "cz": "Czech Republic",
       "de": "Germany",
+      "dk": "Denmark",
+      "ee": "Estonia",
+      "es": "Spain",
+      "fi": "Finland",
       "fr": "France",
       "gb": "United Kingdom",
-      "es": "Spain",
+      "gr": "Greece",
+      "hr": "Croatia",
+      "hu": "Hungary",
+      "ie": "Ireland",
+      "is": "Iceland",
       "it": "Italy",
+      "li": "Liechtenstein",
+      "lt": "Lithuania",
+      "lu": "Luxembourg",
+      "lv": "Latvia",
+      "mc": "Monaco",
+      "md": "Moldova",
+      "me": "Montenegro",
+      "mk": "North Macedonia",
+      "mt": "Malta",
+      "nl": "Netherlands",
+      "no": "Norway",
+      "pl": "Poland",
+      "pt": "Portugal",
+      "ro": "Romania",
+      "rs": "Serbia",
+      "ru": "Russia",
+      "se": "Sweden",
+      "si": "Slovenia",
+      "sk": "Slovakia",
+      "sm": "San Marino",
+      "ua": "Ukraine",
+      "va": "Vatican City",
+      "us": "United States",
       "other": "Other"
     },
     "errors": {
@@ -189,5 +228,52 @@
       "add-new": "Add new address",
       "set-as-default": "Set as default"
     }
+  },
+  "Order": {
+    "thank-you": "Thank you!",
+    "pending": {
+      "title": "Your order is pending now.",
+      "subtitle": "Please wait for the payment to be processed. Order {orderID}"
+    },
+    "paid": {
+      "title": "Payment has been received.",
+      "subtitle": "We will start processing your order soon. Order {orderID}"
+    },
+    "unpaid": {
+      "title": "Payment failed.",
+      "subtitle": "Please try again or contact support if you have any trouble. Order {orderID}"
+    },
+    "processing": {
+      "title": "We're processing your order.",
+      "subtitle": "Order {orderID} will be shipped soon."
+    },
+    "shipped": {
+      "title": "It's on its way!",
+      "subtitle": "Your order {orderID} has been shipped."
+    },
+    "completed": {
+      "title": "Finished!",
+      "subtitle": "You received your order {orderID}."
+    },
+    "cancelled": {
+      "title": "Cancelled.",
+      "subtitle": "The order {orderID} has been cancelled."
+    },
+    "returned": {
+      "title": "Returned.",
+      "subtitle": "Order {orderID} has been returned."
+    },
+    "tracking-number": "Tracking number: ",
+    "your-order": "Your order",
+    "items": "Items",
+    "quantity": "Quantity",
+    "price": "Price",
+    "your-information": "Your information",
+    "shipping-address": "Shipping address",
+    "shipping-method": "Shipping method",
+    "summary": "Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total"
   }
 }
