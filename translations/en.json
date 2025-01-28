@@ -227,6 +227,31 @@
       "title": "Data for orders",
       "add-new": "Add new address",
       "set-as-default": "Set as default"
+    },
+    "settings": {
+      "title": "Account settings",
+      "name": "Name",
+      "birthDate": "Birth date",
+      "email": "Email address",
+      "password": "Password",
+      "change-password": "Change password",
+      "old-password": "Old password",
+      "new-password": "New password",
+      "confirm-password": "Confirm new password",
+      "save": "Save",
+      "update": "Update",
+      "password-form": {
+        "success": "Password has been changed successfully. You can close that window.",
+        "errors": {
+          "old-password": "Old password cannot be empty",
+          "new-password": "New password cannot be empty",
+          "password-length": "Password must be at least 8 characters long",
+          "passwords-mismatch": "Passwords do not match",
+          "password-incorrect": "Old password is incorrect",
+          "password-same": "New password cannot be the same as the old one",
+          "server-error": "Internal server error. Please contact support."
+        }
+      }
     }
   },
   "Order": {

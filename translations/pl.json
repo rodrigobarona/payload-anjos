@@ -227,6 +227,31 @@
       "title": "Dane do zamówień",
       "add-new": "Dodaj nowy adres",
       "set-as-default": "Ustaw jako domyślny"
+    },
+    "settings": {
+      "title": "Ustawienia konta",
+      "name": "Imię nazwisko lub nazwa firmy",
+      "birthDate": "Data urodzenia",
+      "email": "Adres e-mail",
+      "password": "Hasło",
+      "change-password": "Zmień hasło",
+      "old-password": "Stare hasło",
+      "new-password": "Nowe hasło",
+      "confirm-password": "Potwierdź hasło",
+      "save": "Zapisz",
+      "update": "Aktualizuj",
+      "password-form": {
+        "success": "Hasło zostało zmienione pomyślnie. Możesz zamknąć to okno",
+        "errors": {
+          "old-password": "Stare hasło nie może być puste",
+          "new-password": "Nowe hasło nie może być puste",
+          "password-length": "Hasło musi mieć co najmniej 8 znaków",
+          "passwords-mismatch": "Hasła nie są takie same",
+          "password-incorrect": "Stare hasło jest nieprawidłowe",
+          "password-same": "Nowe hasło musi być inne niż stare",
+          "server-error": "Wewnętrzny błąd serwera. Skontaktuj się z pomocą techniczną."
+        }
+      }
     }
   },
   "Order": {

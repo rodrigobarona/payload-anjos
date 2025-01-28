@@ -22,7 +22,10 @@ export const Customers: CollectionConfig = {
       pl: "Klienci",
     },
   },
-  auth: true,
+  auth: {
+    maxLoginAttempts: 30,
+    lockTime: 30 * 1000,
+  },
   fields: [
     {
       type: "row",
@@ -94,6 +97,7 @@ export const Customers: CollectionConfig = {
         },
       },
       admin: {
+        initCollapsed: true,
         components: {
           RowLabel:
             "@/collections/(ecommerce)/Customers/ui/RowLabels/ShippingAddressRowLabel#ShippingAddressRowLabel",
