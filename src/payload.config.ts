@@ -18,6 +18,7 @@ import { defaultLexical } from "@/fields/defaultLexical";
 import { getServerSideURL } from "./utilities/getURL";
 import { en } from "payload/i18n/en";
 import { pl } from "payload/i18n/pl";
+import { EmailMessages } from "./globals/EmailMessages/config";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -26,6 +27,7 @@ const dirname = path.dirname(filename);
 export default buildConfig({
   admin: {
     components: {
+      afterLogin: ["@/components/AdminResetPassword#AdminResetPassword"],
       graphics: {
         Logo: "@/components/AdminLogoBig/AdminLogoBig#AdminLogoBig",
         Icon: "@/components/AdminLogoIcon/AdminLogoIcon#AdminLogoIcon",
@@ -73,7 +75,7 @@ export default buildConfig({
   }),
   collections: [Pages, Posts, Media, Categories, Administrators],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, EmailMessages],
   plugins: [
     ...plugins,
     s3Storage({

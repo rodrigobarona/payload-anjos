@@ -6,5 +6,28 @@
   "LocaleSwitch": {
     "label": "Change language",
     "locale": "{locale, select, pl {Polish} en {English} other {Unknown}}"
+  },
+  "Emails": {
+    "reset-password": {
+      "greeting": "Hello {name},",
+      "message": "Someone requested a password reset for your account. If it wasn't you, ignore this email.",
+      "subject": "Reset your password",
+      "button": "Reset password",
+      "body": "Click the link below to reset your password"
+    }
+  },
+  "ResetPasswordForm": {
+    "new-password": "New password",
+    "confirm-password": "Confirm password",
+    "change-password": "Change password",
+    "errors": {
+      "old-password": "Old password cannot be empty",
+      "new-password": "New password cannot be empty",
+      "password-length": "Password must be at least 8 characters long",
+      "passwords-mismatch": "Passwords do not match",
+      "password-incorrect": "Old password is incorrect",
+      "password-same": "New password cannot be the same as the old one",
+      "server-error": "Internal server error. Please contact support."
+    }
   }
 }

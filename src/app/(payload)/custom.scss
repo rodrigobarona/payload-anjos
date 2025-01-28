@@ -5,6 +5,9 @@
 .table {
   width: 100%;
 }
+.login__form a {
+  display: none;
+}
 
 @layer base {
   h1,
@@ -53,7 +56,7 @@
     --error: 10 100% 86%;
   }
 
-  [data-theme='dark'] {
+  [data-theme="dark"] {
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
 
@@ -87,4 +90,3 @@
     --error: 10 39% 43%;
   }
 }
-

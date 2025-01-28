@@ -45,10 +45,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    emailMessages: EmailMessage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    emailMessages: EmailMessagesSelect<false> | EmailMessagesSelect<true>;
   };
   locale: 'en' | 'pl';
   user: Administrator & {
@@ -1676,6 +1678,21 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emailMessages".
+ */
+export interface EmailMessage {
+  id: string;
+  host: string;
+  port: number;
+  secure: boolean;
+  user: string;
+  password: string;
+  fromEmail: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1721,6 +1738,21 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emailMessages_select".
+ */
+export interface EmailMessagesSelect<T extends boolean = true> {
+  host?: T;
+  port?: T;
+  secure?: T;
+  user?: T;
+  password?: T;
+  fromEmail?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
