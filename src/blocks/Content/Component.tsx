@@ -8,9 +8,6 @@ import {
 import { CMSLink } from "@/components/Link";
 import RichText from "@/components/RichText";
 import { cn } from "@/utilities/cn";
-import { CMSLink } from "@/components/Link";
-import RichText from "@/components/RichText";
-import { cn } from "@/utilities/cn";
 
 import type { ContentBlock as ContentBlockProps } from "@/payload-types";
 

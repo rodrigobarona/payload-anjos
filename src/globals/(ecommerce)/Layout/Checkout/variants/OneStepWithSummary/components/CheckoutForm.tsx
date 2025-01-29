@@ -1,12 +1,11 @@
 "use client";
 
 import { Button, Radio, RadioGroup } from "@headlessui/react";
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
 import { ShippingAddressForm } from "@/components/(ecommerce)/ShippingAddressForm";
@@ -14,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { type Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { type ProductWithFilledVariants } from "@/globals/(ecommerce)/Layout/Cart/variants/SlideOver";
 import { type Locale } from "@/i18n/config";
@@ -30,9 +29,6 @@ import { AddNewAddressDialog } from "./AddNewAddressDialog";
 import { ChangeAddressDialog } from "./ChangeAddressDialog";
 import { DeliveryMethod } from "./DeliveryMethod";
 import { OrderSummary } from "./OrderSummary";
-
-
-
 
 export type FilledCourier = {
   slug: string;
@@ -106,15 +102,13 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
   const { cart, setCart } = useCart();
   const locale = useLocale() as Locale;
   const currency = useCurrency();
-
   /**
    * Fetches products from the cart, calculates the total price and available couriers with their prices. Basically, it's getting all checkout needed data.
    * @param cartToCalculate - Actual cart to calculate the total price and available couriers.
    * @param countryToCalculate - Country to get available couriers.
-   * @returns void
    */
   const fetchCartProducts = useCallback(
-    debounce(async (cartToCalculate: Cart | null, countryToCalculate: string) => {
+    async (cartToCalculate: Cart | null, countryToCalculate: string) => {
       try {
         const { data } = await axios.post<{
           status: number;
@@ -135,13 +129,15 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
       } catch (error) {
         console.error(error);
       }
-    }, 300),
-    [],
+    },
+    [locale, setCheckoutProducts, setDeliveryMethods, setTotalPrice],
   );
 
+  const debouncedFetchCartProducts = useMemo(() => debounce(fetchCartProducts, 300), [fetchCartProducts]);
+
   useEffect(() => {
-    fetchCartProducts(cart, shipping.country);
-  }, [cart, shipping.country]);
+    void debouncedFetchCartProducts(cart, shipping.country);
+  }, [cart, debouncedFetchCartProducts, shipping.country]);
 
   const router = useRouter();
 

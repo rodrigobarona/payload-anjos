@@ -16,6 +16,16 @@ import {
   useChangePasswordModalForm,
 } from "@/schemas/changePasswordModalForm.schema";
 
+type ErrorWithStatus = { status: number };
+
+function isErrorWithStatus(error: unknown): error is ErrorWithStatus {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "status" in error &&
+    typeof (error as ErrorWithStatus).status === "number"
+  );
+}
 
 export const ChangePassword = ({ user }: { user: Customer }) => {
   const t = useTranslations("Account.settings");
@@ -55,9 +65,11 @@ export const ChangePassword = ({ user }: { user: Customer }) => {
         form.setError("oldPassword", { message: t("password-form.errors.password-incorrect") });
       }
     } catch (error) {
-      error.status === 401
-        ? form.setError("oldPassword", { message: t("password-form.errors.password-incorrect") })
-        : form.setError("oldPassword", { message: t("password-form.errors.server-error") });
+      if (isErrorWithStatus(error) && error.status === 401) {
+        form.setError("oldPassword", { message: t("password-form.errors.password-incorrect") });
+      } else {
+        form.setError("oldPassword", { message: t("password-form.errors.server-error") });
+      }
     }
   };
 

@@ -5,9 +5,10 @@ import { useFormContext } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { type CheckoutFormData } from "@/schemas/checkoutForm.schema";
 
 export const ShippingAddressForm = () => {
-  const form = useFormContext();
+  const form = useFormContext<CheckoutFormData>();
   const t = useTranslations("CheckoutForm.form");
   const c = useTranslations("CheckoutForm.countries");
   return (

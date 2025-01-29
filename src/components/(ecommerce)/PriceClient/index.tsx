@@ -2,7 +2,6 @@
 import { useLocale } from "next-intl";
 
 import { useCurrency } from "@/stores/Currency";
-import { type Currency } from "@/stores/Currency/types";
 import { formatPrice } from "@/utilities/formatPrices";
 
 export const PriceClient = ({
@@ -10,7 +9,7 @@ export const PriceClient = ({
 }: {
   pricing: {
     value: number;
-    currency: Currency | string;
+    currency: string;
   }[];
 }) => {
   const { currency } = useCurrency();

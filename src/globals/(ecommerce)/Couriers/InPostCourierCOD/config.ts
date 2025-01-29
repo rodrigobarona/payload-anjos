@@ -50,7 +50,7 @@ export const InPostCourierCOD: GlobalConfig = {
               },
               required: true,
               admin: {
-                condition: (data) => data.enabled,
+                condition: (data) => Boolean(data.enabled),
               },
             },
             {
@@ -84,7 +84,7 @@ export const InPostCourierCOD: GlobalConfig = {
                 },
               ],
               admin: {
-                condition: (data) => data.enabled,
+                condition: (data) => Boolean(data.enabled),
                 description: {
                   en: "Remember to pass matching keys for choosen environment",
                   pl: "Pamiętaj o przekazaniu odpowiednich kluczy dla wybranego środowiska",
@@ -105,7 +105,7 @@ export const InPostCourierCOD: GlobalConfig = {
               },
               required: true,
               admin: {
-                condition: (data) => data.enabled,
+                condition: (data) => Boolean(data.enabled),
               },
             },
           ],

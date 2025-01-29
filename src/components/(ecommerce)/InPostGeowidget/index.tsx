@@ -3,12 +3,13 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef } from "react";
 
-const InPostWrapper = ({ token, onPointSelect }) => {
+const InPostWrapper = ({ token, onPointSelect }: { token: string; onPointSelect: (e: Event) => void }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetInitialized = useRef(false);
 
   useEffect(() => {
-    if (containerRef.current && !widgetInitialized.current) {
+    const container = containerRef.current;
+    if (container && !widgetInitialized.current) {
       const geowidget = document.createElement("inpost-geowidget");
       geowidget.className = "flex-1";
       geowidget.setAttribute("language", "pl");
@@ -20,17 +21,17 @@ const InPostWrapper = ({ token, onPointSelect }) => {
 
       geowidget.setAttribute("onpoint", "onpointselect");
 
-      containerRef.current.appendChild(geowidget);
+      container.appendChild(geowidget);
       widgetInitialized.current = true;
     }
 
     return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
+      if (container) {
+        container.innerHTML = "";
         widgetInitialized.current = false;
       }
     };
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     document.addEventListener("onpointselect", (e) => {
@@ -42,7 +43,7 @@ const InPostWrapper = ({ token, onPointSelect }) => {
         onPointSelect(e);
       });
     };
-  }, []);
+  }, [onPointSelect]);
 
   useEffect(() => {
     const script = document.createElement("script");

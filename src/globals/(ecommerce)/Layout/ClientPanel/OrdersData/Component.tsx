@@ -10,13 +10,11 @@ import { cn } from "@/utilities/cn";
 
 import { AddNewAddressDialog } from "../../Checkout/variants/OneStepWithSummary/components/AddNewAddressDialog";
 
-
-
 export const OrdersData = ({ user }: { user: Customer }) => {
   const [selectedShipping, setSelectedShipping] = useState(
-    user?.shippings?.find((shipping) => shipping.default) || user?.shippings?.[0],
+    user?.shippings?.find((shipping) => shipping.default) ?? user?.shippings?.[0],
   );
-  const [shippings, setShippings] = useState(user.shippings || []);
+  const [shippings, setShippings] = useState(user.shippings ?? []);
   const [addressDialogOpen, setAddressDialogOpen] = useState(false);
 
   const t = useTranslations("Account.orders-data");

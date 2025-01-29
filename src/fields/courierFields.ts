@@ -58,7 +58,7 @@ export const courierFields: Field[] = [
     },
     relationTo: "media",
     admin: {
-      condition: (data) => data.enabled,
+      condition: (data) => Boolean(data.enabled),
     },
   },
 ];

@@ -5,10 +5,8 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 
-
 import RichText from "@/components/RichText";
 import { Button } from "@/components/ui/button";
-import { getClientSideURL } from "@/utilities/getURL";
 import { getClientSideURL } from "@/utilities/getURL";
 
 import { buildInitialFormState } from "./buildInitialFormState";
@@ -17,14 +15,11 @@ import { fields } from "./fields";
 import type { Form as FormType } from "@payloadcms/plugin-form-builder/types";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 
-import type { Form as FormType } from "@payloadcms/plugin-form-builder/types";
-import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
-
 export type Value = unknown;
 
-export type Property = Record<string, Value>
+export type Property = Record<string, Value>;
 
-export type Data = Record<string, Property | Property[]>
+export type Data = Record<string, Property | Property[]>;
 
 export interface FormBlockType {
   blockName?: string;

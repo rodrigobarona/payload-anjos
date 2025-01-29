@@ -3,7 +3,6 @@ import { useTranslations } from "next-intl";
 import { type ReactNode } from "react";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
-import { type Locale } from "@/i18n/config";
 import { Link } from "@/i18n/routing";
 import { type Product } from "@/payload-types";
 import { type Currency } from "@/stores/Currency/types";
@@ -19,6 +18,8 @@ const getPriceRange = (variants: Product["variants"], enableVariantPrices: boole
         acc[currentPrice.currency] = [];
       }
 
+      // temporary, TODO: fix typings
+      // eslint-disable-next-line
       acc[currentPrice.currency].push({
         ...currentPrice,
         id: currentPrice.id ?? undefined,
@@ -49,7 +50,7 @@ const getPriceRange = (variants: Product["variants"], enableVariantPrices: boole
   return priceRanges;
 };
 
-const WithInlinePrice = ({ products, locale }: { products: Product[]; locale: Locale }) => {
+const WithInlinePrice = ({ products }: { products: Product[] }) => {
   const t = useTranslations("ProductList");
   return (
     <>

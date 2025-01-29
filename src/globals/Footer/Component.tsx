@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { getLocale } from "next-intl/server";
-import { getLocale } from "next-intl/server";
 
 import { CMSLink } from "@/components/Link";
-import LocaleSwitch from "@/components/LocaleSwitch/LocaleSwitch";
 import LocaleSwitch from "@/components/LocaleSwitch/LocaleSwitch";
 import { Logo } from "@/components/Logo/Logo";
 import RichText from "@/components/RichText";
@@ -17,7 +15,7 @@ export async function Footer() {
   const locale = (await getLocale()) as Locale;
   const footerData: Footer = await getCachedGlobal("footer", locale, 1)();
   const shopSettings: ShopSetting = await getCachedGlobal("shopSettings", locale, 1)();
-  const navItems = footerData?.navItems || [];
+  const navItems = footerData?.navItems ?? [];
 
   return (
     <footer className="mt-auto border-t border-border bg-black text-white dark:bg-card">

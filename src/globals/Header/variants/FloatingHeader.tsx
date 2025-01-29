@@ -3,18 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { useEffect, useState } from "react";
-
 import { CMSLink } from "@/components/Link";
-import { Logo } from "@/components/Logo/Logo";
-import { cn } from "@/utilities/cn";
-
 import { Logo } from "@/components/Logo/Logo";
 import { cn } from "@/utilities/cn";
 
 import type { Header } from "@/payload-types";
 
-export const FloatingHeader = ({ data, theme }: { data: Header; theme?: string | null }) => {
+export const FloatingHeader = ({ data }: { data: Header }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [scrollDown, setScrollDown] = useState(false);

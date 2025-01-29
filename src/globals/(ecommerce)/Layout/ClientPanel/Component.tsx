@@ -3,13 +3,11 @@ import { getLocale } from "next-intl/server";
 import { type ReactNode } from "react";
 
 import { type Locale } from "@/i18n/config";
-import { type Customer } from "@/payload-types";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 
 import { WithSidebar } from "./variants/WithSidebar";
 
-
-export const ClientPanel = async ({ user, children }: { user: Customer; children: ReactNode }) => {
+export const ClientPanel = async ({ children }: { children: ReactNode }) => {
   try {
     const locale = (await getLocale()) as Locale;
     const { clientPanel } = await getCachedGlobal("shopLayout", locale, 1)();

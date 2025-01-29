@@ -9,8 +9,6 @@ import { type Config } from "payload";
 //   VimeoFeature,
 // } from "payloadcms-lexical-ext";
 import { Carousel } from "@/blocks/Carousel/config";
-import { FormBlock } from "@/blocks/Form/config";
-import { MediaBlock } from "@/blocks/MediaBlock/config";
 
 export const noBlocksLexical: Config["editor"] = lexicalEditor({
   features: ({ defaultFeatures }) => {

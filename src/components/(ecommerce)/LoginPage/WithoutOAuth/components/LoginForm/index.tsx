@@ -6,15 +6,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link, useRouter } from "@/i18n/routing";
 import { type LoginFormData, useLoginFormSchema } from "@/schemas/loginForm.schema";
@@ -39,7 +31,7 @@ export const LoginForm = () => {
     try {
       const res = await axios.post("/api/customers/login", values);
       if (res.status === 200 || res.status === 201) {
-        synchronizeCart();
+        void synchronizeCart();
         router.replace("/account");
       }
     } catch (error) {
@@ -91,7 +83,7 @@ export const LoginForm = () => {
           ""
         )}
         <div className="ml-auto text-sm/6">
-          <Link href="/forgot-password" className="hover:text-main-500 text-main-600 font-semibold">
+          <Link href="/forgot-password" className="font-semibold text-main-600 hover:text-main-500">
             {t("forgot-password")}
           </Link>
         </div>

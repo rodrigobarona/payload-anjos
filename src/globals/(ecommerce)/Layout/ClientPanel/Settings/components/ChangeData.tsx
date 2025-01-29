@@ -25,10 +25,11 @@ const ChangeData = ({
 }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const onSubmit = async (values) => {
-    // console.log(values);
     try {
-      await axios.patch(
+      await axios.patch<void>(
         `/api/customers/${userID}`,
+        // TODO: type that
+        // eslint-disable-next-line
         { [name]: type === "date" ? new Date(values[name]).toISOString() : values[name] },
         {
           withCredentials: true,

@@ -24,6 +24,8 @@ import type {
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from "@/payload-types";
+import { AccordionBlock } from "@/blocks/Accordion/Component";
+import { FormBlock } from "@/blocks/Form/Component";
 
 type NodeTypes =
   | DefaultNodeTypes

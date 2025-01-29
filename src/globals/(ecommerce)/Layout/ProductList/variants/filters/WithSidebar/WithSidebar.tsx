@@ -11,18 +11,15 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { useTranslations } from "next-intl";
 import { type ReactNode } from "react";
 
-
 import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "@/i18n/routing";
 import { type Product, type ProductCategory, type ProductSubCategory } from "@/payload-types";
-
 
 import { FilterCheckbox } from "./components/FilterCheckbox";
 import { MobileFiltersCloseButton } from "./components/MobileFiltersCloseButton";
 import { MobileFiltersDialog } from "./components/MobileFiltersDialog";
 import { MobileFunnelFiltersButton } from "./components/MobileFunnelFiltersButton";
 import { SortSelect } from "./components/SortSelect";
-
 
 const sortOptions = [
   { label: "Most Popular", value: "most-popular" },
@@ -63,7 +60,7 @@ export const WithSidebar = ({
               value: size.slug,
               label: size.label,
               checked: searchParams.size.includes(size.slug) ?? false,
-            })) || []
+            })) ?? []
           );
         })
         .map((size) => [size.value, size]),
@@ -80,7 +77,7 @@ export const WithSidebar = ({
               value: color.slug,
               label: color.label,
               checked: searchParams.color.includes(color.slug),
-            })) || []
+            })) ?? []
           );
         })
         .map((color) => [color.value, color]),
@@ -126,28 +123,26 @@ export const WithSidebar = ({
 
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200">
-                {category &&
-                  isProductCategory(category) &&
-                  category.subcategories?.docs && (
-                    <>
-                      <h3 className="sr-only">{t("categories")}</h3>
-                      <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                        {category.subcategories.docs.map(
-                          (subcategory) =>
-                            typeof subcategory !== "string" && (
-                              <li key={subcategory.id}>
-                                <Link
-                                  className="block px-2 py-3"
-                                  href={`/category/${category.slug}/${subcategory.slug}`}
-                                >
-                                  {subcategory.title}
-                                </Link>
-                              </li>
-                            ),
-                        )}
-                      </ul>
-                    </>
-                  )}
+                {category && isProductCategory(category) && category.subcategories?.docs && (
+                  <>
+                    <h3 className="sr-only">{t("categories")}</h3>
+                    <ul role="list" className="px-2 py-3 font-medium text-gray-900">
+                      {category.subcategories.docs.map(
+                        (subcategory) =>
+                          typeof subcategory !== "string" && (
+                            <li key={subcategory.id}>
+                              <Link
+                                className="block px-2 py-3"
+                                href={`/category/${category.slug}/${subcategory.slug}`}
+                              >
+                                {subcategory.title}
+                              </Link>
+                            </li>
+                          ),
+                      )}
+                    </ul>
+                  </>
+                )}
 
                 {filters.map(
                   (section) =>
@@ -251,28 +246,26 @@ export const WithSidebar = ({
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
-                {category &&
-                  isProductCategory(category) &&
-                  category.subcategories?.docs && (
-                    <>
-                      <h3 className="sr-only">{t("categories")}</h3>
-                      <ul
-                        role="list"
-                        className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
-                      >
-                        {category.subcategories.docs.map(
-                          (subcategory) =>
-                            typeof subcategory !== "string" && (
-                              <li key={subcategory.id}>
-                                <Link href={`/category/${category.slug}/${subcategory.slug}`}>
-                                  {subcategory.title}
-                                </Link>
-                              </li>
-                            ),
-                        )}
-                      </ul>
-                    </>
-                  )}
+                {category && isProductCategory(category) && category.subcategories?.docs && (
+                  <>
+                    <h3 className="sr-only">{t("categories")}</h3>
+                    <ul
+                      role="list"
+                      className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
+                    >
+                      {category.subcategories.docs.map(
+                        (subcategory) =>
+                          typeof subcategory !== "string" && (
+                            <li key={subcategory.id}>
+                              <Link href={`/category/${category.slug}/${subcategory.slug}`}>
+                                {subcategory.title}
+                              </Link>
+                            </li>
+                          ),
+                      )}
+                    </ul>
+                  </>
+                )}
 
                 {filters.map(
                   (section) =>

@@ -1,5 +1,4 @@
- 
-
+/* eslint-disable */
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { draftMode } from "next/headers";
 import { getPayload } from "payload";

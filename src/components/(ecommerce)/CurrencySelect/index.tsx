@@ -26,11 +26,11 @@ export const CurrencySelect: TextFieldClientComponent = ({ path }) => {
             value: currency,
           })),
         );
-      } catch (error) {
+      } catch {
         setOptions([]);
       }
     };
-    fetchOptions();
+    void fetchOptions();
   }, []);
 
   return (

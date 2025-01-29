@@ -54,7 +54,7 @@ export const ProductForm = ({
     if (quantity > maxQuantity) {
       setQuantity(maxQuantity);
     }
-  }, [selectedVariant, maxQuantity]);
+  }, [selectedVariant, maxQuantity, quantity]);
 
   useEffect(() => {
     setOverStock(false);
@@ -96,11 +96,14 @@ export const ProductForm = ({
     }
   };
 
-  const isProductAvailable = !((product.enableVariants && (!selectedVariant || selectedVariant.stock === 0)) ||
-      (!product.enableVariants && product.stock === 0));
+  const isProductAvailable = !(
+    (product.enableVariants && (!selectedVariant || selectedVariant.stock === 0)) ??
+    (!product.enableVariants && product.stock === 0)
+  );
 
-  const cartItem =
-    cart?.find((item) => item.id === product.id && item.choosenVariantSlug === selectedVariant?.slug);
+  const cartItem = cart?.find(
+    (item) => item.id === product.id && item.choosenVariantSlug === selectedVariant?.slug,
+  );
 
   return (
     <form className="mt-6">
@@ -111,32 +114,32 @@ export const ProductForm = ({
 
           <fieldset aria-label={t("choose-color")} className="mt-2">
             <RadioGroup
-              value={selectedVariant?.color?.id ?? (filledVariants?.[0]?.color?.id)}
+              value={selectedVariant?.color?.id ?? filledVariants?.[0]?.color?.id}
               onChange={handleChangeColor}
               className="flex items-center gap-x-3"
             >
               {product.colors?.map((color) => {
-                  const isAvailable = isColorAvailable(color.id ?? "");
-                  return (
-                    <Radio
-                      key={color.id}
-                      value={color.id}
-                      aria-label={color.label}
-                      disabled={!isAvailable}
-                      className={cn(
-                        "ring-gray-500",
-                        "focus:outline-hidden data-[focus]:data-[checked]:ring-3 relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 data-[checked]:ring-2 data-[focus]:data-[checked]:ring-offset-1",
-                        !isAvailable && "cursor-not-allowed opacity-25",
-                      )}
-                    >
-                      <span
-                        aria-hidden="true"
-                        style={{ background: color.colorValue ?? "" }}
-                        className={cn("size-8 rounded-full border border-black/10")}
-                      />
-                    </Radio>
-                  );
-                })}
+                const isAvailable = isColorAvailable(color.id ?? "");
+                return (
+                  <Radio
+                    key={color.id}
+                    value={color.id}
+                    aria-label={color.label}
+                    disabled={!isAvailable}
+                    className={cn(
+                      "ring-gray-500",
+                      "focus:outline-hidden data-[focus]:data-[checked]:ring-3 relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 data-[checked]:ring-2 data-[focus]:data-[checked]:ring-offset-1",
+                      !isAvailable && "cursor-not-allowed opacity-25",
+                    )}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{ background: color.colorValue ?? "" }}
+                      className={cn("size-8 rounded-full border border-black/10")}
+                    />
+                  </Radio>
+                );
+              })}
             </RadioGroup>
           </fieldset>
         </div>
@@ -147,40 +150,40 @@ export const ProductForm = ({
         <div className="mt-8">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium text-gray-900">{t("size")}</h2>
-            <a href="#" className="hover:text-main-500 text-main-600 text-sm font-medium">
+            <a href="#" className="text-sm font-medium text-main-600 hover:text-main-500">
               {t("sizing-chart")}
             </a>
           </div>
 
           <fieldset aria-label={t("choose-size")} className="mt-2">
             <RadioGroup
-              value={selectedVariant?.size?.id ?? (filledVariants?.[0]?.size?.id)}
+              value={selectedVariant?.size?.id ?? filledVariants?.[0]?.size?.id}
               onChange={handleChangeSize}
               className="grid grid-cols-3 gap-3 sm:grid-cols-6"
             >
               {product.sizes?.map((size) => {
-                  const matchingVariant = findAvailableSizeVariant(size.id || "");
+                const matchingVariant = findAvailableSizeVariant(size.id ?? "");
 
-                  return (
-                    <Radio
-                      key={
-                        matchingVariant
-                          ? `${matchingVariant?.size?.id}-${matchingVariant?.color?.id}`
-                          : `${size.id}-unavailable`
-                      }
-                      value={matchingVariant ? matchingVariant?.size?.id : `${size.id}-unavailable`}
-                      disabled={!matchingVariant}
-                      className={cn(
-                        matchingVariant
-                          ? "focus:outline-hidden cursor-pointer"
-                          : "cursor-not-allowed opacity-25",
-                        "data-[focus]:ring-main-500 data-[checked]:bg-main-600 data-[checked]:hover:bg-main-700 flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-offset-2 sm:flex-1",
-                      )}
-                    >
-                      {size.label}
-                    </Radio>
-                  );
-                })}
+                return (
+                  <Radio
+                    key={
+                      matchingVariant
+                        ? `${matchingVariant?.size?.id}-${matchingVariant?.color?.id}`
+                        : `${size.id}-unavailable`
+                    }
+                    value={matchingVariant ? matchingVariant?.size?.id : `${size.id}-unavailable`}
+                    disabled={!matchingVariant}
+                    className={cn(
+                      matchingVariant
+                        ? "focus:outline-hidden cursor-pointer"
+                        : "cursor-not-allowed opacity-25",
+                      "flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-main-600 data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-main-500 data-[focus]:ring-offset-2 data-[checked]:hover:bg-main-700 sm:flex-1",
+                    )}
+                  >
+                    {size.label}
+                  </Radio>
+                );
+              })}
             </RadioGroup>
           </fieldset>
         </div>
@@ -191,7 +194,7 @@ export const ProductForm = ({
           type="submit"
           disabled={!isProductAvailable}
           className={cn(
-            "focus:outline-hidden focus:ring-main-500 bg-main-600 hover:bg-main-700 col-span-2 row-start-2 flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full",
+            "focus:outline-hidden col-span-2 row-start-2 flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-main-600 px-8 py-3 text-base font-medium text-white hover:bg-main-700 focus:ring-2 focus:ring-main-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full",
             !isProductAvailable && "cursor-not-allowed opacity-25",
           )}
           onClick={(e) => {

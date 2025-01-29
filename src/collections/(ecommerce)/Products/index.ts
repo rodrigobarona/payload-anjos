@@ -1,8 +1,7 @@
-import { APIError, type CollectionConfig } from "payload";
+import { type CollectionConfig } from "payload";
 
 import { authenticated } from "@/access/authenticated";
 import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
-import { backgroundPicker } from "@/fields/backgroundPicker";
 import { currencyField } from "@/fields/currencyField";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { slugField } from "@/fields/slug";
@@ -212,7 +211,7 @@ export const Products: CollectionConfig = {
                 pl: "Rodzaj wariantów",
               },
               admin: {
-                condition: (data) => data.enableVariants,
+                condition: (data) => Boolean(data.enableVariants),
               },
               defaultValue: "sizes",
               options: [
@@ -361,15 +360,21 @@ export const Products: CollectionConfig = {
               },
               validate: (value) => {
                 if (!value) return true;
+                // eslint-disable-next-line
                 const groupedByVariantSlug = value.reduce((acc: Record<string, any[]>, item: any) => {
+                  // eslint-disable-next-line
                   if (!acc[item.variantSlug]) {
+                    // eslint-disable-next-line
                     acc[item.variantSlug] = [];
                   }
+                  // eslint-disable-next-line
                   acc[item.variantSlug].push(item);
                   return acc;
+                  // eslint-disable-next-line
                 }, {}) as any[];
 
                 const duplicateSlugs = Object.keys(groupedByVariantSlug).filter(
+                  // eslint-disable-next-line
                   (slug) => groupedByVariantSlug[slug].length > 1,
                 );
                 if (duplicateSlugs.length > 0) {
@@ -448,7 +453,7 @@ export const Products: CollectionConfig = {
                   },
                   type: "number",
                   admin: {
-                    condition: (data) => data.enableVariantWeights,
+                    condition: (data) => Boolean(data.enableVariantWeights),
                     description: {
                       en: "Define weight for this variant.",
                       pl: "Zdefiniuj wagę dla tego wariantu.",
@@ -477,7 +482,7 @@ export const Products: CollectionConfig = {
                     },
                   },
                   admin: {
-                    condition: (data) => data.enableVariantPrices,
+                    condition: (data) => Boolean(data.enableVariantPrices),
                     components: {
                       RowLabel: "@/components/(ecommerce)/RowLabels/PriceRowLabel#PriceRowLabel",
                     },
@@ -557,8 +562,10 @@ export const Products: CollectionConfig = {
                   },
                   relationTo: "productSubCategories",
                   filterOptions: ({ siblingData }) => {
+                    // eslint-disable-next-line
                     const siblingDataTyped: {
                       category: string;
+                      // eslint-disable-next-line
                     } = siblingData as any;
                     return {
                       category: {

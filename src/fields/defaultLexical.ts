@@ -11,7 +11,6 @@ import { type Config } from "payload";
 import { Accordion } from "@/blocks/Accordion/config";
 import { Carousel } from "@/blocks/Carousel/config";
 import { FormBlock } from "@/blocks/Form/config";
-import { MediaBlock } from "@/blocks/MediaBlock/config";
 
 export const defaultLexical: Config["editor"] = lexicalEditor({
   features: ({ defaultFeatures }) => {

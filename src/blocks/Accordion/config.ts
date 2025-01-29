@@ -4,7 +4,6 @@ import { marginFields, paddingFields } from "@/fields/spacingFields";
 
 import type { Block, Field } from "payload";
 
-
 const faqFields: Field[] = [
   {
     name: "title",

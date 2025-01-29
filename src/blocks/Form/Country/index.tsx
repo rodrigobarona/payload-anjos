@@ -11,8 +11,6 @@ import { Width } from "../Width";
 
 import type { CountryField } from "@payloadcms/plugin-form-builder/types";
 
-import type { CountryField } from "@payloadcms/plugin-form-builder/types";
-
 export const Country = ({
   name,
   control,
@@ -22,9 +20,7 @@ export const Country = ({
   width,
 }: CountryField & {
   control: Control<FieldValues, any>;
-  errors: Partial<
-    FieldErrorsImpl<Record<string, any>>
-  >;
+  errors: Partial<FieldErrorsImpl<Record<string, any>>>;
 }) => {
   return (
     <Width width={width}>

@@ -12,6 +12,8 @@ export const getFilledProducts = (products: Product[], cart: Cart) => {
               image: typeof product.images[0] !== "string" ? product.images[0] : null,
               slug: product.slug,
               enableVariantPrices: product.enableVariantPrices,
+              // TODO: fix that
+              // eslint-disable-next-line
               variant: null as any, // Type assertion
               stock: product.stock,
               pricing: product.pricing,

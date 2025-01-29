@@ -13,7 +13,6 @@ import { Accordion } from "@/blocks/Accordion/config";
 import { Archive } from "@/blocks/ArchiveBlock/config";
 import { CallToAction } from "@/blocks/CallToAction/config";
 import { Carousel } from "@/blocks/Carousel/config";
-import { Code } from "@/blocks/Code/config";
 import { Content } from "@/blocks/Content/config";
 import { FormBlock } from "@/blocks/Form/config";
 import { MediaBlock } from "@/blocks/MediaBlock/config";
@@ -23,7 +22,6 @@ import { populatePublishedAt } from "@/hooks/populatePublishedAt";
 import { generatePreviewPath } from "@/utilities/generatePreviewPath";
 
 import { revalidateDelete, revalidatePage } from "./hooks/revalidatePage";
-
 
 import type { CollectionConfig } from "payload";
 

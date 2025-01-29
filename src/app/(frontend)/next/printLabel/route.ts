@@ -3,9 +3,13 @@ import { headers as getHeaders } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { getPayload } from "payload";
 
-import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 import { type Locale } from "@/i18n/config";
 import config from "@payload-config";
+
+const createCouriers = async (locale: Locale) => {
+  const couriersModule = await import("@/globals/(ecommerce)/Couriers/utils/couriersConfig");
+  return couriersModule.createCouriers(locale);
+};
 
 export async function GET(req: Request) {
   try {
@@ -35,7 +39,7 @@ export async function GET(req: Request) {
 
     const locale = (await getLocale()) as Locale;
 
-    const courier = createCouriers(locale).find((c) => c.key === order.orderDetails?.shipping);
+    const courier = (await createCouriers(locale)).find((c) => c.key === order.orderDetails?.shipping);
 
     const file: ArrayBuffer | null | undefined = courier
       ? await courier.getLabel(order.printLabel?.packageNumber ?? "")
@@ -55,10 +59,10 @@ export async function GET(req: Request) {
     });
   } catch (error) {
     if (isAxiosError(error)) {
-      console.log();
+      const typedError = error.response?.data as { message: string; details: Record<string, unknown> };
       return Response.json(
-        `${error.response?.data.message} \n
-        Error details: ${JSON.stringify(error.response?.data.details)}`,
+        `${typedError.message} \n
+        Error details: ${JSON.stringify(typedError.details)}`,
         { status: 400 },
       );
     } else {

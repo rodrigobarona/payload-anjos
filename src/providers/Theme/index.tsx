@@ -1,12 +1,10 @@
 "use client";
 
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
-import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
 
 import canUseDOM from "@/utilities/canUseDOM";
 
 import { defaultTheme, getImplicitPreference, themeLocalStorageKey } from "./shared";
-import { themeIsValid, type Theme, type ThemeContextType } from "./types";
 import { themeIsValid, type Theme, type ThemeContextType } from "./types";
 
 const initialContext: ThemeContextType = {

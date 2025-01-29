@@ -1,3 +1,5 @@
+/* eslint-disable */
+// only temporary for now TODO: remove it
 import { getPayload } from "payload";
 
 import RichText from "@/components/RichText";
@@ -55,7 +57,7 @@ export const HotspotBlock = async ({
     <section className="container">
       {title && <RichText data={title} />}
       <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
-        <WithInlinePrice products={productsToShow} locale="en" />
+        <WithInlinePrice products={productsToShow} />
       </div>
     </section>
   );

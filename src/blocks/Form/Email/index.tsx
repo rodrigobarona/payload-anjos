@@ -8,9 +8,6 @@ import { Width } from "../Width";
 import type { EmailField } from "@payloadcms/plugin-form-builder/types";
 import type { FieldErrorsImpl, FieldValues, UseFormRegister } from "react-hook-form";
 
-import type { EmailField } from "@payloadcms/plugin-form-builder/types";
-import type { FieldErrorsImpl, FieldValues, UseFormRegister } from "react-hook-form";
-
 export const Email = ({
   name,
   defaultValue,

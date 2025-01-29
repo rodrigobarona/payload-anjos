@@ -12,7 +12,6 @@ import None from "./variants/filters/None";
 import { WithSidebar } from "./variants/filters/WithSidebar/WithSidebar";
 import WithInlinePrice from "./variants/listings/WithInlinePrice";
 
-
 export const ProductList = async ({
   filteredProducts,
   title,
@@ -77,7 +76,7 @@ export const ProductList = async ({
           category={category}
           searchParams={searchParams}
         >
-          <WithInlinePrice products={filteredProducts} locale={locale} />
+          <WithInlinePrice products={filteredProducts} />
         </ProductDetailsComponent>
       </div>
     );

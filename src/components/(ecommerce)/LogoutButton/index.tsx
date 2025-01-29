@@ -13,7 +13,7 @@ export const LogoutButton = ({
 }: {
   children: ReactNode;
   className?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }) => {
   const router = useRouter();
   const handleLogout = async () => {

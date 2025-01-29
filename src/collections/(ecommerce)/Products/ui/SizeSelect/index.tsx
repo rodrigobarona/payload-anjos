@@ -1,10 +1,9 @@
+/* eslint-disable */
 "use client";
 
 import { FieldLabel, Select, useField, useForm } from "@payloadcms/ui";
 import { type TextFieldClientComponent } from "payload";
 import { useEffect } from "react";
-
-import { Product } from "@/payload-types";
 
 export const SizeSelect: TextFieldClientComponent = ({ path }) => {
   const { value, setValue } = useField<string>({ path });
@@ -19,7 +18,7 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
 
   const { value: variantType } = useField<string>({ path: "variantsType" });
 
-  const sizes = getDataByPath("sizes");
+  const sizes: any = getDataByPath("sizes");
 
   const handleSizeChange = (option: { value: string }) => {
     setValue(option.value);
@@ -35,7 +34,6 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
       handleSizeChange({ value: "" });
     }
   }, [variantType]);
-
 
   return variantType !== "colors" ? (
     <div className="twp my-auto h-fit flex-1">

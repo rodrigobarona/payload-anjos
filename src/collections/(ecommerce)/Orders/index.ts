@@ -5,7 +5,6 @@ import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couri
 
 import { generateID } from "./hooks/generateID";
 
-
 export const Orders: CollectionConfig = {
   slug: "orders",
   admin: {
@@ -115,7 +114,7 @@ export const Orders: CollectionConfig = {
                 {
                   type: "row",
                   admin: {
-                    condition: (_, siblingData) => siblingData.hasVariant,
+                    condition: (_, siblingData) => Boolean(siblingData.hasVariant),
                   },
                   fields: [
                     {
@@ -154,7 +153,7 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         readOnly: true,
-                        condition: (_, siblingData) => siblingData.hasVariant,
+                        condition: (_, siblingData) => Boolean(siblingData.hasVariant),
                       },
                     },
                     {
@@ -182,7 +181,7 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         readOnly: true,
-                        condition: (_, siblingData) => siblingData.hasVariant,
+                        condition: (_, siblingData) => Boolean(siblingData.hasVariant),
                       },
                       required: true,
                     },
@@ -246,7 +245,7 @@ export const Orders: CollectionConfig = {
                   },
                   admin: {
                     readOnly: true,
-                    condition: (_, siblingData) => siblingData.isCompany,
+                    condition: (_, siblingData) => Boolean(siblingData.isCompany),
                   },
                 },
                 {
@@ -346,7 +345,11 @@ export const Orders: CollectionConfig = {
                   name: "pickupShipmentMenu",
                   type: "ui",
                   admin: {
-                    condition: (data) => data.orderDetails.shipping === "inpost-pickup",
+                    condition: (data) =>
+                      Boolean(
+                        // eslint-disable-next-line
+                        data.orderDetails?.shipping === "inpost-pickup",
+                      ),
                     components: {
                       Field:
                         "@/collections/(ecommerce)/Orders/components/inpost-pickup/PickupShipmentMenu#PickupShipmentMenu",
@@ -397,6 +400,7 @@ export const Orders: CollectionConfig = {
                   name: "courierShipmentMenu",
                   type: "ui",
                   admin: {
+                    // eslint-disable-next-line
                     condition: (data) => data.orderDetails.shipping !== "inpost-pickup",
                     components: {
                       Field:
@@ -446,7 +450,7 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-
+                        // eslint-disable-next-line
                         condition: (data) => data.orderDetails.shipping === "inpost-pickup",
                       },
                     },
@@ -459,7 +463,7 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-
+                        // eslint-disable-next-line
                         condition: (data) => data.orderDetails.shipping === "inpost-pickup",
                       },
                     },

@@ -45,7 +45,7 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [data.hideOnScroll]);
 
   useEffect(() => {
     if (cart) {
@@ -98,9 +98,8 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
         >
           <div className="flex flex-col items-start gap-12 pt-24 lg:flex-row lg:pt-0">
             {data.navItems?.map(({ link }, i) => {
-            {data.navItems?.map(({ link }, i) => {
-                return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
-              })}
+              return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
+            })}
           </div>
         </nav>
         <div className="flex gap-5">
@@ -110,7 +109,7 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
           {!disableCart && (
             <button onClick={toggleCart} className="relative -m-2 cursor-pointer p-2">
               {totalQuantity && totalQuantity > 0 ? (
-                <span className="bg-main-600 absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full text-xs text-white">
+                <span className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-main-600 text-xs text-white">
                   {totalQuantity}
                 </span>
               ) : (

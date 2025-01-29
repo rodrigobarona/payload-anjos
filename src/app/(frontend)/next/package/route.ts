@@ -3,11 +3,11 @@ import { headers as getHeaders } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { getPayload } from "payload";
 
-import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+const createCouriers = async (locale: Locale) => {
+  const couriersModule = await import("@/globals/(ecommerce)/Couriers/utils/couriersConfig");
+  return couriersModule.createCouriers(locale);
+};
 import { type Locale } from "@/i18n/config";
-import { createInpostCODCourierPackage } from "@/lib/couriers/packages/createInpostCODCourierPackage";
-import { createInpostCourierPackage } from "@/lib/couriers/packages/createInpostCourierPackage";
-import { createInpostPickupPackage } from "@/lib/couriers/packages/createInpostPickupPackage";
 import config from "@payload-config";
 
 export type Dimensions = { width: number; height: number; length: number; weight: number };
@@ -27,7 +27,11 @@ export async function POST(req: Request) {
       orderID: string;
       dimension: string;
       dimensions: Dimensions;
-    } = await req.json();
+    } = (await req.json()) as {
+      orderID: string;
+      dimension: string;
+      dimensions: Dimensions;
+    };
 
     if (!orderID) {
       return Response.json("Cannot find order ID", { status: 400 });
@@ -51,7 +55,7 @@ export async function POST(req: Request) {
       return Response.json("Cannot find order", { status: 400 });
     }
 
-    const courier = createCouriers(locale).find((c) => c.key === order.orderDetails?.shipping);
+    const courier = (await createCouriers(locale)).find((c) => c.key === order.orderDetails?.shipping);
     const packageID = courier ? await courier.createPackage(order, dimension, dimensions) : null;
 
     if (!packageID) {
@@ -62,9 +66,10 @@ export async function POST(req: Request) {
   } catch (error) {
     if (isAxiosError(error)) {
       console.log();
+      const typedError = error?.response?.data as { message: string; details: Record<string, unknown> };
       return Response.json(
-        `${error.response?.data.message} \n
-        Error details: ${JSON.stringify(error.response?.data.details)}`,
+        `${typedError.message} \n
+        Error details: ${JSON.stringify(typedError.details)}`,
         { status: 400 },
       );
     } else {

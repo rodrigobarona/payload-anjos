@@ -5,20 +5,13 @@ import React, { cache } from "react";
 
 import { RenderBlocks } from "@/blocks/RenderBlocks";
 import { PayloadRedirects } from "@/components/PayloadRedirects";
-import { PayloadRedirects } from "@/components/PayloadRedirects";
 import { RenderHero } from "@/components/heros/RenderHero";
-import { type Locale } from "@/i18n/config";
-import { routing } from "@/i18n/routing";
 import { type Locale } from "@/i18n/config";
 import { routing } from "@/i18n/routing";
 import { generateMeta } from "@/utilities/generateMeta";
 import config from "@payload-config";
 
-import config from "@payload-config";
-
 import PageClient from "./page.client";
-
-import type { Metadata } from "next";
 
 import type { Metadata } from "next";
 
@@ -51,7 +44,7 @@ type Args = {
     locale: Locale;
     slug?: string;
   }>;
-}
+};
 
 export default async function Page({ params: paramsPromise }: Args) {
   // const { isEnabled: draft } = await draftMode();
@@ -59,7 +52,6 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const url = `/${locale}/${slug}`;
 
-  const page = await queryPageBySlug({
   const page = await queryPageBySlug({
     slug,
     locale,

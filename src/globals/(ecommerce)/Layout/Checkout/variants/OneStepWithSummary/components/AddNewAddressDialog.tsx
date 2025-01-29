@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useTranslations } from "next-intl";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 
 import { ShippingAddressForm } from "@/components/(ecommerce)/ShippingAddressForm";
@@ -49,7 +49,7 @@ export const AddNewAddressDialog = ({
       }>(
         `/api/customers/${user?.id}`,
         {
-          shippings: [...(user.shippings || []), values.shipping],
+          shippings: [...(user.shippings ?? []), values.shipping],
         },
         {
           withCredentials: true,
@@ -62,7 +62,7 @@ export const AddNewAddressDialog = ({
         });
         setOpen(false);
       }
-    } catch (error) {
+    } catch {
       form.setError("root", {
         message: "Internal server error",
       });

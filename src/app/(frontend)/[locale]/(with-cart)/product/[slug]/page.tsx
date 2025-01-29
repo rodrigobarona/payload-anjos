@@ -34,7 +34,7 @@ const ProductPage = async ({
     }
 
     return <ProductDetails variant={variant} product={docs[0]} />;
-  } catch (error) {
+  } catch {
     notFound();
   }
 };

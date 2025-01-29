@@ -8,8 +8,6 @@ import { type Order } from "@/payload-types";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import config from "@payload-config";
 
-
-
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const createInpostCODCourierPackage = async (order: Order, dimensions: Dimensions) => {
@@ -34,7 +32,7 @@ export const createInpostCODCourierPackage = async (order: Order, dimensions: Di
     throw new Error("No shipping address found");
   }
 
-  const { data } = await axios.post(
+  const { data } = await axios.post<{ id: string }>(
     `${APIUrl}/v1/organizations/${clientId}/shipments`,
     {
       sender: {
@@ -104,11 +102,14 @@ export const createInpostCODCourierPackage = async (order: Order, dimensions: Di
 
   const checkShipmentStatus = async (maxAttempts = 10): Promise<string> => {
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      const { data: shipmentData } = await axios.get(`${APIUrl}/v1/shipments/${packageID}`, {
-        headers: {
-          Authorization: `Bearer ${shipXAPIKey}`,
+      const { data: shipmentData } = await axios.get<{ status: string; tracking_number: string }>(
+        `${APIUrl}/v1/shipments/${packageID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${shipXAPIKey}`,
+          },
         },
-      });
+      );
       if (shipmentData.status === "confirmed" && shipmentData.tracking_number) {
         await payload.update({
           id: order.id,

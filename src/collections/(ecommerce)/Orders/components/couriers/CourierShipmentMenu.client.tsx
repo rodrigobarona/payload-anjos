@@ -1,7 +1,7 @@
 "use client";
 
 import { FieldLabel, useField, useForm, useTranslation } from "@payloadcms/ui";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useState } from "react";
 
 import { type CustomTranslationsKeys, type CustomTranslationsObject } from "@/admin/translations/custom-translations";
@@ -39,7 +39,7 @@ export const CourierShipmentMenuClient = ({ orderID }: { orderID: string }) => {
 
       await form.submit({ skipValidation: true, overrides: { printLabel: { packageNumber: data } } });
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.data) {
+      if (isAxiosError(error) && error.response?.data) {
         const errorData = JSON.stringify(error.response.data);
         console.log("Error:", errorData);
         setError(errorData || "Error downloading file");

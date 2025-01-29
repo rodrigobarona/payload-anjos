@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { type SetStateAction } from "react";
 
 export const getShippingLabel = async ({
@@ -26,11 +26,12 @@ export const getShippingLabel = async ({
     link.remove();
     window.URL.revokeObjectURL(url);
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.data instanceof Blob) {
-      const text = await error.response.data.text();
+    if (isAxiosError(error) && error.response?.data instanceof Blob) {
+      const text: string = await error.response.data.text();
+      // eslint-disable-next-line
       const errorData = JSON.parse(text);
       console.log("Error:", errorData);
-      setError(errorData || "Error downloading file");
+      setError((errorData as string) || "Error downloading file");
     } else {
       console.log("Unknown error:", error);
       setError("Unknown error occurred");

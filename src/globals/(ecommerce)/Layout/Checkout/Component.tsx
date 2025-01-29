@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { getLocale } from "next-intl/server";
 import { type ReactNode } from "react";
 
 import { type Locale } from "@/i18n/config";

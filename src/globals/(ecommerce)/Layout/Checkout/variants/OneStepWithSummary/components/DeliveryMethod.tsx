@@ -30,7 +30,17 @@ export const DeliveryMethod = ({
   const pickupPointAddress = useWatch({ control: form.control, name: "shipping.pickupPointAddress" });
   const selectedDeliveryMethod = useWatch({ control: form.control, name: "deliveryMethod" });
 
-  const onPointSelect = (event: CustomEvent) => {
+  const onPointSelect = (
+    event: CustomEvent<{
+      name?: string;
+      address_details: {
+        street?: string;
+        building_number?: string;
+        post_code?: string;
+        city?: string;
+      };
+    }>,
+  ) => {
     form.setValue("shipping.pickupPointID", event.detail.name);
     form.setValue(
       "shipping.pickupPointAddress",
@@ -55,7 +65,7 @@ export const DeliveryMethod = ({
                   <h3 className="text-lg font-semibold leading-none tracking-tight">{t("choose-pickup")}</h3>
                 </DialogTitle>
               </DialogHeader>
-              <InPostGeowidget token={geowidgetToken} onPointSelect={onPointSelect} />
+              <InPostGeowidget token={geowidgetToken ?? ""} onPointSelect={onPointSelect} />
             </DialogContent>
           </Dialog>
 

@@ -7,8 +7,8 @@ import { useCart } from "@/stores/CartStore";
 const SynchronizeCart = () => {
   const { synchronizeCart } = useCart();
   useEffect(() => {
-    synchronizeCart();
-  }, []);
+    void synchronizeCart();
+  }, [synchronizeCart]);
   return <></>;
 };
 export default SynchronizeCart;

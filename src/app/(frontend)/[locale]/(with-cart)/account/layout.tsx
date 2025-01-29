@@ -23,6 +23,6 @@ const AccountPage = async ({
     return redirect({ locale, href: "/login" });
   }
 
-  return <ClientPanel user={user}>{children}</ClientPanel>;
+  return <ClientPanel>{children}</ClientPanel>;
 };
 export default AccountPage;
