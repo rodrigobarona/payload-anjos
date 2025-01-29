@@ -1,5 +1,6 @@
 import { authenticated } from "@/access/authenticated";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
+
 import type { GlobalConfig } from "payload";
 
 export const Paywalls: GlobalConfig = {

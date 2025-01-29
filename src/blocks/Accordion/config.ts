@@ -1,8 +1,9 @@
-import type { Block, Field } from "payload";
 
-import { marginFields, paddingFields } from "@/fields/spacingFields";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { noBlocksLexical } from "@/fields/noBlocksLexical";
+import { marginFields, paddingFields } from "@/fields/spacingFields";
+
+import type { Block, Field } from "payload";
 
 const faqFields: Field[] = [
   {

@@ -1,8 +1,9 @@
 "use client";
-import { useCurrency } from "@/stores/Currency";
-import { Currency } from "@/stores/Currency/types";
-import { formatPrice } from "@/utilities/formatPrices";
 import { useLocale } from "next-intl";
+
+import { useCurrency } from "@/stores/Currency";
+import { type Currency } from "@/stores/Currency/types";
+import { formatPrice } from "@/utilities/formatPrices";
 
 export const PriceClient = ({
   pricing,

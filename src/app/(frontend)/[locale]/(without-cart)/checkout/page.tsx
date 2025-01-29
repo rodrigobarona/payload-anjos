@@ -1,5 +1,5 @@
 import { Checkout } from "@/globals/(ecommerce)/Layout/Checkout/Component";
-import { Locale } from "@/i18n/config";
+import { type Locale } from "@/i18n/config";
 
 const CheckoutPage = async ({ params }: { params: Promise<{ locale: Locale }> }) => {
   const { locale } = await params;

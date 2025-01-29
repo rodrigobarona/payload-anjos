@@ -1,15 +1,17 @@
-import { Product, ProductCategory, ProductSubCategory } from "@/payload-types";
-import { Locale } from "@/i18n/config";
-import WithInlinePrice from "./variants/listings/WithInlinePrice";
+import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
+import { getPayload } from "payload";
+
+import { ListingBreadcrumbs } from "@/components/(ecommerce)/ListingBreadcrumbs";
+import { type Locale } from "@/i18n/config";
+import { type Product, type ProductCategory, type ProductSubCategory } from "@/payload-types";
 import { getCachedGlobal } from "@/utilities/getGlobals";
-import { WithSidebar } from "./variants/filters/WithSidebar/WithSidebar";
+import config from "@payload-config";
 
 import None from "./variants/filters/None";
-import { notFound } from "next/navigation";
-import { ListingBreadcrumbs } from "@/components/(ecommerce)/ListingBreadcrumbs";
-import config from "@payload-config";
-import { getPayload } from "payload";
+import { WithSidebar } from "./variants/filters/WithSidebar/WithSidebar";
+import WithInlinePrice from "./variants/listings/WithInlinePrice";
+
 
 export const ProductList = async ({
   filteredProducts,

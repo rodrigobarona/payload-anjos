@@ -1,7 +1,8 @@
 "use server";
-import { getPayload } from "payload";
-import config from "@payload-config";
 import { headers as getHeaders } from "next/headers";
+import { getPayload } from "payload";
+
+import config from "@payload-config";
 
 export const getCustomer = async () => {
   const payload = await getPayload({ config });

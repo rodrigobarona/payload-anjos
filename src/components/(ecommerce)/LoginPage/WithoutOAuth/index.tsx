@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { LoginForm } from "./components/LoginForm";
 import { useTranslations } from "next-intl";
+
 import { Link } from "@/i18n/routing";
+
+import { LoginForm } from "./components/LoginForm";
 
 export const LoginPageWithoutOAuth = () => {
   const t = useTranslations("LoginForm");

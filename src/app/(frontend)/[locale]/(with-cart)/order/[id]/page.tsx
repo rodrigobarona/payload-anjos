@@ -1,13 +1,14 @@
-import { Locale } from "@/i18n/config";
-import { getPayload } from "payload";
-import config from "@/payload.config";
-import { Media } from "@/payload-types";
-import RichText from "@/components/RichText";
-import { formatPrice } from "@/utilities/formatPrices";
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getTranslations } from "next-intl/server";
+import { getPayload } from "payload";
+
+import RichText from "@/components/RichText";
+import { type Locale } from "@/i18n/config";
+import { Link } from "@/i18n/routing";
+import { type Media } from "@/payload-types";
+import config from "@/payload.config";
+import { formatPrice } from "@/utilities/formatPrices";
+import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getOrderProducts } from "@/utilities/getOrderProducts";
 
 const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: string }> }) => {

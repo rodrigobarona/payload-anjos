@@ -1,33 +1,38 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
 import { Button, Radio, RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import debounce from "lodash.debounce";
+import { useLocale, useTranslations } from "next-intl";
+import { useCallback, useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
+
+import { ShippingAddressForm } from "@/components/(ecommerce)/ShippingAddressForm";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CheckoutFormData, useCheckoutFormSchema } from "@/schemas/checkoutForm.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Customer, Media } from "@/payload-types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useLocale, useTranslations } from "next-intl";
-import { DeliveryMethod } from "./DeliveryMethod";
-import debounce from "lodash.debounce";
-import axios from "axios";
-import { Cart } from "@/stores/CartStore/types";
-import { useCart } from "@/stores/CartStore";
-import { Currency } from "@/stores/Currency/types";
-import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Layout/Cart/variants/SlideOver";
-import { OrderSummary } from "./OrderSummary";
-import { Locale } from "@/i18n/config";
-import { useCurrency } from "@/stores/Currency";
+import { type Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
+import { type ProductWithFilledVariants } from "@/globals/(ecommerce)/Layout/Cart/variants/SlideOver";
+import { type Locale } from "@/i18n/config";
 import { useRouter } from "@/i18n/routing";
-import { ShippingAddressForm } from "@/components/(ecommerce)/ShippingAddressForm";
-import { ChangeAddressDialog } from "./ChangeAddressDialog";
+import { type Customer, type Media } from "@/payload-types";
+import { type CheckoutFormData, useCheckoutFormSchema } from "@/schemas/checkoutForm.schema";
+import { useCart } from "@/stores/CartStore";
+import { type Cart } from "@/stores/CartStore/types";
+import { useCurrency } from "@/stores/Currency";
+import { type Currency } from "@/stores/Currency/types";
+
 import { AddNewAddressDialog } from "./AddNewAddressDialog";
-import { Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
+import { ChangeAddressDialog } from "./ChangeAddressDialog";
+import { DeliveryMethod } from "./DeliveryMethod";
+import { OrderSummary } from "./OrderSummary";
+
+
+
 
 export type FilledCourier = {
   slug: string;

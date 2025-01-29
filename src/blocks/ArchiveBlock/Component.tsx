@@ -1,10 +1,11 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps } from "@/payload-types";
 
-import config from "@payload-config";
 import { getPayload } from "payload";
-import RichText from "@/components/RichText";
 
 import { CollectionArchive } from "@/components/CollectionArchive";
+import RichText from "@/components/RichText";
+import config from "@payload-config";
+
+import type { Post, ArchiveBlock as ArchiveBlockProps } from "@/payload-types";
 
 export const ArchiveBlock = async (
   props: ArchiveBlockProps & {

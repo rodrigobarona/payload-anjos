@@ -1,6 +1,6 @@
-import { Order } from "@/payload-types";
-import type { CollectionBeforeValidateHook } from "payload";
-import { getPayload } from "payload";
+import { getPayload ,type  CollectionBeforeValidateHook } from "payload";
+
+import { type Order } from "@/payload-types";
 import config from "@payload-config";
 
 export const generateID: CollectionBeforeValidateHook<Order> = async ({ data }) => {

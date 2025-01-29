@@ -1,6 +1,7 @@
+import { type GlobalConfig } from "payload";
+
 import { authenticated } from "@/access/authenticated";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
-import { GlobalConfig } from "payload";
 
 export const EmailMessages: GlobalConfig = {
   slug: "emailMessages",

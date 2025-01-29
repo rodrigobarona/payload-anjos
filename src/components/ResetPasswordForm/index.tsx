@@ -1,13 +1,15 @@
 "use client";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
-import { ResetPasswordFormData, useResetPasswordForm } from "@/schemas/ResetPasswordFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useRouter } from "@/i18n/routing";
+import { type ResetPasswordFormData, useResetPasswordForm } from "@/schemas/ResetPasswordFormSchema";
+
 
 export const ResetPasswordForm = ({ token, collection }: { token: string; collection: string }) => {
   const { ResetPasswordFormResolver } = useResetPasswordForm();

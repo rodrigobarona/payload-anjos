@@ -1,16 +1,17 @@
-import { ProductDetails } from "@/globals/(ecommerce)/Layout/ProductDetails/Component";
-import { Locale } from "@/i18n/config";
-import config from "@payload-config";
-import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 import { getPayload } from "payload";
+
+import { ProductDetails } from "@/globals/(ecommerce)/Layout/ProductDetails/Component";
+import { type Locale } from "@/i18n/config";
+import config from "@payload-config";
 
 const ProductPage = async ({
   params,
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | undefined }>;
+  searchParams: Promise<Record<string, string | undefined>>;
 }) => {
   try {
     const payload = await getPayload({ config });

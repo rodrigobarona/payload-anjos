@@ -1,14 +1,19 @@
-import type { Metadata } from "next/types";
 
-import { CollectionArchive } from "@/components/CollectionArchive";
-import config from "@payload-config";
+import { getLocale } from "next-intl/server";
 import { getPayload } from "payload";
 import React from "react";
+
+import { type CardPostData } from "@/components/Card";
+import { CollectionArchive } from "@/components/CollectionArchive";
 import { Search } from "@/components/search/Component";
+import { type Locale } from "@/i18n/config";
+import config from "@payload-config";
+
+
 import PageClient from "./page.client";
-import { CardPostData } from "@/components/Card";
-import { getLocale } from "next-intl/server";
-import { Locale } from "@/i18n/config";
+
+
+import type { Metadata } from "next/types";
 
 type Args = {
   searchParams: Promise<{

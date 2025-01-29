@@ -1,13 +1,14 @@
 "use client";
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import type { Header } from "@/payload-types";
 
 import { DefaultHeader } from "./variants/DefaultHeader";
 import { FloatingHeader } from "./variants/FloatingHeader";
 
-interface HeaderClientProps {
+import type { Header } from "@/payload-types";
+
+type HeaderClientProps = {
   data: Header;
   disableCart?: boolean;
 }

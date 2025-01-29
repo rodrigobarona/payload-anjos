@@ -1,10 +1,12 @@
 "use client";
-import { create } from "zustand";
-import canUseDOM from "@/utilities/canUseDOM";
-import { Currency } from "./types";
 import { useEffect, useState } from "react";
+import { create } from "zustand";
 
-interface CurrencyState {
+import canUseDOM from "@/utilities/canUseDOM";
+
+import { type Currency } from "./types";
+
+type CurrencyState = {
   currency: Currency;
   setCurrency: (currency: Currency) => void;
 }

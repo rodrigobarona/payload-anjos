@@ -1,21 +1,19 @@
-import type { Metadata } from "next";
-
-import { PayloadRedirects } from "@/components/PayloadRedirects";
-import config from "@payload-config";
-import { getPayload } from "payload";
 import { draftMode } from "next/headers";
+import { setRequestLocale } from "next-intl/server";
+import { getPayload } from "payload";
 import React, { cache } from "react";
-import { Locale } from "@/i18n/config";
-
-import type { Page as PageType } from "@/payload-types";
 
 import { RenderBlocks } from "@/blocks/RenderBlocks";
+import { PayloadRedirects } from "@/components/PayloadRedirects";
 import { RenderHero } from "@/components/heros/RenderHero";
-import { generateMeta } from "@/utilities/generateMeta";
-import PageClient from "./page.client";
-import { LivePreviewListener } from "@/components/LivePreviewListener";
+import { type Locale } from "@/i18n/config";
 import { routing } from "@/i18n/routing";
-import { setRequestLocale } from "next-intl/server";
+import { generateMeta } from "@/utilities/generateMeta";
+import config from "@payload-config";
+
+import PageClient from "./page.client";
+
+import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -54,9 +52,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const url = `/${locale}/${slug}`;
 
-  let page: PageType | null;
-
-  page = await queryPageBySlug({
+  const page = await queryPageBySlug({
     slug,
     locale,
   });

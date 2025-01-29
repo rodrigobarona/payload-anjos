@@ -1,12 +1,13 @@
 "use client";
 
-import type { Theme } from "@/providers/Theme/types";
 
 import { createContext, useCallback, useContext, useState } from "react";
 
 import canUseDOM from "@/utilities/canUseDOM";
 
-export interface ContextType {
+import type { Theme } from "@/providers/Theme/types";
+
+export type ContextType = {
   headerTheme?: Theme | null;
   setHeaderTheme: (theme: Theme | null) => void;
 }

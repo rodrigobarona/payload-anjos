@@ -1,5 +1,6 @@
 "use client";
 import { RefreshRouteOnSave as PayloadLivePreview } from "@payloadcms/live-preview-react";
+
 import { useRouter } from "@/i18n/routing";
 
 export const LivePreviewListener = () => {

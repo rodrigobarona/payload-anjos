@@ -1,9 +1,10 @@
 "use client";
 
-import { Product } from "@/payload-types";
 import { FieldLabel, Select, useField, useForm } from "@payloadcms/ui";
-import { TextFieldClientComponent } from "payload";
+import { type TextFieldClientComponent } from "payload";
 import { useEffect } from "react";
+
+import { Product } from "@/payload-types";
 
 export const ColorSelect: TextFieldClientComponent = ({ path }) => {
   const { value, setValue } = useField<string>({ path });
@@ -18,7 +19,7 @@ export const ColorSelect: TextFieldClientComponent = ({ path }) => {
 
   const { value: variantType } = useField<string>({ path: "variantsType" });
 
-  const colors = getDataByPath("colors") as Product["colors"];
+  const colors = getDataByPath("colors");
 
   const handleColorChange = (option: { value: string }) => {
     setValue(option.value);

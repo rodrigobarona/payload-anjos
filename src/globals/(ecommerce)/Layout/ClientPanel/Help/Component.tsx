@@ -1,7 +1,8 @@
-import RichText from "@/components/RichText";
-import { Locale } from "@/i18n/config";
-import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getLocale } from "next-intl/server";
+
+import RichText from "@/components/RichText";
+import { type Locale } from "@/i18n/config";
+import { getCachedGlobal } from "@/utilities/getGlobals";
 
 export const ClientHelp = async () => {
   const locale = (await getLocale()) as Locale;

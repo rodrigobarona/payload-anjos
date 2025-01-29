@@ -1,4 +1,7 @@
 "use client";
+import { useTranslations } from "next-intl";
+import { type Dispatch, type SetStateAction } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,11 +11,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Customer } from "@/payload-types";
-import { CheckoutFormData } from "@/schemas/checkoutForm.schema";
+import { type Customer } from "@/payload-types";
+import { type CheckoutFormData } from "@/schemas/checkoutForm.schema";
 import { cn } from "@/utilities/cn";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction } from "react";
 
 export const ChangeAddressDialog = ({
   open,

@@ -1,16 +1,17 @@
-import { ProductList } from "@/globals/(ecommerce)/Layout/ProductList/Component";
-import { Locale } from "@/i18n/config";
-import config from "@payload-config";
-import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { getPayload, Sort } from "payload";
+import { getLocale } from "next-intl/server";
+import { getPayload, type Sort } from "payload";
+
+import { ProductList } from "@/globals/(ecommerce)/Layout/ProductList/Component";
+import { type Locale } from "@/i18n/config";
+import config from "@payload-config";
 
 const CategoryPage = async ({
   params,
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | undefined }>;
+  searchParams: Promise<Record<string, string | undefined>>;
 }) => {
   try {
     const payload = await getPayload({ config });
@@ -74,7 +75,7 @@ const CategoryPage = async ({
         searchParams={{
           color: colorArr,
           size: sizeArr,
-          sortBy: sortBy || "most-popular",
+          sortBy: sortBy ?? "most-popular",
         }}
       />
     );

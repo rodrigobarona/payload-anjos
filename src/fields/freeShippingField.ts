@@ -1,4 +1,5 @@
-import { Field } from "payload";
+import { type Field } from "payload";
+
 import { currencyField } from "./currencyField";
 
 export const freeShippingField: Field = {

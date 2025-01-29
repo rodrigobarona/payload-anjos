@@ -1,4 +1,3 @@
-import type { Block, Field } from "payload";
 
 import {
   FixedToolbarFeature,
@@ -9,6 +8,8 @@ import {
 
 import { link } from "@/fields/link";
 import { marginFields, paddingFields } from "@/fields/spacingFields";
+
+import type { Block, Field } from "payload";
 
 const slideFields: Field[] = [
   {

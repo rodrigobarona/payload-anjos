@@ -1,6 +1,5 @@
 import "server-only";
 
-import { ReactNode } from "react";
 import {
   DialogBackdrop,
   DialogPanel,
@@ -8,19 +7,22 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-
 import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
+import { useTranslations } from "next-intl";
+import { type ReactNode } from "react";
 
-import { Product, ProductCategory, ProductSubCategory } from "@/payload-types";
-import { Link } from "@/i18n/routing";
 
 import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SortSelect } from "./components/SortSelect";
+import { Link } from "@/i18n/routing";
+import { type Product, type ProductCategory, type ProductSubCategory } from "@/payload-types";
+
+
 import { FilterCheckbox } from "./components/FilterCheckbox";
-import { MobileFunnelFiltersButton } from "./components/MobileFunnelFiltersButton";
-import { MobileFiltersDialog } from "./components/MobileFiltersDialog";
 import { MobileFiltersCloseButton } from "./components/MobileFiltersCloseButton";
-import { useTranslations } from "next-intl";
+import { MobileFiltersDialog } from "./components/MobileFiltersDialog";
+import { MobileFunnelFiltersButton } from "./components/MobileFunnelFiltersButton";
+import { SortSelect } from "./components/SortSelect";
+
 
 const sortOptions = [
   { label: "Most Popular", value: "most-popular" },
@@ -126,8 +128,7 @@ export const WithSidebar = ({
               <form className="mt-4 border-t border-gray-200">
                 {category &&
                   isProductCategory(category) &&
-                  category.subcategories &&
-                  category.subcategories.docs && (
+                  category.subcategories?.docs && (
                     <>
                       <h3 className="sr-only">{t("categories")}</h3>
                       <ul role="list" className="px-2 py-3 font-medium text-gray-900">
@@ -252,8 +253,7 @@ export const WithSidebar = ({
               <form className="hidden lg:block">
                 {category &&
                   isProductCategory(category) &&
-                  category.subcategories &&
-                  category.subcategories.docs && (
+                  category.subcategories?.docs && (
                     <>
                       <h3 className="sr-only">{t("categories")}</h3>
                       <ul

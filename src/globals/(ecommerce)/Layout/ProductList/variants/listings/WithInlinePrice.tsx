@@ -1,11 +1,12 @@
-import { PriceClient } from "@/components/(ecommerce)/PriceClient";
-import { Locale } from "@/i18n/config";
-import { Link } from "@/i18n/routing";
-import { Product } from "@/payload-types";
-import { Currency } from "@/stores/Currency/types";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { ReactNode } from "react";
+import { useTranslations } from "next-intl";
+import { type ReactNode } from "react";
+
+import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { type Locale } from "@/i18n/config";
+import { Link } from "@/i18n/routing";
+import { type Product } from "@/payload-types";
+import { type Currency } from "@/stores/Currency/types";
 
 const getPriceRange = (variants: Product["variants"], enableVariantPrices: boolean) => {
   if (!variants || !enableVariantPrices) return null;
@@ -28,8 +29,8 @@ const getPriceRange = (variants: Product["variants"], enableVariantPrices: boole
   );
 
   const priceRanges: { value: number; currency: Currency; id?: string }[][] = [];
-  let minPrices: { value: number; currency: Currency; id?: string }[] = [];
-  let maxPrices: { value: number; currency: Currency; id?: string }[] = [];
+  const minPrices: { value: number; currency: Currency; id?: string }[] = [];
+  const maxPrices: { value: number; currency: Currency; id?: string }[] = [];
 
   for (const currency in groupedPrices) {
     const prices = groupedPrices[currency as Currency];

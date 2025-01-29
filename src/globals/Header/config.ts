@@ -1,8 +1,9 @@
-import type { GlobalConfig } from "payload";
 
-import { link } from "@/fields/link";
 import { backgroundPicker } from "@/fields/backgroundPicker";
+import { link } from "@/fields/link";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
+
+import type { GlobalConfig } from "payload";
 
 export const Header: GlobalConfig = {
   slug: "header",

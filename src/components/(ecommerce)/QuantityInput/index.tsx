@@ -1,7 +1,7 @@
-import { cn } from "@/utilities/cn";
 import { Input } from "@headlessui/react";
-
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+
+import { cn } from "@/utilities/cn";
 
 export const QuantityInput = ({
   minQuantity,

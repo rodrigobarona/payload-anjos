@@ -1,6 +1,6 @@
 import { Button, type ButtonProps } from "@/components/ui/button";
-import { cn } from "src/utilities/cn";
 import { Link } from "@/i18n/routing";
+import { cn } from "src/utilities/cn";
 
 import type { Page, Post } from "@/payload-types";
 

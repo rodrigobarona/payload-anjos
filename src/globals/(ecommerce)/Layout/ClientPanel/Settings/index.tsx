@@ -1,7 +1,9 @@
-import { Customer } from "@/payload-types";
 import { useTranslations } from "next-intl";
-import { ChangePassword } from "./components/ChangePassword";
+
+import { type Customer } from "@/payload-types";
+
 import ChangeData from "./components/ChangeData";
+import { ChangePassword } from "./components/ChangePassword";
 
 export const Settings = ({ user }: { user: Customer }) => {
   const t = useTranslations("Account.settings");

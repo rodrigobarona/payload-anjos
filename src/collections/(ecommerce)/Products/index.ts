@@ -2,11 +2,11 @@ import { APIError, type CollectionConfig } from "payload";
 
 import { authenticated } from "@/access/authenticated";
 import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
+import { backgroundPicker } from "@/fields/backgroundPicker";
+import { currencyField } from "@/fields/currencyField";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { slugField } from "@/fields/slug";
 import { generatePreviewPath } from "@/utilities/generatePreviewPath";
-import { backgroundPicker } from "@/fields/backgroundPicker";
-import { currencyField } from "@/fields/currencyField";
 
 export const Products: CollectionConfig = {
   slug: "products",

@@ -1,5 +1,6 @@
-import { Config } from "payload";
 import { LinkFeature, lexicalEditor, BlocksFeature } from "@payloadcms/richtext-lexical";
+import { type Config } from "payload";
+
 // import {
 //   BgColorFeature,
 //   HighlightColorFeature,
@@ -8,8 +9,8 @@ import { LinkFeature, lexicalEditor, BlocksFeature } from "@payloadcms/richtext-
 //   VimeoFeature,
 // } from "payloadcms-lexical-ext";
 import { Carousel } from "@/blocks/Carousel/config";
-import { MediaBlock } from "@/blocks/MediaBlock/config";
 import { FormBlock } from "@/blocks/Form/config";
+import { MediaBlock } from "@/blocks/MediaBlock/config";
 
 export const noBlocksLexical: Config["editor"] = lexicalEditor({
   features: ({ defaultFeatures }) => {

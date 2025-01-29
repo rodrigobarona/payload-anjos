@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 import { draftMode } from "next/headers";
-import { redirect } from "@/i18n/routing";
 import { getPayload } from "payload";
+
+import { type Locale } from "@/i18n/config";
+import { redirect } from "@/i18n/routing";
 import configPromise from "@payload-config";
-import { Locale } from "@/i18n/config";
 
 const payloadToken = "payload-token";
 

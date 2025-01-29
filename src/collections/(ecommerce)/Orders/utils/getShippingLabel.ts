@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SetStateAction } from "react";
+import { type SetStateAction } from "react";
 
 export const getShippingLabel = async ({
   setIsDownloading,

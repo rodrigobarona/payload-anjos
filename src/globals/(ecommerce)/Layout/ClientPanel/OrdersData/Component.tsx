@@ -1,12 +1,16 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Customer } from "@/payload-types";
-import { cn } from "@/utilities/cn";
-import { useState } from "react";
-import { AddNewAddressDialog } from "../../Checkout/variants/OneStepWithSummary/components/AddNewAddressDialog";
-import { Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import axios from "axios";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { type Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
+import { type Customer } from "@/payload-types";
+import { cn } from "@/utilities/cn";
+
+import { AddNewAddressDialog } from "../../Checkout/variants/OneStepWithSummary/components/AddNewAddressDialog";
+
+
 
 export const OrdersData = ({ user }: { user: Customer }) => {
   const [selectedShipping, setSelectedShipping] = useState(
@@ -31,7 +35,7 @@ export const OrdersData = ({ user }: { user: Customer }) => {
           shippings: updatedShippings,
         });
         console.log(data);
-        if (data && data.doc.shippings) {
+        if (data?.doc.shippings) {
           setShippings(data.doc.shippings);
         }
       } catch (error) {

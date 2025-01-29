@@ -1,6 +1,7 @@
-import { Field } from "payload";
-import { courierSettingsFields } from "./courierSettingsFields";
+import { type Field } from "payload";
+
 import { countryPickerField } from "./countryPickerField";
+import { courierSettingsFields } from "./courierSettingsFields";
 import { freeShippingField } from "./freeShippingField";
 import { weightRangesField } from "./weightRangesField";
 

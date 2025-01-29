@@ -1,5 +1,5 @@
-import { Product } from "@/payload-types";
-import { Cart } from "@/stores/CartStore/types";
+import { type Product } from "@/payload-types";
+import { type Cart } from "@/stores/CartStore/types";
 
 export const getFilledProducts = (products: Product[], cart: Cart) => {
   const filledProducts = products.flatMap((product) => {

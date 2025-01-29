@@ -1,4 +1,3 @@
-import type { Block } from "payload";
 
 import {
   FixedToolbarFeature,
@@ -6,7 +5,10 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
+
 import { noBlocksLexical } from "@/fields/noBlocksLexical";
+
+import type { Block } from "payload";
 
 export const FormBlock: Block = {
   slug: "formBlock",

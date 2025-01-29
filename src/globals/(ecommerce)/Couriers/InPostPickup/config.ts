@@ -1,7 +1,8 @@
 import { authenticated } from "@/access/authenticated";
-import { revalidateGlobal } from "@/hooks/revalidateGlobal";
-import type { GlobalConfig } from "payload";
 import { courierFields } from "@/fields/courierFields";
+import { revalidateGlobal } from "@/hooks/revalidateGlobal";
+
+import type { GlobalConfig } from "payload";
 
 export const InPostPickup: GlobalConfig = {
   slug: "inpost-pickup",

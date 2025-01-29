@@ -1,8 +1,10 @@
-import { Locale } from "@/i18n/config";
-import { Order } from "@/payload-types";
-import { getCachedGlobal } from "@/utilities/getGlobals";
 import { Html } from "@react-email/components";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
+
+import { type Locale } from "@/i18n/config";
+import { type Order } from "@/payload-types";
+import { getCachedGlobal } from "@/utilities/getGlobals";
+
 import { Default } from "./variants/Default";
 
 export const OrderPlacedEmail = async ({ order, locale }: { order: Order; locale: Locale }) => {

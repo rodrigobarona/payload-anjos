@@ -1,10 +1,11 @@
-import { getPayload } from "payload";
-import config from "@payload-config";
-import { headers as getHeaders } from "next/headers";
 import { isAxiosError } from "axios";
-import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+import { headers as getHeaders } from "next/headers";
 import { getLocale } from "next-intl/server";
-import { Locale } from "@/i18n/config";
+import { getPayload } from "payload";
+
+import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+import { type Locale } from "@/i18n/config";
+import config from "@payload-config";
 
 export async function GET(req: Request) {
   try {

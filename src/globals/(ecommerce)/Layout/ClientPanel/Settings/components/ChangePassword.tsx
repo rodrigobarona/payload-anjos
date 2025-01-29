@@ -1,19 +1,21 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import axios from "axios";
 import { useTranslations } from "next-intl";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Input } from "@/components/ui/input";
+import { type Customer } from "@/payload-types";
 import {
-  ChangePasswordModalFormData,
+  type ChangePasswordModalFormData,
   useChangePasswordModalForm,
 } from "@/schemas/changePasswordModalForm.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { Customer } from "@/payload-types";
+
 
 export const ChangePassword = ({ user }: { user: Customer }) => {
   const t = useTranslations("Account.settings");

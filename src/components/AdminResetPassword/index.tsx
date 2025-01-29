@@ -1,8 +1,9 @@
 "use client";
-import { CustomTranslationsKeys, CustomTranslationsObject } from "@/admin/translations/custom-translations";
 import { useTranslation } from "@payloadcms/ui";
 import axios from "axios";
 import { useState } from "react";
+
+import { type CustomTranslationsKeys, type CustomTranslationsObject } from "@/admin/translations/custom-translations";
 
 export const AdminResetPassword = () => {
   const [message, setMessage] = useState("");

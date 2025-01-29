@@ -1,7 +1,8 @@
-import { Locale } from "@/i18n/config";
-import { getCachedGlobal } from "@/utilities/getGlobals";
 import axios from "axios";
 import { getLocale } from "next-intl/server";
+
+import { type Locale } from "@/i18n/config";
+import { getCachedGlobal } from "@/utilities/getGlobals";
 
 export const getInpostLabel = async (
   packageID: string,

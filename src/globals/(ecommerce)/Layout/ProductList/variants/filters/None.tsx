@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 const None = ({ title, children }: { title: string; children: ReactNode }) => {
   return (

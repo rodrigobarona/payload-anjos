@@ -1,4 +1,5 @@
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
+
 import type { GlobalConfig } from "payload";
 
 export const ShopSettings: GlobalConfig = {

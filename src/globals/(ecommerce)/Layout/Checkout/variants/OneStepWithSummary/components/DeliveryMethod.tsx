@@ -1,14 +1,16 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { ReactNode, useState } from "react";
-import { InPostGeowidget } from "@/components/(ecommerce)/InPostGeowidget";
-import { CheckoutFormData } from "@/schemas/checkoutForm.schema";
+import { useTranslations } from "next-intl";
+import { type ReactNode, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
+
+import { InPostGeowidget } from "@/components/(ecommerce)/InPostGeowidget";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { FilledCourier } from "./CheckoutForm";
+import { type CheckoutFormData } from "@/schemas/checkoutForm.schema";
+
+import { type FilledCourier } from "./CheckoutForm";
 
 export const DeliveryMethod = ({
   deliveryMethod,
@@ -72,7 +74,7 @@ export const DeliveryMethod = ({
   return (
     <div className="flex flex-1 flex-col">
       <span className="flex flex-1 items-center gap-3">
-        {icon && icon.url && (
+        {icon?.url && (
           <Image
             src={icon.url}
             alt={icon.alt}

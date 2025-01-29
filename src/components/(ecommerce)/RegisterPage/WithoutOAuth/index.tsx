@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { RegisterForm } from "./components/RegisterForm";
 import { useTranslations } from "next-intl";
+
+import { RegisterForm } from "./components/RegisterForm";
 
 export const RegisterPageWithoutOAuth = () => {
   const t = useTranslations("RegisterForm");

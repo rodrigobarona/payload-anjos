@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-interface Props {
+type Props = {
   className?: string;
   loading?: "lazy" | "eager";
   priority?: "auto" | "high" | "low";

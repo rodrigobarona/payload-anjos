@@ -1,13 +1,14 @@
-import { getPayload } from "payload";
-import config from "@payload-config";
-import { headers as getHeaders } from "next/headers";
-import { createInpostPickupPackage } from "@/lib/couriers/packages/createInpostPickupPackage";
 import { isAxiosError } from "axios";
-import { createInpostCourierPackage } from "@/lib/couriers/packages/createInpostCourierPackage";
-import { createInpostCODCourierPackage } from "@/lib/couriers/packages/createInpostCODCourierPackage";
-import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+import { headers as getHeaders } from "next/headers";
 import { getLocale } from "next-intl/server";
-import { Locale } from "@/i18n/config";
+import { getPayload } from "payload";
+
+import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+import { type Locale } from "@/i18n/config";
+import { createInpostCODCourierPackage } from "@/lib/couriers/packages/createInpostCODCourierPackage";
+import { createInpostCourierPackage } from "@/lib/couriers/packages/createInpostCourierPackage";
+import { createInpostPickupPackage } from "@/lib/couriers/packages/createInpostPickupPackage";
+import config from "@payload-config";
 
 export type Dimensions = { width: number; height: number; length: number; weight: number };
 

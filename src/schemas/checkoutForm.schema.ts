@@ -1,5 +1,5 @@
-import { z, ZodType } from "zod";
 import { useTranslations } from "next-intl";
+import { z, type ZodType } from "zod";
 
 export const CheckoutFormSchemaServer = z.object({
   buyerType: z.string().nonempty(),
@@ -86,7 +86,7 @@ export const useCheckoutFormSchema = () => {
           return key !== "tin" && (!value || value.trim() === "");
         })
       ) {
-        Object.entries(data.invoice || {}).forEach(([key, value]) => {
+        Object.entries(data.invoice ?? {}).forEach(([key, value]) => {
           if (key !== "tin" && (!value || value.trim() === "")) {
             type invoiceObject = Exclude<
               keyof NonNullable<z.infer<typeof CheckoutFormSchemaServer>["invoice"]>,

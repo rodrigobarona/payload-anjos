@@ -1,10 +1,12 @@
-import { create } from "zustand";
-import canUseDOM from "@/utilities/canUseDOM";
-import { Cart } from "./types";
 import axios from "axios";
 import debounce from "lodash.debounce";
+import { create } from "zustand";
 
-interface CartState {
+import canUseDOM from "@/utilities/canUseDOM";
+
+import { type Cart } from "./types";
+
+type CartState = {
   cart: Cart | null;
   setCart: (cartToSet: Cart | null) => void;
   updateCart: (cartToSet: Cart) => void;
@@ -35,7 +37,7 @@ const debouncedFetchCartFromUserAccount = debounce(fetchCartFromUserAccount, 100
 
 const debouncedSaveCartToUserAccount = debounce(saveCartToUserAccount, 1000);
 
-const useCartStore = create<CartState>((set, get) => ({
+const useCartStore = create<CartState>((set) => ({
   cart: canUseDOM
     ? (() => {
         const cartData = window.localStorage.getItem("cart");
@@ -56,7 +58,7 @@ const useCartStore = create<CartState>((set, get) => ({
     if (canUseDOM) {
       window.localStorage.setItem("cart", JSON.stringify(cartToSet));
     }
-    debouncedSaveCartToUserAccount(cartToSet);
+    void debouncedSaveCartToUserAccount(cartToSet);
     set({ cart: cartToSet });
   },
 
@@ -68,7 +70,7 @@ const useCartStore = create<CartState>((set, get) => ({
         if (canUseDOM) {
           window.localStorage.setItem("cart", JSON.stringify(cartToSet));
         }
-        debouncedSaveCartToUserAccount(cartToSet);
+        void debouncedSaveCartToUserAccount(cartToSet);
         return { cart: cartToSet };
       }
 
@@ -92,7 +94,7 @@ const useCartStore = create<CartState>((set, get) => ({
       if (canUseDOM) {
         window.localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
-      debouncedSaveCartToUserAccount(updatedCart);
+      void debouncedSaveCartToUserAccount(updatedCart);
       return { cart: updatedCart };
     });
   },
@@ -109,7 +111,7 @@ const useCartStore = create<CartState>((set, get) => ({
       if (canUseDOM) {
         window.localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
-      debouncedSaveCartToUserAccount(updatedCart ?? []);
+      void debouncedSaveCartToUserAccount(updatedCart ?? []);
       return { cart: updatedCart };
     });
   },
@@ -122,7 +124,7 @@ const useCartStore = create<CartState>((set, get) => ({
 
     if (!cartFromUserAccount) {
       if (cartFromLocalStorage.length > 0) {
-        debouncedSaveCartToUserAccount(cartFromLocalStorage);
+        void debouncedSaveCartToUserAccount(cartFromLocalStorage);
       }
       return;
     }

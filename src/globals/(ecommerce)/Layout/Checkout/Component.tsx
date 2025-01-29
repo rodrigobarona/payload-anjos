@@ -1,8 +1,10 @@
-import { Locale } from "@/i18n/config";
-import { getCachedGlobal } from "@/utilities/getGlobals";
-import { getLocale } from "next-intl/server";
-import { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
+import { type ReactNode } from "react";
+
+import { type Locale } from "@/i18n/config";
+import { getCachedGlobal } from "@/utilities/getGlobals";
+
 import { OneStepWithSummary } from "./variants/OneStepWithSummary";
 
 export const Checkout = async ({ locale }: { locale: Locale }) => {

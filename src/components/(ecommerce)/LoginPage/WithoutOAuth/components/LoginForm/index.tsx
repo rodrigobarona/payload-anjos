@@ -1,5 +1,10 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios, { isAxiosError } from "axios";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,12 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginFormData, useLoginFormSchema } from "@/schemas/loginForm.schema";
-import { useForm } from "react-hook-form";
 import { Link, useRouter } from "@/i18n/routing";
-import axios, { isAxiosError } from "axios";
-import { useTranslations } from "next-intl";
+import { type LoginFormData, useLoginFormSchema } from "@/schemas/loginForm.schema";
 import { useCart } from "@/stores/CartStore";
 
 export const LoginForm = () => {

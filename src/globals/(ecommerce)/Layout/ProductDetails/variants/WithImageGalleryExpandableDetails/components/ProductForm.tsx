@@ -1,16 +1,18 @@
 "use client";
-import { Product } from "@/payload-types";
 
-import { useTranslations } from "next-intl";
-import { FilledVariant } from "../../../types";
 import { Radio, RadioGroup } from "@headlessui/react";
-import { cn } from "@/utilities/cn";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import { useCart } from "@/stores/CartStore";
-import { useEffect, useState } from "react";
-import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+
+import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 import { useRouter } from "@/i18n/routing";
+import { type Product } from "@/payload-types";
+import { useCart } from "@/stores/CartStore";
+import { cn } from "@/utilities/cn";
+
+import { type FilledVariant } from "../../../types";
 
 export const ProductForm = ({
   product,
@@ -94,13 +96,11 @@ export const ProductForm = ({
     }
   };
 
-  const isProductAvailable = !Boolean(
-    (product.enableVariants && (!selectedVariant || selectedVariant.stock === 0)) ||
-      (!product.enableVariants && product.stock === 0),
-  );
+  const isProductAvailable = !((product.enableVariants && (!selectedVariant || selectedVariant.stock === 0)) ||
+      (!product.enableVariants && product.stock === 0));
 
   const cartItem =
-    cart && cart.find((item) => item.id === product.id && item.choosenVariantSlug === selectedVariant?.slug);
+    cart?.find((item) => item.id === product.id && item.choosenVariantSlug === selectedVariant?.slug);
 
   return (
     <form className="mt-6">
@@ -111,12 +111,11 @@ export const ProductForm = ({
 
           <fieldset aria-label={t("choose-color")} className="mt-2">
             <RadioGroup
-              value={selectedVariant?.color?.id ?? (filledVariants && filledVariants[0]?.color?.id)}
+              value={selectedVariant?.color?.id ?? (filledVariants?.[0]?.color?.id)}
               onChange={handleChangeColor}
               className="flex items-center gap-x-3"
             >
-              {product.colors &&
-                product.colors.map((color) => {
+              {product.colors?.map((color) => {
                   const isAvailable = isColorAvailable(color.id ?? "");
                   return (
                     <Radio
@@ -155,12 +154,11 @@ export const ProductForm = ({
 
           <fieldset aria-label={t("choose-size")} className="mt-2">
             <RadioGroup
-              value={selectedVariant?.size?.id ?? (filledVariants && filledVariants[0]?.size?.id)}
+              value={selectedVariant?.size?.id ?? (filledVariants?.[0]?.size?.id)}
               onChange={handleChangeSize}
               className="grid grid-cols-3 gap-3 sm:grid-cols-6"
             >
-              {product.sizes &&
-                product.sizes.map((size) => {
+              {product.sizes?.map((size) => {
                   const matchingVariant = findAvailableSizeVariant(size.id || "");
 
                   return (

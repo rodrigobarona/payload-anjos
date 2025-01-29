@@ -1,9 +1,10 @@
 import { getPayload } from "payload";
-import config from "@payload-config";
-import { Cart } from "@/stores/CartStore/types";
-import { Locale } from "@/i18n/config";
+
+import { type Locale } from "@/i18n/config";
 import { getFilledProducts } from "@/lib/getFilledProducts";
 import { getTotal } from "@/lib/getTotal";
+import { type Cart } from "@/stores/CartStore/types";
+import config from "@payload-config";
 
 export async function POST(req: Request) {
   try {

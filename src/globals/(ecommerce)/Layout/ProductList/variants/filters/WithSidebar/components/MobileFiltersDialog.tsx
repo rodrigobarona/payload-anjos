@@ -1,8 +1,9 @@
 "use client";
 
 import { Dialog } from "@headlessui/react";
+import { type ReactNode } from "react";
+
 import { useMobileFilters } from "../stores/MobileFiltersContext";
-import { ReactNode } from "react";
 
 export const MobileFiltersDialog = ({ children }: { children: ReactNode }) => {
   const { mobileFiltersOpen, setMobileFiltersOpen } = useMobileFilters();

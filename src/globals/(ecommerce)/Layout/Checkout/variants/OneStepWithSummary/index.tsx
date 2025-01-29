@@ -1,8 +1,10 @@
-import { getCustomer } from "@/utilities/getCustomer";
-import { CheckoutForm } from "./components/CheckoutForm";
-import { getCachedGlobal } from "@/utilities/getGlobals";
-import { Locale } from "@/i18n/config";
 import { getTranslations } from "next-intl/server";
+
+import { type Locale } from "@/i18n/config";
+import { getCustomer } from "@/utilities/getCustomer";
+import { getCachedGlobal } from "@/utilities/getGlobals";
+
+import { CheckoutForm } from "./components/CheckoutForm";
 
 export const OneStepWithSummary = async ({ locale }: { locale: Locale }) => {
   const user = await getCustomer();

@@ -1,5 +1,6 @@
-import { Cart } from "@/stores/CartStore/types";
-import { FilledProduct } from "./getFilledProducts";
+import { type Cart } from "@/stores/CartStore/types";
+
+import { type FilledProduct } from "./getFilledProducts";
 
 export const getTotalWeight = (filledProducts: FilledProduct[], cart: Cart) =>
   filledProducts.reduce((acc, product) => {

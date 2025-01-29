@@ -1,6 +1,4 @@
 import "server-only";
-import { Locale } from "@/i18n/config";
-import { Customer, Media, Order } from "@/payload-types";
 import {
   Body,
   Column,
@@ -16,12 +14,14 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-
 import { getTranslations } from "next-intl/server";
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
+
+import { type Locale } from "@/i18n/config";
+import { type Media, type Order } from "@/payload-types";
 import { formatDateTime } from "@/utilities/formatDateTime";
-import { getOrderProducts } from "@/utilities/getOrderProducts";
 import { formatPrice } from "@/utilities/formatPrices";
+import { getOrderProducts } from "@/utilities/getOrderProducts";
 
 const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -89,7 +89,7 @@ export const Default = async ({ order, locale }: { order: Order; locale: Locale 
                       ?.image ?? product.images[0]) as Media | undefined)
                   : (product.images[0] as Media);
               return (
-                <Row>
+                <Row key={`${product.id}-${product.variantSlug}`}>
                   <Column>
                     <Img
                       alt={productImage?.alt ?? ""}
@@ -293,8 +293,8 @@ export const Default = async ({ order, locale }: { order: Order; locale: Locale 
             </Row>
             <Row>
               <Text style={{ ...footer.text, paddingTop: 30, paddingBottom: 30 }}>
-                Please contact us if you have any questions. (If you reply to this email, we won't be able to
-                see it.)
+                Please contact us if you have any questions. (If you reply to this email, we won&apos;t be
+                able to see it.)
               </Text>
             </Row>
             <Row>
@@ -397,32 +397,6 @@ const adressTitle = {
   ...paragraph,
   fontSize: "15px",
   fontWeight: "bold",
-};
-
-const recomendationsText = {
-  margin: "0",
-  fontSize: "15px",
-  lineHeight: "1",
-  paddingLeft: "10px",
-  paddingRight: "10px",
-};
-
-const recomendations = {
-  container: {
-    padding: "20px 0",
-  },
-  product: {
-    verticalAlign: "top",
-    textAlign: "left" as const,
-    paddingLeft: "2px",
-    paddingRight: "2px",
-  },
-  title: { ...recomendationsText, paddingTop: "12px", fontWeight: "500" },
-  text: {
-    ...recomendationsText,
-    paddingTop: "4px",
-    color: "#747474",
-  },
 };
 
 const menu = {

@@ -1,9 +1,11 @@
 "use client";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { ReactNode, useEffect, useState } from "react";
-import { Product } from "@/payload-types";
 import Image from "next/image";
-import { FilledVariant } from "../../../types";
+import { type ReactNode, useEffect, useState } from "react";
+
+import { type Product } from "@/payload-types";
+
+import { type FilledVariant } from "../../../types";
 
 export const ProductGallery = ({
   product,

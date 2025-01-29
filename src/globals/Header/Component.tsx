@@ -1,9 +1,13 @@
-import { HeaderClient } from "./Component.client";
+import { getLocale } from "next-intl/server";
+
+import { type Locale } from "@/i18n/config";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 
+import { HeaderClient } from "./Component.client";
+
 import type { Header } from "@/payload-types";
-import { getLocale } from "next-intl/server";
-import { Locale } from "@/i18n/config";
+
+
 
 export async function Header({ disableCart }: { disableCart?: boolean }) {
   const locale = (await getLocale()) as Locale;

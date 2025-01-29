@@ -1,21 +1,22 @@
 import "server-only";
 
-import { cn } from "@/utilities/cn";
 import { Disclosure, DisclosureButton, DisclosurePanel, Tab, TabPanel } from "@headlessui/react";
-
 import { StarIcon } from "@heroicons/react/20/solid";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { Product, ShopLayout } from "@/payload-types";
 import Image from "next/image";
-import RichText from "@/components/RichText";
 import { useTranslations } from "next-intl";
 
-import { FilledVariant } from "../../types";
-import { ProductForm } from "./components/ProductForm";
 
-import { ProductGallery } from "./components/ProductGallery";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
-import { Currency } from "@/stores/Currency/types";
+import RichText from "@/components/RichText";
+import { type Product, type ShopLayout } from "@/payload-types";
+import { type Currency } from "@/stores/Currency/types";
+import { cn } from "@/utilities/cn";
+
+import { ProductForm } from "./components/ProductForm";
+import { ProductGallery } from "./components/ProductGallery";
+
+import { type FilledVariant } from "../../types";
 
 export const WithImageGalleryExpandableDetails = ({
   variant,
@@ -165,8 +166,7 @@ export const WithImageGalleryExpandableDetails = ({
               </h2>
 
               <div className="divide-gray-360 divide-y border-t">
-                {product.details &&
-                  product.details.map((detail) => (
+                {product.details?.map((detail) => (
                     <Disclosure key={detail.id} as="div">
                       <h3>
                         <DisclosureButton className="group relative flex w-full items-center justify-between py-6 text-left">

@@ -1,10 +1,11 @@
 "use client";
 
-import { ShopSetting } from "@/payload-types";
 import { FieldLabel, Select, useField } from "@payloadcms/ui";
 import axios from "axios";
-import { TextFieldClientComponent } from "payload";
+import { type TextFieldClientComponent } from "payload";
 import { useEffect, useState } from "react";
+
+import { type ShopSetting } from "@/payload-types";
 
 export const CurrencySelect: TextFieldClientComponent = ({ path }) => {
   const { value, setValue } = useField<string>({ path });

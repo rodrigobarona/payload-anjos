@@ -1,22 +1,23 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import debounce from "lodash.debounce";
+import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
+import { type FilledVariant } from "@/globals/(ecommerce)/Layout/ProductDetails/types";
+import { type Locale } from "@/i18n/config";
+import { Link } from "@/i18n/routing";
+import { type Media, type Product } from "@/payload-types";
 import { useCartState } from "@/stores/CartStateStore";
 import { useCart } from "@/stores/CartStore";
-import axios from "axios";
-import { FilledVariant } from "@/globals/(ecommerce)/Layout/ProductDetails/types";
-import { Media, Product } from "@/payload-types";
-import { PriceClient } from "@/components/(ecommerce)/PriceClient";
-import Image from "next/image";
-import { Currency } from "@/stores/Currency/types";
-import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
-import { Link } from "@/i18n/routing";
-import { useLocale, useTranslations } from "next-intl";
-import debounce from "lodash.debounce";
-import { Cart } from "@/stores/CartStore/types";
-import { Locale } from "@/i18n/config";
+import { type Cart } from "@/stores/CartStore/types";
+import { type Currency } from "@/stores/Currency/types";
 
 export type ProductWithFilledVariants = Omit<Product, "variants" | "pricing"> & {
   variant: FilledVariant | undefined;
@@ -45,7 +46,7 @@ export const SlideOver = () => {
   const locale = useLocale() as Locale;
 
   const fetchCartProducts = useCallback(
-    debounce(async (cartToCalculate: Cart | null) => {
+    async (cartToCalculate: Cart | null) => {
       try {
         const { data } = await axios.post<{
           status: number;
@@ -64,13 +65,15 @@ export const SlideOver = () => {
       } catch (error) {
         console.error(error);
       }
-    }, 300),
-    [],
+    },
+    [locale, setCartProducts, setTotal],
   );
 
+  const debouncedFetchCartProducts = useMemo(() => debounce(fetchCartProducts, 300), [fetchCartProducts]);
+
   useEffect(() => {
-    fetchCartProducts(cart);
-  }, [cart]);
+    void debouncedFetchCartProducts(cart);
+  }, [cart, debouncedFetchCartProducts]);
 
   const setCartQuantity = (quantity: number, productID: string, productVariantSlug: string | undefined) => {
     setCart([
@@ -134,12 +137,9 @@ export const SlideOver = () => {
                             cart?.map((cartProduct) => cartProduct.id).includes(product.id),
                           )
                           .map((product) => (
-                            <li
-                              key={`${product.id}-${product.variant && product.variant.slug}`}
-                              className="flex py-6"
-                            >
+                            <li key={`${product.id}-${product.variant?.slug}`} className="flex py-6">
                               <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                {product.variant && product.variant.image && product.variant.image.url ? (
+                                {product.variant?.image?.url ? (
                                   <Image
                                     alt={product.variant.image.alt}
                                     src={product.variant.image.url}
@@ -147,7 +147,7 @@ export const SlideOver = () => {
                                     height={96}
                                     className="size-full object-cover"
                                   />
-                                ) : product.image && product.image.url ? (
+                                ) : product.image?.url ? (
                                   <Image
                                     alt={product.image.alt}
                                     src={product.image.url}
@@ -172,13 +172,10 @@ export const SlideOver = () => {
                                       <PriceClient
                                         pricing={
                                           product.enableVariantPrices
-                                            ? ((product.variant &&
-                                                product.variant.pricing &&
-                                                product.variant.pricing.map((p) => ({
-                                                  ...p,
-                                                  value: p.value * product.quantity,
-                                                }))) ??
-                                              [])
+                                            ? (product.variant?.pricing?.map((p) => ({
+                                                ...p,
+                                                value: p.value * product.quantity,
+                                              })) ?? [])
                                             : product.pricing
                                               ? product.pricing.map((p) => ({
                                                   ...p,
@@ -235,10 +232,7 @@ export const SlideOver = () => {
                                     <button
                                       type="button"
                                       onClick={() => {
-                                        removeFromCart(
-                                          product.id,
-                                          (product.variant && product.variant.slug) ?? undefined,
-                                        );
+                                        removeFromCart(product.id, product.variant?.slug ?? undefined);
                                       }}
                                       className="font-medium text-main-600 hover:text-main-500"
                                     >

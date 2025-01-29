@@ -1,10 +1,10 @@
-import { Dimensions } from "@/app/(frontend)/next/package/route";
-import { Locale } from "@/i18n/config";
+import { type Dimensions } from "@/app/(frontend)/next/package/route";
+import { type Locale } from "@/i18n/config";
 import { getInpostLabel } from "@/lib/couriers/labels/getInpostLabel";
 import { createInpostCODCourierPackage } from "@/lib/couriers/packages/createInpostCODCourierPackage";
 import { createInpostCourierPackage } from "@/lib/couriers/packages/createInpostCourierPackage";
 import { createInpostPickupPackage } from "@/lib/couriers/packages/createInpostPickupPackage";
-import { Order } from "@/payload-types";
+import { type Order } from "@/payload-types";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 
 export const createCouriers = (locale: Locale) =>

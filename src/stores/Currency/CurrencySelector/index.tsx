@@ -1,8 +1,9 @@
 "use client";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { useCurrency } from "..";
-import { Currency } from "../types";
+import { type Currency } from "../types";
 
 export const CurrencySelector = ({ currencyOptions }: { currencyOptions: string[] }) => {
   const { setCurrency, currency } = useCurrency();

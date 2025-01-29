@@ -1,4 +1,5 @@
-import { GlobalConfig } from "payload";
+import { type GlobalConfig } from "payload";
+
 import { countryList } from "../Couriers/utils/countryList";
 
 export const Fulfilment: GlobalConfig = {

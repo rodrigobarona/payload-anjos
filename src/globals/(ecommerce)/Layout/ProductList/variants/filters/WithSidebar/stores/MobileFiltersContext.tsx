@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface MobileFiltersState {
+type MobileFiltersState = {
   mobileFiltersOpen: boolean;
   setMobileFiltersOpen: (open: boolean) => void;
 }

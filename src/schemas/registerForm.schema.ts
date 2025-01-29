@@ -1,5 +1,5 @@
-import { z, ZodType } from "zod";
 import { useTranslations } from "next-intl";
+import { z, type ZodType } from "zod";
 
 export type RegisterFormData = {
   email: string;

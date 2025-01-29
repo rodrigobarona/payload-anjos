@@ -1,15 +1,15 @@
-import { getPayload } from "payload";
-import config from "@payload-config";
-import { getCustomer } from "@/utilities/getCustomer";
 
-import { getLocale, getTranslations } from "next-intl/server";
-import { Locale } from "@/i18n/config";
-import { Link, redirect } from "@/i18n/routing";
-
-import { formatPrice } from "@/utilities/formatPrices";
 import Image from "next/image";
+import { getLocale, getTranslations } from "next-intl/server";
+import { getPayload } from "payload";
+
 import { Card } from "@/components/ui/card";
+import { type Locale } from "@/i18n/config";
+import { Link, redirect } from "@/i18n/routing";
 import { formatDateTime } from "@/utilities/formatDateTime";
+import { formatPrice } from "@/utilities/formatPrices";
+import { getCustomer } from "@/utilities/getCustomer";
+import config from "@payload-config";
 
 export const WithSidebarOrders = async () => {
   const payload = await getPayload({ config });

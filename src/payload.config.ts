@@ -1,38 +1,39 @@
-import { s3Storage } from "@payloadcms/storage-s3";
-import { mongooseAdapter } from "@payloadcms/db-mongodb";
-
-import sharp from "sharp"; // sharp-import
 import path from "path";
-import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
+
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { s3Storage } from "@payloadcms/storage-s3";
+import { buildConfig } from "payload";
+import { en } from "payload/i18n/en";
+import { pl } from "payload/i18n/pl";
+import sharp from "sharp"; // sharp-import
+
+import { defaultLexical } from "@/fields/defaultLexical";
+import { getServerSideURL } from "@/utilities/getURL";
+
+import { customTranslationsObject } from "./admin/translations/custom-translations";
+import { Customers } from "./collections/(ecommerce)/Customers";
+import { Orders } from "./collections/(ecommerce)/Orders";
+import { ProductCategories } from "./collections/(ecommerce)/ProductCategories";
+import { ProductReviews } from "./collections/(ecommerce)/ProductReviews";
+import { ProductSubCategories } from "./collections/(ecommerce)/ProductSubCategories";
+import { Products } from "./collections/(ecommerce)/Products";
+import { Administrators } from "./collections/Administrators";
 import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Posts } from "./collections/Posts";
-import { Administrators } from "./collections/Administrators";
+import { InPostCourier } from "./globals/(ecommerce)/Couriers/InPostCourier/config";
+import { InPostCourierCOD } from "./globals/(ecommerce)/Couriers/InPostCourierCOD/config";
+import { InPostPickup } from "./globals/(ecommerce)/Couriers/InPostPickup/config";
+import { Fulfilment } from "./globals/(ecommerce)/Fulfilment";
+import { ShopLayout } from "./globals/(ecommerce)/Layout/config";
+import { Paywalls } from "./globals/(ecommerce)/Paywalls/config";
+import { ShopSettings } from "./globals/(ecommerce)/ShopSettings/config";
+import { EmailMessages } from "./globals/EmailMessages/config";
 import { Footer } from "./globals/Footer/config";
 import { Header } from "./globals/Header/config";
 import { plugins } from "./plugins";
-import { defaultLexical } from "@/fields/defaultLexical";
-import { getServerSideURL } from "@/utilities/getURL";
-import { en } from "payload/i18n/en";
-import { pl } from "payload/i18n/pl";
-import { Products } from "./collections/(ecommerce)/Products";
-import { ProductReviews } from "./collections/(ecommerce)/ProductReviews";
-import { Customers } from "./collections/(ecommerce)/Customers";
-import { ProductCategories } from "./collections/(ecommerce)/ProductCategories";
-import { ProductSubCategories } from "./collections/(ecommerce)/ProductSubCategories";
-
-import { ShopSettings } from "./globals/(ecommerce)/ShopSettings/config";
-import { InPostPickup } from "./globals/(ecommerce)/Couriers/InPostPickup/config";
-import { InPostCourier } from "./globals/(ecommerce)/Couriers/InPostCourier/config";
-import { Paywalls } from "./globals/(ecommerce)/Paywalls/config";
-import { Orders } from "./collections/(ecommerce)/Orders";
-import { Fulfilment } from "./globals/(ecommerce)/Fulfilment";
-import { customTranslationsObject } from "./admin/translations/custom-translations";
-import { InPostCourierCOD } from "./globals/(ecommerce)/Couriers/InPostCourierCOD/config";
-import { ShopLayout } from "./globals/(ecommerce)/Layout/config";
-import { EmailMessages } from "./globals/EmailMessages/config";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -119,13 +120,13 @@ export default buildConfig({
       collections: {
         [Media.slug]: true,
       },
-      bucket: process.env.S3_BUCKET || "",
+      bucket: process.env.S3_BUCKET ?? "",
       config: {
-        endpoint: process.env.S3_ENDPOINT || "",
+        endpoint: process.env.S3_ENDPOINT ?? "",
         region: "auto",
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+          accessKeyId: process.env.S3_ACCESS_KEY_ID ?? "",
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? "",
         },
         requestChecksumCalculation: "WHEN_REQUIRED",
         responseChecksumValidation: "WHEN_REQUIRED",

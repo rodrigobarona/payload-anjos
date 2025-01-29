@@ -1,15 +1,15 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios, { isAxiosError } from "axios";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useForm } from "react-hook-form";
 import { useRouter } from "@/i18n/routing";
-import axios, { isAxiosError } from "axios";
-import { useTranslations } from "next-intl";
-import { RegisterFormData, useRegisterFormSchema } from "@/schemas/registerForm.schema";
+import { type RegisterFormData, useRegisterFormSchema } from "@/schemas/registerForm.schema";
 
 export const RegisterForm = () => {
   const { RegisterFormSchemaResolver } = useRegisterFormSchema();

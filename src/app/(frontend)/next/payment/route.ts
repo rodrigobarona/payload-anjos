@@ -1,20 +1,21 @@
+import { render } from "@react-email/components";
 import { getPayload } from "payload";
-import config from "@payload-config";
-import { Cart } from "@/stores/CartStore/types";
-import { Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
-import { createCouriers, getCouriersArray } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
-import { Locale } from "@/i18n/config";
+
+import { OrderPlacedEmail } from "@/components/Emails/OrderPlacedEmail";
+import { type Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
+import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+import { type Locale } from "@/i18n/config";
 import { getFilledProducts } from "@/lib/getFilledProducts";
 import { getTotal } from "@/lib/getTotal";
 import { getTotalWeight } from "@/lib/getTotalWeight";
-import { CheckoutFormData } from "@/schemas/checkoutForm.schema";
-import { Currency } from "@/stores/Currency/types";
-import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getStripePaymentURL } from "@/lib/paywalls/getStripePaymentURL";
+import { type CheckoutFormData } from "@/schemas/checkoutForm.schema";
+import { type Cart } from "@/stores/CartStore/types";
+import { type Currency } from "@/stores/Currency/types";
 import { getCustomer } from "@/utilities/getCustomer";
+import { getCachedGlobal } from "@/utilities/getGlobals";
 import { sendEmail } from "@/utilities/nodemailer";
-import { OrderPlacedEmail } from "@/components/Emails/OrderPlacedEmail";
-import { render } from "@react-email/components";
+import config from "@payload-config";
 
 export async function POST(req: Request) {
   try {
@@ -31,7 +32,13 @@ export async function POST(req: Request) {
       locale: Locale;
       checkoutData: CheckoutFormData;
       currency: Currency;
-    } = await req.json();
+    } = (await req.json()) as {
+      cart: Cart | undefined;
+      selectedCountry: Country;
+      locale: Locale;
+      checkoutData: CheckoutFormData;
+      currency: Currency;
+    };
     if (!cart) {
       return Response.json({ status: 200 });
     }
@@ -170,7 +177,7 @@ export async function POST(req: Request) {
         const variant = product.variant;
         if (variant.stock) {
           const newStock = variant.stock - product.quantity;
-          payload.update({
+          void payload.update({
             collection: "products",
             id: product.id,
             data: {
@@ -189,7 +196,7 @@ export async function POST(req: Request) {
       } else {
         if (product.stock) {
           const newStock = product.stock - product.quantity;
-          payload.update({
+          void payload.update({
             collection: "products",
             id: product.id,
             data: {
@@ -201,7 +208,7 @@ export async function POST(req: Request) {
     });
 
     if (user) {
-      payload.update({
+      void payload.update({
         collection: "customers",
         id: user.id,
         data: {

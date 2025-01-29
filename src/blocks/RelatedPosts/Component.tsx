@@ -1,9 +1,10 @@
 import RichText from "@/components/RichText";
+import { cn } from "@/utilities/cn";
+
+import { Card } from "../../components/Card";
 
 import type { Post } from "@/payload-types";
 
-import { Card } from "../../components/Card";
-import { cn } from "@/utilities/cn";
 
 export type RelatedPostsProps = {
   className?: string;

@@ -1,8 +1,9 @@
-import type { Block } from "payload";
-
+import { defaultLexical } from "@/fields/defaultLexical";
 import { linkGroup } from "@/fields/linkGroup";
 import { marginFields, paddingFields } from "@/fields/spacingFields";
-import { defaultLexical } from "@/fields/defaultLexical";
+
+import type { Block } from "payload";
+
 
 export const CallToAction: Block = {
   slug: "cta",

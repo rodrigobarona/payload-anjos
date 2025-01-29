@@ -1,7 +1,10 @@
+import { type CollectionConfig } from "payload";
+
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
-import { CollectionConfig } from "payload";
-import { generateID } from "./hooks/generateID";
 import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
+
+import { generateID } from "./hooks/generateID";
+
 
 export const Orders: CollectionConfig = {
   slug: "orders",

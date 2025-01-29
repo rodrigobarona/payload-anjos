@@ -2,16 +2,16 @@ import nodemailer from "nodemailer";
 
 import { getCachedGlobal } from "./getGlobals";
 
-interface EmailPayload {
+type EmailPayload = {
   to: string;
   subject: string;
   html: string;
-}
+};
 
-interface EmailResponse {
+type EmailResponse = {
   success: boolean;
   messageId: string;
-}
+};
 
 const createEmailTransporter = async () => {
   const { smtp } = await getCachedGlobal("emailMessages", "en", 1)();

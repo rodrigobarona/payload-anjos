@@ -1,7 +1,8 @@
+import { noBlocksLexical } from "@/fields/noBlocksLexical";
+import { marginFields, paddingFields } from "@/fields/spacingFields";
+
 import type { Block } from "payload";
 
-import { marginFields, paddingFields } from "@/fields/spacingFields";
-import { noBlocksLexical } from "@/fields/noBlocksLexical";
 
 export const Hotspot: Block = {
   slug: "hotspotZone",

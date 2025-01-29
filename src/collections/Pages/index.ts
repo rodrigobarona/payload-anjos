@@ -1,17 +1,3 @@
-import type { CollectionConfig } from "payload";
-
-import { authenticated } from "@/access/authenticated";
-import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
-import { Archive } from "@/blocks/ArchiveBlock/config";
-import { CallToAction } from "@/blocks/CallToAction/config";
-import { Content } from "@/blocks/Content/config";
-import { FormBlock } from "@/blocks/Form/config";
-import { MediaBlock } from "@/blocks/MediaBlock/config";
-import { hero } from "@/components/heros/config";
-import { slugField } from "@/fields/slug";
-import { populatePublishedAt } from "@/hooks/populatePublishedAt";
-import { generatePreviewPath } from "@/utilities/generatePreviewPath";
-import { revalidateDelete, revalidatePage } from "./hooks/revalidatePage";
 
 import {
   MetaDescriptionField,
@@ -20,10 +6,27 @@ import {
   OverviewField,
   PreviewField,
 } from "@payloadcms/plugin-seo/fields";
-import { Carousel } from "@/blocks/Carousel/config";
-import { Accordion } from "@/blocks/Accordion/config";
-import { Code } from "@/blocks/Code/config";
+
+import { authenticated } from "@/access/authenticated";
+import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
 import { Hotspot } from "@/blocks/(ecommerce)/Hotspot/config";
+import { Accordion } from "@/blocks/Accordion/config";
+import { Archive } from "@/blocks/ArchiveBlock/config";
+import { CallToAction } from "@/blocks/CallToAction/config";
+import { Carousel } from "@/blocks/Carousel/config";
+import { Code } from "@/blocks/Code/config";
+import { Content } from "@/blocks/Content/config";
+import { FormBlock } from "@/blocks/Form/config";
+import { MediaBlock } from "@/blocks/MediaBlock/config";
+import { hero } from "@/components/heros/config";
+import { slugField } from "@/fields/slug";
+import { populatePublishedAt } from "@/hooks/populatePublishedAt";
+import { generatePreviewPath } from "@/utilities/generatePreviewPath";
+
+import { revalidateDelete, revalidatePage } from "./hooks/revalidatePage";
+
+
+import type { CollectionConfig } from "payload";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",

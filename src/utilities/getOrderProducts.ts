@@ -1,7 +1,8 @@
-import { Order } from "@/payload-types";
 import { getPayload } from "payload";
+
+import { type Locale } from "@/i18n/config";
+import { type Order } from "@/payload-types";
 import config from "@/payload.config";
-import { Locale } from "@/i18n/config";
 
 export const getOrderProducts = async (orderProducts: Order["products"], locale: Locale) => {
   const payload = await getPayload({ config });

@@ -1,14 +1,16 @@
 "use client";
 
-import { CustomTranslationsKeys, CustomTranslationsObject } from "@/admin/translations/custom-translations";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utilities/cn";
 import { FieldLabel, useField, useForm, useTranslation } from "@payloadcms/ui";
 import axios from "axios";
 import { useState } from "react";
-import { getShippingLabel } from "../../utils/getShippingLabel";
-import { Dimensions } from "@/app/(frontend)/next/package/route";
+
+import { type CustomTranslationsKeys, type CustomTranslationsObject } from "@/admin/translations/custom-translations";
+import { type Dimensions } from "@/app/(frontend)/next/package/route";
 import { AdminInput } from "@/components/ui/AdminInput";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/utilities/cn";
+
+import { getShippingLabel } from "../../utils/getShippingLabel";
 
 export const CourierShipmentMenuClient = ({ orderID }: { orderID: string }) => {
   const [isLoading, setIsLoading] = useState(false);

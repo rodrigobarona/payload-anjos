@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
+import React, { useEffect, useRef } from "react";
 
 const InPostWrapper = ({ token, onPointSelect }) => {
   const containerRef = useRef<HTMLDivElement>(null);

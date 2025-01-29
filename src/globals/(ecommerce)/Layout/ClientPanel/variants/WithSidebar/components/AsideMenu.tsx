@@ -5,10 +5,12 @@ import {
   CubeIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@/utilities/cn";
-import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { useTranslations } from "next-intl";
+
+import { Link } from "@/i18n/routing";
+import { cn } from "@/utilities/cn";
+
 
 const navigation = [
   { name: "orders", href: "/account/orders", icon: CubeIcon },

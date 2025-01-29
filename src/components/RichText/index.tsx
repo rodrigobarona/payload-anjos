@@ -1,27 +1,30 @@
-import { MediaBlock } from "@/blocks/MediaBlock/Component";
-import { DefaultNodeTypes, SerializedBlockNode, SerializedLinkNode } from "@payloadcms/richtext-lexical";
-import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import {
-  JSXConvertersFunction,
+  type DefaultNodeTypes,
+  type SerializedBlockNode,
+  type SerializedLinkNode,
+} from "@payloadcms/richtext-lexical";
+import { type SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import {
+  type JSXConvertersFunction,
   LinkJSXConverter,
   RichText as RichTextWithoutBlocks,
 } from "@payloadcms/richtext-lexical/react";
 
-import { CodeBlock, CodeBlockProps } from "@/blocks/Code/Component";
+// import { JSXConverters } from "payloadcms-lexical-ext";
+import { AccordionBlock } from "@/blocks/Accordion/Component";
+import { BannerBlock } from "@/blocks/Banner/Component";
+import { CallToActionBlock } from "@/blocks/CallToAction/Component";
+import { CarouselBlock } from "@/blocks/Carousel/Component";
+import { CodeBlock, type CodeBlockProps } from "@/blocks/Code/Component";
+import { FormBlock } from "@/blocks/Form/Component";
+import { MediaBlock } from "@/blocks/MediaBlock/Component";
+import { cn } from "@/utilities/cn";
 
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from "@/payload-types";
-import { BannerBlock } from "@/blocks/Banner/Component";
-import { CallToActionBlock } from "@/blocks/CallToAction/Component";
-import { cn } from "@/utilities/cn";
-
-// import { JSXConverters } from "payloadcms-lexical-ext";
-import { CarouselBlock } from "@/blocks/Carousel/Component";
-import { AccordionBlock } from "@/blocks/Accordion/Component";
-import { FormBlock } from "@/blocks/Form/Component";
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -75,7 +78,7 @@ export default function RichText(props: Props) {
         {
           container: enableGutter,
           "max-w-none": !enableGutter,
-          "md:prose-md prose mx-auto dark:prose-invert": enableProse,
+          "prose mx-auto md:prose-md dark:prose-invert": enableProse,
         },
         className,
       )}

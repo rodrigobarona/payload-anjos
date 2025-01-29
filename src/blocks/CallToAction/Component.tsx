@@ -1,14 +1,15 @@
-import type { CallToActionBlock as CTABlockProps } from "@/payload-types";
-
-import RichText from "@/components/RichText";
-import { CMSLink } from "@/components/Link";
-import { cn } from "@/utilities/cn";
 import {
   paddingBottomClasses,
   paddingTopClasses,
   spacingBottomClasses,
   spacingTopClasses,
 } from "@/blocks/globals";
+import { CMSLink } from "@/components/Link";
+import RichText from "@/components/RichText";
+import { cn } from "@/utilities/cn";
+
+import type { CallToActionBlock as CTABlockProps } from "@/payload-types";
+
 
 export const CallToActionBlock = ({
   links,

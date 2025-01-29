@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import type { Administrator } from "@/payload-types";
 import { getClientSideURL } from "./getURL";
+
+import type { Administrator } from "@/payload-types";
 
 export const getMeUser = async (args?: {
   nullUserRedirect?: string;
@@ -11,10 +12,9 @@ export const getMeUser = async (args?: {
   token: string;
   user: Administrator;
 }> => {
-  const { nullUserRedirect, validUserRedirect } = args || {};
+  const { nullUserRedirect, validUserRedirect } = args ?? {};
   const cookieStore = await cookies();
   const token = cookieStore.get("payload-token")?.value;
-
 
   const meUserReq = await fetch(`${getClientSideURL()}/api/administrators/me`, {
     headers: {
@@ -26,7 +26,7 @@ export const getMeUser = async (args?: {
     user,
   }: {
     user: Administrator;
-  } = await meUserReq.json();
+  } = (await meUserReq.json()) as { user: Administrator };
 
   if (validUserRedirect && meUserReq.ok && user) {
     redirect(validUserRedirect);

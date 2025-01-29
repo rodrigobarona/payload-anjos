@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface CartState {
+type CartState = {
   isOpen: boolean;
   toggleCart: () => void;
   setCartState: (isOpen: boolean) => void;

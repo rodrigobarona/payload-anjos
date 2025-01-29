@@ -1,12 +1,13 @@
 import { getPayload } from "payload";
-import config from "@payload-config";
-import { Cart } from "@/stores/CartStore/types";
-import { Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
+
+import { type Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { getCouriersArray } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
-import { Locale } from "@/i18n/config";
+import { type Locale } from "@/i18n/config";
 import { getFilledProducts } from "@/lib/getFilledProducts";
 import { getTotal } from "@/lib/getTotal";
 import { getTotalWeight } from "@/lib/getTotalWeight";
+import { type Cart } from "@/stores/CartStore/types";
+import config from "@payload-config";
 
 export async function POST(req: Request) {
   try {
@@ -54,11 +55,11 @@ export async function POST(req: Request) {
     const filledCouriers = couriers
       .filter(
         (courier) =>
-          courier && courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry)),
+          courier?.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry)),
       )
       .map((courier) => {
         const deliveryZone =
-          courier && courier.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry));
+          courier?.deliveryZones?.find((zone) => zone.countries.includes(selectedCountry));
         const deliveryZoneWithRange = {
           ...deliveryZone,
           range: deliveryZone?.range?.find(

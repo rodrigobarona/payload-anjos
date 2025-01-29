@@ -7,5 +7,5 @@ export const DeliveryZonesRowLabel = () => {
     countries?: string[];
   }>();
 
-  return <p>{data.countries && data.countries.join(", ")}</p>;
+  return <p>{data.countries?.join(", ")}</p>;
 };

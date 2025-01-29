@@ -1,6 +1,7 @@
-import { Locale } from "@/i18n/config";
-import { redirect } from "@/i18n/routing";
 import { setRequestLocale } from "next-intl/server";
+
+import { type Locale } from "@/i18n/config";
+import { redirect } from "@/i18n/routing";
 
 const Page = async ({ params }: { params: Promise<{ locale: Locale }> }) => {
   const { locale } = await params;

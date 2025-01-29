@@ -1,5 +1,6 @@
+import { type Field } from "payload";
+
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
-import { Field } from "payload";
 
 export const countryPickerField: Field = {
   name: "countries",

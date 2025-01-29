@@ -1,12 +1,14 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
-import { Link } from "@/i18n/routing";
-import { ProductWithFilledVariants } from "@/globals/(ecommerce)/Layout/Cart/variants/SlideOver";
 import Image from "next/image";
-import { Currency } from "@/stores/Currency/types";
+import { useTranslations } from "next-intl";
+
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
+import { type ProductWithFilledVariants } from "@/globals/(ecommerce)/Layout/Cart/variants/SlideOver";
+import { Link } from "@/i18n/routing";
 import { useCart } from "@/stores/CartStore";
-import { useTranslations } from "next-intl";
+import { type Currency } from "@/stores/Currency/types";
+
 
 /**
  * This function merges two arrays of objects with currency and value, summing up the values with the same currency.
@@ -81,11 +83,10 @@ export const OrderSummary = ({
       <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
         <h3 className="sr-only">{t("items-in-cart")}</h3>
         <ul role="list" className="divide-y divide-gray-200">
-          {products &&
-            products.map((product) => (
+          {products?.map((product) => (
               <li key={`${product.id}-${product.variant?.slug}`} className="flex px-4 py-6 sm:px-6">
                 <div className="shrink-0">
-                  {product.variant && product.variant.image && product.variant.image.url ? (
+                  {product.variant?.image?.url ? (
                     <Image
                       alt={product.variant.image.alt}
                       src={product.variant.image.url}
@@ -93,7 +94,7 @@ export const OrderSummary = ({
                       height={96}
                       className="w-20 rounded-md"
                     />
-                  ) : product.image && product.image.url ? (
+                  ) : product.image?.url ? (
                     <Image
                       alt={product.image.alt}
                       src={product.image.url}
@@ -130,7 +131,7 @@ export const OrderSummary = ({
                         type="button"
                         className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
                         onClick={() => {
-                          removeFromCart(product.id, (product.variant && product.variant.slug) ?? undefined);
+                          removeFromCart(product.id, (product.variant?.slug) ?? undefined);
                         }}
                       >
                         <span className="sr-only">{t("remove")}</span>
@@ -144,9 +145,7 @@ export const OrderSummary = ({
                       <PriceClient
                         pricing={
                           product.enableVariantPrices
-                            ? ((product.variant &&
-                                product.variant.pricing &&
-                                product.variant.pricing.map((p) => ({
+                            ? ((product.variant?.pricing?.map((p) => ({
                                   ...p,
                                   value: p.value * product.quantity,
                                 }))) ??

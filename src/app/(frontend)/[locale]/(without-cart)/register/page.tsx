@@ -1,5 +1,5 @@
 import { RegisterPageWithoutOAuth } from "@/components/(ecommerce)/RegisterPage/WithoutOAuth";
-import { Locale } from "@/i18n/config";
+import { type Locale } from "@/i18n/config";
 import { redirect } from "@/i18n/routing";
 import { getCustomer } from "@/utilities/getCustomer";
 import { getCachedGlobal } from "@/utilities/getGlobals";

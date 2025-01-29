@@ -1,27 +1,28 @@
 "use client";
 
-import { cn } from "@/utilities/cn";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  CarouselProps,
-} from "@/components/ui/carousel";
-import AutoplayPlugin from "embla-carousel-autoplay";
 import AutoScrollPlugin from "embla-carousel-auto-scroll";
+import AutoplayPlugin from "embla-carousel-autoplay";
+import Image from "next/image";
+import Link from "next/link";
 
-import type { CarouselBlock as CarouselBlockProps } from "@/payload-types";
 import {
   spacingTopClasses,
   spacingBottomClasses,
   paddingTopClasses,
   paddingBottomClasses,
 } from "@/blocks/globals";
-import Image from "next/image";
-import Link from "next/link";
 import RichText from "@/components/RichText";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselProps,
+} from "@/components/ui/carousel";
+import { cn } from "@/utilities/cn";
+
+import type { CarouselBlock as CarouselBlockProps } from "@/payload-types";
 
 export const CarouselBlock = ({
   type,
@@ -50,7 +51,7 @@ export const CarouselBlock = ({
     ],
   };
 
-  const options: { [key: string]: Partial<CarouselProps["opts"]> } = {
+  const options: Record<string, Partial<CarouselProps["opts"]>> = {
     logo: {
       loop: true,
       watchDrag: false,

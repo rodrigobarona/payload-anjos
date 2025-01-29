@@ -1,7 +1,8 @@
 import { getPayload } from "payload";
-import config from "@payload-config";
-import { Cart } from "@/stores/CartStore/types";
+
+import { type Cart } from "@/stores/CartStore/types";
 import { getCustomer } from "@/utilities/getCustomer";
+import config from "@payload-config";
 
 export async function POST(req: Request) {
   try {
@@ -12,8 +13,8 @@ export async function POST(req: Request) {
 
     let cart: Cart | undefined;
     try {
-      cart = await req.json();
-    } catch (parseError) {
+      cart = (await req.json()) as Cart | undefined;
+    } catch {
       return Response.json(JSON.stringify({ error: "Invalid JSON in request body" }), { status: 400 });
     }
 
@@ -50,7 +51,7 @@ export async function GET() {
 
     return Response.json({
       status: 200,
-      data: typeof user.cart === "string" ? JSON.parse(user.cart) : user.cart,
+      data: typeof user.cart === "string" ? (JSON.parse(user.cart) as Cart) : user.cart,
     });
   } catch (error) {
     console.log(error);

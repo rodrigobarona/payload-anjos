@@ -1,8 +1,9 @@
+import { getPayload } from "payload";
+
 import RichText from "@/components/RichText";
 import WithInlinePrice from "@/globals/(ecommerce)/Layout/ProductList/variants/listings/WithInlinePrice";
-import { HotspotBlock as HotspotBlockProps, Product } from "@/payload-types";
+import { type HotspotBlock as HotspotBlockProps, type Product } from "@/payload-types";
 import config from "@payload-config";
-import { getPayload } from "payload";
 
 export const HotspotBlock = async ({
   appearance,

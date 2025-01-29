@@ -1,13 +1,15 @@
-import type { CountryField } from "@payloadcms/plugin-form-builder/types";
-import type { Control, FieldErrorsImpl, FieldValues } from "react-hook-form";
+import { Controller ,type  Control,type  FieldErrorsImpl,type  FieldValues } from "react-hook-form";
 
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Controller } from "react-hook-form";
+
+
+import { countryOptions } from "./options";
 
 import { Error } from "../Error";
 import { Width } from "../Width";
-import { countryOptions } from "./options";
+
+import type { CountryField } from "@payloadcms/plugin-form-builder/types";
 
 export const Country = ({
   name,
@@ -19,9 +21,7 @@ export const Country = ({
 }: CountryField & {
   control: Control<FieldValues, any>;
   errors: Partial<
-    FieldErrorsImpl<{
-      [x: string]: any;
-    }>
+    FieldErrorsImpl<Record<string, any>>
   >;
 }) => {
   return (

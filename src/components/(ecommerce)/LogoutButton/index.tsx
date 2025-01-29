@@ -1,9 +1,10 @@
 "use client";
 
+import axios from "axios";
+import { type ReactNode } from "react";
+
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/routing";
-import axios from "axios";
-import { ReactNode } from "react";
 
 export const LogoutButton = ({
   className,

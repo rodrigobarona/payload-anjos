@@ -1,15 +1,16 @@
 "use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useTranslations } from "next-intl";
+import { type Dispatch, type SetStateAction, useState } from "react";
+import { useForm } from "react-hook-form";
+
 import { ShippingAddressForm } from "@/components/(ecommerce)/ShippingAddressForm";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
-import { Customer } from "@/payload-types";
-import { CheckoutFormData, useCheckoutFormSchema } from "@/schemas/checkoutForm.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useForm } from "react-hook-form";
+import { type Customer } from "@/payload-types";
+import { type CheckoutFormData, useCheckoutFormSchema } from "@/schemas/checkoutForm.schema";
 
 export const AddNewAddressDialog = ({
   open,

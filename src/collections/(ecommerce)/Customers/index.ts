@@ -1,5 +1,6 @@
+import { type CollectionConfig } from "payload";
+
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
-import { CollectionConfig } from "payload";
 
 export const Customers: CollectionConfig = {
   slug: "customers",

@@ -1,7 +1,8 @@
 "use client";
-import { Select } from "@/components/ui/select";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
+
+import { Select } from "@/components/ui/select";
 
 export const SortSelect = ({ children, defaultValue }: { children: ReactNode; defaultValue: string }) => {
   const searchParams = useSearchParams();

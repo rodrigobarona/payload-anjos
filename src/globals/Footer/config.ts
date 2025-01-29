@@ -1,7 +1,8 @@
-import type { GlobalConfig } from "payload";
 
 import { link } from "@/fields/link";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
+
+import type { GlobalConfig } from "payload";
 
 export const Footer: GlobalConfig = {
   slug: "footer",

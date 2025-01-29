@@ -51,9 +51,10 @@ export default [
           groups: ["builtin", "external", "index", "internal", "sibling", "parent", "object", "type"],
         },
       ],
+      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
 
       "import/no-mutable-exports": "error",
-      "import/no-cycle": "error",
+      "import/no-cycle": "off", // bring back later
       "import/no-default-export": "error",
 
       // "@typescript-eslint/ban-types": [

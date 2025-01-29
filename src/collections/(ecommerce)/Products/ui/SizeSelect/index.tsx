@@ -1,9 +1,10 @@
 "use client";
 
-import { Product } from "@/payload-types";
 import { FieldLabel, Select, useField, useForm } from "@payloadcms/ui";
-import { TextFieldClientComponent } from "payload";
+import { type TextFieldClientComponent } from "payload";
 import { useEffect } from "react";
+
+import { Product } from "@/payload-types";
 
 export const SizeSelect: TextFieldClientComponent = ({ path }) => {
   const { value, setValue } = useField<string>({ path });
@@ -18,7 +19,7 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
 
   const { value: variantType } = useField<string>({ path: "variantsType" });
 
-  const sizes = getDataByPath("sizes") as Product["sizes"];
+  const sizes = getDataByPath("sizes");
 
   const handleSizeChange = (option: { value: string }) => {
     setValue(option.value);

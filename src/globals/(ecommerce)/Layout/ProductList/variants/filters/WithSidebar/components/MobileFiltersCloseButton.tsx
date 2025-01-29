@@ -1,8 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { useMobileFilters } from "../stores/MobileFiltersContext";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
+
+import { useMobileFilters } from "../stores/MobileFiltersContext";
 
 export const MobileFiltersCloseButton = () => {
   const { setMobileFiltersOpen } = useMobileFilters();

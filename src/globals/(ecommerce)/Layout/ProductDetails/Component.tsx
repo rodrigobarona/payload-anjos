@@ -1,10 +1,14 @@
-import { Locale } from "@/i18n/config";
-import { Product } from "@/payload-types";
-import { getCachedGlobal } from "@/utilities/getGlobals";
-import { getLocale } from "next-intl/server";
-import { ReactNode } from "react";
-import { WithImageGalleryExpandableDetails } from "./variants/WithImageGalleryExpandableDetails";
 import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
+import { type ReactNode } from "react";
+
+import { type Locale } from "@/i18n/config";
+import { type Product } from "@/payload-types";
+import { getCachedGlobal } from "@/utilities/getGlobals";
+
+import { WithImageGalleryExpandableDetails } from "./variants/WithImageGalleryExpandableDetails";
+
+
 import { ProductBreadcrumbs } from "../../../../components/(ecommerce)/ProductBreadcrumbs";
 
 export const ProductDetails = async ({ variant, product }: { variant?: string; product: Product }) => {

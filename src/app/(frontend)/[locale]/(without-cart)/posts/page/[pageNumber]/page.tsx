@@ -1,14 +1,19 @@
-import type { Metadata } from "next/types";
+
+import { notFound } from "next/navigation";
+import { getPayload } from "payload";
+import React from "react";
 
 import { CollectionArchive } from "@/components/CollectionArchive";
 import { PageRange } from "@/components/PageRange";
 import { Pagination } from "@/components/Pagination";
+import { type Locale } from "@/i18n/config";
 import configPromise from "@payload-config";
-import { getPayload } from "payload";
-import React from "react";
+
 import PageClient from "./page.client";
-import { notFound } from "next/navigation";
-import { Locale } from "@/i18n/config";
+
+
+
+import type { Metadata } from "next/types";
 
 export const revalidate = 600;
 

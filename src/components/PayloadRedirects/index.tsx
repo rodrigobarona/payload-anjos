@@ -1,11 +1,12 @@
-import { redirect } from "@/i18n/routing";
-import type { Page, Post } from "@/payload-types";
-
-import { getCachedDocument } from "@/utilities/getDocument";
-import { getCachedRedirects } from "@/utilities/getRedirects";
 import { notFound } from "next/navigation";
 
-interface Props {
+import { redirect } from "@/i18n/routing";
+import { getCachedDocument } from "@/utilities/getDocument";
+import { getCachedRedirects } from "@/utilities/getRedirects";
+
+import type { Page, Post } from "@/payload-types";
+
+type Props = {
   disableNotFound?: boolean;
   url: string;
   locale: string;

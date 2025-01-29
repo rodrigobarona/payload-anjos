@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/routing";
-import { Product } from "@/payload-types";
+import { type Product } from "@/payload-types";
 
 export const ProductBreadcrumbs = ({ product }: { product: Product }) => {
   return (
@@ -21,8 +21,7 @@ export const ProductBreadcrumbs = ({ product }: { product: Product }) => {
               </div>
             </li>
           )}
-          {product.categoriesArr &&
-            product.categoriesArr[0].subcategories &&
+          {product.categoriesArr?.[0].subcategories &&
             typeof product.categoriesArr[0].category !== "string" &&
             typeof product.categoriesArr[0].subcategories[0] !== "string" && (
               <li key={product.categoriesArr[0].subcategories[0].id}>

@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/routing";
-import { ProductCategory, ProductSubCategory } from "@/payload-types";
+import { type ProductCategory, type ProductSubCategory } from "@/payload-types";
 
 export const ListingBreadcrumbs = ({
   category,

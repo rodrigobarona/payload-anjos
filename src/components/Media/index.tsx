@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
 
-import type { Props } from "./types";
 
 import { ImageMedia } from "./ImageMedia";
 import { VideoMedia } from "./VideoMedia";
+
+import type { Props } from "./types";
 
 export const Media = (props: Props) => {
   const { className, htmlElement = "div", resource } = props;

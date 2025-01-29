@@ -1,7 +1,9 @@
-import { Currency } from "@/stores/Currency/types";
-import { FilledProduct } from "../getFilledProducts";
-import { Locale } from "@/i18n/config";
 import Stripe from "stripe";
+
+import { type Locale } from "@/i18n/config";
+import { type Currency } from "@/stores/Currency/types";
+
+import { type FilledProduct } from "../getFilledProducts";
 
 export const getStripePaymentURL = async (
   filledProducts: FilledProduct[],
@@ -76,6 +78,6 @@ export const getStripePaymentURL = async (
     return session.url;
   } catch (error) {
     console.log(error);
-    throw new Error(error);
+    throw new Error(error as string);
   }
 };

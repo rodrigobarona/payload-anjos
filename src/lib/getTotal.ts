@@ -1,4 +1,4 @@
-import { FilledProduct } from "./getFilledProducts";
+import { type FilledProduct } from "./getFilledProducts";
 
 type Total = Record<string, number>;
 

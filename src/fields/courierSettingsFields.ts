@@ -1,4 +1,4 @@
-import { Field } from "payload";
+import { type Field } from "payload";
 
 export const courierSettingsFields: Field[] = [
   { name: "label", type: "text", label: { en: "Label", pl: "Etykieta" }, localized: true, required: true },
