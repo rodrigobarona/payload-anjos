@@ -14,59 +14,81 @@ export const EmailMessages: GlobalConfig = {
   },
   fields: [
     {
-      name: "host",
-      type: "text",
-      required: true,
-      label: {
-        en: "Host",
-        pl: "Host",
-      },
-    },
-    {
-      name: "port",
-      type: "number",
-      required: true,
-      label: {
-        en: "SMTP Port",
-        pl: "Port SMTP",
-      },
-    },
-    {
-      name: "secure",
-      type: "checkbox",
-      label: {
-        en: "Secure",
-        pl: "Bezpieczne",
-      },
-      required: true,
-      defaultValue: false,
-    },
-    {
-      name: "user",
-      type: "text",
-      required: true,
-      label: {
-        en: "User",
-        pl: "Użytkownik",
-      },
-    },
-    {
-      name: "password",
-      type: "text",
-      required: true,
-      label: {
-        en: "Password",
-        pl: "Hasło",
-      },
-    },
-    {
-      name: "fromEmail",
-      type: "text",
-      required: true,
-      label: {
-        en: "From Email",
-        pl: "Z adresu e-mail",
-      },
+      type: "tabs",
+      tabs: [
+        {
+          name: "smtp",
+          label: {
+            en: "SMTP",
+            pl: "SMTP",
+          },
+          fields: [
+            {
+              name: "host",
+              type: "text",
+              required: true,
+              label: {
+                en: "Host",
+                pl: "Host",
+              },
+            },
+            {
+              name: "port",
+              type: "number",
+              required: true,
+              label: {
+                en: "SMTP Port",
+                pl: "Port SMTP",
+              },
+            },
+            {
+              name: "secure",
+              type: "checkbox",
+              label: {
+                en: "Secure",
+                pl: "Bezpieczne",
+              },
+              required: true,
+              defaultValue: false,
+            },
+            {
+              name: "user",
+              type: "text",
+              required: true,
+              label: {
+                en: "User",
+                pl: "Użytkownik",
+              },
+            },
+            {
+              name: "password",
+              type: "text",
+              required: true,
+              label: {
+                en: "Password",
+                pl: "Hasło",
+              },
+            },
+            {
+              name: "fromEmail",
+              type: "text",
+              required: true,
+              label: {
+                en: "From Email",
+                pl: "Z adresu e-mail",
+              },
+            },
+          ],
+        },
+        {
+          name: "messages",
+          label: {
+            en: "Messages",
+            pl: "Wiadomości",
+          },
+          fields: [],
+        },
+      ],
     },
   ],
   hooks: {

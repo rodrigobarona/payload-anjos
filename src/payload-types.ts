@@ -1682,12 +1682,15 @@ export interface Footer {
  */
 export interface EmailMessage {
   id: string;
-  host: string;
-  port: number;
-  secure: boolean;
-  user: string;
-  password: string;
-  fromEmail: string;
+  smtp: {
+    host: string;
+    port: number;
+    secure: boolean;
+    user: string;
+    password: string;
+    fromEmail: string;
+  };
+  messages?: {};
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1747,12 +1750,17 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "emailMessages_select".
  */
 export interface EmailMessagesSelect<T extends boolean = true> {
-  host?: T;
-  port?: T;
-  secure?: T;
-  user?: T;
-  password?: T;
-  fromEmail?: T;
+  smtp?:
+    | T
+    | {
+        host?: T;
+        port?: T;
+        secure?: T;
+        user?: T;
+        password?: T;
+        fromEmail?: T;
+      };
+  messages?: T | {};
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
