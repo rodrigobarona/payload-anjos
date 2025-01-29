@@ -14,7 +14,7 @@ export const ArchiveBlock = async (
 ) => {
   const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props;
 
-  const limit = limitFromProps || 3;
+  const limit = limitFromProps ?? 3;
 
   let posts: Post[] = [];
 

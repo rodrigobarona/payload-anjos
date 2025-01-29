@@ -55,10 +55,10 @@ export const MediaBlock = (props: Props) => {
           container: enableGutter,
         },
         className,
-        spacingTopClasses[spacingTop || "medium"],
-        spacingBottomClasses[spacingBottom || "medium"],
-        paddingTopClasses[paddingTop || "medium"],
-        paddingBottomClasses[paddingBottom || "medium"],
+        spacingTopClasses[spacingTop ?? "medium"],
+        spacingBottomClasses[spacingBottom ?? "medium"],
+        paddingTopClasses[paddingTop ?? "medium"],
+        paddingBottomClasses[paddingBottom ?? "medium"],
       )}
     >
       <Media

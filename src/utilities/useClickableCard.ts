@@ -10,7 +10,7 @@ type UseClickableCardType<T extends HTMLElement> = {
   link: {
     ref: RefObject<HTMLAnchorElement | null>;
   };
-};
+}
 
 type Props = {
   external?: boolean;

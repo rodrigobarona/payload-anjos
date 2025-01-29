@@ -22,7 +22,7 @@ type Args = {
     pageNumber: string;
     locale: Locale;
   }>;
-};
+}
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber, locale } = await paramsPromise;

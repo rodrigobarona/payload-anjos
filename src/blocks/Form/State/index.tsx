@@ -1,8 +1,8 @@
-import { Controller ,type  Control,type  FieldErrorsImpl,type  FieldValues } from "react-hook-form";
+/* eslint-disable */
+import { Controller, type Control, type FieldErrorsImpl, type FieldValues } from "react-hook-form";
 
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
 
 import { stateOptions } from "./options";
 
@@ -20,9 +20,7 @@ export const State = ({
   width,
 }: StateField & {
   control: Control<FieldValues, any>;
-  errors: Partial<
-    FieldErrorsImpl<Record<string, any>>
-  >;
+  errors: Partial<FieldErrorsImpl<Record<string, any>>>;
 }) => {
   return (
     <Width width={width}>

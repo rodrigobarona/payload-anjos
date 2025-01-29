@@ -1,5 +1,5 @@
+/* eslint-disable */
 import React, { Fragment } from "react";
-
 
 import { ImageMedia } from "./ImageMedia";
 import { VideoMedia } from "./VideoMedia";

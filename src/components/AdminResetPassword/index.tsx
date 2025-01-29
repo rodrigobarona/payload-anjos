@@ -18,7 +18,7 @@ export const AdminResetPassword = () => {
         if (res.status === 200) {
           setMessage(t("custom:resetPasswordSuccess"));
         }
-      } catch (error) {
+      } catch {
         setMessage(t("custom:resetPasswordError"));
       }
     }

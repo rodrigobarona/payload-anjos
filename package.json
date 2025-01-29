@@ -87,6 +87,7 @@
     "@eslint/js": "^9.19.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/escape-html": "^1.0.4",
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "22.10.4",
     "@types/nodemailer": "^6.4.17",

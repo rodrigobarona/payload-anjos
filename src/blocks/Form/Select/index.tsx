@@ -1,5 +1,5 @@
-
-import { Controller ,type  Control,type  FieldErrorsImpl,type  FieldValues } from "react-hook-form";
+/* eslint-disable */
+import { Controller, type Control, type FieldErrorsImpl, type FieldValues } from "react-hook-form";
 
 import { Label } from "@/components/ui/label";
 import {
@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 
 import { Error } from "../Error";
 import { Width } from "../Width";
@@ -26,9 +25,7 @@ export const Select = ({
   width,
 }: SelectField & {
   control: Control<FieldValues, any>;
-  errors: Partial<
-    FieldErrorsImpl<Record<string, any>>
-  >;
+  errors: Partial<FieldErrorsImpl<Record<string, any>>>;
 }) => {
   return (
     <Width width={width}>

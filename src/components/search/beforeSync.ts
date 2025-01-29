@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { type BeforeSync, type DocToSync } from "@payloadcms/plugin-search/types";
 
 export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc, payload }) => {

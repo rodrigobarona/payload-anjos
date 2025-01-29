@@ -17,7 +17,7 @@ type CMSLinkType = {
   size?: ButtonProps["size"] | null;
   type?: "custom" | "reference" | null;
   url?: string | null;
-};
+}
 
 export const CMSLink = (props: CMSLinkType) => {
   const {
@@ -44,7 +44,7 @@ export const CMSLink = (props: CMSLinkType) => {
   /* Ensure we don't break any styles set by richText */
   if (appearance === "inline") {
     return (
-      <Link className={cn(className)} href={href || url || ""} {...newTabProps}>
+      <Link className={cn(className)} href={(href || url) ?? ""} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
@@ -53,7 +53,7 @@ export const CMSLink = (props: CMSLinkType) => {
 
   return (
     <Button asChild className={className} size={size} variant={appearance}>
-      <Link className={cn(className)} href={href || url || ""} {...newTabProps}>
+      <Link className={cn(className)} href={(href || url) ?? ""} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>

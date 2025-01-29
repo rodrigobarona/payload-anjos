@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
@@ -9,7 +9,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { useRouter } from "@/i18n/routing";
 import { type ResetPasswordFormData, useResetPasswordForm } from "@/schemas/ResetPasswordFormSchema";
-
 
 export const ResetPasswordForm = ({ token, collection }: { token: string; collection: string }) => {
   const { ResetPasswordFormResolver } = useResetPasswordForm();
@@ -24,21 +23,22 @@ export const ResetPasswordForm = ({ token, collection }: { token: string; collec
 
   const onSubmit = async (values: ResetPasswordFormData) => {
     try {
-      const { data, status } = await axios.post(`/api/${collection}/reset-password`, {
+      const { status } = await axios.post(`/api/${collection}/reset-password`, {
         token: token,
         password: values.newPassword,
       });
 
-      console.log(data, status);
+      console.log(status);
 
       if (status === 200) {
-        console.log(data, status);
+        console.log(status);
         router.push("/admin/login");
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError(error)) {
         console.error("Axios error:", error.response?.data);
-        throw new Error(error.response?.data?.message || "Failed to reset password");
+        const typedData = error.response?.data as { message: string };
+        throw new Error(typedData.message || "Failed to reset password");
       }
       console.error("Error:", error);
       throw new Error("Something went wrong");

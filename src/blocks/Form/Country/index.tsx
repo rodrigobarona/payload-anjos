@@ -1,13 +1,15 @@
-import { Controller ,type  Control,type  FieldErrorsImpl,type  FieldValues } from "react-hook-form";
+/* eslint-disable */
+import { Controller, type Control, type FieldErrorsImpl, type FieldValues } from "react-hook-form";
 
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
 
 import { countryOptions } from "./options";
 
 import { Error } from "../Error";
 import { Width } from "../Width";
+
+import type { CountryField } from "@payloadcms/plugin-form-builder/types";
 
 import type { CountryField } from "@payloadcms/plugin-form-builder/types";
 

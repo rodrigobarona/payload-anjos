@@ -39,7 +39,7 @@ export const RenderBlocks = ({ blocks }: { blocks: Page["layout"][0][] }) => {
             if (Block) {
               return (
                 <div key={index}>
-                  {/* @ts-ignore */}
+                  {/* @ts-expect-error - There can type be error, payload team did it like that */}
                   <Block {...block} disableInnerContainer />
                 </div>
               );

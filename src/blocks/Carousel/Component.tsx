@@ -65,10 +65,10 @@ export const CarouselBlock = ({
     <section
       className={cn(
         "container",
-        spacingTopClasses[spacingTop || "medium"],
-        spacingBottomClasses[spacingBottom || "medium"],
-        paddingTopClasses[paddingTop || "medium"],
-        paddingBottomClasses[paddingBottom || "medium"],
+        spacingTopClasses[spacingTop ?? "medium"],
+        spacingBottomClasses[spacingBottom ?? "medium"],
+        paddingTopClasses[paddingTop ?? "medium"],
+        paddingBottomClasses[paddingBottom ?? "medium"],
       )}
     >
       {title && <RichText data={title} className="mb-6" />}
@@ -85,22 +85,22 @@ export const CarouselBlock = ({
                   (slide.link.url ||
                     (typeof slide.link.reference?.value !== "string" && slide.link.reference?.value.slug)) ? (
                     <Link
-                      // @ts-ignore - reference.value is not a string! TypeScript doesn't know that, it was checked above
-                      href={slide.link.url || `/${slide.link.reference?.value.slug}`}
+                      // @ts-expect-error - reference.value is not a string! TypeScript doesn't know that, it was checked above
+                      href={slide.link.url ?? `/${slide.link.reference?.value.slug}`}
                       target={slide.link.newTab ? "_blank" : "_self"}
                     >
                       <Image
                         src={slide.image.url}
-                        width={slide.image.width || 256}
-                        height={slide.image.height || 256}
+                        width={slide.image.width ?? 256}
+                        height={slide.image.height ?? 256}
                         alt={slide.image.alt}
                       />
                     </Link>
                   ) : (
                     <Image
                       src={slide.image.url}
-                      width={slide.image.width || 256}
-                      height={slide.image.height || 256}
+                      width={slide.image.width ?? 256}
+                      height={slide.image.height ?? 256}
                       alt={slide.image.alt}
                     />
                   )}

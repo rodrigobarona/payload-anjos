@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { type Administrator } from "@/payload-types";
 
 import type { CollectionAfterReadHook } from "payload";

@@ -1,8 +1,7 @@
 "use client";
 
 import { Paintbrush } from "lucide-react";
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -138,4 +137,3 @@ export const GradientPicker = ({
     </div>
   );
 };
-

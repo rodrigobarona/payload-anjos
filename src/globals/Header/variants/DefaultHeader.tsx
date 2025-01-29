@@ -98,6 +98,7 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
         >
           <div className="flex flex-col items-start gap-12 pt-24 lg:flex-row lg:pt-0">
             {data.navItems?.map(({ link }, i) => {
+            {data.navItems?.map(({ link }, i) => {
                 return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
               })}
           </div>

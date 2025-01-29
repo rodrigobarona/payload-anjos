@@ -1,24 +1,18 @@
 import path from "path";
 import { fileURLToPath } from "url";
 
-import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import { s3Storage } from "@payloadcms/storage-s3";
-import { buildConfig } from "payload";
-import { en } from "payload/i18n/en";
-import { pl } from "payload/i18n/pl";
-import sharp from "sharp"; // sharp-import
 
-import { defaultLexical } from "@/fields/defaultLexical";
-import { getServerSideURL } from "@/utilities/getURL";
-
-import { customTranslationsObject } from "./admin/translations/custom-translations";
 import { Customers } from "./collections/(ecommerce)/Customers";
 import { Orders } from "./collections/(ecommerce)/Orders";
 import { ProductCategories } from "./collections/(ecommerce)/ProductCategories";
 import { ProductReviews } from "./collections/(ecommerce)/ProductReviews";
 import { ProductSubCategories } from "./collections/(ecommerce)/ProductSubCategories";
 import { Products } from "./collections/(ecommerce)/Products";
-import { Administrators } from "./collections/Administrators";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { s3Storage } from "@payloadcms/storage-s3";
+import { buildConfig } from "payload";
+import sharp from "sharp"; // sharp-import
+
 import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
@@ -34,6 +28,12 @@ import { EmailMessages } from "./globals/EmailMessages/config";
 import { Footer } from "./globals/Footer/config";
 import { Header } from "./globals/Header/config";
 import { plugins } from "./plugins";
+import { defaultLexical } from "@/fields/defaultLexical";
+import { getServerSideURL } from "./utilities/getURL";
+import { en } from "payload/i18n/en";
+import { pl } from "payload/i18n/pl";
+import { customTranslationsObject } from "./admin/translations/custom-translations";
+import { Administrators } from "./collections/Administrators";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -87,7 +87,7 @@ export default buildConfig({
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || "",
+    url: process.env.DATABASE_URI ?? "",
   }),
   collections: [
     Pages,

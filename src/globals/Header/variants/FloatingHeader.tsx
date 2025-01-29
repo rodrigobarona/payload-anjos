@@ -3,7 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { useEffect, useState } from "react";
+
 import { CMSLink } from "@/components/Link";
+import { Logo } from "@/components/Logo/Logo";
+import { cn } from "@/utilities/cn";
+
 import { Logo } from "@/components/Logo/Logo";
 import { cn } from "@/utilities/cn";
 
@@ -39,7 +44,7 @@ export const FloatingHeader = ({ data, theme }: { data: Header; theme?: string |
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [data.hideOnScroll]);
 
   const classes = cn(
     `sticky flex w-full top-0 justify-center md:px-12 transition-transformColors z-50`,
@@ -90,8 +95,8 @@ export const FloatingHeader = ({ data, theme }: { data: Header; theme?: string |
         >
           <div className="flex flex-col items-start gap-12 pt-24 lg:flex-row lg:pt-0">
             {data.navItems?.map(({ link }, i) => {
-                return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
-              })}
+              return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
+            })}
           </div>
         </nav>
         <CMSLink className="ml-auto hidden md:flex" />

@@ -14,7 +14,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ["**/*.js", "**/*.jsx"],
+    ignores: ["**/*.js", "**/*.jsx", "src/app/(payload)/**/*"],
   },
   ...fixupConfigRules(
     compat.extends(
@@ -53,6 +53,7 @@ export default [
       ],
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
 
+      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "import/no-mutable-exports": "error",
       "import/no-cycle": "off", // bring back later
       "import/no-default-export": "error",

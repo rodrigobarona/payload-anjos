@@ -25,7 +25,7 @@ const slideFields: Field[] = [
   link({
     overrides: {
       admin: {
-        condition: (_: any, { enableLink }: { enableLink: any }) => Boolean(enableLink),
+        condition: (_, { enableLink }: { enableLink: boolean }) => Boolean(enableLink),
       },
     },
   }),

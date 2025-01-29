@@ -65,7 +65,7 @@ export const SlugComponent = ({
     [checkboxValue, checkboxFieldPath, dispatchFields],
   );
 
-  const readOnly = readOnlyFromProps || checkboxValue;
+  const readOnly = readOnlyFromProps ?? checkboxValue;
 
   return (
     <div className="field-type slug-field-component">

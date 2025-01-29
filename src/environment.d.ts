@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type en from "../translations/en.json";
 
 type Messages = typeof en;

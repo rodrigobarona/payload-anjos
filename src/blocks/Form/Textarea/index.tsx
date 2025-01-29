@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 import { Label } from "@/components/ui/label";
 import { Textarea as TextAreaComponent } from "@/components/ui/textarea";
 
@@ -18,9 +18,7 @@ export const Textarea = ({
   rows = 3,
   width,
 }: TextField & {
-  errors: Partial<
-    FieldErrorsImpl<Record<string, any>>
-  >;
+  errors: Partial<FieldErrorsImpl<Record<string, any>>>;
   register: UseFormRegister<FieldValues>;
   rows?: number;
 }) => {

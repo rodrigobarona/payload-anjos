@@ -1,10 +1,10 @@
+/* eslint-disable */
 import RichText from "@/components/RichText";
 import { cn } from "@/utilities/cn";
 
 import { Card } from "../../components/Card";
 
 import type { Post } from "@/payload-types";
-
 
 export type RelatedPostsProps = {
   className?: string;

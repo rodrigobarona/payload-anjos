@@ -2,7 +2,6 @@
 
 import { FieldLabel, useField } from "@payloadcms/ui";
 import { type TextFieldClientComponent } from "payload";
-import { useEffect } from "react";
 
 import { GradientPicker } from "../ui/backgroundPicker";
 

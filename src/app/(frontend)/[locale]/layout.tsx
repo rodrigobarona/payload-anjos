@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
 
-import { routing } from "@/i18n/routing";
-
+// eslint-disable-next-line
 import { GeistMono } from "geist/font/mono";
+// eslint-disable-next-line
 import { GeistSans } from "geist/font/sans";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
@@ -14,10 +13,13 @@ import "../globals.css";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { Footer } from "@/globals/Footer/Component";
 import { type Locale } from "@/i18n/config";
+import { routing } from "@/i18n/routing";
 import { Providers } from "@/providers";
 import { getServerSideURL } from "@/utilities/getURL";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import { cn } from "src/utilities/cn";
+
+import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

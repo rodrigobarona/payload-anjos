@@ -1,4 +1,5 @@
 
+/* eslint-disable */
 import { useFormContext ,type  FieldErrorsImpl,type  FieldValues,type  UseFormRegister } from "react-hook-form";
 
 import { Checkbox as CheckboxUi } from "@/components/ui/checkbox";

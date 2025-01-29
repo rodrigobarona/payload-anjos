@@ -11,7 +11,7 @@ import { importMap } from './admin/importMap.js'
 import type { ServerFunctionClient } from 'payload'
 import './custom.scss'
 
-type Args = {
+interface Args {
   children: React.ReactNode
 }
 

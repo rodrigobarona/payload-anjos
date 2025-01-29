@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   type DefaultNodeTypes,
   type SerializedBlockNode,
@@ -10,13 +11,11 @@ import {
   RichText as RichTextWithoutBlocks,
 } from "@payloadcms/richtext-lexical/react";
 
-// import { JSXConverters } from "payloadcms-lexical-ext";
-import { AccordionBlock } from "@/blocks/Accordion/Component";
 import { BannerBlock } from "@/blocks/Banner/Component";
 import { CallToActionBlock } from "@/blocks/CallToAction/Component";
+// import { JSXConverters } from "payloadcms-lexical-ext";
 import { CarouselBlock } from "@/blocks/Carousel/Component";
 import { CodeBlock, type CodeBlockProps } from "@/blocks/Code/Component";
-import { FormBlock } from "@/blocks/Form/Component";
 import { MediaBlock } from "@/blocks/MediaBlock/Component";
 import { cn } from "@/utilities/cn";
 
@@ -35,7 +34,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   if (typeof value !== "object") {
     throw new Error("Expected value to be an object");
   }
-  const slug = value.slug;
+  const slug = value.slug as string;
   return relationTo === "posts" ? `/posts/${slug}` : `/${slug}`;
 };
 

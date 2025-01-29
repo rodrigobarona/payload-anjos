@@ -4,7 +4,7 @@ import { z, type ZodType } from "zod";
 export type ResetPasswordFormData = {
   newPassword: string;
   confirmPassword: string;
-};
+}
 
 export const useResetPasswordForm = () => {
   const t = useTranslations("ResetPasswordForm.errors");

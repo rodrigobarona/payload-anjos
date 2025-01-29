@@ -10,7 +10,6 @@ import { cn } from "@/utilities/cn";
 
 import type { CallToActionBlock as CTABlockProps } from "@/payload-types";
 
-
 export const CallToActionBlock = ({
   links,
   richText,
@@ -23,10 +22,10 @@ export const CallToActionBlock = ({
     <div
       className={cn(
         "container",
-        spacingTopClasses[spacingTop || "medium"],
-        spacingBottomClasses[spacingBottom || "medium"],
-        paddingTopClasses[paddingTop || "medium"],
-        paddingBottomClasses[paddingBottom || "medium"],
+        spacingTopClasses[spacingTop ?? "medium"],
+        spacingBottomClasses[spacingBottom ?? "medium"],
+        paddingTopClasses[paddingTop ?? "medium"],
+        paddingBottomClasses[paddingBottom ?? "medium"],
       )}
     >
       <div className="flex flex-col gap-8 rounded border border-border bg-card p-4 md:flex-row md:items-center md:justify-between">
@@ -34,7 +33,7 @@ export const CallToActionBlock = ({
           {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
         </div>
         <div className="flex flex-col gap-8">
-          {(links || []).map(({ link }, i) => {
+          {(links ?? []).map(({ link }, i) => {
             return <CMSLink key={i} size="lg" {...link} />;
           })}
         </div>

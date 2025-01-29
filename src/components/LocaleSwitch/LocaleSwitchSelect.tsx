@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useSearchParams } from "next/navigation";
-import { type ReactNode, Suspense, useTransition } from "react";
+import { type ReactNode, useTransition } from "react";
 
 import { Select, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { type Locale } from "@/i18n/config";

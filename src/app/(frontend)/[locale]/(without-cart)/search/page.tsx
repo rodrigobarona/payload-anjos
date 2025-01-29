@@ -19,7 +19,7 @@ type Args = {
   searchParams: Promise<{
     q: string;
   }>;
-};
+}
 export default async function Page({ searchParams: searchParamsPromise }: Args) {
   const { q: query } = await searchParamsPromise;
   const payload = await getPayload({ config });

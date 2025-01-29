@@ -1,10 +1,4 @@
 
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from "@payloadcms/richtext-lexical";
 
 import { noBlocksLexical } from "@/fields/noBlocksLexical";
 

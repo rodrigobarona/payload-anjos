@@ -1,11 +1,8 @@
-import { Html } from "@react-email/components";
-import { type ReactNode } from "react";
+import { Button, Html, Text } from "@react-email/components";
+import { getTranslations } from "next-intl/server";
+import * as React from "react";
 
 import { type Locale } from "@/i18n/config";
-import { type Order } from "@/payload-types";
-import { getCachedGlobal } from "@/utilities/getGlobals";
-
-import { Default } from "./variants/Default";
 
 export const OrderPlacedEmail = async ({ order, locale }: { order: Order; locale: Locale }) => {
   const { messages } = await getCachedGlobal("emailMessages", locale, 1)();

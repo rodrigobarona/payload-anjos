@@ -23,11 +23,11 @@ export const AccordionBlock = ({
   return (
     <section
       className={cn(
-        "not-prose container px-0",
-        spacingTopClasses[spacingTop || "medium"],
-        spacingBottomClasses[spacingBottom || "medium"],
-        paddingTopClasses[paddingTop || "medium"],
-        paddingBottomClasses[paddingBottom || "medium"],
+        "container",
+        spacingTopClasses[spacingTop ?? "medium"],
+        spacingBottomClasses[spacingBottom ?? "medium"],
+        paddingTopClasses[paddingTop ?? "medium"],
+        paddingBottomClasses[paddingBottom ?? "medium"],
       )}
     >
       {title && <RichText data={title} className="mb-6" />}
