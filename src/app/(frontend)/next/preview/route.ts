@@ -1,7 +1,7 @@
 /* eslint-disable */
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { draftMode } from "next/headers";
-import { getPayload } from "payload";
+import { getPayload, User } from "payload";
 
 import { type Locale } from "@/i18n/config";
 import { redirect } from "@/i18n/routing";
@@ -33,7 +33,7 @@ export async function GET(
     new Response("You are not allowed to preview this page", { status: 403 });
   }
 
-  let user: JwtPayload | string | null = null;
+  let user: User | JwtPayload | string | null = null;
 
   try {
     user = jwt.verify(token, payload.secret);
@@ -42,7 +42,7 @@ export async function GET(
   }
 
   // You can add additional checks here to see if the user is allowed to preview this page
-  if (!user || user.collection !== "administrators") {
+  if (!user || (user as User).collection === "administrators") {
     draft.disable();
     return new Response("You are not allowed to preview this page", { status: 403 });
   }
