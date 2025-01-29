@@ -69,6 +69,7 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    emailMessages: EmailMessage;
     shopSettings: ShopSetting;
     shopLayout: ShopLayout;
     'inpost-pickup': InpostPickup;
@@ -80,6 +81,7 @@ export interface Config {
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    emailMessages: EmailMessagesSelect<false> | EmailMessagesSelect<true>;
     shopSettings: ShopSettingsSelect<false> | ShopSettingsSelect<true>;
     shopLayout: ShopLayoutSelect<false> | ShopLayoutSelect<true>;
     'inpost-pickup': InpostPickupSelect<false> | InpostPickupSelect<true>;
@@ -2435,6 +2437,21 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emailMessages".
+ */
+export interface EmailMessage {
+  id: string;
+  host: string;
+  port: number;
+  secure: boolean;
+  user: string;
+  password: string;
+  fromEmail: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "shopSettings".
  */
 export interface ShopSetting {
@@ -2904,6 +2921,21 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emailMessages_select".
+ */
+export interface EmailMessagesSelect<T extends boolean = true> {
+  host?: T;
+  port?: T;
+  secure?: T;
+  user?: T;
+  password?: T;
+  fromEmail?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

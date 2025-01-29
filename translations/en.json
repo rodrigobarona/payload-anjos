@@ -300,7 +300,8 @@
     "summary": "Summary",
     "subtotal": "Subtotal",
     "shipping": "Shipping",
-    "total": "Total"},
+    "total": "Total"
+  },
   "Emails": {
     "reset-password": {
       "greeting": "Hello {name},",

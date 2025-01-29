@@ -33,7 +33,6 @@ import { customTranslationsObject } from "./admin/translations/custom-translatio
 import { InPostCourierCOD } from "./globals/(ecommerce)/Couriers/InPostCourierCOD/config";
 import { ShopLayout } from "./globals/(ecommerce)/Layout/config";
 import { EmailMessages } from "./globals/EmailMessages/config";
-import { customTranslationsObject } from "./admin/translations/custom-translations";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -78,7 +77,6 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { en, pl },
     fallbackLanguage: "en",
-    translations: customTranslationsObject,
     translations: customTranslationsObject,
   },
   localization: {
