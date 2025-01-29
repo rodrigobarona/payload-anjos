@@ -20,6 +20,7 @@
     "new-password": "Nowe hasło",
     "confirm-password": "Potwierdź hasło",
     "change-password": "Zmień hasło",
+    "title": "Zresetuj swoje hasło",
     "errors": {
       "old-password": "Stare hasło nie może być puste",
       "new-password": "Nowe hasło nie może być puste",

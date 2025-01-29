@@ -76,6 +76,12 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        main: {
+          "400": "rgb(129 140 248 / var(--tw-bg-opacity, 1))",
+          "500": "rgb(99 102 241 / var(--tw-bg-opacity, 1))",
+          "600": "rgb(79 70 229 / var(--tw-bg-opacity, 1))",
+          "700": "rgb(67 56 202 / var(--tw-bg-opacity, 1))",
+        },
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",

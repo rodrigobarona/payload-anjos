@@ -20,6 +20,7 @@
     "new-password": "New password",
     "confirm-password": "Confirm password",
     "change-password": "Change password",
+    "title": "Reset your password",
     "errors": {
       "old-password": "Old password cannot be empty",
       "new-password": "New password cannot be empty",

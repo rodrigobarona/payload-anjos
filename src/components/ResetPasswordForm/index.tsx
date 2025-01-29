@@ -46,38 +46,44 @@ export const ResetPasswordForm = ({ token, collection }: { token: string; collec
   const t = useTranslations("ResetPasswordForm");
 
   return (
-    <Form {...form}>
-      <form className="twp container grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="newPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("new-password")}</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="••••••••••••" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("confirm-password")}</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="••••••••••••" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button variant="tailwind" type="submit" className="mt-4">
-          {t("change-password")}
-        </Button>
-      </form>
-    </Form>
+    <main className="twp container my-auto flex h-full flex-col items-center">
+      <Form {...form}>
+        <form
+          className="grid w-full max-w-prose gap-4 rounded-lg bg-card p-8 shadow-lg"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <h1 className="text-xl font-semibold">{t("title")}</h1>
+          <FormField
+            control={form.control}
+            name="newPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("new-password")}</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="••••••••••••" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("confirm-password")}</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="••••••••••••" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button variant="tailwind" type="submit" className="mt-4">
+            {t("change-password")}
+          </Button>
+        </form>
+      </Form>
+    </main>
   );
 };
