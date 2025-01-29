@@ -301,5 +301,29 @@
     "subtotal": "Suma częściowa",
     "shipping": "Dostawa",
     "total": "Razem"
+  },
+  "Emails": {
+    "reset-password": {
+      "greeting": "Witaj {name},",
+      "message": "Ktoś poprosił o zresetowanie hasła do Twojego konta. Jeśli to nie Ty, zignoruj tę wiadomość.",
+      "subject": "Resetuj hasło",
+      "button": "Zresetuj hasło",
+      "body": "Kliknij w link poniżej, aby zresetować hasło"
+    }
+  },
+  "ResetPasswordForm": {
+    "new-password": "Nowe hasło",
+    "confirm-password": "Potwierdź hasło",
+    "change-password": "Zmień hasło",
+    "title": "Zresetuj swoje hasło",
+    "errors": {
+      "old-password": "Stare hasło nie może być puste",
+      "new-password": "Nowe hasło nie może być puste",
+      "password-length": "Hasło musi mieć co najmniej 8 znaków",
+      "passwords-mismatch": "Hasła nie są takie same",
+      "password-incorrect": "Stare hasło jest nieprawidłowe",
+      "password-same": "Nowe hasło musi być inne niż stare",
+      "server-error": "Wewnętrzny błąd serwera. Skontaktuj się z pomocą techniczną."
+    }
   }
 }

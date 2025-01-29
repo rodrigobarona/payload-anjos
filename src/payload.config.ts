@@ -32,6 +32,8 @@ import { Fulfilment } from "./globals/(ecommerce)/Fulfilment";
 import { customTranslationsObject } from "./admin/translations/custom-translations";
 import { InPostCourierCOD } from "./globals/(ecommerce)/Couriers/InPostCourierCOD/config";
 import { ShopLayout } from "./globals/(ecommerce)/Layout/config";
+import { EmailMessages } from "./globals/EmailMessages/config";
+import { customTranslationsObject } from "./admin/translations/custom-translations";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -40,6 +42,7 @@ const dirname = path.dirname(filename);
 export default buildConfig({
   admin: {
     components: {
+      afterLogin: ["@/components/AdminResetPassword#AdminResetPassword"],
       graphics: {
         Logo: "@/components/AdminLogoBig/AdminLogoBig#AdminLogoBig",
         Icon: "@/components/AdminLogoIcon/AdminLogoIcon#AdminLogoIcon",
@@ -76,6 +79,7 @@ export default buildConfig({
     supportedLanguages: { en, pl },
     fallbackLanguage: "en",
     translations: customTranslationsObject,
+    translations: customTranslationsObject,
   },
   localization: {
     locales: ["en", "pl"],
@@ -102,7 +106,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [
     Header,
-    Footer,
+    Footer, EmailMessages,
     ShopSettings,
     ShopLayout,
     InPostPickup,

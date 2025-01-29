@@ -10,6 +10,9 @@ export const customTranslationsObject = {
       downloadingLabel: "Downloading...",
       createPackage: "Create package",
       resetPackage: "Reset package",
+      resetPassword: "Reset password (enter email in form)",
+      resetPasswordSuccess: "Password reset link sent to email",
+      resetPasswordError: "Error resetting password",
     },
   },
   pl: {
@@ -21,9 +24,9 @@ export const customTranslationsObject = {
       downloadingLabel: "Pobieranie...",
       createPackage: "Utwórz przesyłkę",
       resetPackage: "Resetuj przesyłkę",
+      resetPassword: "Resetuj hasło (wpisz e-mail w formularzu)",
+      resetPasswordSuccess: "Link do resetowania hasła został wysłany na podany adres e-mail",
+      resetPasswordError: "Błąd resetowania hasła",
     },
   },
 };
-
-export type CustomTranslationsObject = typeof customTranslationsObject.en;
-export type CustomTranslationsKeys = NestedKeysStripped<CustomTranslationsObject>;
