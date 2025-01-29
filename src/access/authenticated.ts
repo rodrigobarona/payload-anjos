@@ -1,6 +1,6 @@
+import type { Administrator } from "@/payload-types";
 import type { AccessArgs } from "payload";
 
-import type { Administrator } from "@/payload-types";
 
 type isAuthenticated = (args: AccessArgs<Administrator>) => boolean;
 

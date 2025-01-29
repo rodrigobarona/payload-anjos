@@ -1,32 +1,52 @@
 import nodemailer from "nodemailer";
+
 import { getCachedGlobal } from "./getGlobals";
 
-// en here because smtp config is not localized at all.
-const { smtp } = await getCachedGlobal("emailMessages", "en", 1)();
+type EmailPayload = {
+  to: string;
+  subject: string;
+  html: string;
+};
 
-const { host, fromEmail, password, port, secure, user } = smtp;
+type EmailResponse = {
+  success: boolean;
+  messageId: string;
+};
 
-const transporter = nodemailer.createTransport({
-  host,
-  port: Number(port),
-  secure,
-  auth: {
-    user,
-    pass: password,
-  },
-});
+const createEmailTransporter = async () => {
+  const { smtp } = await getCachedGlobal("emailMessages", "en", 1)();
 
-export const sendEmail = async ({ to, subject, html }: { to: string; subject: string; html: string }) => {
+  if (!smtp) {
+    throw new Error("SMTP configuration is missing");
+  }
+
+  const { host, fromEmail, password, port, secure, user } = smtp;
+
+  return {
+    transporter: nodemailer.createTransport({
+      host,
+      port: Number(port),
+      secure,
+      auth: { user, pass: password },
+    }),
+    fromEmail,
+  };
+};
+
+export const sendEmail = async ({ to, subject, html }: EmailPayload): Promise<EmailResponse> => {
+  const { transporter, fromEmail } = await createEmailTransporter();
+
   try {
-    const info = await transporter.sendMail({
+    const { messageId } = await transporter.sendMail({
       from: fromEmail,
       to,
       subject,
       html,
     });
-    return { success: true, messageId: info.messageId };
+
+    return { success: true, messageId };
   } catch (error) {
-    console.log(error);
-    throw new Error(`Error sending email: ${error instanceof Error ? error.message : "Unknown error"}`);
+    const errorMessage = error instanceof Error ? error.message : "Unknown email error";
+    throw new Error(`Failed to send email: ${errorMessage}`);
   }
 };

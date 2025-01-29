@@ -1,14 +1,11 @@
 "use client";
 
-import type { StaticImageData } from "next/image";
-
-import { cn } from "src/utilities/cn";
-import NextImage from "next/image";
-
-import type { Props as MediaProps } from "../types";
+import NextImage, { type StaticImageData } from "next/image";
 
 import { cssVariables } from "@/cssVariables";
-import { getClientSideURL } from "@/utilities/getURL";
+import { cn } from "src/utilities/cn";
+
+import type { Props as MediaProps } from "../types";
 
 const { breakpoints } = cssVariables;
 
@@ -31,16 +28,10 @@ export const ImageMedia = (props: MediaProps) => {
   let width: number | undefined;
   let height: number | undefined;
   let alt = altFromProps;
-  let src: StaticImageData | string = srcFromProps || "";
+  let src: StaticImageData | string = srcFromProps ?? "";
 
   if (!src && resource && typeof resource === "object") {
-    const {
-      alt: altFromResource,
-      filename: fullFilename,
-      height: fullHeight,
-      url,
-      width: fullWidth,
-    } = resource;
+    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource;
 
     width = fullWidth!;
     height = fullHeight!;
@@ -49,7 +40,7 @@ export const ImageMedia = (props: MediaProps) => {
     src = `${url}`;
   }
 
-  const loading = loadingFromProps || (!priority ? "lazy" : undefined);
+  const loading = loadingFromProps ?? (!priority ? "lazy" : undefined);
 
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
   const sizes = sizeFromProps
@@ -61,7 +52,7 @@ export const ImageMedia = (props: MediaProps) => {
   return (
     <picture>
       <NextImage
-        alt={alt || ""}
+        alt={alt ?? ""}
         className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height : undefined}

@@ -1,11 +1,14 @@
 "use client";
-import { Logo } from "@/components/Logo/Logo";
-import { Header } from "@/payload-types";
-import { cn } from "@/utilities/cn";
 import Image from "next/image";
 import Link from "next/link";
-import { CMSLink } from "@/components/Link";
 import { useEffect, useState } from "react";
+
+import { CMSLink } from "@/components/Link";
+import { Logo } from "@/components/Logo/Logo";
+import { type Header } from "@/payload-types";
+import { cn } from "@/utilities/cn";
+
+
 
 export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | null }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);
@@ -37,7 +40,7 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [data.hideOnScroll]);
 
   const classes = cn(
     `sticky flex w-full top-0 justify-center md:px-12 transition-transform z-50`,
@@ -82,8 +85,7 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
           className={`absolute left-1/2 top-0 -z-10 flex origin-bottom transition-opacity duration-300 ${isMenuOpened ? "opacity-100" : "scale-y-0 opacity-0"} h-dvh w-screen -translate-x-1/2 flex-col items-start justify-between bg-white p-8 pb-16 md:p-12 lg:static lg:h-auto lg:w-fit lg:translate-x-0 lg:scale-100 lg:flex-row lg:bg-transparent lg:p-0 lg:opacity-100`}
         >
           <div className="flex flex-col items-start gap-12 pt-24 lg:flex-row lg:pt-0">
-            {data.navItems &&
-              data.navItems.map(({ link }, i) => {
+            {data.navItems?.map(({ link }, i) => {
                 return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
               })}
           </div>

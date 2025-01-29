@@ -1,14 +1,7 @@
-import type { Field } from "payload";
-
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from "@payloadcms/richtext-lexical";
-
-import { linkGroup } from "@/fields/linkGroup";
 import { defaultLexical } from "@/fields/defaultLexical";
+import { linkGroup } from "@/fields/linkGroup";
+
+import type { Field } from "payload";
 
 export const hero: Field = {
   name: "hero",
@@ -55,7 +48,7 @@ export const hero: Field = {
       name: "media",
       type: "upload",
       admin: {
-        condition: (_, { type } = {}) => ["highImpact", "mediumImpact"].includes(type),
+        condition: (_, { type } = {}) => ["highImpact", "mediumImpact"].includes(type as string),
       },
       relationTo: "media",
       required: true,
@@ -65,7 +58,7 @@ export const hero: Field = {
       label: "Reverse photo and text",
       type: "checkbox",
       admin: {
-        condition: (_, { type } = {}) => ["mediumImpact"].includes(type),
+        condition: (_, { type } = {}) => ["mediumImpact"].includes(type as string),
       },
       required: true,
     },

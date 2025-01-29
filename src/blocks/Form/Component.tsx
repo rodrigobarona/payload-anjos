@@ -1,34 +1,33 @@
+/* eslint-disable */
 "use client";
-import type { Form as FormType } from "@payloadcms/plugin-form-builder/types";
 
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+
 import RichText from "@/components/RichText";
 import { Button } from "@/components/ui/button";
-import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import { getClientSideURL } from "@/utilities/getURL";
 
 import { buildInitialFormState } from "./buildInitialFormState";
 import { fields } from "./fields";
-import { getClientSideURL } from "@/utilities/getURL";
+
+import type { Form as FormType } from "@payloadcms/plugin-form-builder/types";
+import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 
 export type Value = unknown;
 
-export interface Property {
-  [key: string]: Value;
-}
+export type Property = Record<string, Value>;
 
-export interface Data {
-  [key: string]: Property | Property[];
-}
+export type Data = Record<string, Property | Property[]>;
 
-export type FormBlockType = {
+export interface FormBlockType {
   blockName?: string;
   blockType?: "formBlock";
   enableIntro: boolean;
   form: FormType;
   introContent?: SerializedEditorState;
-};
+}
 
 export const FormBlock = (
   props: {

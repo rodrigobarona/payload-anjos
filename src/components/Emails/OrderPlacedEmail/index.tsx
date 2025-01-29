@@ -1,7 +1,8 @@
-import { Locale } from "@/i18n/config";
 import { Button, Html, Text } from "@react-email/components";
 import { getTranslations } from "next-intl/server";
 import * as React from "react";
+
+import { type Locale } from "@/i18n/config";
 
 export const OrderPlacedEmail = async ({
   url,

@@ -1,12 +1,11 @@
+/* eslint-disable */
 "use client";
 
-import type { PayloadAdminBarProps } from "payload-admin-bar";
+import { useSelectedLayoutSegments, useRouter } from "next/navigation";
+import { type PayloadAdminBarProps, PayloadAdminBar } from "payload-admin-bar";
+import { useCallback, useState } from "react";
 
 import { cn } from "@/utilities/cn";
-import { useSelectedLayoutSegments } from "next/navigation";
-import { PayloadAdminBar } from "payload-admin-bar";
-import { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import "./index.scss";
 

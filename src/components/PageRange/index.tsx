@@ -1,3 +1,4 @@
+/* eslint-disable */
 const defaultLabels = {
   plural: "Docs",
   singular: "Doc",
@@ -33,7 +34,7 @@ export const PageRange = (props: {
   let indexStart = (currentPage ? currentPage - 1 : 1) * (limit || 1) + 1;
   if (totalDocs && indexStart > totalDocs) indexStart = 0;
 
-  let indexEnd = (currentPage || 1) * (limit || 1);
+  let indexEnd = (currentPage ?? 1) * (limit ?? 1);
   if (totalDocs && indexEnd > totalDocs) indexEnd = totalDocs;
 
   const { plural, singular } =

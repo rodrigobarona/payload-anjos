@@ -1,21 +1,21 @@
-import { getCachedGlobal } from "@/utilities/getGlobals";
 import Link from "next/link";
+import { getLocale } from "next-intl/server";
 
-import type { Footer } from "@/payload-types";
-
-import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
 import { CMSLink } from "@/components/Link";
+import LocaleSwitch from "@/components/LocaleSwitch/LocaleSwitch";
 import { Logo } from "@/components/Logo/Logo";
 import RichText from "@/components/RichText";
-import { getLocale } from "next-intl/server";
-import { Locale } from "@/i18n/config";
-import LocaleSwitch from "@/components/LocaleSwitch/LocaleSwitch";
+import { type Locale } from "@/i18n/config";
+import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
+import { getCachedGlobal } from "@/utilities/getGlobals";
+
+import type { Footer } from "@/payload-types";
 
 export async function Footer() {
   const locale = (await getLocale()) as Locale;
   const footerData: Footer = await getCachedGlobal("footer", locale, 1)();
 
-  const navItems = footerData?.navItems || [];
+  const navItems = footerData?.navItems ?? [];
 
   return (
     <footer className="mt-auto border-t border-border bg-black text-white dark:bg-card">

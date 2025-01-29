@@ -1,18 +1,11 @@
-import type { Block, Field } from "payload";
-
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from "@payloadcms/richtext-lexical";
-
-import { link } from "@/fields/link";
-import { marginFields, paddingFields } from "@/fields/spacingFields";
 import { AlignmentField } from "@/fields/alignmentField";
 import { backgroundPicker } from "@/fields/backgroundPicker";
-import { radiusFields } from "@/fields/radiusFields";
 import { defaultLexical } from "@/fields/defaultLexical";
+import { link } from "@/fields/link";
+import { radiusFields } from "@/fields/radiusFields";
+import { marginFields, paddingFields } from "@/fields/spacingFields";
+
+import type { Block, Field } from "payload";
 
 const columnFields: Field[] = [
   {

@@ -1,10 +1,11 @@
 "use client";
 
 import { useParams, useSearchParams } from "next/navigation";
-import { ReactNode, Suspense, useTransition } from "react";
-import { usePathname, useRouter } from "@/i18n/routing";
-import { Locale } from "@/i18n/config";
+import { type ReactNode, useTransition } from "react";
+
 import { Select, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { type Locale } from "@/i18n/config";
+import { usePathname, useRouter } from "@/i18n/routing";
 
 type Props = {
   children: ReactNode;

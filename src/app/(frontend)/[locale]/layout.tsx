@@ -1,27 +1,26 @@
-import type { Metadata } from "next";
-
-import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
-
-import { cn } from "src/utilities/cn";
+// eslint-disable-next-line
 import { GeistMono } from "geist/font/mono";
+// eslint-disable-next-line
 import { GeistSans } from "geist/font/sans";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import React from "react";
 
-import { AdminBar } from "@/components/AdminBar";
+import "./globals.css";
+import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { Footer } from "@/globals/Footer/Component";
 import { Header } from "@/globals/Header/Component";
+import { type Locale } from "@/i18n/config";
+import { routing } from "@/i18n/routing";
 import { Providers } from "@/providers";
 import { InitTheme } from "@/providers/Theme/InitTheme";
-import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
-import { draftMode } from "next/headers";
-
-import "./globals.css";
 import { getServerSideURL } from "@/utilities/getURL";
-import { Locale } from "@/i18n/config";
-import { LivePreviewListener } from "@/components/LivePreviewListener";
+import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
+import { cn } from "src/utilities/cn";
+
+import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

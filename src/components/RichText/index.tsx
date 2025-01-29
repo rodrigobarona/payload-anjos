@@ -1,25 +1,29 @@
-import { MediaBlock } from "@/blocks/MediaBlock/Component";
-import { DefaultNodeTypes, SerializedBlockNode, SerializedLinkNode } from "@payloadcms/richtext-lexical";
-import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+/* eslint-disable */
 import {
-  JSXConvertersFunction,
+  type DefaultNodeTypes,
+  type SerializedBlockNode,
+  type SerializedLinkNode,
+} from "@payloadcms/richtext-lexical";
+import { type SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import {
+  type JSXConvertersFunction,
   LinkJSXConverter,
   RichText as RichTextWithoutBlocks,
 } from "@payloadcms/richtext-lexical/react";
 
-import { CodeBlock, CodeBlockProps } from "@/blocks/Code/Component";
+import { BannerBlock } from "@/blocks/Banner/Component";
+import { CallToActionBlock } from "@/blocks/CallToAction/Component";
+// import { JSXConverters } from "payloadcms-lexical-ext";
+import { CarouselBlock } from "@/blocks/Carousel/Component";
+import { CodeBlock, type CodeBlockProps } from "@/blocks/Code/Component";
+import { MediaBlock } from "@/blocks/MediaBlock/Component";
+import { cn } from "@/utilities/cn";
 
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from "@/payload-types";
-import { BannerBlock } from "@/blocks/Banner/Component";
-import { CallToActionBlock } from "@/blocks/CallToAction/Component";
-import { cn } from "@/utilities/cn";
-
-// import { JSXConverters } from "payloadcms-lexical-ext";
-import { CarouselBlock } from "@/blocks/Carousel/Component";
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -30,7 +34,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   if (typeof value !== "object") {
     throw new Error("Expected value to be an object");
   }
-  const slug = value.slug;
+  const slug = value.slug as string;
   return relationTo === "posts" ? `/posts/${slug}` : `/${slug}`;
 };
 

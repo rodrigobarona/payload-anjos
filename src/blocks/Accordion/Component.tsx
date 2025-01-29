@@ -1,16 +1,16 @@
 "use client";
 
-import { cn } from "@/utilities/cn";
-import type { AccordionBlock as AccordionBlockProps } from "@/payload-types";
 import {
   spacingTopClasses,
   spacingBottomClasses,
   paddingBottomClasses,
   paddingTopClasses,
 } from "@/blocks/globals";
-
 import RichText from "@/components/RichText";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { cn } from "@/utilities/cn";
+
+import type { AccordionBlock as AccordionBlockProps } from "@/payload-types";
 
 export const AccordionBlock = ({
   spacingBottom,
@@ -24,10 +24,10 @@ export const AccordionBlock = ({
     <section
       className={cn(
         "container",
-        spacingTopClasses[spacingTop || "medium"],
-        spacingBottomClasses[spacingBottom || "medium"],
-        paddingTopClasses[paddingTop || "medium"],
-        paddingBottomClasses[paddingBottom || "medium"],
+        spacingTopClasses[spacingTop ?? "medium"],
+        spacingBottomClasses[spacingBottom ?? "medium"],
+        paddingTopClasses[paddingTop ?? "medium"],
+        paddingBottomClasses[paddingBottom ?? "medium"],
       )}
     >
       {title && <RichText data={title} className="mb-6" />}

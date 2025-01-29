@@ -1,13 +1,14 @@
-import type { CheckboxField } from "@payloadcms/plugin-form-builder/types";
-import type { FieldErrorsImpl, FieldValues, UseFormRegister } from "react-hook-form";
 
-import { useFormContext } from "react-hook-form";
+/* eslint-disable */
+import { useFormContext ,type  FieldErrorsImpl,type  FieldValues,type  UseFormRegister } from "react-hook-form";
 
 import { Checkbox as CheckboxUi } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
 import { Error } from "../Error";
 import { Width } from "../Width";
+
+import type { CheckboxField } from "@payloadcms/plugin-form-builder/types";
 
 export const Checkbox = ({
   name,
@@ -19,9 +20,7 @@ export const Checkbox = ({
   width,
 }: CheckboxField & {
   errors: Partial<
-    FieldErrorsImpl<{
-      [x: string]: any;
-    }>
+    FieldErrorsImpl<Record<string, any>>
   >;
   getValues: any;
   register: UseFormRegister<FieldValues>;

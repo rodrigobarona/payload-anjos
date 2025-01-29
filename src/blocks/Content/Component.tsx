@@ -1,6 +1,3 @@
-import { cn } from "@/utilities/cn";
-import RichText from "@/components/RichText";
-import { CMSLink } from "@/components/Link";
 import {
   spacingTopClasses,
   spacingBottomClasses,
@@ -8,6 +5,9 @@ import {
   paddingBottomClasses,
   paddingTopClasses,
 } from "@/blocks/globals";
+import { CMSLink } from "@/components/Link";
+import RichText from "@/components/RichText";
+import { cn } from "@/utilities/cn";
 
 import type { ContentBlock as ContentBlockProps } from "@/payload-types";
 
@@ -33,11 +33,11 @@ export const ContentBlock = (props: ContentBlockProps) => {
     <section
       className={cn(
         "container relative px-0",
-        spacingTopClasses[props["spacingTop"] || "medium"],
-        spacingBottomClasses[props["spacingBottom"] || "medium"],
-        paddingTopClasses[props["paddingTop"] || "medium"],
-        paddingBottomClasses[props["paddingBottom"] || "medium"],
-        getCenteringClasses(props.alignment || undefined),
+        spacingTopClasses[props.spacingTop ?? "medium"],
+        spacingBottomClasses[props.spacingBottom ?? "medium"],
+        paddingTopClasses[props.paddingTop ?? "medium"],
+        paddingBottomClasses[props.paddingBottom ?? "medium"],
+        getCenteringClasses(props.alignment ?? undefined),
         isSingleRadius && props.radiusAll,
         isMultiRadius &&
           `${props.radiusTopLeft} ${props.radiusTopRight} ${props.radiusBottomRight} ${props.radiusBottomLeft}`,
@@ -66,8 +66,8 @@ export const ContentBlock = (props: ContentBlockProps) => {
                     "md:col-span-2": size !== "full",
                   },
                   props.alignment !== "center" ? "lg:first:pl-0 lg:last:pr-0" : "",
-                  paddingTopClasses[col["paddingTop"] || "medium"],
-                  paddingBottomClasses[col["paddingBottom"] || "medium"],
+                  paddingTopClasses[col.paddingTop ?? "medium"],
+                  paddingBottomClasses[col.paddingBottom ?? "medium"],
                 )}
                 style={col.background ? { background: col.background } : {}}
                 key={index}

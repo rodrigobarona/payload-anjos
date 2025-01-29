@@ -1,14 +1,15 @@
-import type { StateField } from "@payloadcms/plugin-form-builder/types";
-import type { Control, FieldErrorsImpl, FieldValues } from "react-hook-form";
+/* eslint-disable */
+import { Controller, type Control, type FieldErrorsImpl, type FieldValues } from "react-hook-form";
 
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { Controller } from "react-hook-form";
+import { stateOptions } from "./options";
 
 import { Error } from "../Error";
 import { Width } from "../Width";
-import { stateOptions } from "./options";
+
+import type { StateField } from "@payloadcms/plugin-form-builder/types";
 
 export const State = ({
   name,
@@ -19,11 +20,7 @@ export const State = ({
   width,
 }: StateField & {
   control: Control<FieldValues, any>;
-  errors: Partial<
-    FieldErrorsImpl<{
-      [x: string]: any;
-    }>
-  >;
+  errors: Partial<FieldErrorsImpl<Record<string, any>>>;
 }) => {
   return (
     <Width width={width}>

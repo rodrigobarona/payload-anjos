@@ -1,14 +1,17 @@
 "use client";
 
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import type { Header } from "@/payload-types";
+import { useTheme } from "@/providers/Theme";
 
 import { DefaultHeader } from "./variants/DefaultHeader";
 import { FloatingHeader } from "./variants/FloatingHeader";
-import { useTheme } from "@/providers/Theme";
 
-interface HeaderClientProps {
+import type { Header } from "@/payload-types";
+
+
+
+type HeaderClientProps = {
   data: Header;
 }
 

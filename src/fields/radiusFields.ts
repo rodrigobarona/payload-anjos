@@ -1,4 +1,4 @@
-import { Field } from "payload";
+import { type Field } from "payload";
 
 export const radiusFields: Field[] = [
   {
@@ -13,7 +13,7 @@ export const radiusFields: Field[] = [
     type: "checkbox",
     defaultValue: false,
     admin: {
-      condition: (_, siblingData) => siblingData.radius,
+      condition: (_, siblingData) => Boolean(siblingData.radius),
     },
   },
   {
@@ -56,7 +56,7 @@ export const radiusFields: Field[] = [
     ],
     defaultValue: "rounded-none",
     admin: {
-      condition: (_, siblingData) => siblingData.radius && !siblingData.specifiedRadius,
+      condition: (_, siblingData) => Boolean(siblingData.radius && !siblingData.specifiedRadius),
     },
   },
   {
@@ -102,7 +102,7 @@ export const radiusFields: Field[] = [
         ],
         defaultValue: "rounded-tl-none",
         admin: {
-          condition: (_, siblingData) => siblingData.radius && siblingData.specifiedRadius,
+          condition: (_, siblingData) => Boolean(siblingData.radius && siblingData.specifiedRadius),
         },
       },
       {
@@ -145,7 +145,7 @@ export const radiusFields: Field[] = [
         ],
         defaultValue: "rounded-tr-none",
         admin: {
-          condition: (_, siblingData) => siblingData.radius && siblingData.specifiedRadius,
+          condition: (_, siblingData) => Boolean(siblingData.radius && siblingData.specifiedRadius),
         },
       },
     ],
@@ -193,7 +193,7 @@ export const radiusFields: Field[] = [
         ],
         defaultValue: "rounded-bl-none",
         admin: {
-          condition: (_, siblingData) => siblingData.radius && siblingData.specifiedRadius,
+          condition: (_, siblingData) => Boolean(siblingData.radius && siblingData.specifiedRadius),
         },
       },
       {
@@ -236,7 +236,7 @@ export const radiusFields: Field[] = [
         ],
         defaultValue: "rounded-br-none",
         admin: {
-          condition: (_, siblingData) => siblingData.radius && siblingData.specifiedRadius,
+          condition: (_, siblingData) => Boolean(siblingData.radius && siblingData.specifiedRadius),
         },
       },
     ],

@@ -1,12 +1,12 @@
 "use client";
 
-import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
 
-import type { Theme, ThemeContextType } from "./types";
 
 import canUseDOM from "@/utilities/canUseDOM";
+
 import { defaultTheme, getImplicitPreference, themeLocalStorageKey } from "./shared";
-import { themeIsValid } from "./types";
+import { themeIsValid ,type  Theme,type  ThemeContextType } from "./types";
 
 const initialContext: ThemeContextType = {
   setTheme: () => null,
@@ -25,7 +25,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     if (themeToSet === null) {
       window.localStorage.removeItem(themeLocalStorageKey);
       const implicitPreference = getImplicitPreference();
-      document.documentElement.setAttribute("data-theme", implicitPreference || "");
+      document.documentElement.setAttribute("data-theme", implicitPreference ?? "");
       if (implicitPreference) setThemeState(implicitPreference);
     } else {
       setThemeState(themeToSet);

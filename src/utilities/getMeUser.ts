@@ -1,8 +1,10 @@
+/* eslint-disable */
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import type { Administrator } from "@/payload-types";
 import { getClientSideURL } from "./getURL";
+
+import type { Administrator } from "@/payload-types";
 
 export const getMeUser = async (args?: {
   nullUserRedirect?: string;

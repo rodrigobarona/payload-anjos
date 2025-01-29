@@ -1,5 +1,6 @@
-import { Config } from "payload";
 import { LinkFeature, lexicalEditor, BlocksFeature } from "@payloadcms/richtext-lexical";
+import { type Config } from "payload";
+
 // import {
 //   BgColorFeature,
 //   HighlightColorFeature,

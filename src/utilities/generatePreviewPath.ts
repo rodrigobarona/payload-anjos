@@ -1,5 +1,6 @@
-import { Locale } from "@/i18n/config";
-import { PayloadRequest, CollectionSlug } from "payload";
+import { type PayloadRequest, type CollectionSlug } from "payload";
+
+import { type Locale } from "@/i18n/config";
 
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   posts: "/posts",
@@ -39,4 +40,4 @@ export const generatePreviewPath1 = ({ collection, slug, req }: Props) => {
 };
 
 export const generatePreviewPath = ({ path, locale }) =>
-  `/next/preview?path=${encodeURIComponent(path)}&locale=${locale}`;
+  `/next/preview?path=${encodeURIComponent(path as string)}&locale=${locale}`;

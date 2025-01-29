@@ -1,9 +1,11 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState, useEffect } from "react";
 import { useDebounce } from "@/utilities/useDebounce";
-import { useRouter } from "next/navigation";
+
 
 export const Search = () => {
   const [value, setValue] = useState("");

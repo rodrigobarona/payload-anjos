@@ -1,27 +1,28 @@
 "use client";
 
-import { cn } from "@/utilities/cn";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  CarouselProps,
-} from "@/components/ui/carousel";
-import AutoplayPlugin from "embla-carousel-autoplay";
 import AutoScrollPlugin from "embla-carousel-auto-scroll";
+import AutoplayPlugin from "embla-carousel-autoplay";
+import Image from "next/image";
+import Link from "next/link";
 
-import type { CarouselBlock as CarouselBlockProps } from "@/payload-types";
 import {
   spacingTopClasses,
   spacingBottomClasses,
   paddingTopClasses,
   paddingBottomClasses,
 } from "@/blocks/globals";
-import Image from "next/image";
-import Link from "next/link";
 import RichText from "@/components/RichText";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselProps,
+} from "@/components/ui/carousel";
+import { cn } from "@/utilities/cn";
+
+import type { CarouselBlock as CarouselBlockProps } from "@/payload-types";
 
 export const CarouselBlock = ({
   type,
@@ -50,7 +51,7 @@ export const CarouselBlock = ({
     ],
   };
 
-  const options: { [key: string]: Partial<CarouselProps["opts"]> } = {
+  const options: Record<string, Partial<CarouselProps["opts"]>> = {
     logo: {
       loop: true,
       watchDrag: false,
@@ -64,10 +65,10 @@ export const CarouselBlock = ({
     <section
       className={cn(
         "container",
-        spacingTopClasses[spacingTop || "medium"],
-        spacingBottomClasses[spacingBottom || "medium"],
-        paddingTopClasses[paddingTop || "medium"],
-        paddingBottomClasses[paddingBottom || "medium"],
+        spacingTopClasses[spacingTop ?? "medium"],
+        spacingBottomClasses[spacingBottom ?? "medium"],
+        paddingTopClasses[paddingTop ?? "medium"],
+        paddingBottomClasses[paddingBottom ?? "medium"],
       )}
     >
       {title && <RichText data={title} className="mb-6" />}
@@ -84,22 +85,22 @@ export const CarouselBlock = ({
                   (slide.link.url ||
                     (typeof slide.link.reference?.value !== "string" && slide.link.reference?.value.slug)) ? (
                     <Link
-                      // @ts-ignore - reference.value is not a string! TypeScript doesn't know that, it was checked above
-                      href={slide.link.url || `/${slide.link.reference?.value.slug}`}
+                      // @ts-expect-error - reference.value is not a string! TypeScript doesn't know that, it was checked above
+                      href={slide.link.url ?? `/${slide.link.reference?.value.slug}`}
                       target={slide.link.newTab ? "_blank" : "_self"}
                     >
                       <Image
                         src={slide.image.url}
-                        width={slide.image.width || 256}
-                        height={slide.image.height || 256}
+                        width={slide.image.width ?? 256}
+                        height={slide.image.height ?? 256}
                         alt={slide.image.alt}
                       />
                     </Link>
                   ) : (
                     <Image
                       src={slide.image.url}
-                      width={slide.image.width || 256}
-                      height={slide.image.height || 256}
+                      width={slide.image.width ?? 256}
+                      height={slide.image.height ?? 256}
                       alt={slide.image.alt}
                     />
                   )}

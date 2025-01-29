@@ -1,8 +1,10 @@
 import { useLocale, useTranslations } from "next-intl";
-import { routing } from "@/i18n/routing";
-import { LocaleSwitchSelect } from "./LocaleSwitchSelect";
-import { SelectItem } from "@/components/ui/select";
 import { Suspense } from "react";
+
+import { SelectItem } from "@/components/ui/select";
+import { routing } from "@/i18n/routing";
+
+import { LocaleSwitchSelect } from "./LocaleSwitchSelect";
 
 export default function LocaleSwitch() {
   const t = useTranslations("LocaleSwitch");

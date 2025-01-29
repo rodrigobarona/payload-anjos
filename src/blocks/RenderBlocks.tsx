@@ -1,13 +1,15 @@
-import type { Page } from "@/payload-types";
 
 import { ArchiveBlock } from "@/blocks/ArchiveBlock/Component";
 import { CallToActionBlock } from "@/blocks/CallToAction/Component";
 import { ContentBlock } from "@/blocks/Content/Component";
 import { FormBlock } from "@/blocks/Form/Component";
 import { MediaBlock } from "@/blocks/MediaBlock/Component";
-import { CarouselBlock } from "./Carousel/Component";
+
 import { AccordionBlock } from "./Accordion/Component";
-import { CodeBlock } from "./Code/Component";
+import { CarouselBlock } from "./Carousel/Component";
+
+
+import type { Page } from "@/payload-types";
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -35,7 +37,7 @@ export const RenderBlocks = ({ blocks }: { blocks: Page["layout"][0][] }) => {
             if (Block) {
               return (
                 <div key={index}>
-                  {/* @ts-ignore */}
+                  {/* @ts-expect-error - There can type be error, payload team did it like that */}
                   <Block {...block} disableInnerContainer />
                 </div>
               );

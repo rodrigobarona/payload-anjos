@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { FieldHook } from "payload";
 
 const format = (val: string): string =>

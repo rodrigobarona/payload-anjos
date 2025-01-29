@@ -4,7 +4,7 @@ export type CodeBlockProps = {
   code: string;
   language?: string;
   blockType: "code";
-};
+}
 
 type Props = CodeBlockProps & {
   className?: string;

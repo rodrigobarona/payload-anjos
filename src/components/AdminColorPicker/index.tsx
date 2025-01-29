@@ -1,9 +1,9 @@
 "use client";
 
-import { GradientPicker } from "../ui/backgroundPicker";
-import { TextFieldClientComponent } from "payload";
 import { FieldLabel, useField } from "@payloadcms/ui";
-import { useEffect } from "react";
+import { type TextFieldClientComponent } from "payload";
+
+import { GradientPicker } from "../ui/backgroundPicker";
 
 export const AdminColorPicker: TextFieldClientComponent = ({ path, field }) => {
   const { value, setValue } = useField<{ value: string | undefined }>({ path });

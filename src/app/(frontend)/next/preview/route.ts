@@ -1,9 +1,12 @@
-import jwt from "jsonwebtoken";
+ 
+
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import { draftMode } from "next/headers";
-import { redirect } from "@/i18n/routing";
 import { getPayload } from "payload";
+
+import { type Locale } from "@/i18n/config";
+import { redirect } from "@/i18n/routing";
 import configPromise from "@payload-config";
-import { Locale } from "@/i18n/config";
 
 const payloadToken = "payload-token";
 
@@ -31,7 +34,7 @@ export async function GET(
     new Response("You are not allowed to preview this page", { status: 403 });
   }
 
-  let user;
+  let user: JwtPayload | string | null = null;
 
   try {
     user = jwt.verify(token, payload.secret);

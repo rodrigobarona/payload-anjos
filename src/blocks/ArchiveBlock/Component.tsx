@@ -1,10 +1,11 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps } from "@/payload-types";
 
-import config from "@payload-config";
 import { getPayload } from "payload";
-import RichText from "@/components/RichText";
 
 import { CollectionArchive } from "@/components/CollectionArchive";
+import RichText from "@/components/RichText";
+import config from "@payload-config";
+
+import type { Post, ArchiveBlock as ArchiveBlockProps } from "@/payload-types";
 
 export const ArchiveBlock = async (
   props: ArchiveBlockProps & {
@@ -13,7 +14,7 @@ export const ArchiveBlock = async (
 ) => {
   const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props;
 
-  const limit = limitFromProps || 3;
+  const limit = limitFromProps ?? 3;
 
   let posts: Post[] = [];
 

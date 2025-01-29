@@ -1,6 +1,7 @@
-import type { GlobalAfterChangeHook } from "payload";
-
+/* eslint-disable */
 import { revalidateTag } from "next/cache";
+
+import type { GlobalAfterChangeHook } from "payload";
 
 export const revalidateGlobal: GlobalAfterChangeHook = ({ doc, req: { payload, context } }) => {
   if (!context.disableRevalidate) {

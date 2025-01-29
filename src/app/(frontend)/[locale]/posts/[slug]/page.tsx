@@ -1,21 +1,22 @@
-import type { Metadata } from "next";
+
+import { draftMode } from "next/headers";
+import { getPayload } from "payload";
+import React, { cache } from "react";
 
 import { RelatedPosts } from "@/blocks/RelatedPosts/Component";
+import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { PayloadRedirects } from "@/components/PayloadRedirects";
-import config from "@payload-config";
-import { getPayload } from "payload";
-import { draftMode } from "next/headers";
-import React, { cache } from "react";
 import RichText from "@/components/RichText";
+import { PostHero } from "@/components/heros/PostHero";
+import { type Locale } from "@/i18n/config";
+import { routing } from "@/i18n/routing";
+import { generateMeta } from "@/utilities/generateMeta";
+import config from "@payload-config";
+
+import PageClient from "./page.client";
 
 import type { Post } from "@/payload-types";
-
-import { PostHero } from "@/components/heros/PostHero";
-import { generateMeta } from "@/utilities/generateMeta";
-import PageClient from "./page.client";
-import { LivePreviewListener } from "@/components/LivePreviewListener";
-import { Locale } from "@/i18n/config";
-import { routing } from "@/i18n/routing";
+import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -44,7 +45,7 @@ type Args = {
     slug?: string;
     locale: Locale;
   }>;
-};
+}
 
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode();
