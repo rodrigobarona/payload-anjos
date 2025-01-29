@@ -93,14 +93,14 @@ export const Default = async ({ order, locale }: { order: Order; locale: Locale 
                   <Column>
                     <Img
                       alt={productImage?.alt ?? ""}
-                      src={productImage?.url ?? ""}
+                      src={`${baseUrl}${productImage?.url ?? ""}`}
                       style={{ float: "left" }}
                       width="260px"
                     />
                   </Column>
                   <Column style={{ verticalAlign: "top", paddingLeft: "12px" }}>
                     <Link
-                      href={`/${locale}/product/${product.slug}${product.variants && selectedVariant && `?variant=${selectedVariant.variantSlug}`}`}
+                      href={`${baseUrl}/${locale}/product/${product.slug}${product.variants && selectedVariant && `?variant=${selectedVariant.variantSlug}`}`}
                       style={{ ...paragraph, fontWeight: "500" }}
                     >
                       {product.title}
@@ -138,7 +138,7 @@ export const Default = async ({ order, locale }: { order: Order; locale: Locale 
             </Row>
             <Row>
               <Column align="center">
-                <Link href={`/${locale}/order/${order.id}`} style={global.button}>
+                <Link href={`${baseUrl}/${locale}/order/${order.id}`} style={global.button}>
                   Order Status
                 </Link>
               </Column>
