@@ -4,8 +4,9 @@ import config from "@payload-config";
 import { sendEmail } from "@/utilities/nodemailer";
 import { render } from "@react-email/components";
 import { ResetPasswordEmail } from "@/components/Emails/ResetPasswordEmail";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Locale } from "@/i18n/config";
+import { Administrator } from "@/payload-types";
 
 export async function POST(req: Request) {
   const payload = await getPayload({ config });
@@ -14,7 +15,6 @@ export async function POST(req: Request) {
     const email = body.email;
     const collection: "administrators" = "administrators";
     const token: string = randomBytes(20).toString("hex");
-    console.log(email);
 
     const { docs } = await payload.find({
       collection: collection,
@@ -25,12 +25,11 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log(docs);
     if (!docs || docs.length === 0) {
       return Response.json({ message: "Success" }, { status: 200 });
     }
 
-    let user = docs[0];
+    let user: Administrator = docs[0];
 
     user.resetPasswordToken = token;
     user.resetPasswordExpiration = new Date(Date.now() + 3600000).toISOString();
@@ -51,11 +50,12 @@ export async function POST(req: Request) {
       }),
     );
 
-    const res = await sendEmail({ to: email, subject: "Reset hasła boilerplate", html });
+    const t = await getTranslations({ locale, namespace: "Emails.reset-password" });
+
+    const res = await sendEmail({ to: email, subject: t("subject"), html });
     console.log(res);
   } catch (error) {
-    console.log(error);
+    return Response.json({ message: "Internal server error" }, { status: 500 });
   }
-
   return Response.json({ message: "Success" }, { status: 200 });
 }

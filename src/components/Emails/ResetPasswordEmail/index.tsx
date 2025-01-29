@@ -1,9 +1,19 @@
+import { Locale } from "@/i18n/config";
 import { Button, Html, Text } from "@react-email/components";
 import { getTranslations } from "next-intl/server";
 import * as React from "react";
 
-export const ResetPasswordEmail = async ({ url, locale, name }) => {
+export const ResetPasswordEmail = async ({
+  url,
+  locale,
+  name,
+}: {
+  url: string;
+  locale: Locale;
+  name: string;
+}) => {
   const t = await getTranslations({ locale, namespace: "Emails.reset-password" });
+  console.log(name);
   return (
     <Html>
       <Text

@@ -19,6 +19,7 @@ import { getServerSideURL } from "./utilities/getURL";
 import { en } from "payload/i18n/en";
 import { pl } from "payload/i18n/pl";
 import { EmailMessages } from "./globals/EmailMessages/config";
+import { customTranslationsObject } from "./admin/translations/custom-translations";
 // import 'payloadcms-lexical-ext/client/client.css'
 
 const filename = fileURLToPath(import.meta.url);
@@ -63,6 +64,7 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { en, pl },
     fallbackLanguage: "en",
+    translations: customTranslationsObject,
   },
   localization: {
     locales: ["en", "pl"],
