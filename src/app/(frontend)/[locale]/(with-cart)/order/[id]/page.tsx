@@ -83,9 +83,9 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                       </Link>
                     </h4>
                     <p className="mt-2 text-sm text-gray-500">
-                      {product.color}
+                      {product.colors?.find((color) => color.slug === product.color)?.label}
                       {product.color && product.size && ", "}
-                      {product.size}
+                      {product.sizes?.find((size) => size.slug === product.size)?.label}
                     </p>
                     {product.description && (
                       <RichText data={product.description} className="mt-2 text-sm text-gray-600" />

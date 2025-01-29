@@ -97,8 +97,8 @@ export async function POST(req: Request) {
           quantity: product.quantity,
           hasVariant: product.enableVariants && product.variant ? true : false,
           variantSlug: product.variant.variantSlug ?? undefined,
-          color: product.variant.color?.label ?? undefined,
-          size: product.variant.size?.label ?? undefined,
+          color: product.variant.color?.slug ?? undefined,
+          size: product.variant.size?.slug ?? undefined,
           price:
             product.variant.pricing && product.enableVariantPrices
               ? (product.variant.pricing.find((price) => price.currency === currency)?.value ?? 0)
@@ -245,6 +245,7 @@ export async function POST(req: Request) {
           break;
       }
     } catch (error) {
+      console.log(error);
       return Response.json({ status: 500, message: "Error while creating payment" });
     }
 

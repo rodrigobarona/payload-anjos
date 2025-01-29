@@ -5,7 +5,17 @@ import { getCustomer } from "@/utilities/getCustomer";
 
 export async function POST(req: Request) {
   try {
-    const cart: Cart | undefined = await req.json();
+    const contentLength = req.headers.get("content-length");
+    if (!contentLength || contentLength === "0") {
+      return Response.json(JSON.stringify({ error: "Empty request body" }), { status: 400 });
+    }
+
+    let cart: Cart | undefined;
+    try {
+      cart = await req.json();
+    } catch (parseError) {
+      return Response.json(JSON.stringify({ error: "Invalid JSON in request body" }), { status: 400 });
+    }
 
     const user = await getCustomer();
 
