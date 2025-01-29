@@ -1,4 +1,4 @@
-import type { DefaultTranslationKeys, NestedKeysStripped, TFunction } from "@payloadcms/translations";
+import type { NestedKeysStripped } from "@payloadcms/translations";
 
 export const customTranslationsObject = {
   en: {
@@ -30,3 +30,6 @@ export const customTranslationsObject = {
     },
   },
 };
+
+export type CustomTranslationsObject = typeof customTranslationsObject.en;
+export type CustomTranslationsKeys = NestedKeysStripped<CustomTranslationsObject>;
