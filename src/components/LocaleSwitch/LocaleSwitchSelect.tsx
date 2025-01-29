@@ -1,7 +1,7 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { ReactNode, useTransition } from "react";
+import { useParams, useSearchParams } from "next/navigation";
+import { ReactNode, Suspense, useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { Locale } from "@/i18n/config";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -17,14 +17,19 @@ export function LocaleSwitchSelect({ children, defaultValue, label }: Props) {
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
   const params = useParams();
+  const searchParams = useSearchParams();
 
-  function onSelectChange(locale: Locale) {
+  async function onSelectChange(locale: Locale) {
     startTransition(() => {
+      const query = {
+        ...Object.fromEntries(searchParams.entries()),
+      };
+
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will
         // always match for the current route, we can skip runtime checks.
-        { pathname, params },
+        { pathname, params, query },
         { scroll: false, locale },
       );
     });
