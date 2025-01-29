@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { getCachedGlobal } from "./getGlobals";
 
-const { smtp } = await getCachedGlobal("emailMessages", "en", 1)();
+const { smtp, messages } = await getCachedGlobal("emailMessages", "en", 1)();
 
 const { host, fromEmail, password, port, secure, user } = smtp;
 

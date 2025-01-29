@@ -300,7 +300,8 @@
     "summary": "Summary",
     "subtotal": "Subtotal",
     "shipping": "Shipping",
-    "total": "Total"
+    "total": "Total",
+    "pickup-point": "Pickup point"
   },
   "Emails": {
     "reset-password": {

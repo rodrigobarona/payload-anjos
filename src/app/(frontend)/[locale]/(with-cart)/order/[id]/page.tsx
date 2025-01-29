@@ -8,6 +8,7 @@ import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getTranslations } from "next-intl/server";
+import { getOrderProducts } from "@/utilities/getOrderProducts";
 
 const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: string }> }) => {
   const { locale, id } = await params;
@@ -19,22 +20,9 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
   });
 
   const t = await getTranslations("Order");
+  const c = await getTranslations("CheckoutForm.countries");
 
-  const filledProducts =
-    order.products &&
-    (await Promise.all(
-      order.products.map(async (product) => {
-        const filledProduct = await payload.findByID({
-          collection: "products",
-          id: product.id ?? "",
-          locale,
-        });
-        return {
-          ...product,
-          ...filledProduct,
-        };
-      }),
-    ));
+  const filledProducts = await getOrderProducts(order.products, locale);
 
   const courier =
     order.orderDetails.shipping && (await getCachedGlobal(order.orderDetails.shipping, locale, 1)());
@@ -67,14 +55,17 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
             const selectedVariant = product.variants?.find(
               (variant) => variant.variantSlug === product.variantSlug,
             );
-            const productImage = product.variants
-              ? (product.variants.find((variant) => product.variantSlug === variant.variantSlug)?.image as
-                  | Media
-                  | undefined)
-              : (product.images[0] as Media);
+            const productImage =
+              product.variants && product.variantSlug
+                ? ((product.variants.find((variant) => product.variantSlug === variant.variantSlug)?.image ??
+                    product.images[0]) as Media | undefined)
+                : (product.images[0] as Media);
 
             return (
-              <div key={product.id} className="flex space-x-6 border-b border-gray-200 py-6">
+              <div
+                key={`${product.id}-${product.variantSlug}`}
+                className="flex space-x-6 border-b border-gray-200 py-6"
+              >
                 <Image
                   alt={productImage?.alt ?? ""}
                   src={productImage?.url ?? ""}
@@ -92,7 +83,9 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                       </Link>
                     </h4>
                     <p className="mt-2 text-sm text-gray-500">
-                      {product.color}, {product.size}
+                      {product.color}
+                      {product.color && product.size && ", "}
+                      {product.size}
                     </p>
                     {product.description && (
                       <RichText data={product.description} className="mt-2 text-sm text-gray-600" />
@@ -131,8 +124,18 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                       {order.shippingAddress.postalCode}, {order.shippingAddress.city}
                     </span>
                     <span className="block">
-                      {order.shippingAddress.region}, {order.shippingAddress.country}
+                      {order.shippingAddress.region}, {c(order.shippingAddress.country)}
                     </span>
+                    {order.shippingAddress.pickupPointID && (
+                      <>
+                        <span className="block">
+                          {t("pickup-point")}: {order.shippingAddress.pickupPointID}
+                        </span>
+                        {order.shippingAddress.pickupPointAddress && (
+                          <span>{order.shippingAddress.pickupPointAddress}</span>
+                        )}
+                      </>
+                    )}
                   </address>
                 </dd>
               </div>

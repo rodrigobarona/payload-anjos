@@ -92,7 +92,24 @@ export const EmailMessages: GlobalConfig = {
             en: "Messages",
             pl: "Wiadomości",
           },
-          fields: [],
+          fields: [
+            {
+              name: "logo",
+              type: "upload",
+              label: {
+                en: "Logo",
+                pl: "Logo",
+              },
+              relationTo: "media",
+            },
+            {
+              name: "template",
+              type: "select",
+              required: true,
+              defaultValue: "default",
+              options: [{ value: "default", label: { en: "Default", pl: "Domyślny" } }],
+            },
+          ],
         },
       ],
     },

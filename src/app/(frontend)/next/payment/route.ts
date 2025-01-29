@@ -12,6 +12,9 @@ import { Currency } from "@/stores/Currency/types";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getStripePaymentURL } from "@/lib/paywalls/getStripePaymentURL";
 import { getCustomer } from "@/utilities/getCustomer";
+import { sendEmail } from "@/utilities/nodemailer";
+import { OrderPlacedEmail } from "@/components/Emails/OrderPlacedEmail";
+import { render } from "@react-email/components";
 
 export async function POST(req: Request) {
   try {
@@ -96,9 +99,16 @@ export async function POST(req: Request) {
           variantSlug: product.variant.variantSlug ?? undefined,
           color: product.variant.color?.label ?? undefined,
           size: product.variant.size?.label ?? undefined,
-          price: product.pricing?.find((price) => price.currency === currency)?.value ?? 0,
+          price:
+            product.variant.pricing && product.enableVariantPrices
+              ? (product.variant.pricing.find((price) => price.currency === currency)?.value ?? 0)
+              : (product.pricing?.find((price) => price.currency === currency)?.value ?? 0),
           priceTotal:
-            product.pricing?.find((price) => price.currency === currency)?.value ?? 0 * product.quantity,
+            product.variant.pricing && product.enableVariantPrices
+              ? (product.variant.pricing.find((price) => price.currency === currency)?.value ??
+                0 * product.quantity)
+              : (product.pricing?.find((price) => price.currency === currency)?.value ??
+                0 * product.quantity),
         })),
         date: new Date().toISOString(),
         invoice: {
@@ -208,6 +218,14 @@ export async function POST(req: Request) {
         url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/order/${order.id}`,
       });
     }
+
+    const html = await render(await OrderPlacedEmail({ locale, order }));
+
+    await sendEmail({
+      html,
+      subject: "Order placed",
+      to: checkoutData.shipping.email,
+    });
 
     try {
       switch (paywalls.paywall) {

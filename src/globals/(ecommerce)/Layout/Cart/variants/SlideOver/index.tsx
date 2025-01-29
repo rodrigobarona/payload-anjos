@@ -58,7 +58,7 @@ export const SlideOver = () => {
             totalQuantity: number;
           };
         }>("/next/cartProducts", { cart: cartToCalculate, locale });
-        const { filledProducts, total } = data.productsWithTotal;
+        const { filledProducts = [], total = [] } = data.productsWithTotal;
         setCartProducts(filledProducts);
         setTotal(total);
       } catch (error) {

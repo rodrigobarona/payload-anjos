@@ -300,7 +300,8 @@
     "summary": "Podsumowanie",
     "subtotal": "Suma częściowa",
     "shipping": "Dostawa",
-    "total": "Razem"
+    "total": "Razem",
+    "pickup-point": "Punkt odbioru"
   },
   "Emails": {
     "reset-password": {

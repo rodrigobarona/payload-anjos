@@ -2514,7 +2514,10 @@ export interface EmailMessage {
     password: string;
     fromEmail: string;
   };
-  messages?: {};
+  messages: {
+    logo?: (string | null) | Media;
+    template: 'default';
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3008,7 +3011,12 @@ export interface EmailMessagesSelect<T extends boolean = true> {
         password?: T;
         fromEmail?: T;
       };
-  messages?: T | {};
+  messages?:
+    | T
+    | {
+        logo?: T;
+        template?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
