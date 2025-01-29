@@ -48,6 +48,7 @@ import { WeightRangeRowLabel as WeightRangeRowLabel_408d0e590e7be77eda1e9250fd39
 import { DeliveryZonesRowLabel as DeliveryZonesRowLabel_0d2e9891c92e5d6a59a49ed2697b12d5 } from '@/components/(ecommerce)/RowLabels/DeliveryZonesRowLabel'
 import { AdminLogoIcon as AdminLogoIcon_b44db66c75684c15f88e108165ed4089 } from '@/components/AdminLogoIcon/AdminLogoIcon'
 import { AdminLogoBig as AdminLogoBig_06da07c1f0ebe9eb350437b211008391 } from '@/components/AdminLogoBig/AdminLogoBig'
+import { AdminResetPassword as AdminResetPassword_f8d611a17c80018cb52bc9ecc1bbddd2 } from '@/components/AdminResetPassword/AdminResetPassword'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -99,5 +100,6 @@ export const importMap = {
   "@/components/(ecommerce)/RowLabels/WeightRangeRowLabel#WeightRangeRowLabel": WeightRangeRowLabel_408d0e590e7be77eda1e9250fd393637,
   "@/components/(ecommerce)/RowLabels/DeliveryZonesRowLabel#DeliveryZonesRowLabel": DeliveryZonesRowLabel_0d2e9891c92e5d6a59a49ed2697b12d5,
   "@/components/AdminLogoIcon/AdminLogoIcon#AdminLogoIcon": AdminLogoIcon_b44db66c75684c15f88e108165ed4089,
-  "@/components/AdminLogoBig/AdminLogoBig#AdminLogoBig": AdminLogoBig_06da07c1f0ebe9eb350437b211008391
+  "@/components/AdminLogoBig/AdminLogoBig#AdminLogoBig": AdminLogoBig_06da07c1f0ebe9eb350437b211008391,
+  "@/components/AdminResetPassword#AdminResetPassword": AdminResetPassword_f8d611a17c80018cb52bc9ecc1bbddd2
 }

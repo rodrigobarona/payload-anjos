@@ -3,12 +3,11 @@
 import { CustomTranslationsKeys, CustomTranslationsObject } from "@/admin/translations/custom-translations";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utilities/cn";
-import { FieldLabel, Select, TextInput, useField, useForm, useTranslation } from "@payloadcms/ui";
+import { FieldLabel, useField, useForm, useTranslation } from "@payloadcms/ui";
 import axios from "axios";
 import { useState } from "react";
 import { getShippingLabel } from "../../utils/getShippingLabel";
 import { Dimensions } from "@/app/(frontend)/next/package/route";
-import { Input } from "@/components/ui/input";
 import { AdminInput } from "@/components/ui/AdminInput";
 
 export const CourierShipmentMenuClient = ({ orderID }: { orderID: string }) => {
@@ -50,8 +49,6 @@ export const CourierShipmentMenuClient = ({ orderID }: { orderID: string }) => {
       setIsLoading(false);
     }
   };
-
-  const onSubmit = () => {};
 
   const handleResetPackage = async () => {
     try {
