@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { getCachedGlobal } from "./getGlobals";
 
+// en here because smtp config is not localized at all.
 const { smtp } = await getCachedGlobal("emailMessages", "en", 1)();
 
 const { host, fromEmail, password, port, secure, user } = smtp;
@@ -23,7 +24,6 @@ export const sendEmail = async ({ to, subject, html }: { to: string; subject: st
       subject,
       html,
     });
-    console.log(info);
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.log(error);
