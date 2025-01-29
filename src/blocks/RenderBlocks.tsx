@@ -8,6 +8,7 @@ import { MediaBlock } from "@/blocks/MediaBlock/Component";
 import { CarouselBlock } from "./Carousel/Component";
 import { AccordionBlock } from "./Accordion/Component";
 import { CodeBlock } from "./Code/Component";
+import { HotspotBlock } from "./(ecommerce)/Hotspot/Component";
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -18,6 +19,7 @@ const blockComponents = {
   carousel: CarouselBlock,
   mediaBlock: MediaBlock,
   accordion: AccordionBlock,
+  hotspotZone: HotspotBlock,
 };
 
 export const RenderBlocks = ({ blocks }: { blocks: Page["layout"][0][] }) => {

@@ -190,7 +190,16 @@ export interface Page {
     media?: (string | null) | Media;
     reversed?: boolean | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | CarouselBlock | AccordionBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | CarouselBlock
+    | AccordionBlock
+    | HotspotBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -908,6 +917,202 @@ export interface AccordionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hotspotBlock".
+ */
+export interface HotspotBlock {
+  title?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  type?: ('category' | 'subcategory' | 'manual') | null;
+  appearance?: 'default' | null;
+  sort?: ('quantity-sold' | 'newest' | 'oldest' | 'cheapest' | 'most-expensive') | null;
+  products?: (string | Product)[] | null;
+  category?: (string | null) | ProductCategory;
+  subcategory?: (string | null) | ProductSubCategory;
+  limit?: number | null;
+  spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hotspotZone';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * If you have variants, first image will be variant image.
+   */
+  images: (string | Media)[];
+  details?:
+    | {
+        title: string;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  enableVariants?: boolean | null;
+  /**
+   * If false, price is in Product Details
+   */
+  enableVariantPrices?: boolean | null;
+  /**
+   * If false, weight is in Product Details
+   */
+  enableVariantWeights?: boolean | null;
+  variantsType?: ('sizes' | 'colors' | 'colorsAndSizes') | null;
+  colors?:
+    | {
+        label: string;
+        slug: string;
+        colorValue?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  sizes?:
+    | {
+        label: string;
+        slug: string;
+        id?: string | null;
+      }[]
+    | null;
+  variants?:
+    | {
+        size?: string | null;
+        color?: string | null;
+        variantSlug?: string | null;
+        image?: (string | null) | Media;
+        /**
+         * Define stock for this variant. A stock of 0 disables checkout for this variant.
+         */
+        stock: number;
+        /**
+         * Define weight for this variant.
+         */
+        weight?: number | null;
+        pricing?:
+          | {
+              value: number;
+              currency: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  categoriesArr?:
+    | {
+        category: string | ProductCategory;
+        subcategories?: (string | ProductSubCategory)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Define stock for whole product. A stock of 0 disables checkout for this product.
+   */
+  stock?: number | null;
+  /**
+   * Define weight for whole product.
+   */
+  weight?: number | null;
+  pricing?:
+    | {
+        value: number;
+        currency: string;
+        id?: string | null;
+      }[]
+    | null;
+  bought?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productCategories".
+ */
+export interface ProductCategory {
+  id: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  subcategories?: {
+    docs?: (string | ProductSubCategory)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  products?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productSubCategories".
+ */
+export interface ProductSubCategory {
+  id: string;
+  category: string | ProductCategory;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  products?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "customers".
  */
 export interface Customer {
@@ -1157,167 +1362,6 @@ export interface Order {
     trackingNumber?: string | null;
     orderNote?: string | null;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: string;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * If you have variants, first image will be variant image.
-   */
-  images: (string | Media)[];
-  details?:
-    | {
-        title: string;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  enableVariants?: boolean | null;
-  /**
-   * If false, price is in Product Details
-   */
-  enableVariantPrices?: boolean | null;
-  /**
-   * If false, weight is in Product Details
-   */
-  enableVariantWeights?: boolean | null;
-  variantsType?: ('sizes' | 'colors' | 'colorsAndSizes') | null;
-  colors?:
-    | {
-        label: string;
-        slug: string;
-        colorValue?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  sizes?:
-    | {
-        label: string;
-        slug: string;
-        id?: string | null;
-      }[]
-    | null;
-  variants?:
-    | {
-        size?: string | null;
-        color?: string | null;
-        variantSlug?: string | null;
-        image?: (string | null) | Media;
-        /**
-         * Define stock for this variant. A stock of 0 disables checkout for this variant.
-         */
-        stock: number;
-        /**
-         * Define weight for this variant.
-         */
-        weight?: number | null;
-        pricing?:
-          | {
-              value: number;
-              currency: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  categoriesArr?:
-    | {
-        category: string | ProductCategory;
-        subcategories?: (string | ProductSubCategory)[] | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Define stock for whole product. A stock of 0 disables checkout for this product.
-   */
-  stock?: number | null;
-  /**
-   * Define weight for whole product.
-   */
-  weight?: number | null;
-  pricing?:
-    | {
-        value: number;
-        currency: string;
-        id?: string | null;
-      }[]
-    | null;
-  bought?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "productCategories".
- */
-export interface ProductCategory {
-  id: string;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  subcategories?: {
-    docs?: (string | ProductSubCategory)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  products?: {
-    docs?: (string | Product)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "productSubCategories".
- */
-export interface ProductSubCategory {
-  id: string;
-  category: string | ProductCategory;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  products?: {
-    docs?: (string | Product)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1579,6 +1623,7 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
         accordion?: T | AccordionBlockSelect<T>;
+        hotspotZone?: T | HotspotBlockSelect<T>;
       };
   meta?:
     | T
@@ -1748,6 +1793,26 @@ export interface AccordionBlockSelect<T extends boolean = true> {
         content?: T;
         id?: T;
       };
+  spacingBottom?: T;
+  spacingTop?: T;
+  paddingBottom?: T;
+  paddingTop?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hotspotBlock_select".
+ */
+export interface HotspotBlockSelect<T extends boolean = true> {
+  title?: T;
+  type?: T;
+  appearance?: T;
+  sort?: T;
+  products?: T;
+  category?: T;
+  subcategory?: T;
+  limit?: T;
   spacingBottom?: T;
   spacingTop?: T;
   paddingBottom?: T;

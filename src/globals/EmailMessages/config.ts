@@ -12,6 +12,12 @@ export const EmailMessages: GlobalConfig = {
     read: authenticated,
     update: authenticated,
   },
+  admin: {
+    group: {
+      en: "Shop settings",
+      pl: "Ustawienia sklepu",
+    },
+  },
   fields: [
     {
       name: "host",

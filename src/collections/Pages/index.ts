@@ -23,7 +23,7 @@ import {
 import { Carousel } from "@/blocks/Carousel/config";
 import { Accordion } from "@/blocks/Accordion/config";
 import { Code } from "@/blocks/Code/config";
-import { en } from "payload/i18n/en";
+import { Hotspot } from "@/blocks/(ecommerce)/Hotspot/config";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -91,7 +91,7 @@ export const Pages: CollectionConfig<"pages"> = {
             {
               name: "layout",
               type: "blocks",
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Carousel, Accordion],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Carousel, Accordion, Hotspot],
               required: true,
               admin: {
                 initCollapsed: true,
