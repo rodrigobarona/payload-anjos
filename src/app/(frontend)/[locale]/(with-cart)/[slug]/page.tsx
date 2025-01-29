@@ -15,6 +15,7 @@ import { generateMeta } from "@/utilities/generateMeta";
 import PageClient from "./page.client";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { routing } from "@/i18n/routing";
+import { setRequestLocale } from "next-intl/server";
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -63,6 +64,8 @@ export default async function Page({ params: paramsPromise }: Args) {
   if (!page) {
     return <PayloadRedirects url={url} locale={locale} />;
   }
+
+  setRequestLocale(locale);
 
   const { hero, layout } = page;
 
