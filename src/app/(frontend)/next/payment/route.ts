@@ -1,7 +1,6 @@
 import { getPayload } from "payload";
 
 import { type Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
-import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 import { type Locale } from "@/i18n/config";
 import { getFilledProducts } from "@/lib/getFilledProducts";
 import { getTotal } from "@/lib/getTotal";
@@ -13,6 +12,11 @@ import { type Currency } from "@/stores/Currency/types";
 import { getCustomer } from "@/utilities/getCustomer";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import config from "@payload-config";
+
+const createCouriers = async (locale: Locale) => {
+  const couriersModule = await import("@/globals/(ecommerce)/Couriers/utils/couriersConfig");
+  return couriersModule.createCouriers(locale);
+};
 
 export async function POST(req: Request) {
   try {
@@ -67,7 +71,7 @@ export async function POST(req: Request) {
     const filledProducts = getFilledProducts(products, cart);
     const total = getTotal(filledProducts);
     const totalWeight = getTotalWeight(filledProducts, cart);
-    const couriers = createCouriers(locale);
+    const couriers = await createCouriers(locale);
 
     const courier = couriers.find((courier) => courier?.key === checkoutData.deliveryMethod);
     if (!courier) {

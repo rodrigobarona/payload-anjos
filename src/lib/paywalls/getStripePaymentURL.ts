@@ -70,7 +70,9 @@ export const getStripePaymentURL = async (
           },
         },
       ],
-      client_reference_id: orderID,
+      metadata: {
+        orderID,
+      },
       success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/order/${orderID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/order/${orderID}?cancelled=true`,
     });
