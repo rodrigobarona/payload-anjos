@@ -5,7 +5,7 @@ import { Link } from "@/i18n/routing";
 
 import { LoginForm } from "./components/LoginForm";
 
-export const LoginPageWithoutOAuth = () => {
+export const LoginPageWithoutOAuth = ({ verified }: { verified?: string }) => {
   const t = useTranslations("LoginForm");
   return (
     <main className="flex h-full flex-1 flex-col items-center justify-center bg-gray-50">
@@ -24,11 +24,13 @@ export const LoginPageWithoutOAuth = () => {
         <div className="mt-10 w-full sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <LoginForm />
+            {verified === "true" && <p className="mt-4 text-sm text-green-600">{t("verified-success")}</p>}
+            {verified === "false" && <p className="mt-4 text-sm text-red-500">{t("verified-fail")}</p>}
           </div>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             {t("no-account")}{" "}
-            <Link href="/register" className="hover:text-main-500 text-main-600 font-semibold">
+            <Link href="/register" className="font-semibold text-main-600 hover:text-main-500">
               {t("register-now")}
             </Link>
           </p>

@@ -12,12 +12,6 @@ export async function GET(req: Request) {
       return Response.json({ message: "Verification token is required" }, { status: 400 });
     }
 
-    const { docs: test } = await payload.find({
-      collection: "customers",
-    });
-
-    console.log(test[0]._verificationToken);
-
     await payload.verifyEmail({
       collection: "customers",
       token: token,

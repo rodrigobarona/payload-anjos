@@ -50,6 +50,8 @@
     "forgot-password": "Zapomniałeś hasła?",
     "no-account": "Nie masz konta?",
     "register-now": "Zarejestruj się teraz!",
+    "verified-success": "Adres e-mail zweryfikowany. Możesz się teraz zalogować.",
+    "verified-fail": "Nieprawidłowy link weryfikacyjny. Spróbuj ponownie lub skontaktuj się z nami.",
     "errors": {
       "email": "Nieprawidłowy adres e-mail",
       "email-empty": "Adres e-mail nie może być pusty",
@@ -65,6 +67,8 @@
     "confirm-password": "Potwierdź hasło",
     "submit": "Zarejestruj się",
     "success": "Konto utworzone pomyślnie. Na Twój adres e-mail został wysłany link aktywacyjny.",
+    "have-account": "Masz już konto?",
+    "login-now": "Zaloguj się tutaj!",
     "errors": {
       "email": "Nieprawidłowy adres e-mail",
       "email-empty": "Adres e-mail nie może być pusty",

@@ -92,8 +92,10 @@ export const RegisterForm = () => {
           )}
         />
 
-        <p className="text-sm text-red-500">{form.formState.errors.root?.message ?? ""}</p>
-        <p className="text-sm text-green-600">{message}</p>
+        {form.formState.errors.root?.message && (
+          <p className="text-sm text-red-500">{form.formState.errors.root.message}</p>
+        )}
+        {message && <p className="text-sm text-green-600">{message}</p>}
 
         <Button type="submit" variant="tailwind">
           {t("submit")}

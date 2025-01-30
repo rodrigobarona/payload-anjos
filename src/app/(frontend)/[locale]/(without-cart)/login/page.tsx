@@ -4,14 +4,21 @@ import { redirect } from "@/i18n/routing";
 import { getCustomer } from "@/utilities/getCustomer";
 import { getCachedGlobal } from "@/utilities/getGlobals";
 
-const LoginPage = async ({ params }: { params: Promise<{ locale: Locale }> }) => {
+const LoginPage = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ verified?: string }>;
+}) => {
   const user = await getCustomer();
   const { locale } = await params;
+  const { verified } = await searchParams;
   if (user) {
     return redirect({ locale: locale, href: "/account" });
   }
   const shopSettings = await getCachedGlobal("shopSettings", locale, 1)();
 
-  return shopSettings.enableOAuth ? <></> : <LoginPageWithoutOAuth />;
+  return shopSettings.enableOAuth ? <></> : <LoginPageWithoutOAuth verified={verified} />;
 };
 export default LoginPage;

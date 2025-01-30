@@ -50,6 +50,8 @@
     "forgot-password": "Forgot password?",
     "no-account": "Don't have an account?",
     "register-now": "Register now!",
+    "verified-success": "Email has been verified successfully. You can now sign in.",
+    "verified-fail": "Email verification failed. Please try again or contact support.",
     "errors": {
       "email": "Invalid email address",
       "email-empty": "Email address cannot be empty",
@@ -65,6 +67,8 @@
     "confirm-password": "Confirm password",
     "submit": "Sign up",
     "success": "Account has been created successfully. An email has been sent to you with a confirmation link.",
+    "have-account": "Already have an account?",
+    "login-now": "Login here!",
     "errors": {
       "email": "Invalid email address",
       "email-empty": "Email address cannot be empty",

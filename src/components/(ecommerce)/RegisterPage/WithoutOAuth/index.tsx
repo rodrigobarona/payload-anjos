@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
+import { Link } from "@/i18n/routing";
+
 import { RegisterForm } from "./components/RegisterForm";
 
 export const RegisterPageWithoutOAuth = () => {
@@ -24,12 +26,12 @@ export const RegisterPageWithoutOAuth = () => {
             <RegisterForm />
           </div>
 
-          {/* <p className="mt-10 text-center text-sm/6 text-gray-500">
-            {t("no-account")}{" "}
+          <p className="mt-10 text-center text-sm/6 text-gray-500">
+            {t("have-account")}{" "}
             <Link href="/register" className="font-semibold text-main-600 hover:text-main-500">
-              {t("register-now")}
+              {t("login-now")}
             </Link>
-          </p> */}
+          </p>
         </div>
       </div>
     </main>
