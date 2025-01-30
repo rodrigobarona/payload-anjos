@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { type Locale } from "@/i18n/config";
 
-export const ResetPasswordEmail = async ({
+export const VerifyAccountEmail = async ({
   url,
   locale,
   name,
@@ -13,8 +13,7 @@ export const ResetPasswordEmail = async ({
   locale: Locale;
   name: string;
 }) => {
-  const t = await getTranslations({ locale, namespace: "Emails.reset-password" });
-  console.log(name);
+  const t = await getTranslations({ locale, namespace: "Emails.verify-email" });
   return (
     <Html>
       <Text
@@ -37,9 +36,18 @@ export const ResetPasswordEmail = async ({
           fontSize: "16px",
         }}
       >
-        {t("message")}
+        {t("body")}
       </Text>
-      <Button href={url} style={{ background: "#000", color: "#fff", padding: "12px 20px", backgroundColor: "#6366f1", margin: "0 auto" }}>
+      <Button
+        href={url}
+        style={{
+          background: "#000",
+          color: "#fff",
+          padding: "12px 20px",
+          backgroundColor: "#6366f1",
+          margin: "0 auto",
+        }}
+      >
         {t("button")}
       </Button>
     </Html>

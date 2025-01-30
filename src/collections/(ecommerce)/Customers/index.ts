@@ -2,6 +2,8 @@ import { type CollectionConfig } from "payload";
 
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 
+import { createTokenAndSendEmail } from "./hooks/createTokenAndSendEmail";
+
 export const Customers: CollectionConfig = {
   slug: "customers",
   access: {
@@ -26,6 +28,10 @@ export const Customers: CollectionConfig = {
   auth: {
     maxLoginAttempts: 30,
     lockTime: 30 * 1000,
+    verify: true,
+  },
+  hooks: {
+    afterOperation: [createTokenAndSendEmail],
   },
   fields: [
     {

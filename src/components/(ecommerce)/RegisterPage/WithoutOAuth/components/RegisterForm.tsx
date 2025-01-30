@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { isAxiosError } from "axios";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "@/i18n/routing";
 import { type RegisterFormData, useRegisterFormSchema } from "@/schemas/registerForm.schema";
 
 export const RegisterForm = () => {
@@ -23,10 +23,12 @@ export const RegisterForm = () => {
     },
   });
 
+  const [message, setMessage] = useState("");
+
   const t = useTranslations("RegisterForm");
-  const router = useRouter();
 
   const onSubmit = async (values: RegisterFormData) => {
+    setMessage("");
     try {
       const res = await axios.post("/api/customers", {
         email: values.email,
@@ -34,7 +36,7 @@ export const RegisterForm = () => {
       });
 
       if (res.status === 200 || res.status === 201) {
-        router.replace("/account");
+        setMessage(t("success"));
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -91,6 +93,7 @@ export const RegisterForm = () => {
         />
 
         <p className="text-sm text-red-500">{form.formState.errors.root?.message ?? ""}</p>
+        <p className="text-sm text-green-600">{message}</p>
 
         <Button type="submit" variant="tailwind">
           {t("submit")}

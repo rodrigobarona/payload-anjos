@@ -21,6 +21,7 @@ import { type Locale } from "@/i18n/config";
 import { type Media, type Order } from "@/payload-types";
 import { formatDateTime } from "@/utilities/formatDateTime";
 import { formatPrice } from "@/utilities/formatPrices";
+import { getCachedGlobal } from "@/utilities/getGlobals";
 import { getOrderProducts } from "@/utilities/getOrderProducts";
 
 const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -29,6 +30,7 @@ export const Default = async ({ order, locale }: { order: Order; locale: Locale 
   const t = await getTranslations({ locale, namespace: "Order" });
 
   const products = await getOrderProducts(order.products, locale);
+  const { messages } = await getCachedGlobal("emailMessages", locale, 1)();
 
   return (
     <Html>
@@ -52,22 +54,22 @@ export const Default = async ({ order, locale }: { order: Order; locale: Locale 
           )}
           <Hr style={global.hr} />
           <Section style={message}>
-            <Img
-              src={`${baseUrl}/static/nike-logo.png`}
-              width="66"
-              height="22"
-              alt="Nike"
-              style={{ margin: "auto" }}
-            />
+            {messages?.logo && typeof messages.logo !== "string" && (
+              <Img
+                alt={messages.logo.alt ?? ""}
+                src={`${baseUrl}${messages.logo.url ?? ""}`}
+                width="66"
+                height="22"
+                style={{ margin: "auto" }}
+              />
+            )}
             <Heading style={global.heading}>{t(`${order.orderDetails.status}.title`)}</Heading>
             <Text style={global.text}>
               {t(`${order.orderDetails.status}.subtitle`, { orderID: order.id })}
             </Text>
-            <Text style={{ ...global.text, marginTop: 24 }}>
-              We´ve also charged your payment method for the cost of your order and will be removing any
-              authorization holds. For payment details, please visit your Orders page on Nike.com or in the
-              Nike app.
-            </Text>
+            {messages.additionalText && (
+              <Text style={{ ...global.text, marginTop: 24 }}>{messages.additionalText}</Text>
+            )}
           </Section>
           <Hr style={global.hr} />
           <Section style={global.defaultPadding}>
@@ -256,7 +258,7 @@ export const Default = async ({ order, locale }: { order: Order; locale: Locale 
           <Hr style={global.hr} />
           <Section style={paddingY}>
             <Row>
-              <Text style={global.heading}>Nike.com</Text>
+              <Text style={global.heading}>Pimento</Text>
             </Row>
             <Row style={categories.container}>
               <Column align="center">

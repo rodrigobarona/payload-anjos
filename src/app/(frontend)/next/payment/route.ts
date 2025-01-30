@@ -111,11 +111,10 @@ export async function POST(req: Request) {
               ? (product.variant.pricing.find((price) => price.currency === currency)?.value ?? 0)
               : (product.pricing?.find((price) => price.currency === currency)?.value ?? 0),
           priceTotal:
-            product.variant.pricing && product.enableVariantPrices
-              ? (product.variant.pricing.find((price) => price.currency === currency)?.value ??
-                0 * product.quantity)
-              : (product.pricing?.find((price) => price.currency === currency)?.value ??
-                0 * product.quantity),
+            (product.variant.pricing && product.enableVariantPrices
+              ? (product.variant.pricing.find((price) => price.currency === currency)?.value ?? 0)
+              : (product.pricing?.find((price) => price.currency === currency)?.value ?? 0)) *
+            product.quantity,
         })),
         date: new Date().toISOString(),
         invoice: {

@@ -3,7 +3,10 @@ import { useTranslation } from "@payloadcms/ui";
 import axios from "axios";
 import { useState } from "react";
 
-import { type CustomTranslationsKeys, type CustomTranslationsObject } from "@/admin/translations/custom-translations";
+import {
+  type CustomTranslationsKeys,
+  type CustomTranslationsObject,
+} from "@/admin/translations/custom-translations";
 
 export const AdminResetPassword = () => {
   const [message, setMessage] = useState("");
@@ -13,7 +16,7 @@ export const AdminResetPassword = () => {
     if (emailInput) {
       const email = emailInput.value;
       try {
-        const res = await axios.post("/next/reset-password", { email });
+        const res = await axios.post("/next/reset-password", { email, collection: "administrators" });
         console.log(res);
         if (res.status === 200) {
           setMessage(t("custom:resetPasswordSuccess"));

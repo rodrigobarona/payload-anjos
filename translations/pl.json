@@ -64,6 +64,7 @@
     "password": "Hasło",
     "confirm-password": "Potwierdź hasło",
     "submit": "Zarejestruj się",
+    "success": "Konto utworzone pomyślnie. Na Twój adres e-mail został wysłany link aktywacyjny.",
     "errors": {
       "email": "Nieprawidłowy adres e-mail",
       "email-empty": "Adres e-mail nie może być pusty",
@@ -310,6 +311,13 @@
       "subject": "Resetuj hasło",
       "button": "Zresetuj hasło",
       "body": "Kliknij w link poniżej, aby zresetować hasło"
+    },
+    "verify-email": {
+      "greeting": "Witaj {name},",
+
+      "subject": "Zweryfikuj swój adres e-mail",
+      "button": "Zweryfikuj e-mail",
+      "body": "Kliknij w link poniżej, aby zweryfikować swój adres e-mail"
     }
   },
   "ResetPasswordForm": {

@@ -1,4 +1,7 @@
+import tailwindTypography from "@tailwindcss/typography";
+import tailwindAnimate from "tailwindcss-animate";
 import { scopedPreflightStyles, isolateInsideOfContainer } from "tailwindcss-scoped-preflight";
+
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -13,8 +16,8 @@ const config: Config = {
     preflight: false,
   },
   plugins: [
-    require("tailwindcss-animate"),
-    require("@tailwindcss/typography"),
+    tailwindAnimate,
+    tailwindTypography,
     scopedPreflightStyles({
       isolationStrategy: isolateInsideOfContainer(".twp", {
         except: ".no-twp",

@@ -6,16 +6,20 @@ import { getPayload } from "payload";
 
 import { ResetPasswordEmail } from "@/components/Emails/ResetPasswordEmail";
 import { type Locale } from "@/i18n/config";
-import { type Administrator } from "@/payload-types";
+import { type Customer, type Administrator } from "@/payload-types";
 import { sendEmail } from "@/utilities/nodemailer";
 import config from "@payload-config";
+
+const isCustomer = (user: Administrator | Customer): user is Customer => {
+  return !(user as Administrator).name;
+};
 
 export async function POST(req: Request) {
   const payload = await getPayload({ config });
   try {
-    const body = (await req.json()) as { email: string };
+    const body = (await req.json()) as { email: string; collection: "administrators" | "customers" };
     const email = body.email;
-    const collection: "administrators" | "customers" = "administrators";
+    const collection: "administrators" | "customers" = body.collection;
     const token: string = randomBytes(20).toString("hex");
 
     const { docs } = await payload.find({
@@ -31,7 +35,7 @@ export async function POST(req: Request) {
       return Response.json({ message: "Success" }, { status: 200 });
     }
 
-    let user: Administrator = docs[0];
+    let user: Administrator | Customer = docs[0];
 
     user.resetPasswordToken = token;
     user.resetPasswordExpiration = new Date(Date.now() + 3600000).toISOString();
@@ -44,11 +48,18 @@ export async function POST(req: Request) {
 
     const locale = (await getLocale()) as Locale;
 
+    let name = "User";
+    if (isCustomer(user) && user.firstName) {
+      name = user.firstName;
+    } else if (!isCustomer(user) && user.name) {
+      name = user.name;
+    }
+
     const html = await render(
       await ResetPasswordEmail({
         url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/reset-password?token=${token}&collection=${collection}`,
         locale,
-        name: user.name ?? "User",
+        name,
       }),
     );
 

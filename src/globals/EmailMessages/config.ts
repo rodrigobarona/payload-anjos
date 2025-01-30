@@ -104,6 +104,14 @@ export const EmailMessages: GlobalConfig = {
               relationTo: "media",
             },
             {
+              name: "additionalText",
+              type: "textarea",
+              label: {
+                en: "Additional text",
+                pl: "Dodatkowy tekst",
+              },
+            },
+            {
               name: "template",
               type: "select",
               required: true,
