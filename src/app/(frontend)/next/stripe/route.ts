@@ -11,10 +11,9 @@ export async function POST(req: Request) {
     const { stripe: stripeOptions } = await getCachedGlobal("paywalls", "en", 1)();
     const secret = stripeOptions?.secret;
 
-    const endpointSecret = "whsec_a44ea7469c080796a191791df72c56e43682aef66809f93587ca14116c2eb36b";
+    const endpointSecret = stripeOptions?.webhookSecret ?? "";
 
     if (!secret) {
-      console.log("err");
       return Response.json({ status: 400 });
     }
 
@@ -47,6 +46,25 @@ export async function POST(req: Request) {
               orderDetails: {
                 status: "paid",
                 transactionID: paymentIntentSucceeded.id,
+              },
+            },
+          });
+        }
+
+        break;
+      }
+      case "checkout.session.async_payment_succeeded": {
+        const checkoutSuccessObject = event.data.object;
+        const orderID = checkoutSuccessObject.metadata?.orderID ?? "";
+
+        if (checkoutSuccessObject.status && checkoutSuccessObject.status === "complete") {
+          void payload.update({
+            collection: "orders",
+            id: orderID,
+            data: {
+              orderDetails: {
+                status: "paid",
+                transactionID: checkoutSuccessObject.id,
               },
             },
           });

@@ -1,11 +1,8 @@
-import "server-only";
-
 import { Disclosure, DisclosureButton, DisclosurePanel, Tab, TabPanel } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import RichText from "@/components/RichText";
@@ -167,32 +164,32 @@ export const WithImageGalleryExpandableDetails = ({
 
               <div className="divide-gray-360 divide-y border-t">
                 {product.details?.map((detail) => (
-                    <Disclosure key={detail.id} as="div">
-                      <h3>
-                        <DisclosureButton className="group relative flex w-full items-center justify-between py-6 text-left">
-                          <span className="text-sm font-medium text-gray-900 group-data-[open]:text-main-600">
-                            {detail.title}
-                          </span>
-                          <span className="ml-6 flex items-center">
-                            <PlusIcon
-                              aria-hidden="true"
-                              className="block size-6 text-gray-400 group-hover:text-gray-500 group-data-[open]:hidden"
-                            />
-                            <MinusIcon
-                              aria-hidden="true"
-                              className="hidden size-6 text-main-400 group-hover:text-main-500 group-data-[open]:block"
-                            />
-                          </span>
-                        </DisclosureButton>
-                      </h3>
-                      <DisclosurePanel className="pb-6">
-                        <RichText
-                          className="list-disc space-y-1 pl-5 text-sm/6 text-gray-700 marker:text-gray-300"
-                          data={detail.content}
-                        />
-                      </DisclosurePanel>
-                    </Disclosure>
-                  ))}
+                  <Disclosure key={detail.id} as="div">
+                    <h3>
+                      <DisclosureButton className="group relative flex w-full items-center justify-between py-6 text-left">
+                        <span className="text-sm font-medium text-gray-900 group-data-[open]:text-main-600">
+                          {detail.title}
+                        </span>
+                        <span className="ml-6 flex items-center">
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="block size-6 text-gray-400 group-hover:text-gray-500 group-data-[open]:hidden"
+                          />
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="hidden size-6 text-main-400 group-hover:text-main-500 group-data-[open]:block"
+                          />
+                        </span>
+                      </DisclosureButton>
+                    </h3>
+                    <DisclosurePanel className="pb-6">
+                      <RichText
+                        className="list-disc space-y-1 pl-5 text-sm/6 text-gray-700 marker:text-gray-300"
+                        data={detail.content}
+                      />
+                    </DisclosurePanel>
+                  </Disclosure>
+                ))}
               </div>
             </section>
           </div>

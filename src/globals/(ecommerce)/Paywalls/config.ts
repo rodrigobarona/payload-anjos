@@ -77,6 +77,20 @@ export const Paywalls: GlobalConfig = {
           required: true,
         },
         {
+          name: "webhookSecret",
+          type: "text",
+          label: {
+            en: "Webhook Secret API Key",
+            pl: "Prywatny klucz API Webhook",
+          },
+          access: {
+            read: authenticated,
+            create: authenticated,
+            update: authenticated,
+          },
+          required: true,
+        },
+        {
           name: "public",
           type: "text",
           label: {

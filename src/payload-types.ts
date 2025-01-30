@@ -2881,6 +2881,7 @@ export interface Paywall {
    */
   stripe?: {
     secret: string;
+    webhookSecret: string;
     public?: string | null;
   };
   updatedAt?: string | null;
@@ -3231,6 +3232,7 @@ export interface PaywallsSelect<T extends boolean = true> {
     | T
     | {
         secret?: T;
+        webhookSecret?: T;
         public?: T;
       };
   updatedAt?: T;
