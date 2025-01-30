@@ -60,6 +60,13 @@ export const restoreStocks: FieldHook<Order, Order["orderDetails"]["status"] | u
     }
 
     await Promise.all(updates);
+    await payload.update({
+      collection: "orders",
+      id: originalDoc.id,
+      data: {
+        extractedFromStock: false,
+      },
+    });
   } catch (error) {
     console.error("Failed to restore stocks:", error);
   }
