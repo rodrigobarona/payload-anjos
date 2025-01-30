@@ -4,6 +4,7 @@ import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 
 import { generateID } from "./hooks/generateID";
+import { sendStatusEmail } from "./hooks/sendStatusEmail";
 
 export const Orders: CollectionConfig = {
   slug: "orders",
@@ -661,6 +662,9 @@ export const Orders: CollectionConfig = {
           label: {
             en: "Status",
             pl: "Status",
+          },
+          hooks: {
+            afterChange: [sendStatusEmail],
           },
           options: [
             {

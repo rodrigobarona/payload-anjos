@@ -1,7 +1,5 @@
-import { render } from "@react-email/components";
 import { getPayload } from "payload";
 
-import { OrderPlacedEmail } from "@/components/Emails/OrderPlacedEmail";
 import { type Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { createCouriers } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 import { type Locale } from "@/i18n/config";
@@ -14,7 +12,6 @@ import { type Cart } from "@/stores/CartStore/types";
 import { type Currency } from "@/stores/Currency/types";
 import { getCustomer } from "@/utilities/getCustomer";
 import { getCachedGlobal } from "@/utilities/getGlobals";
-import { sendEmail } from "@/utilities/nodemailer";
 import config from "@payload-config";
 
 export async function POST(req: Request) {
@@ -224,14 +221,6 @@ export async function POST(req: Request) {
         url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/order/${order.id}`,
       });
     }
-
-    const html = await render(await OrderPlacedEmail({ locale, order }));
-
-    await sendEmail({
-      html,
-      subject: "Order placed",
-      to: checkoutData.shipping.email,
-    });
 
     try {
       switch (paywalls.paywall) {
