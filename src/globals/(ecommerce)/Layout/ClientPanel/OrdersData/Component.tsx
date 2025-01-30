@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { type Country } from "@/globals/(ecommerce)/Couriers/utils/countryList";
@@ -10,7 +10,13 @@ import { cn } from "@/utilities/cn";
 
 import { AddNewAddressDialog } from "../../Checkout/variants/OneStepWithSummary/components/AddNewAddressDialog";
 
-export const OrdersData = ({ user }: { user: Customer }) => {
+export const OrdersData = ({
+  user,
+  updateCustomerData,
+}: {
+  user: Customer;
+  updateCustomerData: () => Promise<void>;
+}) => {
   const [selectedShipping, setSelectedShipping] = useState(
     user?.shippings?.find((shipping) => shipping.default) ?? user?.shippings?.[0],
   );
@@ -20,27 +26,35 @@ export const OrdersData = ({ user }: { user: Customer }) => {
   const t = useTranslations("Account.orders-data");
 
   const setDefaultAddress = async () => {
-    if (selectedShipping && user.shippings) {
-      const updatedShippings = user.shippings.map((shipping) => {
-        return {
-          ...shipping,
-          default: shipping.id === selectedShipping.id,
-        };
+    await updateCustomerData();
+    console.log(user.shippings);
+    if (!selectedShipping || !user.shippings?.length) return;
+
+    console.log(user.shippings);
+
+    const updatedShippings = shippings.map((shipping) => ({
+      ...shipping,
+      default: shipping.id === selectedShipping.id,
+    }));
+
+    try {
+      const { data } = await axios.patch<{ doc: Customer }>(`/api/customers/${user.id}`, {
+        shippings: updatedShippings,
       });
 
-      try {
-        const { data } = await axios.patch<{ doc: Customer }>(`/api/customers/${user?.id}`, {
-          shippings: updatedShippings,
-        });
-        console.log(data);
-        if (data?.doc.shippings) {
-          setShippings(data.doc.shippings);
-        }
-      } catch (error) {
-        console.error(error);
+      if (data?.doc.shippings) {
+        setShippings(data.doc.shippings);
+        setSelectedShipping(data.doc.shippings.find((s) => s.default) ?? data.doc.shippings[0]);
       }
+    } catch (error) {
+      console.error("Failed to update default address:", error);
     }
   };
+
+  useEffect(() => {
+    setShippings(user.shippings ?? []);
+    setSelectedShipping(user.shippings?.find((shipping) => shipping.default) ?? user.shippings?.[0]);
+  }, [user.shippings]);
 
   return (
     <section className="no-prose">
@@ -48,7 +62,7 @@ export const OrdersData = ({ user }: { user: Customer }) => {
         open={addressDialogOpen}
         setOpen={setAddressDialogOpen}
         user={user}
-        setShipping={(shipping) => {
+        setShipping={async (shipping) => {
           setShippings((prevState) => [
             ...prevState,
             {
@@ -56,6 +70,7 @@ export const OrdersData = ({ user }: { user: Customer }) => {
               country: shipping.country as Country,
             },
           ]);
+          await updateCustomerData();
         }}
       />
       <h2 className="mb-8 text-xl font-bold">{t("title")}</h2>

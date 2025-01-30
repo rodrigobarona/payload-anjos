@@ -6,14 +6,15 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 
 export const getCustomer = async () => {
+  const headers = await getHeaders();
+
   return unstable_cache(
-    async () => {
+    async (headersList: Headers) => {
       try {
         const payload = await getPayload({ config });
-        const headers = await getHeaders();
 
         const { user } = await payload.auth({
-          headers,
+          headers: headersList,
         });
 
         if (!user || user.collection !== "customers") {
@@ -31,5 +32,5 @@ export const getCustomer = async () => {
       revalidate: 1,
       tags: ["user-auth"],
     },
-  )();
+  )(headers);
 };

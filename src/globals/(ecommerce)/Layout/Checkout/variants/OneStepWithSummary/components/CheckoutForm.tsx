@@ -49,8 +49,15 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
   const t = useTranslations("CheckoutForm.form");
   const c = useTranslations("CheckoutForm.countries");
 
-  const defaultShippingAddress = user?.shippings?.find((shippingAddress) => shippingAddress.default);
-  const shippingAddresses = user?.shippings && user.shippings.length > 0 && user.shippings;
+  const shippingAddresses = user?.shippings && user?.shippings?.length > 0 ? user?.shippings : null;
+
+  console.log(shippingAddresses);
+
+  const defaultShippingAddress = shippingAddresses
+    ? (shippingAddresses.find((address) => address.default) ?? shippingAddresses[0])
+    : null;
+
+  console.log(defaultShippingAddress);
 
   const form = useForm<CheckoutFormData>({
     resolver: zodResolver(CheckoutFormSchemaResolver),
@@ -71,7 +78,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
         name: defaultShippingAddress?.name ?? "",
         address: defaultShippingAddress?.address ?? "",
         city: defaultShippingAddress?.city ?? "",
-        country: defaultShippingAddress?.country ?? "pl",
+        country: defaultShippingAddress?.country ?? "",
         region: defaultShippingAddress?.region ?? "",
         postalCode: defaultShippingAddress?.postalCode ?? "",
         phone: defaultShippingAddress?.phone ?? "",
