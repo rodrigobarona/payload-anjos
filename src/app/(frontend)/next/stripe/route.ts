@@ -35,17 +35,17 @@ export async function POST(req: Request) {
     }
     switch (event.type) {
       case "payment_intent.succeeded": {
-        const paymentIntentSucceeded = event.data.object;
-        const orderID = paymentIntentSucceeded.metadata.orderID;
+        const paymentIntent = event.data.object;
+        const orderID = paymentIntent.metadata.orderID;
 
-        if (paymentIntentSucceeded.status === "succeeded") {
+        if (paymentIntent.status === "succeeded") {
           void payload.update({
             collection: "orders",
             id: orderID,
             data: {
               orderDetails: {
                 status: "paid",
-                transactionID: paymentIntentSucceeded.id,
+                transactionID: paymentIntent.id,
               },
             },
           });
@@ -53,23 +53,22 @@ export async function POST(req: Request) {
 
         break;
       }
-      case "checkout.session.async_payment_succeeded": {
-        const checkoutSuccessObject = event.data.object;
-        const orderID = checkoutSuccessObject.metadata?.orderID ?? "";
-
-        if (checkoutSuccessObject.status && checkoutSuccessObject.status === "complete") {
+      case "payment_intent.payment_failed":
+      case "payment_intent.canceled": {
+        const paymentIntent = event.data.object;
+        const orderID = paymentIntent.metadata.orderID;
+        if (paymentIntent.status !== "succeeded") {
           void payload.update({
             collection: "orders",
             id: orderID,
             data: {
               orderDetails: {
-                status: "paid",
-                transactionID: checkoutSuccessObject.id,
+                status: "unpaid",
+                transactionID: paymentIntent.id,
               },
             },
           });
         }
-
         break;
       }
       default:

@@ -70,8 +70,10 @@ export const getStripePaymentURL = async (
           },
         },
       ],
-      metadata: {
-        orderID,
+      payment_intent_data: {
+        metadata: {
+          orderID,
+        },
       },
       success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/order/${orderID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/order/${orderID}?cancelled=true`,
