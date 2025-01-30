@@ -1223,7 +1223,7 @@ export interface Order {
         color?: string | null;
         size?: string | null;
         variantSlug?: string | null;
-        quantity?: number | null;
+        quantity: number;
         price?: number | null;
         priceTotal: number;
         id?: string | null;

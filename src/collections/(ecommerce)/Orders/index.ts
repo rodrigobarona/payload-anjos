@@ -4,6 +4,7 @@ import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 
 import { generateID } from "./hooks/generateID";
+import { restoreStocks } from "./hooks/restoreStocks";
 import { sendStatusEmail } from "./hooks/sendStatusEmail";
 
 export const Orders: CollectionConfig = {
@@ -167,6 +168,7 @@ export const Orders: CollectionConfig = {
                       admin: {
                         readOnly: true,
                       },
+                      required: true,
                     },
                   ],
                 },
@@ -664,7 +666,7 @@ export const Orders: CollectionConfig = {
             pl: "Status",
           },
           hooks: {
-            afterChange: [sendStatusEmail],
+            afterChange: [sendStatusEmail, restoreStocks],
           },
           options: [
             {

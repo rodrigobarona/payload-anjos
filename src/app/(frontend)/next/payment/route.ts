@@ -217,8 +217,6 @@ export async function POST(req: Request) {
       });
     }
 
-    // TODO: Handle stock changes
-
     if (courier.prepaid === false) {
       return Response.json({
         status: 200,
