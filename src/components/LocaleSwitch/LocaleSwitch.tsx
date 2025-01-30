@@ -6,7 +6,7 @@ import { routing } from "@/i18n/routing";
 
 import { LocaleSwitchSelect } from "./LocaleSwitchSelect";
 
-export default function LocaleSwitch() {
+export function LocaleSwitch() {
   const t = useTranslations("LocaleSwitch");
   const locale = useLocale();
 

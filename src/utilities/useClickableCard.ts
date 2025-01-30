@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef ,type  RefObject } from "react";
+import { useCallback, useEffect, useRef, type RefObject } from "react";
 
 type UseClickableCardType<T extends HTMLElement> = {
   card: {
@@ -10,15 +10,15 @@ type UseClickableCardType<T extends HTMLElement> = {
   link: {
     ref: RefObject<HTMLAnchorElement | null>;
   };
-}
+};
 
 type Props = {
   external?: boolean;
   newTab?: boolean;
   scroll?: boolean;
-}
+};
 
-function useClickableCard<T extends HTMLElement>({
+export function useClickableCard<T extends HTMLElement>({
   external = false,
   newTab = false,
   scroll = true,
@@ -102,5 +102,3 @@ function useClickableCard<T extends HTMLElement>({
     },
   };
 }
-
-export default useClickableCard;

@@ -50,7 +50,7 @@ const getPriceRange = (variants: Product["variants"], enableVariantPrices: boole
   return priceRanges;
 };
 
-const WithInlinePrice = ({ products }: { products: Product[] }) => {
+export const WithInlinePrice = ({ products }: { products: Product[] }) => {
   const t = useTranslations("ProductList");
   return (
     <>
@@ -109,4 +109,3 @@ const WithInlinePrice = ({ products }: { products: Product[] }) => {
     </>
   );
 };
-export default WithInlinePrice;

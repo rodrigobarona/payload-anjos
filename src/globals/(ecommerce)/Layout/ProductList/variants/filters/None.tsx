@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-const None = ({ title, children }: { title: string; children: ReactNode }) => {
+export const None = ({ title, children }: { title: string; children: ReactNode }) => {
   return (
     <main className="container pb-6 pt-24">
       <h1 className="text-4xl font-bold tracking-tight text-gray-900">{title}</h1>
@@ -10,4 +10,3 @@ const None = ({ title, children }: { title: string; children: ReactNode }) => {
     </main>
   );
 };
-export default None;

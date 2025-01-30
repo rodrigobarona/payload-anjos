@@ -4,10 +4,9 @@ import { Fragment } from "react";
 
 import { Media } from "@/components/Media";
 import { cn } from "@/utilities/cn";
-import useClickableCard from "@/utilities/useClickableCard";
+import { useClickableCard } from "@/utilities/useClickableCard";
 
 import type { Post } from "@/payload-types";
-
 
 export type CardPostData = Pick<Post, "slug" | "categories" | "meta" | "title">;
 

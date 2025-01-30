@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getLocale } from "next-intl/server";
 
 import { CMSLink } from "@/components/Link";
-import LocaleSwitch from "@/components/LocaleSwitch/LocaleSwitch";
+import { LocaleSwitch } from "@/components/LocaleSwitch/LocaleSwitch";
 import { Logo } from "@/components/Logo/Logo";
 import RichText from "@/components/RichText";
 import { type Locale } from "@/i18n/config";

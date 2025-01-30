@@ -8,9 +8,9 @@ import { type Product, type ProductCategory, type ProductSubCategory } from "@/p
 import { getCachedGlobal } from "@/utilities/getGlobals";
 import config from "@payload-config";
 
-import None from "./variants/filters/None";
+import { None } from "./variants/filters/None";
 import { WithSidebar } from "./variants/filters/WithSidebar/WithSidebar";
-import WithInlinePrice from "./variants/listings/WithInlinePrice";
+import { WithInlinePrice } from "./variants/listings/WithInlinePrice";
 
 export const ProductList = async ({
   filteredProducts,

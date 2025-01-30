@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 
 import { type Customer } from "@/payload-types";
 
-import ChangeData from "./components/ChangeData";
+import { ChangeData } from "./components/ChangeData";
 import { ChangePassword } from "./components/ChangePassword";
 
 export const Settings = ({ user }: { user: Customer }) => {

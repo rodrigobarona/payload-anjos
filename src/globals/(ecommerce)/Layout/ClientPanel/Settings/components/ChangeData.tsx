@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
 
-const ChangeData = ({
+export const ChangeData = ({
   value,
   text,
   altText,
@@ -77,4 +77,3 @@ const ChangeData = ({
     </Form>
   );
 };
-export default ChangeData;

@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-import SynchronizeCart from "@/components/(ecommerce)/Cart/SynchronizeCart";
+import { SynchronizeCart } from "@/components/(ecommerce)/Cart/SynchronizeCart";
 import { Cart } from "@/globals/(ecommerce)/Layout/Cart/Component";
 import { Header } from "@/globals/Header/Component";
 

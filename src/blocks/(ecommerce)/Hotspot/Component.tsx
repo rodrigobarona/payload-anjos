@@ -3,7 +3,7 @@
 import { getPayload } from "payload";
 
 import RichText from "@/components/RichText";
-import WithInlinePrice from "@/globals/(ecommerce)/Layout/ProductList/variants/listings/WithInlinePrice";
+import { WithInlinePrice } from "@/globals/(ecommerce)/Layout/ProductList/variants/listings/WithInlinePrice";
 import { type HotspotBlock as HotspotBlockProps, type Product } from "@/payload-types";
 import config from "@payload-config";
 

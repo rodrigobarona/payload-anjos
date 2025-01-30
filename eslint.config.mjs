@@ -14,7 +14,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ["**/*.js", "**/*.jsx", "src/app/(payload)/**/*"],
+    ignores: ["**/*.js", "**/*.jsx", "src/app/(payload)/**/*", "src/payload-types.ts"],
   },
   ...fixupConfigRules(
     compat.extends(
@@ -29,8 +29,8 @@ export default [
   ),
   {
     languageOptions: {
-      ecmaVersion: 5,
-      sourceType: "script",
+      ecmaVersion: "latest",
+      sourceType: "module",
 
       parserOptions: {
         project: "tsconfig.json",
@@ -123,7 +123,7 @@ export default [
     },
   },
   {
-    files: ["src/app/**/{page,layout,loading,route}.ts?(x)", "**/tailwind.config.ts"],
+    files: ["src/app/**/**/**/**", "**/tailwind.config.ts", "src/payload.config.ts", "src/middleware.ts"],
 
     rules: {
       "import/no-default-export": "off",
