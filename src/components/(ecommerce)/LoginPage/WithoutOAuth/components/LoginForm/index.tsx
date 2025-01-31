@@ -32,7 +32,7 @@ export const LoginForm = () => {
       const res = await axios.post("/api/customers/login", values);
       if (res.status === 200 || res.status === 201) {
         void synchronizeCart();
-        router.replace("/account");
+        router.push("/account");
       }
     } catch (error) {
       if (isAxiosError(error)) {
