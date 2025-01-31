@@ -11,7 +11,6 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/utilities/cn";
 
-
 const navigation = [
   { name: "orders", href: "/account/orders", icon: CubeIcon },
   { name: "settings", href: "/account/settings", icon: AdjustmentsHorizontalIcon },

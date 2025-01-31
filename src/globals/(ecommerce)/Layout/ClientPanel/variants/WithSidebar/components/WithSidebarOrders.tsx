@@ -4,7 +4,7 @@ import { getPayload } from "payload";
 
 import { Card } from "@/components/ui/card";
 import { type Locale } from "@/i18n/config";
-import { Link, redirect } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { formatDateTime } from "@/utilities/formatDateTime";
 import { formatPrice } from "@/utilities/formatPrices";
 import { getCustomer } from "@/utilities/getCustomer";
@@ -16,7 +16,7 @@ export const WithSidebarOrders = async () => {
   const locale = (await getLocale()) as Locale;
 
   if (!user) {
-    redirect({ locale, href: "/login" });
+    return null;
   }
   const t = await getTranslations("Account.orders");
 

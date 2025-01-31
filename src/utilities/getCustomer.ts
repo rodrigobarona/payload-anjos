@@ -1,36 +1,45 @@
 "use server";
+
 import { unstable_cache } from "next/cache";
-import { headers as getHeaders } from "next/headers";
+import { headers as getHeaders, cookies } from "next/headers";
 import { getPayload } from "payload";
 
 import config from "@payload-config";
 
 export const getCustomer = async () => {
   const headers = await getHeaders();
+  const cookieStore = await cookies();
+  const cookieString = cookieStore.toString();
 
-  return unstable_cache(
-    async (headersList: Headers) => {
+  const customer = await unstable_cache(
+    async () => {
       try {
         const payload = await getPayload({ config });
 
         const { user } = await payload.auth({
-          headers: headersList,
+          headers: new Headers({
+            Cookie: cookieString,
+            "Accept-Language": headers.get("Accept-Language") ?? "",
+            "User-Agent": headers.get("User-Agent") ?? "",
+          }),
         });
 
         if (!user || user.collection !== "customers") {
-          return undefined;
+          return null;
         }
 
         return user;
       } catch (error) {
         console.error("Auth error:", error);
-        return undefined;
+        return null;
       }
     },
-    ["user-auth"],
+    ["user-auth", cookieString],
     {
       revalidate: 1,
       tags: ["user-auth"],
     },
-  )(headers);
+  )();
+
+  return customer;
 };
