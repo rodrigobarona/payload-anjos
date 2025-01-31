@@ -41,5 +41,5 @@ export const getCustomer = async () => {
     },
   )();
 
-  return customer;
+  return customer ?? undefined;
 };
