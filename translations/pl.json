@@ -322,6 +322,13 @@
       "subject": "Zweryfikuj swój adres e-mail",
       "button": "Zweryfikuj e-mail",
       "body": "Kliknij w link poniżej, aby zweryfikować swój adres e-mail"
+    },
+    "welcome": {
+      "greeting": "Witaj {name},",
+      "preview": "Witaj w naszym sklepie. Mamy nadzieję, że będziesz zadowolony z zakupów.",
+      "subject": "Cześć! Dziękujemy za rejestrację",
+      "body": "Mamy przyjemność powitać Cię w naszym sklepie. Znajdziesz u nas szeroki wybór produktów w atrakcyjnych cenach.",
+      "button": "Przejdź do sklepu"
     }
   },
   "ResetPasswordForm": {

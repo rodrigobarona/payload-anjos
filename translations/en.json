@@ -321,6 +321,13 @@
       "subject": "Verify your email",
       "button": "Verify email",
       "body": "Click the link below to verify your email"
+    },
+    "welcome": {
+      "greeting": "Hello {name},",
+      "preview": "Welcome to our shop! Were glad to have you there",
+      "subject": "Welcome to our store",
+      "body": "Thank you for creating an account in our store. We hope you will enjoy your shopping experience.",
+      "button": "Go shopping"
     }
   },
   "ResetPasswordForm": {
