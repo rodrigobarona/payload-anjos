@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { isAxiosError } from "axios";
+import { revalidateTag } from "next/cache";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
@@ -32,6 +33,7 @@ export const LoginForm = () => {
       const res = await axios.post("/api/customers/login", values);
       if (res.status === 200 || res.status === 201) {
         void synchronizeCart();
+        revalidateTag("user-auth");
         router.replace("/account");
       }
     } catch (error) {

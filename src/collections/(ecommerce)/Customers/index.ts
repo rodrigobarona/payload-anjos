@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { type CollectionConfig } from "payload";
 
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
@@ -32,6 +33,11 @@ export const Customers: CollectionConfig = {
   },
   hooks: {
     afterOperation: [createTokenAndSendEmail],
+    afterLogin: [
+      () => {
+        revalidateTag("user-auth");
+      },
+    ],
   },
   fields: [
     {
