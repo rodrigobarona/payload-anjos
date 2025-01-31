@@ -1,9 +1,10 @@
-/* eslint-disable */
 "use client";
 
 import { FieldLabel, Select, useField, useForm } from "@payloadcms/ui";
 import { type TextFieldClientComponent } from "payload";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+
+import { type Product } from "@/payload-types";
 
 export const SizeSelect: TextFieldClientComponent = ({ path }) => {
   const { value, setValue } = useField<string>({ path });
@@ -18,22 +19,25 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
 
   const { value: variantType } = useField<string>({ path: "variantsType" });
 
-  const sizes: any = getDataByPath("sizes");
+  const sizes = getDataByPath<Product["sizes"]>("sizes");
 
-  const handleSizeChange = (option: { value: string }) => {
-    setValue(option.value);
+  const handleSizeChange = useCallback(
+    (option: { value: string }) => {
+      setValue(option.value);
 
-    const siblings = getSiblingData(path);
-    const color = siblings.color as string;
+      const siblings = getSiblingData(path);
+      const color = siblings.color as string;
 
-    setVariantSlugValue(`${color ?? ""}${color && option.value ? "-" : ""}${option.value ?? ""}`);
-  };
+      setVariantSlugValue(`${color ?? ""}${color && option.value ? "-" : ""}${option.value ?? ""}`);
+    },
+    [getSiblingData, path, setVariantSlugValue, setValue],
+  );
 
   useEffect(() => {
     if (variantType === "colors") {
       handleSizeChange({ value: "" });
     }
-  }, [variantType]);
+  }, [variantType, handleSizeChange]);
 
   return variantType !== "colors" ? (
     <div className="twp my-auto h-fit flex-1">

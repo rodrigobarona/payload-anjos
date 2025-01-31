@@ -107,43 +107,6 @@ export const Orders: CollectionConfig = {
                   },
                 },
                 {
-                  name: "hasVariant",
-                  type: "checkbox",
-                  admin: {
-                    hidden: true,
-                  },
-                },
-                {
-                  type: "row",
-                  admin: {
-                    condition: (_, siblingData) => Boolean(siblingData.hasVariant),
-                  },
-                  fields: [
-                    {
-                      name: "color",
-                      type: "text",
-                      label: {
-                        en: "Color",
-                        pl: "Kolor",
-                      },
-                      admin: {
-                        readOnly: true,
-                      },
-                    },
-                    {
-                      name: "size",
-                      type: "text",
-                      label: {
-                        en: "Size",
-                        pl: "Rozmiar",
-                      },
-                      admin: {
-                        readOnly: true,
-                      },
-                    },
-                  ],
-                },
-                {
                   type: "row",
                   fields: [
                     {
@@ -154,8 +117,10 @@ export const Orders: CollectionConfig = {
                         pl: "Wariant",
                       },
                       admin: {
-                        readOnly: true,
-                        condition: (_, siblingData) => Boolean(siblingData.hasVariant),
+                        components: {
+                          Field: "@/collections/(ecommerce)/Orders/components/VariantSelect#VariantSelect",
+                        },
+                        width: "50%",
                       },
                     },
                     {
@@ -166,7 +131,7 @@ export const Orders: CollectionConfig = {
                         pl: "Ilość",
                       },
                       admin: {
-                        readOnly: true,
+                        width: "50%",
                       },
                       required: true,
                     },
@@ -182,10 +147,6 @@ export const Orders: CollectionConfig = {
                         en: "Price per unit",
                         pl: "Cena za sztukę",
                       },
-                      admin: {
-                        readOnly: true,
-                        condition: (_, siblingData) => Boolean(siblingData.hasVariant),
-                      },
                       required: true,
                     },
                     {
@@ -194,9 +155,6 @@ export const Orders: CollectionConfig = {
                       label: {
                         en: "Price Total",
                         pl: "Cena całkowita",
-                      },
-                      admin: {
-                        readOnly: true,
                       },
                       required: true,
                     },

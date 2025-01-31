@@ -116,7 +116,7 @@ export const Products: CollectionConfig = {
               },
               admin: {
                 components: {
-                  RowLabel: "@/collections/(ecommerce)/Products/ui/RowLabels/DetailLabel#DetailLabel",
+                  RowLabel: "@/collections/(ecommerce)/Products/components/RowLabels/DetailLabel#DetailLabel",
                 },
               },
               fields: [
@@ -253,7 +253,7 @@ export const Products: CollectionConfig = {
               type: "array",
               admin: {
                 components: {
-                  RowLabel: "@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel#OptionLabel",
+                  RowLabel: "@/collections/(ecommerce)/Products/components/RowLabels/OptionLabel#OptionLabel",
                 },
                 condition: (_, siblingData) =>
                   Boolean(siblingData.enableVariants && siblingData.variantsType !== "sizes"),
@@ -314,7 +314,7 @@ export const Products: CollectionConfig = {
               type: "array",
               admin: {
                 components: {
-                  RowLabel: "@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel#OptionLabel",
+                  RowLabel: "@/collections/(ecommerce)/Products/components/RowLabels/OptionLabel#OptionLabel",
                 },
                 condition: (_, siblingData) =>
                   Boolean(siblingData.enableVariants && siblingData.variantsType !== "colors"),
@@ -352,7 +352,8 @@ export const Products: CollectionConfig = {
               type: "array",
               admin: {
                 components: {
-                  RowLabel: "@/collections/(ecommerce)/Products/ui/RowLabels/VariantLabel#VariantLabel",
+                  RowLabel:
+                    "@/collections/(ecommerce)/Products/components/RowLabels/VariantLabel#VariantLabel",
                 },
                 condition: (_, siblingData) => {
                   return Boolean(siblingData.enableVariants);
@@ -399,7 +400,7 @@ export const Products: CollectionConfig = {
                       },
                       admin: {
                         components: {
-                          Field: "@/collections/(ecommerce)/Products/ui/SizeSelect#SizeSelect",
+                          Field: "@/collections/(ecommerce)/Products/components/SizeSelect#SizeSelect",
                         },
                         condition: (_, siblingData) => siblingData.variantsType !== "colors",
                       },
@@ -414,7 +415,7 @@ export const Products: CollectionConfig = {
                       },
                       admin: {
                         components: {
-                          Field: "@/collections/(ecommerce)/Products/ui/ColorSelect#ColorSelect",
+                          Field: "@/collections/(ecommerce)/Products/components/ColorSelect#ColorSelect",
                         },
                         condition: (_, siblingData) => siblingData.variantsType !== "sizes",
                       },

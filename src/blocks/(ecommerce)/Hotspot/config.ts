@@ -3,7 +3,6 @@ import { marginFields, paddingFields } from "@/fields/spacingFields";
 
 import type { Block } from "payload";
 
-
 export const Hotspot: Block = {
   slug: "hotspotZone",
   interfaceName: "hotspotBlock",
@@ -58,12 +57,22 @@ export const Hotspot: Block = {
         en: "Sort by",
       },
       options: [
-        { label: { pl: "Ilość sprzedanych", en: "Quantity sold" }, value: "quantity-sold" },
-        { label: { pl: "Najnowsze", en: "Newest" }, value: "newest" },
-        { label: { pl: "Najstarsze", en: "Oldest" }, value: "oldest" },
-        { label: { pl: "Najtańsze", en: "Cheapest" }, value: "cheapest" },
-        { label: { pl: "Najdroższe", en: "Most expensive" }, value: "most-expensive" },
+        { label: { pl: "Ilość sprzedanych", en: "Quantity sold" }, value: "-bought" },
+        { label: { pl: "Najnowsze", en: "Newest" }, value: "-createdAt" },
+        { label: { pl: "Najstarsze", en: "Oldest" }, value: "createdAt" },
+        { label: { pl: "Najtańsze", en: "Cheapest" }, value: "variants.pricing[0].value,pricing.value" },
+        {
+          label: { pl: "Najdroższe", en: "Most expensive" },
+          value: "-variants.pricing[0].value,-pricing.value",
+        },
       ],
+      admin: {
+        condition: (_, siblingData) => siblingData.type !== "manual",
+        description: {
+          en: "Sort is applied only when type is set to 'category' or 'subcategory', in manual mode you can manually sort products in the list",
+          pl: "Sortowanie jest stosowane tylko gdy typ jest ustawiony na 'category' lub 'subcategory', w trybie manualnym możesz ręcznie sortować produkty na liście",
+        },
+      },
     },
     {
       name: "products",

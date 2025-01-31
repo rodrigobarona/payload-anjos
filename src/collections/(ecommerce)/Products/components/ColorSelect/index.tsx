@@ -1,10 +1,10 @@
-/* eslint-disable */
-// only temporary for now TODO: remove it
 "use client";
 
 import { FieldLabel, Select, useField, useForm } from "@payloadcms/ui";
 import { type TextFieldClientComponent } from "payload";
 import { useCallback, useEffect } from "react";
+
+import { type Product } from "@/payload-types";
 
 export const ColorSelect: TextFieldClientComponent = ({ path }) => {
   const { value, setValue } = useField<string>({ path });
@@ -19,7 +19,7 @@ export const ColorSelect: TextFieldClientComponent = ({ path }) => {
 
   const { value: variantType } = useField<string>({ path: "variantsType" });
 
-  const colors: any = getDataByPath("colors");
+  const colors = getDataByPath<Product["colors"]>("colors");
 
   const handleColorChange = useCallback(
     (option: { value: string }) => {

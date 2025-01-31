@@ -937,7 +937,18 @@ export interface HotspotBlock {
   } | null;
   type?: ('category' | 'subcategory' | 'manual') | null;
   appearance?: 'default' | null;
-  sort?: ('quantity-sold' | 'newest' | 'oldest' | 'cheapest' | 'most-expensive') | null;
+  /**
+   * Sort is applied only when type is set to 'category' or 'subcategory', in manual mode you can manually sort products in the list
+   */
+  sort?:
+    | (
+        | '-bought'
+        | '-createdAt'
+        | 'createdAt'
+        | 'variants.pricing[0].value,pricing.value'
+        | '-variants.pricing[0].value,-pricing.value'
+      )
+    | null;
   products?: (string | Product)[] | null;
   category?: (string | null) | ProductCategory;
   subcategory?: (string | null) | ProductSubCategory;
@@ -1219,12 +1230,9 @@ export interface Order {
     | {
         product?: (string | null) | Product;
         productName?: string | null;
-        hasVariant?: boolean | null;
-        color?: string | null;
-        size?: string | null;
         variantSlug?: string | null;
         quantity: number;
-        price?: number | null;
+        price: number;
         priceTotal: number;
         id?: string | null;
       }[]
@@ -2031,9 +2039,6 @@ export interface OrdersSelect<T extends boolean = true> {
     | {
         product?: T;
         productName?: T;
-        hasVariant?: T;
-        color?: T;
-        size?: T;
         variantSlug?: T;
         quantity?: T;
         price?: T;

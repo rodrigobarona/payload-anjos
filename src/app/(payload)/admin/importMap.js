@@ -30,16 +30,17 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { SlugComponent as SlugComponent_92cc057d0a2abb4f6cf0307edf59f986 } from '@/fields/slug/SlugComponent'
 import { ShippingAddressRowLabel as ShippingAddressRowLabel_b3d6dcafebb3c6e91e67625f35393a32 } from '@/collections/(ecommerce)/Customers/ui/RowLabels/ShippingAddressRowLabel'
+import { VariantSelect as VariantSelect_f66da6a005d5d8ac2d60b93c1613174e } from '@/collections/(ecommerce)/Orders/components/VariantSelect'
 import { OrderProductsRowLabel as OrderProductsRowLabel_a44d89da141f836d5aed2b72298ee5d6 } from '@/components/(ecommerce)/RowLabels/OrderProductsRowLabel'
 import { PickupShipmentMenu as PickupShipmentMenu_b3ca5dfccb96837001fe943ce509dd7f } from '@/collections/(ecommerce)/Orders/components/inpost-pickup/PickupShipmentMenu'
 import { CourierShipmentMenu as CourierShipmentMenu_a2a60c116f7b67b23eaabdaa4a46011f } from '@/collections/(ecommerce)/Orders/components/couriers/CourierShipmentMenu'
-import { DetailLabel as DetailLabel_f27e148de9d6ca6e35ba83e1caf063b6 } from '@/collections/(ecommerce)/Products/ui/RowLabels/DetailLabel'
-import { OptionLabel as OptionLabel_b17ed890d8122f86250bc87431a6fb22 } from '@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel'
-import { SizeSelect as SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a } from '@/collections/(ecommerce)/Products/ui/SizeSelect'
-import { ColorSelect as ColorSelect_619c98d2f17f9cadf7e7c184dc78c786 } from '@/collections/(ecommerce)/Products/ui/ColorSelect'
+import { DetailLabel as DetailLabel_fdf47050741fd52cac7936b6d02f0572 } from '@/collections/(ecommerce)/Products/components/RowLabels/DetailLabel'
+import { OptionLabel as OptionLabel_58dfd143c2293f0d8340fb9b6c82ae98 } from '@/collections/(ecommerce)/Products/components/RowLabels/OptionLabel'
+import { SizeSelect as SizeSelect_c38714f93b739e5d2fc40d8561655455 } from '@/collections/(ecommerce)/Products/components/SizeSelect'
+import { ColorSelect as ColorSelect_bde1551bee045e02f28e524df0813be2 } from '@/collections/(ecommerce)/Products/components/ColorSelect'
 import { CurrencySelect as CurrencySelect_6647ec830145e25b548d2199ccda14d1 } from '@/components/(ecommerce)/CurrencySelect'
 import { PriceRowLabel as PriceRowLabel_67fe256c61a1e173af7f14df0f613a3b } from '@/components/(ecommerce)/RowLabels/PriceRowLabel'
-import { VariantLabel as VariantLabel_6170ecd94cb5bd935fdb53d797d0bb39 } from '@/collections/(ecommerce)/Products/ui/RowLabels/VariantLabel'
+import { VariantLabel as VariantLabel_ecb65b0d221cdf19d0bc78515633cd95 } from '@/collections/(ecommerce)/Products/components/RowLabels/VariantLabel'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { RowLabel as RowLabel_17c6ef4bfe47bfa29d923fb5718170b7 } from '@/globals/Header/RowLabel'
@@ -83,16 +84,17 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_92cc057d0a2abb4f6cf0307edf59f986,
   "@/collections/(ecommerce)/Customers/ui/RowLabels/ShippingAddressRowLabel#ShippingAddressRowLabel": ShippingAddressRowLabel_b3d6dcafebb3c6e91e67625f35393a32,
+  "@/collections/(ecommerce)/Orders/components/VariantSelect#VariantSelect": VariantSelect_f66da6a005d5d8ac2d60b93c1613174e,
   "@/components/(ecommerce)/RowLabels/OrderProductsRowLabel#OrderProductsRowLabel": OrderProductsRowLabel_a44d89da141f836d5aed2b72298ee5d6,
   "@/collections/(ecommerce)/Orders/components/inpost-pickup/PickupShipmentMenu#PickupShipmentMenu": PickupShipmentMenu_b3ca5dfccb96837001fe943ce509dd7f,
   "@/collections/(ecommerce)/Orders/components/couriers/CourierShipmentMenu#CourierShipmentMenu": CourierShipmentMenu_a2a60c116f7b67b23eaabdaa4a46011f,
-  "@/collections/(ecommerce)/Products/ui/RowLabels/DetailLabel#DetailLabel": DetailLabel_f27e148de9d6ca6e35ba83e1caf063b6,
-  "@/collections/(ecommerce)/Products/ui/RowLabels/OptionLabel#OptionLabel": OptionLabel_b17ed890d8122f86250bc87431a6fb22,
-  "@/collections/(ecommerce)/Products/ui/SizeSelect#SizeSelect": SizeSelect_fb4a8fb09de1bb4615ee458662b1cc6a,
-  "@/collections/(ecommerce)/Products/ui/ColorSelect#ColorSelect": ColorSelect_619c98d2f17f9cadf7e7c184dc78c786,
+  "@/collections/(ecommerce)/Products/components/RowLabels/DetailLabel#DetailLabel": DetailLabel_fdf47050741fd52cac7936b6d02f0572,
+  "@/collections/(ecommerce)/Products/components/RowLabels/OptionLabel#OptionLabel": OptionLabel_58dfd143c2293f0d8340fb9b6c82ae98,
+  "@/collections/(ecommerce)/Products/components/SizeSelect#SizeSelect": SizeSelect_c38714f93b739e5d2fc40d8561655455,
+  "@/collections/(ecommerce)/Products/components/ColorSelect#ColorSelect": ColorSelect_bde1551bee045e02f28e524df0813be2,
   "@/components/(ecommerce)/CurrencySelect#CurrencySelect": CurrencySelect_6647ec830145e25b548d2199ccda14d1,
   "@/components/(ecommerce)/RowLabels/PriceRowLabel#PriceRowLabel": PriceRowLabel_67fe256c61a1e173af7f14df0f613a3b,
-  "@/collections/(ecommerce)/Products/ui/RowLabels/VariantLabel#VariantLabel": VariantLabel_6170ecd94cb5bd935fdb53d797d0bb39,
+  "@/collections/(ecommerce)/Products/components/RowLabels/VariantLabel#VariantLabel": VariantLabel_ecb65b0d221cdf19d0bc78515633cd95,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@/globals/Header/RowLabel#RowLabel": RowLabel_17c6ef4bfe47bfa29d923fb5718170b7,
