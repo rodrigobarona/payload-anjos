@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getPayload } from "payload";
@@ -51,7 +50,7 @@ export const WithSidebarOrders = async () => {
             </div>
             <div className="flex items-center gap-2 overflow-y-auto p-4 sm:pl-8">
               {order.products?.map((product) => {
-                const hasVariant = product.hasVariant && product.variantSlug;
+                const hasVariant = product.variantSlug;
                 const variantImage =
                   typeof product.product !== "string" &&
                   product.product &&

@@ -12,6 +12,7 @@ export const VariantSelectClient = ({ variantsArr, path }: { variantsArr: Varian
 
   return (
     <Select
+      className="custom-select"
       value={{
         label: value,
         value,

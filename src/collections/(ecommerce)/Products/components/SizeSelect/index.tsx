@@ -47,6 +47,7 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
           label: sizes?.find((size) => size.slug === value)?.label,
           value,
         }}
+        className="custom-select"
         onChange={handleSizeChange}
         options={
           sizes

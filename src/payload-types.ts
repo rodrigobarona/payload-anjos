@@ -1230,9 +1230,13 @@ export interface Order {
     | {
         product?: (string | null) | Product;
         productName?: string | null;
+        isFromAPI: boolean;
+        color?: string | null;
+        size?: string | null;
         variantSlug?: string | null;
         quantity: number;
-        price: number;
+        price?: number | null;
+        autoprice?: boolean | null;
         priceTotal: number;
         id?: string | null;
       }[]
@@ -2039,9 +2043,13 @@ export interface OrdersSelect<T extends boolean = true> {
     | {
         product?: T;
         productName?: T;
+        isFromAPI?: T;
+        color?: T;
+        size?: T;
         variantSlug?: T;
         quantity?: T;
         price?: T;
+        autoprice?: T;
         priceTotal?: T;
         id?: T;
       };

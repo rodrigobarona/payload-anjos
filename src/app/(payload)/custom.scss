@@ -9,6 +9,11 @@
   display: none;
 }
 
+.custom-select {
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: var(--style-radius-s);
+}
+
 .variant-gap-row .row__fields {
   gap: 1rem;
   display: grid;

@@ -3,7 +3,6 @@ import { useField, Button, TextInput, FieldLabel, useFormFields, useForm } from 
 import { type TextFieldClientProps } from "payload";
 import { type MouseEvent, useCallback, useEffect } from "react";
 
-
 import { formatSlug } from "./formatSlug";
 import "./index.scss";
 

@@ -103,6 +103,7 @@ export async function POST(req: Request) {
           product: product.id,
           productName: product.title,
           quantity: product.quantity,
+          isFromAPI: true,
           hasVariant: product.enableVariants && product.variant ? true : false,
           variantSlug: product.variant.variantSlug ?? undefined,
           color: product.variant.color?.slug ?? undefined,

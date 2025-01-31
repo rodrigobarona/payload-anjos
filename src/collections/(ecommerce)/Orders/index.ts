@@ -1,5 +1,6 @@
 import { type CollectionConfig } from "payload";
 
+import { currencyField } from "@/fields/currencyField";
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
 
@@ -88,6 +89,7 @@ export const Orders: CollectionConfig = {
               name: "products",
               type: "array",
               label: { en: "Products", pl: "Produkty" },
+
               admin: {
                 components: {
                   RowLabel: "@/components/(ecommerce)/RowLabels/OrderProductsRowLabel#OrderProductsRowLabel",
@@ -107,8 +109,29 @@ export const Orders: CollectionConfig = {
                   },
                 },
                 {
+                  name: "isFromAPI",
+                  type: "checkbox",
+                  admin: { hidden: true },
+                  required: true,
+                  defaultValue: false,
+                },
+                {
                   type: "row",
                   fields: [
+                    {
+                      name: "color",
+                      type: "text",
+                      admin: {
+                        hidden: true,
+                      },
+                    },
+                    {
+                      name: "size",
+                      type: "text",
+                      admin: {
+                        hidden: true,
+                      },
+                    },
                     {
                       name: "variantSlug",
                       type: "text",
@@ -147,7 +170,25 @@ export const Orders: CollectionConfig = {
                         en: "Price per unit",
                         pl: "Cena za sztukę",
                       },
-                      required: true,
+                      admin: {
+                        components: {
+                          Field:
+                            "@/collections/(ecommerce)/Orders/components/ProductUnitPriceField#ProductUnitPriceField",
+                        },
+                        width: "50%",
+                      },
+                    },
+                    {
+                      name: "autoprice",
+                      type: "checkbox",
+                      label: {
+                        en: "Auto Price",
+                        pl: "Automatyczna cena",
+                      },
+                      admin: {
+                        readOnly: true,
+                        hidden: true,
+                      },
                     },
                     {
                       name: "priceTotal",
@@ -155,6 +196,9 @@ export const Orders: CollectionConfig = {
                       label: {
                         en: "Price Total",
                         pl: "Cena całkowita",
+                      },
+                      admin: {
+                        width: "50%",
                       },
                       required: true,
                     },
@@ -182,9 +226,6 @@ export const Orders: CollectionConfig = {
                     en: "Company",
                     pl: "Firma",
                   },
-                  admin: {
-                    readOnly: true,
-                  },
                 },
                 {
                   name: "name",
@@ -192,9 +233,6 @@ export const Orders: CollectionConfig = {
                   label: {
                     en: "Name",
                     pl: "Nazwa",
-                  },
-                  admin: {
-                    readOnly: true,
                   },
                 },
                 {
@@ -216,9 +254,6 @@ export const Orders: CollectionConfig = {
                     en: "Address",
                     pl: "Adres",
                   },
-                  admin: {
-                    readOnly: true,
-                  },
                 },
                 {
                   type: "row",
@@ -232,7 +267,6 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                     },
                     {
@@ -245,7 +279,6 @@ export const Orders: CollectionConfig = {
                       options: [...countryList],
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                     },
                   ],
@@ -274,7 +307,6 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                     },
                   ],
@@ -545,9 +577,7 @@ export const Orders: CollectionConfig = {
                 en: "Total (without shipping)",
                 pl: "Suma (bez kosztów dostawy)",
               },
-              admin: {
-                readOnly: true,
-              },
+
               required: true,
             },
             {
@@ -557,9 +587,7 @@ export const Orders: CollectionConfig = {
                 en: "Shipping Cost",
                 pl: "Koszt dostawy",
               },
-              admin: {
-                readOnly: true,
-              },
+
               required: true,
             },
           ],
@@ -575,22 +603,11 @@ export const Orders: CollectionConfig = {
                 pl: "Suma (z kosztami dostawy)",
               },
               admin: {
-                readOnly: true,
+                width: "50%",
               },
               required: true,
             },
-            {
-              name: "currency",
-              label: {
-                en: "Currency",
-                pl: "Waluta",
-              },
-              type: "text",
-              admin: {
-                readOnly: true,
-              },
-              required: true,
-            },
+            currencyField,
           ],
         },
         {
@@ -599,9 +616,6 @@ export const Orders: CollectionConfig = {
           label: {
             en: "Choosen Shipping Method",
             pl: "Wybrana metoda dostawy",
-          },
-          admin: {
-            readOnly: true,
           },
           options: courierSelectOptions,
         },

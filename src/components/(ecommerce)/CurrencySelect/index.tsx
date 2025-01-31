@@ -34,9 +34,10 @@ export const CurrencySelect: TextFieldClientComponent = ({ path }) => {
   }, []);
 
   return (
-    <div className="twp my-auto h-fit flex-1">
+    <div className="twp mx-[5px] my-auto h-fit flex-1">
       <FieldLabel label="Waluta" />
       <Select
+        className="custom-select"
         value={{
           label: value,
           value,

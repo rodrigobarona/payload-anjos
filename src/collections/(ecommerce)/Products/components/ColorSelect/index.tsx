@@ -49,6 +49,7 @@ export const ColorSelect: TextFieldClientComponent = ({ path }) => {
           value,
         }}
         onChange={handleColorChange}
+        className="custom-select"
         options={
           colors
             ? colors?.map((color) => ({
