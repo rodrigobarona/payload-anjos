@@ -42,6 +42,12 @@
     "or": "or",
     "continue-shopping": "Continue shopping"
   },
+  "WishList": {
+    "title": "Wishlist",
+    "close-panel": "Close panel",
+    "remove": "Remove",
+    "add-to-cart": "Add to cart"
+  },
   "LoginForm": {
     "title": "Sign in to your account",
     "email": "Email address",

@@ -245,5 +245,16 @@ export const Customers: CollectionConfig = {
         hidden: true,
       },
     },
+    {
+      name: "wishlist",
+      type: "json",
+      label: {
+        en: "Wishlist",
+        pl: "Lista życzeń",
+      },
+      admin: {
+        hidden: true,
+      },
+    },
   ],
 };

@@ -1207,6 +1207,15 @@ export interface Customer {
     | number
     | boolean
     | null;
+  wishlist?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -2020,6 +2029,7 @@ export interface CustomersSelect<T extends boolean = true> {
       };
   orders?: T;
   cart?: T;
+  wishlist?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -2569,7 +2579,7 @@ export interface ShopLayout {
   productList: {
     filters: 'none' | 'withSidebar' | 'sortOnly';
   };
-  cart: {
+  cartAndWishlist: {
     type: 'slideOver';
   };
   checkout: {
@@ -3071,7 +3081,7 @@ export interface ShopLayoutSelect<T extends boolean = true> {
     | {
         filters?: T;
       };
-  cart?:
+  cartAndWishlist?:
     | T
     | {
         type?: T;

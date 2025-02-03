@@ -6,19 +6,19 @@ import { getCachedGlobal } from "@/utilities/getGlobals";
 
 import { SlideOver } from "./variants/SlideOver";
 
-export const Cart = async () => {
+export const WishList = async () => {
   try {
     const locale = (await getLocale()) as Locale;
     const { cartAndWishlist } = await getCachedGlobal("shopLayout", locale, 1)();
 
-    let CartComponent: ReactNode = null;
+    let WishListComponent: ReactNode = null;
     switch (cartAndWishlist.type) {
       case "slideOver":
-        CartComponent = <SlideOver />;
+        WishListComponent = <SlideOver />;
         break;
     }
 
-    return CartComponent;
+    return WishListComponent;
   } catch (error) {
     console.log(error);
   }

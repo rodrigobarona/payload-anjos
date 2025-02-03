@@ -102,10 +102,10 @@ export const ShopLayout: GlobalConfig = {
         },
         {
           label: {
-            en: "Cart",
-            pl: "Koszyk",
+            en: "Cart and Wishlist",
+            pl: "Koszyk i lista życzeń",
           },
-          name: "cart",
+          name: "cartAndWishlist",
           fields: [
             {
               name: "type",
@@ -114,14 +114,14 @@ export const ShopLayout: GlobalConfig = {
                 {
                   label: {
                     en: "Slide-over",
-                    pl: "Wysuwany",
+                    pl: "Wysuwane",
                   },
                   value: "slideOver",
                 },
               ],
               label: {
-                en: "Basket type",
-                pl: "Rodzaj koszyka",
+                en: "Type of cart and wishlist",
+                pl: "Rodzaj koszyka i listy życzeń",
               },
               defaultValue: "slideOver",
               required: true,

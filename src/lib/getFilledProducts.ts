@@ -1,23 +1,36 @@
 import { type Product } from "@/payload-types";
-import { type Cart } from "@/stores/CartStore/types";
+type BaseProduct = {
+  id: string;
+  choosenVariantSlug?: string;
+};
 
-export const getFilledProducts = (products: Product[], cart: Cart) => {
+type CartProduct = BaseProduct & {
+  quantity: number;
+};
+
+type WishlistProduct = BaseProduct;
+
+export const getFilledProducts = <T extends CartProduct | WishlistProduct>(
+  products: Product[],
+  items: T[],
+) => {
+  const isCart = (item: CartProduct | WishlistProduct): item is CartProduct => "quantity" in item;
+
   const filledProducts = products.flatMap((product) => {
     if (!product.variants || product.variants.length === 0) {
-      const cartProduct = cart.find((cartProduct) => cartProduct.id === product.id);
-      return cartProduct
+      const item = items.find((item) => item.id === product.id);
+      return item
         ? [
             {
               ...product,
               image: typeof product.images[0] !== "string" ? product.images[0] : null,
               slug: product.slug,
               enableVariantPrices: product.enableVariantPrices,
-              // TODO: fix that
               // eslint-disable-next-line
-              variant: null as any, // Type assertion
+              variant: null as any,
               stock: product.stock,
               pricing: product.pricing,
-              quantity: cartProduct.quantity,
+              ...(isCart(item) ? { quantity: item.quantity } : {}),
             },
           ]
         : [];
@@ -25,14 +38,13 @@ export const getFilledProducts = (products: Product[], cart: Cart) => {
 
     return product.variants
       .filter((variant) => {
-        return cart.some((cartProduct) => {
-          return cartProduct.id === product.id && cartProduct.choosenVariantSlug === variant.variantSlug;
-        });
+        return items.some(
+          (item) => item.id === product.id && item.choosenVariantSlug === variant.variantSlug,
+        );
       })
       .map((variant) => {
-        const cartProduct = cart.find(
-          (cartProduct) =>
-            cartProduct.id === product.id && cartProduct.choosenVariantSlug === variant.variantSlug,
+        const item = items.find(
+          (item) => item.id === product.id && item.choosenVariantSlug === variant.variantSlug,
         );
 
         return {
@@ -49,11 +61,11 @@ export const getFilledProducts = (products: Product[], cart: Cart) => {
             image: typeof variant.image !== "string" ? variant.image : null,
             pricing: variant.pricing,
           },
-          quantity: cartProduct ? cartProduct.quantity : 1,
+          ...(isCart(item!) ? { quantity: item.quantity } : {}),
         };
       });
   });
   return filledProducts;
 };
 
-export type FilledProduct = ReturnType<typeof getFilledProducts>[number];
+export type FilledProduct = ReturnType<typeof getFilledProducts<CartProduct | WishlistProduct>>[number];

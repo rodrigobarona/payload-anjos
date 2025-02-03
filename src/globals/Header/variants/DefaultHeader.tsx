@@ -1,5 +1,5 @@
 "use client";
-import { ShoppingBagIcon, UserIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, ShoppingBagIcon, UserIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -9,6 +9,8 @@ import { Link } from "@/i18n/routing";
 import { type Header } from "@/payload-types";
 import { useCartState } from "@/stores/CartStateStore";
 import { useCart } from "@/stores/CartStore";
+import { useWishListState } from "@/stores/WishListStateStore";
+import { useWishList } from "@/stores/WishlistStore";
 import { cn } from "@/utilities/cn";
 
 export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart?: boolean }) => {
@@ -25,6 +27,9 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
   const { toggleCart } = useCartState();
   const { cart } = useCart();
   const [totalQuantity, setTotalQuantity] = useState<number>(0);
+
+  const { toggleWishList } = useWishListState();
+  const { wishlist } = useWishList();
 
   useEffect(() => {
     let lastScrollValue = 0;
@@ -107,16 +112,28 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
             <UserIcon color="white" width={24} height={24} />
           </Link>
           {!disableCart && (
-            <button onClick={toggleCart} className="relative -m-2 cursor-pointer p-2">
-              {totalQuantity && totalQuantity > 0 ? (
-                <span className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-main-600 text-xs text-white">
-                  {totalQuantity}
-                </span>
-              ) : (
-                ""
-              )}
-              <ShoppingBagIcon color="white" width={24} height={24} />
-            </button>
+            <>
+              <button onClick={toggleWishList} className="relative -m-2 cursor-pointer p-2">
+                {wishlist && wishlist.length > 0 ? (
+                  <span className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-main-600 text-xs text-white">
+                    {wishlist.length}
+                  </span>
+                ) : (
+                  ""
+                )}
+                <HeartIcon color="white" width={24} height={24} />
+              </button>
+              <button onClick={toggleCart} className="relative -m-2 cursor-pointer p-2">
+                {totalQuantity && totalQuantity > 0 ? (
+                  <span className="absolute right-0 top-0 flex aspect-square h-5 w-5 items-center justify-center rounded-full bg-main-600 text-xs text-white">
+                    {totalQuantity}
+                  </span>
+                ) : (
+                  ""
+                )}
+                <ShoppingBagIcon color="white" width={24} height={24} />
+              </button>
+            </>
           )}
         </div>
         <CMSLink className="ml-auto hidden md:flex" />

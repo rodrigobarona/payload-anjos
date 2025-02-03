@@ -2,6 +2,7 @@
 
 import { Radio, RadioGroup } from "@headlessui/react";
 import { HeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon as FilledHeartIcon } from "@heroicons/react/24/solid";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
 import { useRouter } from "@/i18n/routing";
 import { type Product } from "@/payload-types";
 import { useCart } from "@/stores/CartStore";
+import { useWishList } from "@/stores/WishlistStore";
 import { cn } from "@/utilities/cn";
 
 import { type FilledVariant } from "../../../types";
@@ -29,6 +31,9 @@ export const ProductForm = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
   const { updateCart, cart } = useCart();
+
+  const { toggleWishList, wishlist } = useWishList();
+
   const t = useTranslations("ProductDetails");
   const [overStock, setOverStock] = useState(false);
   const searchParams = useSearchParams();
@@ -226,10 +231,27 @@ export const ProductForm = ({
           />
 
           <button
+            onClick={(e) => {
+              e.preventDefault();
+              toggleWishList([
+                {
+                  id: product.id,
+                  choosenVariantSlug: selectedVariant?.slug ?? undefined,
+                },
+              ]);
+            }}
             type="button"
             className="ml-4 flex w-fit items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
           >
-            <HeartIcon aria-hidden="true" className="size-6 shrink-0" />
+            {wishlist?.find(
+              (item) =>
+                item.id === product.id &&
+                (product.enableVariants ? item.choosenVariantSlug === selectedVariant?.slug : true),
+            ) ? (
+              <FilledHeartIcon aria-hidden="true" className="size-6 shrink-0" />
+            ) : (
+              <HeartIcon aria-hidden="true" className="size-6 shrink-0" />
+            )}
             <span className="sr-only">{t("add-to-favs")}</span>
           </button>
         </div>
