@@ -57,6 +57,8 @@ export default buildConfig({
           rel: "icon",
         },
       ],
+      title: "Admin Panel",
+      titleSuffix: "| Pimento",
     },
     importMap: {
       baseDir: path.resolve(dirname),
