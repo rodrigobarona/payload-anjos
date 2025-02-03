@@ -35,7 +35,7 @@ export const ImageMedia = (props: MediaProps) => {
 
     width = fullWidth!;
     height = fullHeight!;
-    alt = altFromResource || "";
+    alt = altFromResource ?? "";
 
     src = `${url}`;
   }
@@ -43,11 +43,11 @@ export const ImageMedia = (props: MediaProps) => {
   const loading = loadingFromProps ?? (!priority ? "lazy" : undefined);
 
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
-  const sizes = sizeFromProps
-    ? sizeFromProps
-    : Object.entries(breakpoints)
-        .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
-        .join(", ");
+  const sizes =
+    sizeFromProps ??
+    Object.entries(breakpoints)
+      .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
+      .join(", ");
 
   return (
     <picture>

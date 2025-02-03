@@ -53,7 +53,7 @@ export const ChangeAddressDialog = ({
               onClick={() => {
                 setShipping({
                   ...shipping,
-                  id: shipping.id ? shipping.id : undefined,
+                  id: shipping.id ?? undefined,
                 });
               }}
               key={shipping.id}

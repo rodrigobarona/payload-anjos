@@ -4,7 +4,7 @@ import { defaultTheme, themeLocalStorageKey } from "../ThemeSelector/types";
 
 export const InitTheme = () => {
   return (
-    // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
+    // eslint-disable-next-line
     <Script
       dangerouslySetInnerHTML={{
         __html: `

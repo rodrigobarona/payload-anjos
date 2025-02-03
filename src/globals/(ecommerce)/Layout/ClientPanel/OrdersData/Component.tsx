@@ -85,7 +85,7 @@ export const OrdersData = ({
               onClick={() => {
                 setSelectedShipping({
                   ...shipping,
-                  id: shipping.id ? shipping.id : undefined,
+                  id: shipping.id ?? undefined,
                 });
               }}
               key={shipping.id}
