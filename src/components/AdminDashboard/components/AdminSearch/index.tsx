@@ -26,7 +26,7 @@ export const AdminSearch = ({ groups }: { groups: NavGroupType[] }) => {
   return (
     <Command className="bg-payload-backgroundColor border-payload-elevation-200 text-payload-foreground group twp relative overflow-visible rounded-lg border border-b-0 shadow-md md:min-w-[450px]">
       <CommandInput className="border-payload-elevation-200" placeholder="Search for collections..." />
-      <CommandList className="border-payload-elevation-200 border-l-payload-elevation-200 w-full-border twp absolute -left-[1px] top-full hidden h-[50dvh] max-h-[350px] min-h-[200px] -translate-y-[1px] border-b border-l group-focus-within:block">
+      <CommandList className="border-payload-elevation-200 border-l-payload-elevation-200 w-full-border border-r-payload-elevation-200 twp absolute -left-[1px] top-full hidden h-fit max-h-[350px] -translate-y-[1px] border-b border-l border-r group-focus-within:block">
         <CommandEmpty>No results found.</CommandEmpty>
         {groups.map((group, index) => (
           <>
