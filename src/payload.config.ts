@@ -49,6 +49,15 @@ export default buildConfig({
         Icon: "@/components/AdminLogoIcon/AdminLogoIcon#AdminLogoIcon",
       },
     },
+    meta: {
+      icons: [
+        {
+          type: "image/svg+xml",
+          url: "/favicon.svg",
+          rel: "icon",
+        },
+      ],
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
