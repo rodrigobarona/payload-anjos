@@ -5,50 +5,7 @@ import { type ReactNode } from "react";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import { Link } from "@/i18n/routing";
 import { type Product } from "@/payload-types";
-import { type Currency } from "@/stores/Currency/types";
-
-const getPriceRange = (variants: Product["variants"], enableVariantPrices: boolean) => {
-  if (!variants || !enableVariantPrices) return null;
-
-  const allPrices = variants.flatMap((variant) => variant.pricing ?? []);
-
-  const groupedPrices = allPrices.reduce(
-    (acc, currentPrice) => {
-      if (!acc[currentPrice.currency]) {
-        acc[currentPrice.currency] = [];
-      }
-
-      // temporary, TODO: fix typings
-      // eslint-disable-next-line
-      acc[currentPrice.currency].push({
-        ...currentPrice,
-        id: currentPrice.id ?? undefined,
-      });
-      return acc;
-    },
-    {} as Record<Currency, { value: number; currency: Currency; id?: string }[]>,
-  );
-
-  const priceRanges: { value: number; currency: Currency; id?: string }[][] = [];
-  const minPrices: { value: number; currency: Currency; id?: string }[] = [];
-  const maxPrices: { value: number; currency: Currency; id?: string }[] = [];
-
-  for (const currency in groupedPrices) {
-    const prices = groupedPrices[currency as Currency];
-    const sortedPrices = prices.sort((a, b) => a.value - b.value);
-
-    const minPrice = sortedPrices[0];
-    const maxPrice = sortedPrices[sortedPrices.length - 1];
-
-    minPrices.push(minPrice);
-    maxPrices.push(maxPrice);
-  }
-
-  priceRanges.push(minPrices);
-  priceRanges.push(maxPrices);
-
-  return priceRanges;
-};
+import { getPriceRange } from "@/utilities/getPriceRange";
 
 export const WithInlinePrice = ({ products }: { products: Product[] }) => {
   const t = useTranslations("ProductList");

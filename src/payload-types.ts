@@ -935,8 +935,10 @@ export interface HotspotBlock {
     };
     [k: string]: unknown;
   } | null;
-  type?: ('category' | 'subcategory' | 'manual') | null;
-  appearance?: 'default' | null;
+  type: 'category' | 'subcategory' | 'manual';
+  appearance: 'default' | 'slider' | 'sliderLoop';
+  category?: (string | null) | ProductCategory;
+  subcategory?: (string | null) | ProductSubCategory;
   /**
    * Sort is applied only when type is set to 'category' or 'subcategory', in manual mode you can manually sort products in the list
    */
@@ -949,9 +951,10 @@ export interface HotspotBlock {
         | '-variants.pricing[0].value,-pricing.value'
       )
     | null;
+  /**
+   * Products order will be the same as the order of selection
+   */
   products?: (string | Product)[] | null;
-  category?: (string | null) | ProductCategory;
-  subcategory?: (string | null) | ProductSubCategory;
   limit?: number | null;
   spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
   spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
@@ -960,6 +963,43 @@ export interface HotspotBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'hotspotZone';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productCategories".
+ */
+export interface ProductCategory {
+  id: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  subcategories?: {
+    docs?: (string | ProductSubCategory)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  products?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "productSubCategories".
+ */
+export interface ProductSubCategory {
+  id: string;
+  category: string | ProductCategory;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  products?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1082,43 +1122,6 @@ export interface Product {
       }[]
     | null;
   bought?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "productCategories".
- */
-export interface ProductCategory {
-  id: string;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  subcategories?: {
-    docs?: (string | ProductSubCategory)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  products?: {
-    docs?: (string | Product)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "productSubCategories".
- */
-export interface ProductSubCategory {
-  id: string;
-  category: string | ProductCategory;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  products?: {
-    docs?: (string | Product)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1822,10 +1825,10 @@ export interface HotspotBlockSelect<T extends boolean = true> {
   title?: T;
   type?: T;
   appearance?: T;
-  sort?: T;
-  products?: T;
   category?: T;
   subcategory?: T;
+  sort?: T;
+  products?: T;
   limit?: T;
   spacingBottom?: T;
   spacingTop?: T;

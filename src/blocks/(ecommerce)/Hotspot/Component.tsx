@@ -13,6 +13,8 @@ import { type HotspotBlock as HotspotBlockProps, type Product } from "@/payload-
 import { cn } from "@/utilities/cn";
 import config from "@payload-config";
 
+import { WithInlinePriceSlider } from "./variants/WithInlinePriceSlider";
+
 export const HotspotBlock = async ({
   appearance,
   type,
@@ -72,7 +74,19 @@ export const HotspotBlock = async ({
 
   switch (appearance) {
     case "default": {
-      HotspotComponent = <WithInlinePrice products={productsToShow} />;
+      HotspotComponent = (
+        <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+          <WithInlinePrice products={productsToShow} />;
+        </div>
+      );
+      break;
+    }
+    case "slider": {
+      HotspotComponent = <WithInlinePriceSlider products={productsToShow} />;
+      break;
+    }
+    case "sliderLoop": {
+      HotspotComponent = <WithInlinePriceSlider opts={{ loop: true }} products={productsToShow} />;
       break;
     }
   }
@@ -88,9 +102,7 @@ export const HotspotBlock = async ({
       )}
     >
       {title && <RichText data={title} />}
-      <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
-        {HotspotComponent}
-      </div>
+      {HotspotComponent}
     </section>
   );
 };
