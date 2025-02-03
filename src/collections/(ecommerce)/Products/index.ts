@@ -1,7 +1,8 @@
 import { type CollectionConfig } from "payload";
 
+import { anyone } from "@/access/anyone";
 import { authenticated } from "@/access/authenticated";
-import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
+// import { authenticatedOrPublished } from "@/access/authenticatedOrPublished";
 import { currencyField } from "@/fields/currencyField";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { slugField } from "@/fields/slug";
@@ -22,7 +23,8 @@ export const Products: CollectionConfig = {
   access: {
     create: authenticated,
     delete: authenticated,
-    read: authenticatedOrPublished,
+    // read: authenticatedOrPublished,
+    read: anyone,
     update: authenticated,
   },
   admin: {

@@ -1,19 +1,17 @@
-/* eslint-disable */
-// only temporary for now TODO: remove it
 import { getPayload } from "payload";
+import { type ReactNode } from "react";
 
-import RichText from "@/components/RichText";
-import { WithInlinePrice } from "@/globals/(ecommerce)/Layout/ProductList/variants/listings/WithInlinePrice";
-import { type HotspotBlock as HotspotBlockProps, type Product } from "@/payload-types";
-import config from "@payload-config";
-import { ReactNode } from "react";
-import { cn } from "@/utilities/cn";
 import {
   paddingBottomClasses,
   paddingTopClasses,
   spacingBottomClasses,
   spacingTopClasses,
 } from "@/blocks/globals";
+import RichText from "@/components/RichText";
+import { WithInlinePrice } from "@/globals/(ecommerce)/Layout/ProductList/variants/listings/WithInlinePrice";
+import { type HotspotBlock as HotspotBlockProps, type Product } from "@/payload-types";
+import { cn } from "@/utilities/cn";
+import config from "@payload-config";
 
 export const HotspotBlock = async ({
   appearance,
@@ -33,10 +31,8 @@ export const HotspotBlock = async ({
 
   let productsToShow: Product[] = [];
 
-  console.log(products);
-
   switch (type) {
-    case "category":
+    case "category": {
       const { docs: categoryProducts } = await payload.find({
         collection: "products",
         depth: 2,
@@ -50,25 +46,27 @@ export const HotspotBlock = async ({
       });
       productsToShow = categoryProducts;
       break;
-    case "subcategory":
+    }
+    case "subcategory": {
       const { docs: subcategoryProducts } = await payload.find({
         collection: "products",
         depth: 2,
         where: {
           "categoriesArr.subcategories": {
-            exists: typeof subcategory === "string" ? subcategory : subcategory?.id,
+            in: typeof subcategory === "string" ? subcategory : subcategory?.id,
           },
         },
         limit: limit ?? 4,
         sort: sort?.split(",") ?? ["-bought"],
       });
       productsToShow = subcategoryProducts;
-    case "manual":
-      productsToShow = products && products.every((product) => typeof product !== "string") ? products : [];
       break;
+    }
+    case "manual": {
+      productsToShow = products?.every((product) => typeof product !== "string") ? products : [];
+      break;
+    }
   }
-  console.log(type);
-  console.log(productsToShow);
 
   let HotspotComponent: ReactNode | null = null;
 

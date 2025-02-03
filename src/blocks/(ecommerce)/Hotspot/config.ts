@@ -79,6 +79,9 @@ export const Hotspot: Block = {
       type: "relationship",
       relationTo: "products",
       hasMany: true,
+      access: {
+        read: () => true,
+      },
       admin: {
         condition: (_, siblingData) => siblingData.type === "manual",
       },

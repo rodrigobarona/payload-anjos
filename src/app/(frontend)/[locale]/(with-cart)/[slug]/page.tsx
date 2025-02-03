@@ -86,7 +86,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     locale,
   });
 
-  return generateMeta({ doc: page });
+  return generateMeta({ doc: page! });
 }
 
 const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: Locale }) => {
@@ -94,19 +94,24 @@ const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: L
 
   const payload = await getPayload({ config });
 
-  const result = await payload.find({
-    collection: "pages",
-    draft,
-    limit: 1,
-    locale,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slug,
+  try {
+    const result = await payload.find({
+      collection: "pages",
+      draft,
+      limit: 1,
+      locale,
+      pagination: false,
+      overrideAccess: draft,
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-  });
-
-  return result.docs?.[0] || null;
+    });
+    return result.docs?.[0] || null;
+  } catch (error) {
+    // Now instead of global error we will know at least where the error is
+    console.log("Main page error: ", error);
+    return null;
+  }
 });
