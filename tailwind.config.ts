@@ -89,6 +89,21 @@ const config: Config = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        payload: {
+          backgroundColor: "var(--theme-background)",
+          elevation: {
+            200: "var(--theme-elevation-200)",
+            300: "var(--theme-elevation-300)",
+            400: "var(--theme-elevation-400)",
+            500: "var(--theme-elevation-500)",
+            600: "var(--theme-elevation-600)",
+            700: "var(--theme-elevation-700)",
+            800: "var(--theme-elevation-800)",
+            900: "var(--theme-elevation-900)",
+          },
+          card: "var(--theme-card)",
+          foreground: "var(--theme-foreground)",
+        },
         background: "hsl(var(--background))",
         border: "hsla(var(--border))",
         card: {

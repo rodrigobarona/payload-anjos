@@ -21,6 +21,10 @@
   margin: 0;
 }
 
+.w-full-border {
+  width: calc(100% + 2px);
+}
+
 @layer base {
   h1,
   h2,

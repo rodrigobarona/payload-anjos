@@ -48,6 +48,11 @@ export default buildConfig({
         Logo: "@/components/AdminLogoBig/AdminLogoBig#AdminLogoBig",
         Icon: "@/components/AdminLogoIcon/AdminLogoIcon#AdminLogoIcon",
       },
+      views: {
+        dashboard: {
+          Component: "@/components/AdminDashboard#AdminDashboard",
+        },
+      },
     },
     meta: {
       icons: [
