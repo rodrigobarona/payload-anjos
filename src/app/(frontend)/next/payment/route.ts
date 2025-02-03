@@ -102,7 +102,7 @@ export async function POST(req: Request) {
           id: product.id,
           product: product.id,
           productName: product.title,
-          quantity: product.quantity,
+          quantity: product.quantity ?? 0,
           isFromAPI: true,
           hasVariant: product.enableVariants && product.variant ? true : false,
           variantSlug: product.variant.variantSlug ?? undefined,
@@ -116,7 +116,7 @@ export async function POST(req: Request) {
             (product.variant.pricing && product.enableVariantPrices
               ? (product.variant.pricing.find((price) => price.currency === currency)?.value ?? 0)
               : (product.pricing?.find((price) => price.currency === currency)?.value ?? 0)) *
-            product.quantity,
+            (product?.quantity ?? 0),
         })),
         date: new Date().toISOString(),
         invoice: {
@@ -177,7 +177,7 @@ export async function POST(req: Request) {
       if (product.enableVariants && product.variant && product.variants) {
         const variant = product.variant;
         if (variant.stock) {
-          const newStock = variant.stock - product.quantity;
+          const newStock = variant.stock - (product?.quantity ?? 0);
           void payload.update({
             collection: "products",
             id: product.id,
@@ -196,7 +196,7 @@ export async function POST(req: Request) {
         }
       } else {
         if (product.stock) {
-          const newStock = product.stock - product.quantity;
+          const newStock = product.stock - (product?.quantity ?? 0);
           void payload.update({
             collection: "products",
             id: product.id,

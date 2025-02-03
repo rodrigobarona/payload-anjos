@@ -7,11 +7,11 @@ export const getTotal = (filledProducts: FilledProduct[]) => {
     if (!product) return acc;
     if (!product.enableVariantPrices) {
       product.pricing?.forEach((price) => {
-        acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
+        acc[price.currency] = (acc[price.currency] ?? 0) + price.value * (product.quantity ?? 1);
       });
     } else if (product.enableVariantPrices && product.enableVariants) {
       product.variant?.pricing?.forEach((price) => {
-        acc[price.currency] = (acc[price.currency] ?? 0) + price.value * product.quantity;
+        acc[price.currency] = (acc[price.currency] ?? 0) + price.value * (product.quantity ?? 1);
       });
     }
     return acc;
