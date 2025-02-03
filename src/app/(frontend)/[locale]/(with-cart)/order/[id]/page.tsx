@@ -56,6 +56,8 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
             const selectedVariant = product.variants?.find(
               (variant) => variant.variantSlug === product.variantSlug,
             );
+
+            console.log(selectedVariant);
             const productImage =
               product.variants && product.variantSlug
                 ? ((product.variants.find((variant) => product.variantSlug === variant.variantSlug)?.image ??
@@ -84,9 +86,9 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                       </Link>
                     </h4>
                     <p className="mt-2 text-sm text-gray-500">
-                      {product.colors?.find((color) => color.slug === product.color)?.label}
-                      {product.color && product.size && ", "}
-                      {product.sizes?.find((size) => size.slug === product.size)?.label}
+                      {product.colors?.find((color) => color.slug === selectedVariant?.color)?.label}
+                      {selectedVariant?.color && selectedVariant?.size && ", "}
+                      {product.sizes?.find((size) => size.slug === selectedVariant?.size)?.label}
                     </p>
                     {product.description && (
                       <RichText data={product.description} className="mt-2 text-sm text-gray-600" />

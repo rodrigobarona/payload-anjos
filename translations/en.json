@@ -219,6 +219,7 @@
       "help": "Help"
     },
     "orders": {
+      "title": "Orders",
       "pending": "<yellow>Pending</yellow>",
       "paid": "<green>Paid</green>",
       "unpaid": "<red>Unpaid</red>",
@@ -258,6 +259,10 @@
           "server-error": "Internal server error. Please contact support."
         }
       }
+    },
+    "wrapper": {
+      "my-account": "My account",
+      "logout": "Log out"
     }
   },
   "Order": {

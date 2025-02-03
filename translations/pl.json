@@ -219,6 +219,7 @@
       "help": "Pomoc"
     },
     "orders": {
+      "title": "Zamówienia",
       "pending": "<yellow>Oczekujące</yellow>",
       "paid": "<green>Opłacone</green>",
       "unpaid": "<red>Nieopłacone</red>",
@@ -258,6 +259,10 @@
           "server-error": "Wewnętrzny błąd serwera. Skontaktuj się z pomocą techniczną."
         }
       }
+    },
+    "wrapper": {
+      "my-account": "Moje konto",
+      "logout": "Wyloguj się"
     }
   },
   "Order": {

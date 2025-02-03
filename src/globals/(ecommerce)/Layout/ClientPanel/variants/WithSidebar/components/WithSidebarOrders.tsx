@@ -32,7 +32,7 @@ export const WithSidebarOrders = async () => {
 
   return (
     <div className="no-prose flex flex-col gap-4">
-      <h2 className="mb-8 text-xl font-bold">Orders</h2>
+      <h2 className="mb-8 text-xl font-bold">{t("title")}</h2>
       {orders.docs.map((order) => (
         <Link href={`/order/${order.id}`} key={order.id}>
           <Card className="flex flex-col overflow-clip rounded-[6px] border bg-transparent sm:flex-row">

@@ -1,11 +1,23 @@
+import { LogOutIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type ReactNode } from "react";
+
+import { LogoutButton } from "@/components/(ecommerce)/LogoutButton";
 
 import { AsideMenu } from "./components/AsideMenu";
 
 export const WithSidebar = ({ children }: { children: ReactNode }) => {
+  const t = useTranslations("Account.wrapper");
   return (
     <div className="pt-16">
-      <h1 className="container text-2xl font-bold">Moje konto</h1>
+      <div className="container flex justify-between">
+        <h1 className="text-2xl font-bold">{t("my-account")}</h1>
+
+        <LogoutButton variant="ghost" aria-label={t("logout")}>
+          <p className="sr-only">{t("logout")}</p>
+          <LogOutIcon />
+        </LogoutButton>
+      </div>
       <div className="container mx-auto lg:flex lg:gap-x-16 lg:px-8">
         <AsideMenu />
 
