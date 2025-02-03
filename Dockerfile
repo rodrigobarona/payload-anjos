@@ -1,4 +1,6 @@
 FROM node:22-alpine AS base
+RUN npm install -g corepack@latest
+ENV COREPACK_INTEGRITY_KEYS=0
 
 FROM base AS deps
 
