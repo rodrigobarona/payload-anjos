@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { setRequestLocale } from "next-intl/server";
 import { type ReactNode } from "react";
 
@@ -15,12 +16,17 @@ const AccountPage = async ({
   params: Promise<{ locale: Locale }>;
   children: ReactNode;
 }) => {
-  const user = await getCustomer();
+  let user = await getCustomer();
   const { locale } = await params;
   setRequestLocale(locale);
 
   if (!user) {
-    return redirect({ locale, href: "/login" });
+    revalidateTag("user-auth");
+    user = await getCustomer();
+    console.log(user);
+    if (!user) {
+      return redirect({ locale, href: "/login" });
+    }
   }
 
   return <ClientPanel>{children}</ClientPanel>;

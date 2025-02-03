@@ -16,7 +16,7 @@ const LoginPage = async ({
   const user = await getCustomer();
   const { locale } = await params;
   const { verified } = await searchParams;
-  if (user) {
+  if (user?.id) {
     return redirect({ locale: locale, href: "/account" });
   }
   const shopSettings = await getCachedGlobal("shopSettings", locale, 1)();
