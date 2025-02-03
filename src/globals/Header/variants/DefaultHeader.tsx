@@ -108,7 +108,7 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
           </div>
         </nav>
         <div className="flex gap-5">
-          <Link href="/account" className="-m-2 cursor-pointer p-2">
+          <Link href="/account/orders" className="-m-2 cursor-pointer p-2">
             <UserIcon color="white" width={24} height={24} />
           </Link>
           {!disableCart && (
