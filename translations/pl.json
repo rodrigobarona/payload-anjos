@@ -43,10 +43,10 @@
     "continue-shopping": "Kontynuuj zakupy"
   },
   "WishList": {
-    "title": "Wishlist",
-    "close-panel": "Close panel",
-    "remove": "Remove",
-    "add-to-cart": "Add to cart"
+    "title": "Ulubione",
+    "close-panel": "Zamknij panel",
+    "remove": "Usuń",
+    "add-to-cart": "Dodaj do koszyka"
   },
   "LoginForm": {
     "title": "Zaloguj się na swoje konto",

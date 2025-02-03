@@ -9,10 +9,12 @@ import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { Button } from "@/components/ui/button";
 import { type FilledVariant } from "@/globals/(ecommerce)/Layout/ProductDetails/types";
 import { type Locale } from "@/i18n/config";
 import { Link } from "@/i18n/routing";
 import { type Media, type Product } from "@/payload-types";
+import { useCart } from "@/stores/CartStore";
 import { type Currency } from "@/stores/Currency/types";
 import { useWishListState } from "@/stores/WishListStateStore";
 import { useWishList } from "@/stores/WishlistStore";
@@ -27,11 +29,13 @@ type ProductWithFilledVariants = Omit<Product, "variants" | "pricing"> & {
     id?: string | null;
   }[];
 };
-
+// TODO (optional): Merge with Cart into one reusable component, as it's very similar.
 export const SlideOver = () => {
   const { isOpen, setWishListState, toggleWishList } = useWishListState();
 
   const { wishlist, removeFromWishList } = useWishList();
+
+  const { updateCart } = useCart();
 
   const [wishlistProducts, setWishListProducts] = useState<ProductWithFilledVariants[]>([]);
 
@@ -162,17 +166,32 @@ export const SlideOver = () => {
                               </div>
 
                               <div className="flex flex-1 items-end justify-between text-sm">
-                                <div className="flex">
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      removeFromWishList(product.id, product.variant?.slug ?? undefined);
-                                    }}
-                                    className="font-medium text-main-600 hover:text-main-500"
-                                  >
-                                    {t("remove")}
-                                  </button>
-                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    removeFromWishList(product.id, product.variant?.slug ?? undefined);
+                                  }}
+                                  className="font-medium text-main-600 hover:text-main-500"
+                                >
+                                  {t("remove")}
+                                </button>
+                                <Button
+                                  type="button"
+                                  variant="tailwind"
+                                  onClick={() => {
+                                    updateCart([
+                                      {
+                                        id: product.id,
+                                        quantity: 1,
+                                        choosenVariantSlug: product.variant?.slug ?? undefined,
+                                      },
+                                    ]);
+                                    removeFromWishList(product.id, product.variant?.slug ?? undefined);
+                                  }}
+                                  className="ml-auto w-fit font-medium"
+                                >
+                                  {t("add-to-cart")}
+                                </Button>
                               </div>
                             </div>
                           </li>
