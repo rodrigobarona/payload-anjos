@@ -2,6 +2,7 @@ import { revalidateTag } from "next/cache";
 import { type CollectionConfig } from "payload";
 
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
+import { getCustomer } from "@/utilities/getCustomer";
 
 import { createTokenAndSendEmail } from "./hooks/createTokenAndSendEmail";
 
@@ -34,8 +35,9 @@ export const Customers: CollectionConfig = {
   hooks: {
     afterOperation: [createTokenAndSendEmail],
     afterLogin: [
-      () => {
+      async () => {
         revalidateTag("user-auth");
+        await getCustomer();
       },
     ],
   },
