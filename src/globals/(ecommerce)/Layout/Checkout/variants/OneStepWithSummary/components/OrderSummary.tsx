@@ -1,5 +1,4 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
@@ -9,7 +8,6 @@ import { type ProductWithFilledVariants } from "@/globals/(ecommerce)/Layout/Car
 import { Link } from "@/i18n/routing";
 import { useCart } from "@/stores/CartStore";
 import { type Currency } from "@/stores/Currency/types";
-
 
 /**
  * This function merges two arrays of objects with currency and value, summing up the values with the same currency.
@@ -85,104 +83,97 @@ export const OrderSummary = ({
         <h3 className="sr-only">{t("items-in-cart")}</h3>
         <ul role="list" className="divide-y divide-gray-200">
           {products?.map((product) => (
-              <li key={`${product.id}-${product.variant?.slug}`} className="flex px-4 py-6 sm:px-6">
-                <div className="shrink-0">
-                  {product.variant?.image?.url ? (
-                    <Media
-                      resource={product.variant.image}
-                      className="w-20 rounded-md"
-                    />
-                  ) : product.image?.url ? (
-                    <Media
-                      resource={product.image}
-                      className="w-20 rounded-md"
-                    />
-                  ) : null}
-                </div>
+            <li key={`${product.id}-${product.variant?.slug}`} className="flex px-4 py-6 sm:px-6">
+              <div className="shrink-0">
+                {product.variant?.image?.url ? (
+                  <Media resource={product.variant.image} className="w-20 rounded-md" />
+                ) : product.image?.url ? (
+                  <Media resource={product.image} className="w-20 rounded-md" />
+                ) : null}
+              </div>
 
-                <div className="ml-6 flex flex-1 flex-col">
-                  <div className="flex">
-                    <div className="min-w-0 flex-1">
-                      <h4 className="text-sm">
-                        <Link
-                          className="font-medium text-gray-700 hover:text-gray-800"
-                          href={`/product/${product.slug}${product.enableVariants && product?.variant?.slug ? `?variant=${product.variant.slug}` : ""}`}
-                        >
-                          {product.title}
-                        </Link>
-                      </h4>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {[
-                          product.enableVariants && product.variant?.color?.label,
-                          product.enableVariants && product.variant?.size?.label,
-                        ]
-                          .filter(Boolean)
-                          .join(", ")}
-                      </p>
-                    </div>
-
-                    <div className="ml-4 flow-root shrink-0">
-                      <button
-                        type="button"
-                        className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
-                        onClick={() => {
-                          removeFromCart(product.id, (product.variant?.slug) ?? undefined);
-                        }}
+              <div className="ml-6 flex flex-1 flex-col">
+                <div className="flex">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-sm">
+                      <Link
+                        className="font-medium text-gray-700 hover:text-gray-800"
+                        href={`/product/${product.slug}${product.enableVariants && product?.variant?.slug ? `?variant=${product.variant.slug}` : ""}`}
                       >
-                        <span className="sr-only">{t("remove")}</span>
-                        <TrashIcon aria-hidden="true" className="size-5" />
-                      </button>
-                    </div>
+                        {product.title}
+                      </Link>
+                    </h4>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {[
+                        product.enableVariants && product.variant?.color?.label,
+                        product.enableVariants && product.variant?.size?.label,
+                      ]
+                        .filter(Boolean)
+                        .join(", ")}
+                    </p>
                   </div>
 
-                  <div className="flex flex-1 items-end justify-between pt-2">
-                    <p className="mt-1 text-sm font-medium text-gray-900">
-                      <PriceClient
-                        pricing={
-                          product.enableVariantPrices
-                            ? ((product.variant?.pricing?.map((p) => ({
-                                  ...p,
-                                  value: p.value * product.quantity,
-                                }))) ??
-                              [])
-                            : product.pricing
-                              ? product.pricing.map((p) => ({
-                                  ...p,
-                                  value: p.value * product.quantity,
-                                }))
-                              : []
-                        }
-                      />
-                    </p>
+                  <div className="ml-4 flow-root shrink-0">
+                    <button
+                      type="button"
+                      className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
+                      onClick={() => {
+                        removeFromCart(product.id, product.variant?.slug ?? undefined);
+                      }}
+                    >
+                      <span className="sr-only">{t("remove")}</span>
+                      <TrashIcon aria-hidden="true" className="size-5" />
+                    </button>
+                  </div>
+                </div>
 
-                    <div className="ml-4">
-                      <div className="grid grid-cols-1">
-                        <QuantityInput
-                          quantity={
-                            cart?.find(
-                              (cartProduct) =>
-                                cartProduct.id === product.id &&
-                                cartProduct.choosenVariantSlug === product.variant?.slug,
-                            )?.quantity ?? 1
-                          }
-                          inputVariant="cart"
-                          setQuantity={(quantity) => {
-                            setCartQuantity(quantity, product.id, product.variant?.slug ?? undefined);
-                          }}
-                          updateQuantity={(delta) => {
-                            updateCartQuantity(delta, product.id, product.variant?.slug ?? undefined);
-                          }}
-                          maxQuantity={
-                            product.enableVariants ? (product.variant?.stock ?? 0) : (product.stock ?? 0)
-                          }
-                          minQuantity={1}
-                        />
-                      </div>
+                <div className="flex flex-1 items-end justify-between pt-2">
+                  <p className="mt-1 text-sm font-medium text-gray-900">
+                    <PriceClient
+                      pricing={
+                        product.enableVariantPrices
+                          ? (product.variant?.pricing?.map((p) => ({
+                              ...p,
+                              value: p.value * product.quantity,
+                            })) ?? [])
+                          : product.pricing
+                            ? product.pricing.map((p) => ({
+                                ...p,
+                                value: p.value * product.quantity,
+                              }))
+                            : []
+                      }
+                    />
+                  </p>
+
+                  <div className="ml-4">
+                    <div className="grid grid-cols-1">
+                      <QuantityInput
+                        quantity={
+                          cart?.find(
+                            (cartProduct) =>
+                              cartProduct.id === product.id &&
+                              cartProduct.choosenVariantSlug === product.variant?.slug,
+                          )?.quantity ?? 1
+                        }
+                        inputVariant="cart"
+                        setQuantity={(quantity) => {
+                          setCartQuantity(quantity, product.id, product.variant?.slug ?? undefined);
+                        }}
+                        updateQuantity={(delta) => {
+                          updateCartQuantity(delta, product.id, product.variant?.slug ?? undefined);
+                        }}
+                        maxQuantity={
+                          product.enableVariants ? (product.variant?.stock ?? 0) : (product.stock ?? 0)
+                        }
+                        minQuantity={1}
+                      />
                     </div>
                   </div>
                 </div>
-              </li>
-            ))}
+              </div>
+            </li>
+          ))}
         </ul>
         <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex items-center justify-between">
