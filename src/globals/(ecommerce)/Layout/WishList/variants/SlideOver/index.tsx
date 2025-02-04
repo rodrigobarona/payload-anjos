@@ -4,11 +4,11 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/re
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { Media as MediaComponent } from "@/components/Media";
 import { Button } from "@/components/ui/button";
 import { type FilledVariant } from "@/globals/(ecommerce)/Layout/ProductDetails/types";
 import { type Locale } from "@/i18n/config";
@@ -109,21 +109,12 @@ export const SlideOver = () => {
                           <li key={`${product.id}-${product.variant?.slug}`} className="flex py-6">
                             <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                               {product.variant?.image?.url ? (
-                                <Image
-                                  alt={product.variant.image.alt}
-                                  src={product.variant.image.url}
-                                  width={96}
-                                  height={96}
+                                <MediaComponent
+                                  resource={product.variant.image}
                                   className="size-full object-cover"
                                 />
                               ) : product.image?.url ? (
-                                <Image
-                                  alt={product.image.alt}
-                                  src={product.image.url}
-                                  width={96}
-                                  height={96}
-                                  className="size-full object-cover"
-                                />
+                                <MediaComponent resource={product.image} className="size-full object-cover" />
                               ) : null}
                             </div>
 
