@@ -67,7 +67,8 @@ export async function POST(req: Request) {
 
     const res = await sendEmail({ to: email, subject: t("subject"), html });
     console.log(res);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return Response.json({ message: "Internal server error" }, { status: 500 });
   }
   return Response.json({ message: "Success" }, { status: 200 });

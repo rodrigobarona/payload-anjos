@@ -42,7 +42,9 @@ const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
-    avatar: "gravatar",
+    avatar: {
+      Component: "@/components/AdminAvatar#AdminAvatar",
+    },
     components: {
       afterLogin: ["@/components/AdminResetPassword#AdminResetPassword"],
       graphics: {
