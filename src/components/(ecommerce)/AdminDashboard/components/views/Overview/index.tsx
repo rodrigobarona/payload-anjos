@@ -92,7 +92,7 @@ export const Overview = () => {
           </CardContent>
         </Card>
       </div>
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-7">
         <OverviewChart />
         <OverviewLastOrders />
       </div>

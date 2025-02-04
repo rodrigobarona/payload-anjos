@@ -183,7 +183,7 @@ export const OverviewLastOrders = () => {
     },
   });
   return (
-    <Card className="twp col-span-3 rounded-xl border border-payload-elevation-100 bg-transparent">
+    <Card className="twp rounded-xl border border-payload-elevation-100 bg-transparent lg:col-span-3">
       <CardHeader>
         <CardTitle>Recent Orders</CardTitle>
         <CardDescription className="text-base text-payload-elevation-900 opacity-75">
