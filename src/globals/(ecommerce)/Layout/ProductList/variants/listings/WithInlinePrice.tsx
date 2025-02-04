@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { type ReactNode } from "react";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { Media } from "@/components/Media";
 import { Link } from "@/i18n/routing";
 import { type Product } from "@/payload-types";
 import { getPriceRange } from "@/utilities/getPriceRange";
@@ -33,12 +33,9 @@ export const WithInlinePrice = ({ products }: { products: Product[] }) => {
 
           return (
             <div key={product.id} className="group relative">
-              <Image
-                alt={product.images[0].alt}
-                src={product.images[0].url ?? ""}
-                width={product.images[0].width ?? 512}
-                height={product.images[0].height ?? 512}
-                className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
+              <Media
+                resource={product.images[0]}
+                className="aspect-square w-full rounded-md object-cover group-hover:opacity-75 lg:max-h-80"
               />
               <div className="mt-4 flex justify-between">
                 <div className="w-3/5">
