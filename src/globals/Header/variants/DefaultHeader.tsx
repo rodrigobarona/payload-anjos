@@ -1,14 +1,13 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { CMSLink } from "@/components/Link";
 import { Logo } from "@/components/Logo/Logo";
+import { Media } from "@/components/Media";
 import { type Header } from "@/payload-types";
 import { cn } from "@/utilities/cn";
-
-
 
 export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | null }) => {
   const [isMenuOpened, setisMenuOpened] = useState(false);
@@ -55,11 +54,8 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
       >
         <Link href="/" className="mr-auto">
           {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (
-            <Image
-              src={data.logo.url}
-              alt={data.logo.alt}
-              width={data.logo.width ?? 256}
-              height={data.logo.height ?? 256}
+            <Media
+              resource={data.logo}
               className={`${isMenuOpened && "invert lg:invert-0"} -my-7 h-[88px] w-full max-w-[9.375rem]`}
             />
           ) : (
@@ -86,8 +82,8 @@ export const DefaultHeader = ({ data, theme }: { data: Header; theme: string | n
         >
           <div className="flex flex-col items-start gap-12 pt-24 lg:flex-row lg:pt-0">
             {data.navItems?.map(({ link }, i) => {
-                return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
-              })}
+              return <CMSLink key={i} {...link} appearance="link" className="text-black lg:text-white" />;
+            })}
           </div>
         </nav>
         <CMSLink className="ml-auto hidden md:flex" />
