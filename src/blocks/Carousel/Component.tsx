@@ -2,7 +2,6 @@
 
 import AutoScrollPlugin from "embla-carousel-auto-scroll";
 import AutoplayPlugin from "embla-carousel-autoplay";
-import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -11,6 +10,7 @@ import {
   paddingTopClasses,
   paddingBottomClasses,
 } from "@/blocks/globals";
+import { Media } from "@/components/Media";
 import RichText from "@/components/RichText";
 import {
   Carousel,
@@ -89,20 +89,10 @@ export const CarouselBlock = ({
                       href={slide.link.url ?? `/${slide.link.reference?.value.slug}`}
                       target={slide.link.newTab ? "_blank" : "_self"}
                     >
-                      <Image
-                        src={slide.image.url}
-                        width={slide.image.width ?? 256}
-                        height={slide.image.height ?? 256}
-                        alt={slide.image.alt}
-                      />
+                      <Media resource={slide.image} />
                     </Link>
                   ) : (
-                    <Image
-                      src={slide.image.url}
-                      width={slide.image.width ?? 256}
-                      height={slide.image.height ?? 256}
-                      alt={slide.image.alt}
-                    />
+                    <Media resource={slide.image} />
                   )}
                 </>
               )}
