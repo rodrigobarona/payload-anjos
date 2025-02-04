@@ -15,6 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,7 +30,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useState } from "react";
 
 const data: Payment[] = [
   {
@@ -183,7 +183,7 @@ export const OverviewLastOrders = () => {
     },
   });
   return (
-    <Card className="border-payload-elevation-150 twp rounded-xl border bg-transparent lg:col-span-3">
+    <Card className="twp rounded-xl border border-payload-elevation-150 bg-transparent lg:col-span-3">
       <CardHeader>
         <CardTitle>Recent Orders</CardTitle>
         <CardDescription className="text-base text-payload-elevation-900 opacity-75">
@@ -207,7 +207,7 @@ export const OverviewLastOrders = () => {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="bg-payload-elevation-50 border-payload-elevation-150 ml-auto text-base hover:bg-payload-backgroundColor"
+                  className="ml-auto border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-backgroundColor"
                 >
                   Columns <ChevronDown className="ml-2" width={20} height={20} />
                 </Button>
@@ -231,7 +231,7 @@ export const OverviewLastOrders = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="border-payload-elevation-150 rounded-lg border">
+          <div className="rounded-lg border border-payload-elevation-150">
             <Table className="text-base">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -255,7 +255,7 @@ export const OverviewLastOrders = () => {
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
-                      className="hover:bg-payload-elevation-50 border-payload-elevation-150"
+                      className="border-payload-elevation-150 hover:bg-payload-elevation-50"
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
                     >
@@ -267,7 +267,7 @@ export const OverviewLastOrders = () => {
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow className="hover:bg-payload-elevation-50 border-payload-elevation-150">
+                  <TableRow className="border-payload-elevation-150 hover:bg-payload-elevation-50">
                     <TableCell colSpan={columns.length} className="h-24 text-center">
                       No results.
                     </TableCell>
@@ -284,7 +284,7 @@ export const OverviewLastOrders = () => {
             <div className="space-x-2">
               <Button
                 variant="outline"
-                className="bg-payload-elevation-50 border-payload-elevation-150 border text-base hover:bg-payload-elevation-0"
+                className="border border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-elevation-0"
                 size="sm"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
@@ -293,7 +293,7 @@ export const OverviewLastOrders = () => {
               </Button>
               <Button
                 variant="outline"
-                className="bg-payload-elevation-50 border-payload-elevation-150 border text-base hover:bg-payload-elevation-0"
+                className="border border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-elevation-0"
                 size="sm"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
