@@ -16,6 +16,9 @@ export const customTranslationsObject = {
     },
     adminDashboard: {
       linkTitle: "Dashboard",
+      searchNoResults: "No results",
+      search: "Search collections...",
+      addProduct: "Add product",
     },
   },
   pl: {
@@ -33,6 +36,9 @@ export const customTranslationsObject = {
     },
     adminDashboard: {
       linkTitle: "Panel",
+      searchNoResults: "Brak wyników",
+      search: "Szukaj w kolekcjach...",
+      addProduct: "Dodaj produkt",
     },
   },
 };

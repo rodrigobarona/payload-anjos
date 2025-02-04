@@ -1,5 +1,10 @@
+import { type DefaultTranslationKeys, type TFunction } from "@payloadcms/translations";
+import { Button } from "@payloadcms/ui";
 import { type EntityToGroup, EntityType, groupNavItems } from "@payloadcms/ui/shared";
+import Link from "next/link";
 import { getAccessResults, type PayloadRequest } from "payload";
+
+import { type CustomTranslationsKeys } from "@/admin/translations/custom-translations";
 
 import { AdminSearch } from "./components/AdminSearch";
 
@@ -7,6 +12,7 @@ export const AdminDashboard = async (req: PayloadRequest) => {
   const payload = req.payload;
   const { collections, globals } = payload.config;
   const { i18n } = req;
+  const t: TFunction<CustomTranslationsKeys | DefaultTranslationKeys> = i18n.t;
 
   const permissions = await getAccessResults({ req: { ...req } });
 
@@ -37,8 +43,20 @@ export const AdminDashboard = async (req: PayloadRequest) => {
 
   return (
     <main className="gutter--left gutter--right dashboard__wrap">
-      <h1>Welcome to Pimento admin panel</h1>
-      <AdminSearch groups={groups} />
+      <section className="flex flex-wrap items-center gap-4">
+        <h1 className="mr-auto">{t("adminDashboard:linkTitle")}</h1>
+        <AdminSearch groups={groups} />
+        <Button
+          Link={Link}
+          url="/admin/collections/products/create"
+          to="/admin/collections/products/create"
+          el="link"
+          className="my-0 block min-h-11"
+          icon="plus"
+        >
+          {t("adminDashboard:addProduct")}
+        </Button>
+      </section>
     </main>
   );
 };

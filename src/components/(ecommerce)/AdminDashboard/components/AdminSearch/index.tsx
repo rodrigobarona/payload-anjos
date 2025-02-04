@@ -3,7 +3,12 @@ import { getTranslation } from "@payloadcms/translations";
 import { useConfig, useTranslation } from "@payloadcms/ui";
 import { EntityType, formatAdminURL, type NavGroupType } from "@payloadcms/ui/shared";
 import Link from "next/link";
+import { Fragment } from "react";
 
+import {
+  type CustomTranslationsKeys,
+  type CustomTranslationsObject,
+} from "@/admin/translations/custom-translations";
 import {
   Command,
   CommandEmpty,
@@ -21,19 +26,22 @@ export const AdminSearch = ({ groups }: { groups: NavGroupType[] }) => {
     },
   } = useConfig();
 
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation<CustomTranslationsObject, CustomTranslationsKeys>();
 
   return (
-    <Command className="bg-payload-backgroundColor border-payload-elevation-200 text-payload-foreground group twp relative overflow-visible rounded-lg border border-b-0 shadow-md md:min-w-[450px]">
-      <CommandInput className="border-payload-elevation-200" placeholder="Search for collections..." />
-      <CommandList className="border-payload-elevation-200 border-l-payload-elevation-200 w-full-border border-r-payload-elevation-200 twp absolute -left-[1px] top-full hidden h-fit max-h-[350px] -translate-y-[1px] border-b border-l border-r group-focus-within:block">
-        <CommandEmpty>No results found.</CommandEmpty>
+    <Command className="group twp relative order-3 w-full overflow-visible rounded-lg border border-b-0 border-payload-elevation-200 bg-payload-backgroundColor text-payload-foreground shadow-md md:order-none md:w-fit md:min-w-[450px]">
+      <CommandInput
+        className="border-payload-elevation-200 text-base"
+        placeholder={t("adminDashboard:search")}
+      />
+      <CommandList className="w-full-border twp absolute -left-[1px] top-full hidden h-fit max-h-[350px] -translate-y-[1px] border-b border-l border-r border-payload-elevation-200 border-l-payload-elevation-200 border-r-payload-elevation-200 group-focus-within:block">
+        <CommandEmpty>{t("adminDashboard:searchNoResults")}</CommandEmpty>
         {groups.map((group, index) => (
-          <>
+          <Fragment key={`${group.label}-${index}`}>
             <CommandGroup
               key={`${group.label}-${index}`}
               heading={group.label}
-              className="text-payload-foreground"
+              className="text-base text-payload-foreground"
             >
               {group.entities.map(({ label, slug, type }) => {
                 let href = "/";
@@ -53,7 +61,7 @@ export const AdminSearch = ({ groups }: { groups: NavGroupType[] }) => {
                     asChild
                     key={`${slug}-${index}-${id}`}
                     id={id}
-                    className="data-[selected='true']:bg-payload-elevation-200 data-[selected=true]:text-payload-foreground cursor-pointer"
+                    className="cursor-pointer text-base data-[selected='true']:bg-payload-elevation-200 data-[selected=true]:text-payload-foreground"
                   >
                     <Link href={href}>{getTranslation(label, i18n)}</Link>
                   </CommandItem>
@@ -61,7 +69,7 @@ export const AdminSearch = ({ groups }: { groups: NavGroupType[] }) => {
               })}
             </CommandGroup>
             {index === groups.length - 1 ? null : <CommandSeparator className="bg-payload-elevation-200" />}
-          </>
+          </Fragment>
         ))}
       </CommandList>
     </Command>

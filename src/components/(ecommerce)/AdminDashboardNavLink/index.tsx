@@ -12,7 +12,6 @@ export const AdminDashboardNavLink = () => {
   const { t } = useTranslation<CustomTranslationsObject, CustomTranslationsKeys>();
 
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <Link href="/admin" className={`nav__link mb-2.5 ${pathname === "/admin" ? "active" : ""}`}>
