@@ -141,7 +141,7 @@ export const columns: ColumnDef<Payment>[] = [
               <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-payload-elevation-100">
+          <DropdownMenuContent align="end" className="bg-payload-elevation-50">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
               Copy payment ID
@@ -183,7 +183,7 @@ export const OverviewLastOrders = () => {
     },
   });
   return (
-    <Card className="twp rounded-xl border border-payload-elevation-100 bg-transparent lg:col-span-3">
+    <Card className="border-payload-elevation-150 twp rounded-xl border bg-transparent lg:col-span-3">
       <CardHeader>
         <CardTitle>Recent Orders</CardTitle>
         <CardDescription className="text-base text-payload-elevation-900 opacity-75">
@@ -200,19 +200,19 @@ export const OverviewLastOrders = () => {
                 onChange={(event) => {
                   table.getColumn("email")?.setFilterValue(event.target.value);
                 }}
-                className="h-10 max-w-sm"
+                className="h-10 max-w-sm placeholder:text-payload-elevation-900 placeholder:opacity-75"
               />
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="ml-auto border-payload-elevation-100 bg-payload-elevation-100 text-base hover:bg-payload-backgroundColor"
+                  className="bg-payload-elevation-50 border-payload-elevation-150 ml-auto text-base hover:bg-payload-backgroundColor"
                 >
                   Columns <ChevronDown className="ml-2" width={20} height={20} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-payload-elevation-100">
+              <DropdownMenuContent align="end" className="bg-payload-elevation-50">
                 {table
                   .getAllColumns()
                   .filter((column) => column.getCanHide())
@@ -231,12 +231,12 @@ export const OverviewLastOrders = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="rounded-lg border border-payload-elevation-100">
+          <div className="border-payload-elevation-150 rounded-lg border">
             <Table className="text-base">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow
-                    className="border-payload-elevation-100 hover:bg-transparent"
+                    className="border-payload-elevation-150 hover:bg-transparent"
                     key={headerGroup.id}
                   >
                     {headerGroup.headers.map((header) => {
@@ -255,7 +255,7 @@ export const OverviewLastOrders = () => {
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
-                      className="border-payload-elevation-100 hover:bg-payload-elevation-100"
+                      className="hover:bg-payload-elevation-50 border-payload-elevation-150"
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
                     >
@@ -267,7 +267,7 @@ export const OverviewLastOrders = () => {
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow className="border-payload-elevation-100 hover:bg-payload-elevation-100">
+                  <TableRow className="hover:bg-payload-elevation-50 border-payload-elevation-150">
                     <TableCell colSpan={columns.length} className="h-24 text-center">
                       No results.
                     </TableCell>
@@ -284,7 +284,7 @@ export const OverviewLastOrders = () => {
             <div className="space-x-2">
               <Button
                 variant="outline"
-                className="border border-payload-elevation-100 bg-payload-elevation-100 text-base hover:bg-payload-elevation-0"
+                className="bg-payload-elevation-50 border-payload-elevation-150 border text-base hover:bg-payload-elevation-0"
                 size="sm"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
@@ -293,7 +293,7 @@ export const OverviewLastOrders = () => {
               </Button>
               <Button
                 variant="outline"
-                className="border border-payload-elevation-100 bg-payload-elevation-100 text-base hover:bg-payload-elevation-0"
+                className="bg-payload-elevation-50 border-payload-elevation-150 border text-base hover:bg-payload-elevation-0"
                 size="sm"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}

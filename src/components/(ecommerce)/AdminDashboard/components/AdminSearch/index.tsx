@@ -29,12 +29,12 @@ export const AdminSearch = ({ groups }: { groups: NavGroupType[] }) => {
   const { i18n, t } = useTranslation<CustomTranslationsObject, CustomTranslationsKeys>();
 
   return (
-    <Command className="group twp relative order-3 w-full overflow-visible rounded-lg border border-b-0 border-payload-elevation-200 bg-payload-backgroundColor text-payload-foreground shadow-md md:order-none md:w-fit md:min-w-[450px]">
+    <Command className="border-payload-elevation-150 bg-payload-elevation-50 group twp relative order-3 w-full overflow-visible rounded-lg border border-b-0 text-payload-foreground shadow-md md:order-none md:w-fit md:min-w-[450px]">
       <CommandInput
-        className="border-payload-elevation-200 text-base"
+        className="border-payload-elevation-150 bg-payload-elevation-50 text-base opacity-75 placeholder:text-payload-elevation-900"
         placeholder={t("adminDashboard:search")}
       />
-      <CommandList className="w-full-border twp absolute -left-[1px] top-full z-50 hidden h-fit max-h-[350px] -translate-y-[1px] border-b border-l border-r border-payload-elevation-200 border-l-payload-elevation-200 border-r-payload-elevation-200 bg-payload-backgroundColor group-focus-within:block">
+      <CommandList className="w-full-border border-payload-elevation-150 border-l-payload-elevation-150 border-r-payload-elevation-150 bg-payload-elevation-50 twp absolute -left-[1px] top-full z-50 hidden h-fit max-h-[350px] -translate-y-[1px] border-b border-l border-r group-focus-within:block">
         <CommandEmpty>{t("adminDashboard:searchNoResults")}</CommandEmpty>
         {groups.map((group, index) => (
           <Fragment key={`${group.label}-${index}`}>
@@ -61,14 +61,14 @@ export const AdminSearch = ({ groups }: { groups: NavGroupType[] }) => {
                     asChild
                     key={`${slug}-${index}-${id}`}
                     id={id}
-                    className="cursor-pointer text-base data-[selected='true']:bg-payload-elevation-200 data-[selected=true]:text-payload-foreground"
+                    className="data-[selected='true']:bg-payload-elevation-150 cursor-pointer text-base data-[selected=true]:text-payload-foreground"
                   >
                     <Link href={href}>{getTranslation(label, i18n)}</Link>
                   </CommandItem>
                 );
               })}
             </CommandGroup>
-            {index === groups.length - 1 ? null : <CommandSeparator className="bg-payload-elevation-200" />}
+            {index === groups.length - 1 ? null : <CommandSeparator className="bg-payload-elevation-50" />}
           </Fragment>
         ))}
       </CommandList>

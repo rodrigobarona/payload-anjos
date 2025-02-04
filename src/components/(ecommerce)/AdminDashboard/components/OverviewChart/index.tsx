@@ -57,7 +57,7 @@ const data = [
 
 export const OverviewChart = () => {
   return (
-    <Card className="twp rounded-xl border border-payload-elevation-100 bg-transparent lg:col-span-4">
+    <Card className="twp rounded-xl border border-payload-elevation-150 bg-transparent lg:col-span-4">
       <CardHeader>
         <CardTitle>Overview</CardTitle>
       </CardHeader>

@@ -78,8 +78,8 @@ export function AdminDatePicker({ className }: React.HTMLAttributes<HTMLDivEleme
             id="date"
             variant={"outline"}
             className={cn(
-              "h-full w-[300px] justify-start gap-2 border border-payload-elevation-100 bg-payload-elevation-100 text-left font-normal hover:bg-payload-backgroundColor",
-              !date && "text-muted-foreground",
+              "border-payload-elevation-150 bg-payload-elevation-50 h-full w-[300px] justify-start gap-2 border text-left font-normal hover:bg-payload-backgroundColor",
+              !date && "text-payload-elevation-900",
             )}
           >
             <CalendarIcon className="-mt-[2px]" width={20} height={20} />
@@ -97,7 +97,7 @@ export function AdminDatePicker({ className }: React.HTMLAttributes<HTMLDivEleme
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto rounded-lg bg-payload-elevation-100 p-0"
+          className="bg-payload-elevation-50 border-payload-elevation-150 w-auto rounded-lg p-0"
           align={isMobile ? "start" : "end"}
         >
           <Calendar
@@ -112,7 +112,7 @@ export function AdminDatePicker({ className }: React.HTMLAttributes<HTMLDivEleme
               day_range_start: "bg-payload-elevation-800 text-payload-elevation-0",
               day_range_end: "bg-payload-elevation-800 text-payload-elevation-0",
               day_range_middle: "bg-payload-elevation-200 text-payload-elevation-900",
-              day_today: "bg-payload-elevation-200 text-payload-elevation-900",
+              day_today: "bg-payload-elevation-200 text-payload-elevation-0",
               day_outside: "bg-transparent text-muted-foreground",
               cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-payload-elevation-200/50 [&:has([aria-selected])]:bg-payload-elevation-200 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
             }}

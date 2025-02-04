@@ -7,7 +7,7 @@ export const Overview = () => {
   return (
     <section className="flex flex-col gap-6">
       <div className="twp grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="rounded-xl border-payload-elevation-100 bg-transparent">
+        <Card className="border-payload-elevation-150 rounded-xl bg-transparent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
             <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
             <svg
@@ -28,7 +28,7 @@ export const Overview = () => {
             <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
           </CardContent>
         </Card>
-        <Card className="rounded-xl border-payload-elevation-100 bg-transparent">
+        <Card className="border-payload-elevation-150 rounded-xl bg-transparent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
             <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
             <svg
@@ -49,7 +49,7 @@ export const Overview = () => {
             <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
           </CardContent>
         </Card>
-        <Card className="rounded-xl border-payload-elevation-100 bg-transparent">
+        <Card className="border-payload-elevation-150 rounded-xl bg-transparent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
             <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
             <svg
@@ -70,7 +70,7 @@ export const Overview = () => {
             <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
           </CardContent>
         </Card>
-        <Card className="rounded-xl border-payload-elevation-100 bg-transparent">
+        <Card className="border-payload-elevation-150 rounded-xl bg-transparent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
             <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
             <svg

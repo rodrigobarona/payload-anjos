@@ -17,7 +17,7 @@ export const AdminTabs = () => {
 
   return (
     <Tabs defaultValue="overview" onValueChange={handleValueChange}>
-      <TabsList className="h-fit rounded-lg bg-payload-elevation-100 p-1.5 text-base">
+      <TabsList className="bg-payload-elevation-50 h-fit rounded-lg p-1.5 text-base">
         <TabsTrigger
           className="rounded-lg px-3.5 text-base text-payload-elevation-900 data-[state=active]:bg-payload-backgroundColor"
           value="overview"

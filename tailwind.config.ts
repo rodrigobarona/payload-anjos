@@ -93,7 +93,9 @@ const config: Config = {
           backgroundColor: "var(--theme-bg)",
           elevation: {
             0: "var(--theme-elevation-0)",
+            50: "var(--theme-elevation-50)",
             100: "var(--theme-elevation-100)",
+            150: "var(--theme-elevation-150)",
             200: "var(--theme-elevation-200)",
             300: "var(--theme-elevation-300)",
             400: "var(--theme-elevation-400)",
