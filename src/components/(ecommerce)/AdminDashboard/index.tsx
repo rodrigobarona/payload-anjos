@@ -6,7 +6,10 @@ import { getAccessResults, type PayloadRequest } from "payload";
 
 import { type CustomTranslationsKeys } from "@/admin/translations/custom-translations";
 
+import { AdminDatePicker } from "./components/AdminDatePicker";
 import { AdminSearch } from "./components/AdminSearch";
+import { AdminTabs } from "./components/AdminTabs";
+import { AdminViews } from "./components/views";
 
 export const AdminDashboard = async (req: PayloadRequest) => {
   const payload = req.payload;
@@ -57,6 +60,11 @@ export const AdminDashboard = async (req: PayloadRequest) => {
           {t("adminDashboard:addProduct")}
         </Button>
       </section>
+      <section className="twp my-6 flex flex-col justify-center gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <AdminTabs />
+        <AdminDatePicker />
+      </section>
+      <AdminViews />
     </main>
   );
 };

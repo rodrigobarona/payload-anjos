@@ -90,8 +90,10 @@ const config: Config = {
           foreground: "hsl(var(--accent-foreground))",
         },
         payload: {
-          backgroundColor: "var(--theme-background)",
+          backgroundColor: "var(--theme-bg)",
           elevation: {
+            0: "var(--theme-elevation-0)",
+            100: "var(--theme-elevation-100)",
             200: "var(--theme-elevation-200)",
             300: "var(--theme-elevation-300)",
             400: "var(--theme-elevation-400)",
