@@ -3,8 +3,7 @@ import { type ReactNode } from "react";
 
 import { ClientPanel } from "@/globals/(ecommerce)/Layout/ClientPanel/Component";
 import { type Locale } from "@/i18n/config";
-import { redirect } from "@/i18n/routing";
-import { getCustomer } from "@/utilities/getCustomer";
+import { getMeUser } from "@/utilities/getMeUser";
 
 export const dynamic = "force-dynamic";
 
@@ -17,11 +16,7 @@ const AccountPage = async ({
 }) => {
   const { locale } = await params;
   setRequestLocale(locale);
-  const user = await getCustomer();
-
-  if (!user) {
-    return redirect({ locale, href: "/login" });
-  }
+  await getMeUser({ nullUserRedirect: "/login", locale });
 
   return <ClientPanel>{children}</ClientPanel>;
 };
