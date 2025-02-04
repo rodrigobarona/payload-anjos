@@ -50,9 +50,10 @@ export default buildConfig({
       },
       views: {
         dashboard: {
-          Component: "@/components/AdminDashboard#AdminDashboard",
+          Component: "@/components/(ecommerce)/AdminDashboard#AdminDashboard",
         },
       },
+      beforeNavLinks: ["@/components/(ecommerce)/AdminDashboardNavLink#AdminDashboardNavLink"],
     },
     meta: {
       icons: [

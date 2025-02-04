@@ -14,6 +14,9 @@ export const customTranslationsObject = {
       resetPasswordSuccess: "Password reset link sent to email",
       resetPasswordError: "Error resetting password",
     },
+    adminDashboard: {
+      linkTitle: "Dashboard",
+    },
   },
   pl: {
     custom: {
@@ -27,6 +30,9 @@ export const customTranslationsObject = {
       resetPassword: "Resetuj hasło (wpisz e-mail w formularzu)",
       resetPasswordSuccess: "Link do resetowania hasła został wysłany na podany adres e-mail",
       resetPasswordError: "Błąd resetowania hasła",
+    },
+    adminDashboard: {
+      linkTitle: "Panel",
     },
   },
 };

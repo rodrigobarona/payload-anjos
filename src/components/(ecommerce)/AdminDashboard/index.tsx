@@ -35,11 +35,9 @@ export const AdminDashboard = async (req: PayloadRequest) => {
     i18n,
   );
 
-  console.log(groups);
-
   return (
     <main className="gutter--left gutter--right dashboard__wrap">
-      <h1>Welcome to admin panel</h1>
+      <h1>Welcome to Pimento admin panel</h1>
       <AdminSearch groups={groups} />
     </main>
   );
