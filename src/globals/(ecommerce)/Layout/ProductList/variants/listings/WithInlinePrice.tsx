@@ -35,7 +35,7 @@ export const WithInlinePrice = ({ products }: { products: Product[] }) => {
             <div key={product.id} className="group relative">
               <Media
                 resource={product.images[0]}
-                className="aspect-square w-full rounded-md object-cover group-hover:opacity-75 lg:max-h-80"
+                className="aspect-square w-full overflow-clip rounded-md object-cover group-hover:opacity-75 lg:max-h-80"
               />
               <div className="mt-4 flex justify-between">
                 <div className="w-3/5">
