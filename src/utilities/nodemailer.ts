@@ -16,20 +16,16 @@ type EmailResponse = {
 const createEmailTransporter = async () => {
   const { smtp } = await getCachedGlobal("emailMessages", "en", 1)();
 
-  if (!smtp) {
-    throw new Error("SMTP configuration is missing");
-  }
-
-  const { host, fromEmail, password, port, secure, user } = smtp;
+  const { host, fromEmail, password, port, secure, user } = smtp ?? {};
 
   return {
     transporter: nodemailer.createTransport({
-      host,
-      port: Number(port),
-      secure,
-      auth: { user, pass: password },
+      host: host ?? process.env.SMTP_HOST,
+      port: Number(port ?? 587),
+      secure: secure ?? false,
+      auth: { user: user ?? process.env.SMTP_USER, pass: password ?? process.env.SMTP_PASS },
     }),
-    fromEmail,
+    fromEmail: fromEmail ?? process.env.SMTP_USER,
   };
 };
 
