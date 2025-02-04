@@ -17,12 +17,11 @@ export const getCustomer = async () => {
         const payload = await getPayload({ config });
 
         const { user } = await payload.auth({
-          headers: new Headers({
-            Cookie: cookieString,
-            "Accept-Language": headers.get("Accept-Language") ?? "",
-            "User-Agent": headers.get("User-Agent") ?? "",
-          }),
+          headers,
         });
+
+        console.log("User on login:", user);
+        console.log("Cookies on login:", cookieStore.toString());
 
         if (!user || user.collection !== "customers") {
           return null;
@@ -36,7 +35,7 @@ export const getCustomer = async () => {
     },
     ["user-auth", cookieString],
     {
-      revalidate: 1,
+      revalidate: 0,
       tags: ["user-auth"],
     },
   )();

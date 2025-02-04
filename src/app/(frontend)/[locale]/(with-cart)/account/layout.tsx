@@ -15,9 +15,9 @@ const AccountPage = async ({
   params: Promise<{ locale: Locale }>;
   children: ReactNode;
 }) => {
-  const user = await getCustomer();
   const { locale } = await params;
   setRequestLocale(locale);
+  const user = await getCustomer();
 
   if (!user) {
     return redirect({ locale, href: "/login" });
