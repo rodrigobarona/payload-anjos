@@ -174,6 +174,7 @@ export async function POST(req: Request) {
     });
 
     filledProducts.forEach((product) => {
+      const newBoughtCount = product.bought ?? 0 + (product?.quantity ?? 0);
       if (product.enableVariants && product.variant && product.variants) {
         const variant = product.variant;
         if (variant.stock) {
@@ -191,6 +192,7 @@ export async function POST(req: Request) {
                 }
                 return v;
               }),
+              bought: newBoughtCount,
             },
           });
         }
@@ -202,6 +204,7 @@ export async function POST(req: Request) {
             id: product.id,
             data: {
               stock: newStock,
+              bought: newBoughtCount,
             },
           });
         }
