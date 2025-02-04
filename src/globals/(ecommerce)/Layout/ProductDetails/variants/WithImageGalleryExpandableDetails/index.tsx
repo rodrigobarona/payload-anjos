@@ -1,10 +1,10 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Tab, TabPanel } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { Media } from "@/components/Media";
 import RichText from "@/components/RichText";
 import { type Product, type ShopLayout } from "@/payload-types";
 import { type Currency } from "@/stores/Currency/types";
@@ -61,11 +61,9 @@ export const WithImageGalleryExpandableDetails = ({
               (image) =>
                 typeof image !== "string" && (
                   <TabPanel key={image.id}>
-                    <Image
-                      alt={image.alt}
-                      src={image.url ?? ""}
-                      width={image.width ?? 512}
-                      height={image.height ?? 512}
+                    <Media
+                      placeholder="empty"
+                      resource={image}
                       className="aspect-square w-full object-cover sm:rounded-lg"
                     />
                   </TabPanel>
@@ -77,17 +75,11 @@ export const WithImageGalleryExpandableDetails = ({
                 typeof image !== "string" && (
                   <Tab
                     key={image.id}
-                    className="focus:ring-3 focus:outline-hidden focus:ring-main-500/50 group relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:ring-offset-4"
+                    className="focus:ring-3 focus:outline-hidden focus:ring-main-500/50 group relative flex aspect-square cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:ring-offset-4"
                   >
                     <span className="sr-only">{image.alt}</span>
                     <span className="absolute inset-0 overflow-hidden rounded-md">
-                      <Image
-                        alt={image.alt}
-                        src={image.url ?? ""}
-                        width={image.width ?? 512}
-                        height={image.height ?? 512}
-                        className="size-full object-cover"
-                      />
+                      <Media resource={image} className="size-full object-cover" />
                     </span>
                     <span
                       aria-hidden="true"

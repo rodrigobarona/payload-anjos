@@ -1,8 +1,8 @@
 "use client";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import Image from "next/image";
 import { type ReactNode, useEffect, useState } from "react";
 
+import { Media } from "@/components/Media";
 import { type Product } from "@/payload-types";
 
 import { type FilledVariant } from "../../../types";
@@ -42,20 +42,14 @@ export const ProductGallery = ({
         <TabList className="grid grid-cols-4 gap-6">
           {/* This has to be on client and recieve state */}
           {product.enableVariants && selectedVariant?.image && (
-            <Tab className="focus:ring-3 focus:outline-hidden focus:ring-main-500/50 group relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:ring-offset-4">
+            <Tab className="focus:ring-3 focus:outline-hidden focus:ring-main-500/50 group relative flex aspect-square cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:ring-offset-4">
               <span className="sr-only">{selectedVariant.image.alt}</span>
               <span className="absolute inset-0 overflow-hidden rounded-md">
-                <Image
-                  alt={selectedVariant.image.alt}
-                  src={selectedVariant.image.url ?? ""}
-                  width={selectedVariant.image.width ?? 512}
-                  height={selectedVariant.image.height ?? 512}
-                  className="size-full object-cover"
-                />
+                <Media resource={selectedVariant.image} className="size-full object-cover" />
               </span>
               <span
                 aria-hidden="true"
-                className="group-data-[selected]:ring-main-500 pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2"
+                className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 group-data-[selected]:ring-main-500"
               />
             </Tab>
           )}
@@ -66,11 +60,9 @@ export const ProductGallery = ({
       <TabPanels>
         {product.enableVariants && selectedVariant?.image && (
           <TabPanel>
-            <Image
-              alt={selectedVariant.image.alt}
-              src={selectedVariant.image.url ?? ""}
-              width={selectedVariant.image.width ?? 512}
-              height={selectedVariant.image.height ?? 512}
+            <Media
+              resource={selectedVariant.image}
+              placeholder="empty"
               className="aspect-square w-full object-cover sm:rounded-lg"
             />
           </TabPanel>

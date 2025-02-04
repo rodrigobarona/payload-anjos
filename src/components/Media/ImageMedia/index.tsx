@@ -23,6 +23,7 @@ export const ImageMedia = (props: MediaProps) => {
     size: sizeFromProps,
     src: srcFromProps,
     loading: loadingFromProps,
+    placeholder: placeholderFromProps,
   } = props;
 
   let width: number | undefined;
@@ -56,7 +57,7 @@ export const ImageMedia = (props: MediaProps) => {
         className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height : undefined}
-        placeholder="blur"
+        placeholder={placeholderFromProps ?? "blur"}
         blurDataURL={placeholderBlur}
         priority={priority}
         quality={100}
