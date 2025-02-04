@@ -76,7 +76,7 @@ export const OrderSummary = ({
   const t = useTranslations("OrderSummary");
 
   return (
-    <div className="mt-10 lg:mt-0">
+    <div className="mt-10 lg:sticky lg:top-28 lg:mt-0 lg:h-fit">
       <h2 className="text-lg font-medium text-gray-900">{t("order-summary")}</h2>
 
       <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
