@@ -20,5 +20,5 @@ export const AdminViews = () => {
       ActiveTabComponent = <Overview />;
     }
   }
-  return <section>{ActiveTabComponent}</section>;
+  return ActiveTabComponent;
 };
