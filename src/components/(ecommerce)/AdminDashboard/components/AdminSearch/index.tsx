@@ -34,7 +34,7 @@ export const AdminSearch = ({ groups }: { groups: NavGroupType[] }) => {
         className="border-payload-elevation-200 text-base"
         placeholder={t("adminDashboard:search")}
       />
-      <CommandList className="w-full-border twp absolute -left-[1px] top-full hidden h-fit max-h-[350px] -translate-y-[1px] border-b border-l border-r border-payload-elevation-200 border-l-payload-elevation-200 border-r-payload-elevation-200 group-focus-within:block">
+      <CommandList className="w-full-border twp absolute -left-[1px] top-full hidden h-fit max-h-[350px] -translate-y-[1px] border-b border-l border-r border-payload-elevation-200 border-l-payload-elevation-200 border-r-payload-elevation-200 bg-payload-backgroundColor group-focus-within:block">
         <CommandEmpty>{t("adminDashboard:searchNoResults")}</CommandEmpty>
         {groups.map((group, index) => (
           <Fragment key={`${group.label}-${index}`}>

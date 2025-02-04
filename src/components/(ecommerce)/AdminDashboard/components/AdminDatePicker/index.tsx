@@ -3,7 +3,7 @@
 import { CalendarIcon } from "@heroicons/react/20/solid";
 import { subDays, format } from "date-fns";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type DateRange } from "react-day-picker";
 
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,20 @@ export function AdminDatePicker({ className }: React.HTMLAttributes<HTMLDivEleme
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    checkIsMobile();
+
+    window.addEventListener("resize", checkIsMobile);
+
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   const [date, setDate] = useState<DateRange | undefined>(() => {
     const fromParam = searchParams.get("from");
@@ -82,7 +96,10 @@ export function AdminDatePicker({ className }: React.HTMLAttributes<HTMLDivEleme
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto rounded-lg bg-payload-elevation-100 p-0" align="start">
+        <PopoverContent
+          className="w-auto rounded-lg bg-payload-elevation-100 p-0"
+          align={isMobile ? "start" : "end"}
+        >
           <Calendar
             initialFocus
             mode="range"
