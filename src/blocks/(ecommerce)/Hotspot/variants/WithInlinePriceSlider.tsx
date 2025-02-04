@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { type OptionsType } from "node_modules/.pnpm/embla-carousel@8.5.2/node_modules/embla-carousel/esm/components/Options";
 import { type ReactNode } from "react";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { Media } from "@/components/Media";
 import {
   Carousel,
   CarouselContent,
@@ -61,11 +61,8 @@ export const WithInlinePriceSlider = ({
 
             return (
               <CarouselItem key={product.id} className="group relative basis-1/2 md:basis-1/3 xl:basis-1/4">
-                <Image
-                  alt={product.images[0].alt}
-                  src={product.images[0].url ?? ""}
-                  width={product.images[0].width ?? 512}
-                  height={product.images[0].height ?? 512}
+                <Media
+                  resource={product.images[0]}
                   className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
                 />
                 <div className="mt-4 flex justify-between">

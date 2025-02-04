@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
 import { QuantityInput } from "@/components/(ecommerce)/QuantityInput";
+import { Media } from "@/components/Media";
 import { type ProductWithFilledVariants } from "@/globals/(ecommerce)/Layout/Cart/variants/SlideOver";
 import { Link } from "@/i18n/routing";
 import { useCart } from "@/stores/CartStore";
@@ -87,19 +88,13 @@ export const OrderSummary = ({
               <li key={`${product.id}-${product.variant?.slug}`} className="flex px-4 py-6 sm:px-6">
                 <div className="shrink-0">
                   {product.variant?.image?.url ? (
-                    <Image
-                      alt={product.variant.image.alt}
-                      src={product.variant.image.url}
-                      width={96}
-                      height={96}
+                    <Media
+                      resource={product.variant.image}
                       className="w-20 rounded-md"
                     />
                   ) : product.image?.url ? (
-                    <Image
-                      alt={product.image.alt}
-                      src={product.image.url}
-                      width={96}
-                      height={96}
+                    <Media
+                      resource={product.image}
                       className="w-20 rounded-md"
                     />
                   ) : null}

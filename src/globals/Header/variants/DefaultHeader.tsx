@@ -1,10 +1,10 @@
 "use client";
 import { HeartIcon, ShoppingBagIcon, UserIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { CMSLink } from "@/components/Link";
 import { Logo } from "@/components/Logo/Logo";
+import { Media } from "@/components/Media";
 import { Link } from "@/i18n/routing";
 import { type Header } from "@/payload-types";
 import { useCartState } from "@/stores/CartStateStore";
@@ -72,11 +72,8 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
       >
         <Link href="/" className="mr-auto">
           {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (
-            <Image
-              src={data.logo.url}
-              alt={data.logo.alt}
-              width={data.logo.width ?? 256}
-              height={data.logo.height ?? 256}
+            <Media
+              resource={data.logo}
               className={cn(isMenuOpened && "invert lg:invert-0", "-my-7 h-[88px] w-full max-w-[9.375rem]")}
             />
           ) : (

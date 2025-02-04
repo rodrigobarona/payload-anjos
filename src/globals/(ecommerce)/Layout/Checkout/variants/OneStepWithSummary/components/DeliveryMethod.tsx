@@ -1,11 +1,11 @@
 "use client";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { InPostGeowidget } from "@/components/(ecommerce)/InPostGeowidget";
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
+import { Media } from "@/components/Media";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { type CheckoutFormData } from "@/schemas/checkoutForm.schema";
@@ -84,15 +84,7 @@ export const DeliveryMethod = ({
   return (
     <div className="flex flex-1 flex-col">
       <span className="flex flex-1 items-center gap-3">
-        {icon?.url && (
-          <Image
-            src={icon.url}
-            alt={icon.alt}
-            width={icon.width ?? 359}
-            height={icon.height ?? 277}
-            className="block aspect-[31/24] max-h-12 w-fit max-w-[62px]"
-          />
-        )}
+        {icon?.url && <Media resource={icon} className="block aspect-[31/24] max-h-12 w-fit max-w-[62px]" />}
         <div className="flex-1">
           <span className="block text-sm font-medium text-gray-900">{title}</span>
           <span className="block items-center text-sm text-gray-500">{turnaround}</span>

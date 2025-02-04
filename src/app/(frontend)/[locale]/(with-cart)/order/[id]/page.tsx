@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { getPayload } from "payload";
 
+import { Media as MediaComponent } from "@/components/Media";
 import RichText from "@/components/RichText";
 import { type Locale } from "@/i18n/config";
 import { Link } from "@/i18n/routing";
@@ -69,11 +69,8 @@ const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: st
                 key={`${product.id}-${product.variantSlug}`}
                 className="flex space-x-6 border-b border-gray-200 py-6"
               >
-                <Image
-                  alt={productImage?.alt ?? ""}
-                  src={productImage?.url ?? ""}
-                  width={productImage?.width ?? 160}
-                  height={productImage?.height ?? 160}
+                <MediaComponent
+                  resource={productImage}
                   className="size-20 flex-none rounded-lg bg-gray-100 object-cover sm:size-28"
                 />
                 <div className="flex flex-auto flex-col">

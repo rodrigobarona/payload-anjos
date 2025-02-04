@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getPayload } from "payload";
 
+import { Media } from "@/components/Media";
 import { Card } from "@/components/ui/card";
 import { type Locale } from "@/i18n/config";
 import { Link } from "@/i18n/routing";
@@ -68,13 +68,10 @@ export const WithSidebarOrders = async () => {
 
                 return (
                   image && (
-                    <Image
+                    <Media
                       key={`${product.id}-${product.variantSlug}`}
-                      src={image.url ?? ""}
                       alt={product.productName ?? ""}
-                      width={image.width ?? 50}
-                      height={image.height ?? 50}
-                      title={`${product.productName} ${product.color} ${product.size} x ${product.quantity}`}
+                      resource={image}
                       className="aspect-square w-20 rounded-[6px] border object-cover shadow-sm"
                     />
                   )
