@@ -61,7 +61,6 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
 
   const classes = cn(
     `sticky flex w-full top-0 justify-center md:px-12 transition-transform z-50`,
-
     `${data.hideOnScroll && scrollDown ? "-translate-y-full md:-translate-y-full" : ""}`,
   );
 

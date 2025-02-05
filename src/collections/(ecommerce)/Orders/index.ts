@@ -7,6 +7,8 @@ import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couri
 import { generateID } from "./hooks/generateID";
 import { restoreStocks } from "./hooks/restoreStocks";
 import { sendStatusEmail } from "./hooks/sendStatusEmail";
+import { getRevenue } from "@/endpoints/adminDashboard/getRevenue";
+import { getOrderCount } from "@/endpoints/adminDashboard/getOrderCount";
 
 export const Orders: CollectionConfig = {
   slug: "orders",
@@ -30,6 +32,18 @@ export const Orders: CollectionConfig = {
   hooks: {
     beforeValidate: [generateID],
   },
+  endpoints: [
+    {
+      path: "/revenue",
+      method: "post",
+      handler: getRevenue,
+    },
+    {
+      path: "/count",
+      method: "post",
+      handler: getOrderCount,
+    },
+  ],
   fields: [
     {
       name: "id",
