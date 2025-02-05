@@ -5,7 +5,15 @@ import { subDays, format } from "date-fns";
 import { ClipboardPaste, DollarSign } from "lucide-react";
 import { animate } from "motion/react";
 import { useSearchParams } from "next/navigation";
-import { type SetStateAction, type Dispatch, useEffect, useState, useCallback, useRef } from "react";
+import {
+  type SetStateAction,
+  type Dispatch,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  type RefObject,
+} from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type OrderCountResponse } from "@/endpoints/adminDashboard/getOrderCount";
@@ -18,11 +26,23 @@ import { OverviewChart } from "../../OverviewChart";
 import { OverviewLastOrders } from "../../OverviewLastOrders";
 
 export const Overview = () => {
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [totalOrders, setTotalOrders] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState<{ value: number; percentage: number }>({
+    value: 0,
+    percentage: 0,
+  });
+  const [totalOrders, setTotalOrders] = useState<{ value: number; percentage: number }>({
+    value: 0,
+    percentage: 0,
+  });
 
-  const [rangedOrders, setRangedOrders] = useState(0);
-  const [rangedRevenue, setRangedRevenue] = useState(0);
+  const [rangedRevenue, setRangedRevenue] = useState<{ value: number; percentage: number }>({
+    value: 0,
+    percentage: 0,
+  });
+  const [rangedOrders, setRangedOrders] = useState<{ value: number; percentage: number }>({
+    value: 0,
+    percentage: 0,
+  });
 
   const [currency, setCurrency] = useState<Currency | null>(null);
 
@@ -42,55 +62,74 @@ export const Overview = () => {
     void fetchCurrency();
   }, []);
 
-  const totalRevenueRef = useRef(totalRevenue);
-  const rangedRevenueRef = useRef(rangedRevenue);
-  const totalOrdersRef = useRef(totalOrders);
-  const rangedOrdersRef = useRef(rangedOrders);
+  const totalRevenueRef = useRef(totalRevenue.value);
+  const rangedRevenueRef = useRef(rangedRevenue.value);
+
+  const totalOrdersRef = useRef(totalOrders.value);
+  const rangedOrdersRef = useRef(rangedOrders.value);
 
   const fetchRevenue = useCallback(
     async (
-      currentRef: React.MutableRefObject<number>,
-      setRevenue: Dispatch<SetStateAction<number>>,
+      currentRef: RefObject<number>,
+      setRevenue: Dispatch<SetStateAction<{ value: number; percentage: number }>>,
       requestData?: { dateFrom?: string; dateTo?: string },
     ) => {
       const { data } = await axios.post<RevenueResponse>("/api/orders/revenue", requestData ?? {}, {
         withCredentials: true,
       });
 
-      const animation = animate(currentRef.current, data.totalRevenue, {
+      const valueAnimation = animate(currentRef.current, data.totalRevenue, {
         duration: 1,
         onUpdate: (value) => {
           currentRef.current = Math.round(value);
-          setRevenue(currentRef.current);
+          setRevenue((prev) => ({ ...prev, value: currentRef.current }));
         },
-        onComplete: () => setRevenue(data.totalRevenue),
       });
 
-      return () => animation.stop();
+      const percentageAnimation = animate(0, data.percentage, {
+        duration: 1,
+        onUpdate: (value) => {
+          setRevenue((prev) => ({ ...prev, percentage: Number(value.toFixed(1)) }));
+        },
+      });
+
+      return () => {
+        valueAnimation.stop();
+        percentageAnimation.stop();
+      };
     },
     [],
   );
 
   const fetchOrderCount = useCallback(
     async (
-      currentRef: React.MutableRefObject<number>,
-      setOrders: Dispatch<SetStateAction<number>>,
+      currentRef: RefObject<number>,
+      setOrders: Dispatch<SetStateAction<{ value: number; percentage: number }>>,
       requestData?: { dateFrom?: string; dateTo?: string },
     ) => {
       const { data } = await axios.post<OrderCountResponse>("/api/orders/count", requestData ?? {}, {
         withCredentials: true,
       });
 
-      const animation = animate(currentRef.current, data.total, {
+      const valueAnimation = animate(currentRef.current, data.total, {
         duration: 1,
         onUpdate: (value) => {
           currentRef.current = Math.round(value);
-          setOrders(currentRef.current);
+          setOrders((prev) => ({ ...prev, value: currentRef.current }));
         },
-        onComplete: () => setOrders(data.total),
       });
 
-      return () => animation.stop();
+      const percentageAnimation = animate(0, data.percentage, {
+        duration: 1,
+        onUpdate: (value) => {
+          setOrders((prev) => ({ ...prev, percentage: Number(value.toFixed(1)) }));
+        },
+      });
+
+      return () => {
+        valueAnimation.stop();
+        percentageAnimation.stop();
+      };
     },
     [],
   );
@@ -121,10 +160,10 @@ export const Overview = () => {
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
             <div className="text-3xl font-bold">
-              {currency ? formatPrice(totalRevenue, currency, locale) : totalRevenue}
+              {currency ? formatPrice(totalRevenue.value, currency, locale) : totalRevenue.value}
             </div>
             <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
-              Total Profits Generated by Your Shop
+              +{totalRevenue.percentage}% from last month
             </p>
           </CardContent>
         </Card>
@@ -134,9 +173,9 @@ export const Overview = () => {
             <ClipboardPaste className="h-5 w-5 text-payload-elevation-900 opacity-75" />
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
-            <div className="text-3xl font-bold">{totalOrders}</div>
+            <div className="text-3xl font-bold">{totalOrders.value}</div>
             <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
-              Total Orders Generated by Your Shop
+              +{totalOrders.percentage}% from last month
             </p>
           </CardContent>
         </Card>
@@ -147,9 +186,11 @@ export const Overview = () => {
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
             <div className="text-3xl font-bold">
-              {currency ? formatPrice(rangedRevenue, currency, locale) : rangedRevenue}
+              {currency ? formatPrice(rangedRevenue.value, currency, locale) : rangedRevenue.value}
             </div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
+            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
+              +{rangedRevenue.percentage}% from last month
+            </p>
           </CardContent>
         </Card>
         <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
@@ -158,8 +199,10 @@ export const Overview = () => {
             <ClipboardPaste className="h-5 w-5 text-payload-elevation-900 opacity-75" />
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
-            <div className="text-3xl font-bold">{rangedOrders}</div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
+            <div className="text-3xl font-bold">{rangedOrders.value}</div>
+            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
+              +{rangedOrders.percentage}% from last month
+            </p>
           </CardContent>
         </Card>
       </div>

@@ -1,3 +1,4 @@
+import { subDays } from "date-fns";
 import { type PayloadRequest, type Where } from "payload";
 
 import { type Order } from "@/payload-types";
@@ -28,27 +29,66 @@ export const getRevenue = async (req: PayloadRequest) => {
     const dateFromISO = dateFrom && new Date(dateFrom).toISOString();
     const dateToISO = dateTo && new Date(dateTo).toISOString();
 
-    let whereQuery: Where | undefined = undefined;
+    let whereQuery: Where | undefined;
+    let previousPeriodWhereQuery: Where;
 
-    if (dateFromISO && !dateToISO) {
-      whereQuery = {
-        createdAt: {
-          greater_than_equal: dateFromISO,
-        },
-      };
-    } else if (dateToISO && !dateFromISO) {
-      whereQuery = {
-        createdAt: {
-          less_than_equal: dateToISO,
-        },
-      };
-    } else if (dateFromISO && dateToISO) {
-      whereQuery = {
-        createdAt: {
-          greater_than_equal: dateFromISO,
-          less_than_equal: dateToISO,
-        },
-      };
+    const dateCase = `${dateFromISO ? "from" : ""}${dateToISO ? "to" : ""}`;
+
+    switch (dateCase) {
+      case "from": {
+        whereQuery = {
+          createdAt: {
+            greater_than_equal: dateFromISO,
+          },
+        };
+        previousPeriodWhereQuery = {
+          createdAt: {
+            greater_than_equal: subDays(new Date(dateFrom!), 30).toISOString(),
+            less_than: dateFromISO,
+          },
+        };
+        break;
+      }
+      case "to": {
+        const thirtyDaysAgo = subDays(new Date(), 30).toISOString();
+        whereQuery = {
+          createdAt: {
+            greater_than_equal: thirtyDaysAgo,
+            less_than_equal: dateToISO,
+          },
+        };
+        previousPeriodWhereQuery = {
+          createdAt: {
+            greater_than_equal: subDays(new Date(), 60).toISOString(),
+            less_than: thirtyDaysAgo,
+          },
+        };
+        break;
+      }
+      case "fromto": {
+        whereQuery = {
+          createdAt: {
+            greater_than_equal: dateFromISO,
+            less_than_equal: dateToISO,
+          },
+        };
+        previousPeriodWhereQuery = {
+          createdAt: {
+            greater_than_equal: subDays(new Date(dateFrom!), 30).toISOString(),
+            less_than: dateFromISO,
+          },
+        };
+        break;
+      }
+      default: {
+        const thirtyDaysAgo = subDays(new Date(), 30).toISOString();
+        previousPeriodWhereQuery = {
+          createdAt: {
+            greater_than_equal: subDays(new Date(), 60).toISOString(),
+            less_than: thirtyDaysAgo,
+          },
+        };
+      }
     }
 
     const { docs } = await payload.find({
@@ -60,9 +100,13 @@ export const getRevenue = async (req: PayloadRequest) => {
           total: true,
           currency: true,
         },
+        createdAt: true,
       },
-      ...((whereQuery && { where: whereQuery }) ?? {}),
+      where: whereQuery,
     });
+
+    console.log(whereQuery);
+    console.log(docs);
 
     const { availableCurrencies, currencyValues } = await getCachedGlobal("shopSettings", "en")();
     const defaultCurrency = availableCurrencies[0];
@@ -72,32 +116,55 @@ export const getRevenue = async (req: PayloadRequest) => {
         .reduce((acc: number, doc: Order) => {
           if (doc.orderDetails.currency === defaultCurrency) {
             return acc + doc.orderDetails.total;
-          } else {
-            console.log(doc.orderDetails.total);
-            console.log(
-              acc +
-                doc.orderDetails.total /
-                  (currencyValues
-                    ? (currencyValues.find((currency) => currency?.currency === doc.orderDetails.currency)
-                        ?.value ?? 1)
-                    : 1),
-            );
-            return (
-              acc +
-              doc.orderDetails.total /
-                (currencyValues
-                  ? (currencyValues.find((currency) => currency?.currency === doc.orderDetails.currency)
-                      ?.value ?? 1)
-                  : 1)
-            );
           }
+          return (
+            acc +
+            doc.orderDetails.total /
+              (currencyValues?.find((currency) => currency?.currency === doc.orderDetails.currency)?.value ??
+                1)
+          );
         }, 0)
         .toFixed(2),
     );
+
+    const { docs: previousPeriodDocs } = await payload.find({
+      collection: "orders",
+      depth: 1,
+      pagination: false,
+      select: {
+        orderDetails: {
+          total: true,
+          currency: true,
+        },
+      },
+      where: previousPeriodWhereQuery,
+    });
+
+    const previousPeriodRevenue = Number(
+      previousPeriodDocs
+        .reduce((acc: number, doc: Order) => {
+          if (doc.orderDetails.currency === defaultCurrency) {
+            return acc + doc.orderDetails.total;
+          }
+          return (
+            acc +
+            doc.orderDetails.total /
+              (currencyValues?.find((currency) => currency?.currency === doc.orderDetails.currency)?.value ??
+                1)
+          );
+        }, 0)
+        .toFixed(2),
+    );
+
+    const percentage =
+      previousPeriodRevenue === 0
+        ? 100
+        : Number((((totalRevenue - previousPeriodRevenue) / previousPeriodRevenue) * 100).toFixed(1));
+
     return Response.json(
       {
         totalRevenue,
-        percentage: 20.1,
+        percentage,
       },
       { status: 200 },
     );

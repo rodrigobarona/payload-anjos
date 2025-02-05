@@ -1,3 +1,4 @@
+import { subDays } from "date-fns";
 import { type PayloadRequest, type Where } from "payload";
 
 export type OrderCountResponse = {
@@ -25,41 +26,94 @@ export const getOrderCount = async (req: PayloadRequest) => {
     const dateFromISO = dateFrom && new Date(dateFrom).toISOString();
     const dateToISO = dateTo && new Date(dateTo).toISOString();
 
-    let whereQuery: Where | undefined = undefined;
+    let whereQuery: Where;
+    let previousPeriodWhereQuery: Where;
 
-    if (dateFromISO && !dateToISO) {
-      whereQuery = {
-        createdAt: {
-          greater_than_equal: dateFromISO,
-        },
-      };
-    } else if (dateToISO && !dateFromISO) {
-      whereQuery = {
-        createdAt: {
-          less_than_equal: dateToISO,
-        },
-      };
-    } else if (dateFromISO && dateToISO) {
-      whereQuery = {
-        createdAt: {
-          greater_than_equal: dateFromISO,
-          less_than_equal: dateToISO,
-        },
-      };
+    const dateCase = `${dateFromISO ? "from" : ""}${dateToISO ? "to" : ""}`;
+
+    switch (dateCase) {
+      case "from": {
+        whereQuery = {
+          createdAt: {
+            greater_than_equal: dateFromISO,
+          },
+        };
+        previousPeriodWhereQuery = {
+          createdAt: {
+            greater_than_equal: subDays(new Date(dateFrom!), 30).toISOString(),
+            less_than: dateFromISO,
+          },
+        };
+        break;
+      }
+      case "to": {
+        const thirtyDaysAgo = subDays(new Date(), 30).toISOString();
+        whereQuery = {
+          createdAt: {
+            greater_than_equal: thirtyDaysAgo,
+            less_than_equal: dateToISO,
+          },
+        };
+        previousPeriodWhereQuery = {
+          createdAt: {
+            greater_than_equal: subDays(new Date(), 60).toISOString(),
+            less_than: thirtyDaysAgo,
+          },
+        };
+        break;
+      }
+      case "fromto": {
+        whereQuery = {
+          createdAt: {
+            greater_than_equal: dateFromISO,
+            less_than_equal: dateToISO,
+          },
+        };
+        previousPeriodWhereQuery = {
+          createdAt: {
+            greater_than_equal: subDays(new Date(dateFrom!), 30).toISOString(),
+            less_than: dateFromISO,
+          },
+        };
+        break;
+      }
+      default: {
+        const thirtyDaysAgo = subDays(new Date(), 30).toISOString();
+        whereQuery = {
+          createdAt: {
+            greater_than_equal: thirtyDaysAgo,
+          },
+        };
+        previousPeriodWhereQuery = {
+          createdAt: {
+            greater_than_equal: subDays(new Date(), 60).toISOString(),
+            less_than: thirtyDaysAgo,
+          },
+        };
+      }
     }
 
     const { totalDocs } = await payload.find({
       collection: "orders",
-      depth: 1,
-      pagination: false,
-      select: {},
-      ...((whereQuery && { where: whereQuery }) ?? {}),
+      depth: 0,
+      where: whereQuery,
     });
+
+    const { totalDocs: previousPeriodTotal } = await payload.find({
+      collection: "orders",
+      depth: 0,
+      where: previousPeriodWhereQuery,
+    });
+
+    const percentage =
+      previousPeriodTotal === 0
+        ? 100
+        : Number((((totalDocs - previousPeriodTotal) / previousPeriodTotal) * 100).toFixed(1));
 
     return Response.json(
       {
         total: totalDocs,
-        percentage: 20.1,
+        percentage,
       },
       { status: 200 },
     );
