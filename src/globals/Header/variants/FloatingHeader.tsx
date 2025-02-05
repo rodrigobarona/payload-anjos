@@ -61,6 +61,7 @@ export const FloatingHeader = ({ data }: { data: Header }) => {
           {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (
             <Media
               resource={data.logo}
+              imgClassName="h-[88px] w-full max-w-[9.375rem]"
               className={`${isMenuOpened && "invert lg:invert-0"} -my-7 h-[88px] w-full max-w-[9.375rem]`}
             />
           ) : (

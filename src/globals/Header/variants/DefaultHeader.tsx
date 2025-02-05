@@ -75,6 +75,7 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
             <Media
               resource={data.logo}
               className={cn(isMenuOpened && "invert lg:invert-0", "-my-7 h-[88px] w-full max-w-[9.375rem]")}
+              imgClassName="h-[88px] w-full max-w-[9.375rem]"
             />
           ) : (
             <Logo />
