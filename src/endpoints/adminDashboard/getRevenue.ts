@@ -1,4 +1,4 @@
-import { PayloadRequest, Where } from "payload";
+import { type PayloadRequest, type Where } from "payload";
 
 export type RevenueResponse = {
   totalRevenue: number;
@@ -57,7 +57,7 @@ export const getRevenue = async (req: PayloadRequest) => {
           total: true,
         },
       },
-      ...((whereQuery && { where: whereQuery }) || {}),
+      ...((whereQuery && { where: whereQuery }) ?? {}),
     });
 
     const totalRevenue = Number(

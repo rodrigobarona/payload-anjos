@@ -1,5 +1,7 @@
 import { type CollectionConfig } from "payload";
 
+import { getOrderCount } from "@/endpoints/adminDashboard/getOrderCount";
+import { getRevenue } from "@/endpoints/adminDashboard/getRevenue";
 import { currencyField } from "@/fields/currencyField";
 import { countryList } from "@/globals/(ecommerce)/Couriers/utils/countryList";
 import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couriersConfig";
@@ -7,8 +9,6 @@ import { courierSelectOptions } from "@/globals/(ecommerce)/Couriers/utils/couri
 import { generateID } from "./hooks/generateID";
 import { restoreStocks } from "./hooks/restoreStocks";
 import { sendStatusEmail } from "./hooks/sendStatusEmail";
-import { getRevenue } from "@/endpoints/adminDashboard/getRevenue";
-import { getOrderCount } from "@/endpoints/adminDashboard/getOrderCount";
 
 export const Orders: CollectionConfig = {
   slug: "orders",

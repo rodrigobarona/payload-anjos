@@ -1,16 +1,20 @@
 "use client";
+import { useTranslation } from "@payloadcms/ui";
+import axios from "axios";
+import { subDays, format } from "date-fns";
+import { animate } from "motion/react";
+import { useSearchParams } from "next/navigation";
+import { type SetStateAction, type Dispatch, useEffect, useState, useCallback } from "react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { type OrderCountResponse } from "@/endpoints/adminDashboard/getOrderCount";
+import { type RevenueResponse } from "@/endpoints/adminDashboard/getRevenue";
+import { type ShopSetting } from "@/payload-types";
+import { type Currency } from "@/stores/Currency/types";
+import { formatPrice } from "@/utilities/formatPrices";
 
 import { OverviewChart } from "../../OverviewChart";
 import { OverviewLastOrders } from "../../OverviewLastOrders";
-import { type SetStateAction, type Dispatch, useEffect, useState, useCallback } from "react";
-import axios from "axios";
-import { RevenueResponse } from "@/endpoints/adminDashboard/getRevenue";
-import { useSearchParams } from "next/navigation";
-import { animate } from "motion/react";
-import { OrderCountResponse } from "@/endpoints/adminDashboard/getOrderCount";
-import { subDays, format } from "date-fns";
-import { Currency } from "@/stores/Currency/types";
 
 export const Overview = () => {
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -20,6 +24,9 @@ export const Overview = () => {
   const [rangedRevenue, setRangedRevenue] = useState(0);
 
   const [currency, setCurrency] = useState<Currency | null>(null);
+
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
 
   const searchParams = useSearchParams();
   const dateFrom = searchParams.get("from") ?? format(subDays(new Date(), 30), "yyyy-MM-dd");
@@ -66,20 +73,29 @@ export const Overview = () => {
   );
 
   useEffect(() => {
-    void fetchRevenue(totalRevenue, setTotalRevenue);
+    const fetchCurrency = async () => {
+      const { data } = await axios.get<ShopSetting>("/api/globals/shopSettings", { withCredentials: true });
+      setCurrency(data.availableCurrencies[0]);
+    };
+
+    void fetchCurrency();
   }, []);
+
+  useEffect(() => {
+    void fetchRevenue(totalRevenue, setTotalRevenue);
+  }, [fetchRevenue, totalRevenue]);
 
   useEffect(() => {
     void fetchRevenue(rangedRevenue, setRangedRevenue, { dateFrom, dateTo });
-  }, [dateFrom, dateTo]);
+  }, [dateFrom, dateTo, fetchRevenue, rangedRevenue]);
 
   useEffect(() => {
     void fetchOrderCount(totalOrders, setTotalOrders);
-  }, []);
+  }, [totalOrders, fetchOrderCount]);
 
   useEffect(() => {
     void fetchOrderCount(rangedOrders, setRangedOrders, { dateFrom, dateTo });
-  }, [dateFrom, dateTo]);
+  }, [dateFrom, dateTo, rangedOrders, fetchOrderCount]);
 
   return (
     <section className="flex flex-col gap-6">
@@ -101,28 +117,9 @@ export const Overview = () => {
             </svg>
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
-            <div className="text-3xl font-bold">{totalRevenue}</div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
-          </CardContent>
-        </Card>
-        <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
-            <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-5 w-5 text-payload-elevation-900 opacity-75"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
-          </CardHeader>
-          <CardContent className="text-payload-elevation-900">
-            <div className="text-3xl font-bold">{rangedRevenue}</div>
+            <div className="text-3xl font-bold">
+              {currency ? formatPrice(totalRevenue, currency, locale) : totalRevenue}
+            </div>
             <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
           </CardContent>
         </Card>
@@ -144,6 +141,29 @@ export const Overview = () => {
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
             <div className="text-3xl font-bold">{totalOrders}</div>
+            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
+          </CardContent>
+        </Card>
+        <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
+            <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="h-5 w-5 text-payload-elevation-900 opacity-75"
+            >
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </CardHeader>
+          <CardContent className="text-payload-elevation-900">
+            <div className="text-3xl font-bold">
+              {currency ? formatPrice(rangedRevenue, currency, locale) : rangedRevenue}
+            </div>
             <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
           </CardContent>
         </Card>

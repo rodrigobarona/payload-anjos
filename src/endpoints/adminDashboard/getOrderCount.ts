@@ -1,4 +1,4 @@
-import { PayloadRequest, Where } from "payload";
+import { type PayloadRequest, type Where } from "payload";
 
 export type OrderCountResponse = {
   total: number;
@@ -53,7 +53,7 @@ export const getOrderCount = async (req: PayloadRequest) => {
       depth: 1,
       pagination: false,
       select: {},
-      ...((whereQuery && { where: whereQuery }) || {}),
+      ...((whereQuery && { where: whereQuery }) ?? {}),
     });
 
     return Response.json(
