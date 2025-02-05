@@ -169,6 +169,7 @@ export const SlideOver = () => {
                                 <Button
                                   type="button"
                                   variant="tailwind"
+                                  disabled={!product.variant?.stock || product.variant?.stock === 0}
                                   onClick={() => {
                                     updateCart([
                                       {
@@ -181,7 +182,9 @@ export const SlideOver = () => {
                                   }}
                                   className="ml-auto w-fit font-medium"
                                 >
-                                  {t("add-to-cart")}
+                                  {!product.variant?.stock || product.variant?.stock === 0
+                                    ? t("unavailable")
+                                    : t("add-to-cart")}
                                 </Button>
                               </div>
                             </div>

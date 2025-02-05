@@ -7,19 +7,19 @@ import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } f
 
 const data = [
   {
-    name: "Jan",
+    name: "January",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Feb",
+    name: "February",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Mar",
+    name: "March",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Apr",
+    name: "April",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
@@ -27,31 +27,31 @@ const data = [
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Jun",
+    name: "June",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Jul",
+    name: "July",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Aug",
+    name: "August",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Sep",
+    name: "September",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Oct",
+    name: "October",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Nov",
+    name: "November",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Dec",
+    name: "December",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
 ];
@@ -76,7 +76,14 @@ export const OverviewChart = () => {
         <ResponsiveContainer width="100%" height={500}>
           <ChartContainer config={chartConfig}>
             <BarChart data={data}>
-              <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+              <XAxis
+                dataKey="name"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value: string) => value.slice(0, 3)}
+              />
               <YAxis
                 stroke="#888888"
                 fontSize={12}
@@ -88,10 +95,7 @@ export const OverviewChart = () => {
                 cursor={false}
                 labelClassName="text-payload-elevation-900"
                 content={
-                  <ChartTooltipContent
-                    className="border-payload-elevation-150 bg-payload-elevation-50 text-sm text-payload-elevation-900"
-                    hideLabel
-                  />
+                  <ChartTooltipContent className="border-payload-elevation-150 bg-payload-elevation-50 text-sm text-payload-elevation-900" />
                 }
               />
               <Bar dataKey="total" fill="currentColor" radius={[4, 4, 0, 0]} className="fill-primary" />

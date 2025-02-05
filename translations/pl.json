@@ -46,7 +46,8 @@
     "title": "Ulubione",
     "close-panel": "Zamknij panel",
     "remove": "Usuń",
-    "add-to-cart": "Dodaj do koszyka"
+    "add-to-cart": "Dodaj do koszyka",
+    "unavailable": "Produkt niedostępny"
   },
   "LoginForm": {
     "title": "Zaloguj się na swoje konto",

@@ -46,7 +46,8 @@
     "title": "Wishlist",
     "close-panel": "Close panel",
     "remove": "Remove",
-    "add-to-cart": "Add to cart"
+    "add-to-cart": "Add to cart",
+    "unavailable": "Product unavailable"
   },
   "LoginForm": {
     "title": "Sign in to your account",
