@@ -4,7 +4,7 @@ import axios from "axios";
 import { subDays, format } from "date-fns";
 import { ClipboardPaste, DollarSign } from "lucide-react";
 import { animate } from "motion/react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams} from "next/navigation";
 import {
   type SetStateAction,
   type Dispatch,

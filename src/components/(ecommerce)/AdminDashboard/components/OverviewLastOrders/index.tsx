@@ -14,12 +14,15 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import axios from "axios";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
-import { useState } from "react";
+import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
+import { stringify } from "qs-esm";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -30,74 +33,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { type Order } from "@/payload-types";
 
-const data: Payment[] = [
+export const columns: ColumnDef<Order>[] = [
   {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-];
-
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
-
-export const columns: ColumnDef<Payment>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
+    id: "date",
+    header: "Date",
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt);
+      return date.toLocaleDateString();
+    },
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    id: "status",
     header: "Status",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,
+    cell: ({ row }) => {
+      return <div className="capitalize">{row.original.orderDetails.status}</div>;
+    },
   },
   {
-    accessorKey: "email",
+    id: "email",
     header: ({ column }) => {
       return (
         <Button
@@ -110,15 +67,14 @@ export const columns: ColumnDef<Payment>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.original.shippingAddress.email}</div>,
   },
   {
-    accessorKey: "amount",
+    id: "amount",
     header: () => <div className="text-right hover:bg-payload-elevation-0">Amount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const amount = row.original.orderDetails.totalWithShipping;
 
-      // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -131,7 +87,7 @@ export const columns: ColumnDef<Payment>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
+      const order = row.original;
 
       return (
         <DropdownMenu>
@@ -143,12 +99,16 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-payload-elevation-50">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(order.id)}>
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator className="border-payload-elevation-0 bg-payload-elevation-0" />
             <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/admin/collections/orders/${order.id}`} className="no-underline">
+                View order
+              </Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -156,11 +116,65 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
+const select = {
+  id: true,
+  createdAt: true,
+  orderDetails: {
+    status: true,
+    totalWithShipping: true,
+  },
+  shippingAddress: {
+    email: true,
+  },
+};
+
 export const OverviewLastOrders = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
+
+  const createQueryString = (name: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(name, value);
+    return params.toString();
+  };
+
+  const handlePaginationChange = (page: number) => {
+    router.push(`?${createQueryString("page", page.toString())}`, { scroll: false });
+  };
+
+  const [data, setData] = useState<Order[]>([]);
+
+  useEffect(() => {
+    const stringifiedQuery = stringify(
+      {
+        select,
+        limit: 5,
+        page: currentPage,
+        sort: "-createdAt",
+      },
+      { addQueryPrefix: true },
+    );
+
+    const fetchOrders = async () => {
+      try {
+        const { data } = await axios.get<{ docs: Order[] }>(`/api/orders${stringifiedQuery}`, {
+          withCredentials: true,
+        });
+        console.log(data);
+        setData(data.docs);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    void fetchOrders();
+  }, [currentPage]);
+
+  console.log(data);
 
   const table = useReactTable({
     data,
@@ -286,8 +300,8 @@ export const OverviewLastOrders = () => {
                 variant="outline"
                 className="border border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-elevation-0"
                 size="sm"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
+                onClick={() => handlePaginationChange(currentPage - 1)}
+                disabled={currentPage <= 1}
               >
                 Previous
               </Button>
@@ -295,8 +309,8 @@ export const OverviewLastOrders = () => {
                 variant="outline"
                 className="border border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-elevation-0"
                 size="sm"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
+                onClick={() => handlePaginationChange(currentPage + 1)}
+                disabled={data.length < 5}
               >
                 Next
               </Button>

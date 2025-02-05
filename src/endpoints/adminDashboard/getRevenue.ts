@@ -105,8 +105,8 @@ export const getRevenue = async (req: PayloadRequest) => {
       where: whereQuery,
     });
 
-    console.log(whereQuery);
-    console.log(docs);
+    // console.log(whereQuery);
+    // console.log(docs);
 
     const { availableCurrencies, currencyValues } = await getCachedGlobal("shopSettings", "en")();
     const defaultCurrency = availableCurrencies[0];
