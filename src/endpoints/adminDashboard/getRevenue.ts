@@ -1,5 +1,8 @@
 import { type PayloadRequest, type Where } from "payload";
 
+import { type Order } from "@/payload-types";
+import { getCachedGlobal } from "@/utilities/getGlobals";
+
 export type RevenueResponse = {
   totalRevenue: number;
   percentage: number;
@@ -55,15 +58,39 @@ export const getRevenue = async (req: PayloadRequest) => {
       select: {
         orderDetails: {
           total: true,
+          currency: true,
         },
       },
       ...((whereQuery && { where: whereQuery }) ?? {}),
     });
 
+    const { availableCurrencies, currencyValues } = await getCachedGlobal("shopSettings", "en")();
+    const defaultCurrency = availableCurrencies[0];
+
     const totalRevenue = Number(
       docs
-        .reduce((acc: number, doc: { orderDetails: { total: number } }) => {
-          return acc + doc.orderDetails.total;
+        .reduce((acc: number, doc: Order) => {
+          if (doc.orderDetails.currency === defaultCurrency) {
+            return acc + doc.orderDetails.total;
+          } else {
+            console.log(doc.orderDetails.total);
+            console.log(
+              acc +
+                doc.orderDetails.total /
+                  (currencyValues
+                    ? (currencyValues.find((currency) => currency?.currency === doc.orderDetails.currency)
+                        ?.value ?? 1)
+                    : 1),
+            );
+            return (
+              acc +
+              doc.orderDetails.total /
+                (currencyValues
+                  ? (currencyValues.find((currency) => currency?.currency === doc.orderDetails.currency)
+                      ?.value ?? 1)
+                  : 1)
+            );
+          }
         }, 0)
         .toFixed(2),
     );

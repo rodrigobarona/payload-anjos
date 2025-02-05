@@ -1,3 +1,4 @@
+import { currencyField } from "@/fields/currencyField";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
 
 import type { GlobalConfig } from "payload";
@@ -39,6 +40,23 @@ export const ShopSettings: GlobalConfig = {
       },
       hasMany: true,
       required: true,
+    },
+    {
+      name: "currencyValues",
+      type: "array",
+      fields: [
+        {
+          type: "row",
+          fields: [
+            currencyField,
+            {
+              name: "value",
+              type: "number",
+              required: true,
+            },
+          ],
+        },
+      ],
     },
     {
       name: "enableOAuth",

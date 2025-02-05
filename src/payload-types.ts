@@ -2699,6 +2699,13 @@ export interface ShopSetting {
    * First currency is the default one
    */
   availableCurrencies: ('USD' | 'EUR' | 'GBP' | 'PLN')[];
+  currencyValues?:
+    | {
+        currency: string;
+        value: number;
+        id?: string | null;
+      }[]
+    | null;
   enableOAuth: boolean;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -3197,6 +3204,13 @@ export interface EmailMessagesSelect<T extends boolean = true> {
  */
 export interface ShopSettingsSelect<T extends boolean = true> {
   availableCurrencies?: T;
+  currencyValues?:
+    | T
+    | {
+        currency?: T;
+        value?: T;
+        id?: T;
+      };
   enableOAuth?: T;
   updatedAt?: T;
   createdAt?: T;
