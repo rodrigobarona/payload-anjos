@@ -15,13 +15,17 @@ import {
   type RefObject,
 } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  type CustomTranslationsKeys,
+  type CustomTranslationsObject,
+} from "@/admin/translations/custom-translations";
 import { type OrderCountResponse } from "@/endpoints/adminDashboard/getOrderCount";
 import { type RevenueResponse } from "@/endpoints/adminDashboard/getRevenue";
 import { type ShopSetting } from "@/payload-types";
 import { type Currency } from "@/stores/Currency/types";
 import { formatPrice } from "@/utilities/formatPrices";
 
+import { OverviewCard } from "../../OverviewCard";
 import { OverviewChart } from "../../OverviewChart";
 import { OverviewLastOrders } from "../../OverviewLastOrders";
 
@@ -46,7 +50,7 @@ export const Overview = () => {
 
   const [currency, setCurrency] = useState<Currency | null>(null);
 
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation<CustomTranslationsObject, CustomTranslationsKeys>();
   const locale = i18n.language;
 
   const searchParams = useSearchParams();
@@ -153,58 +157,30 @@ export const Overview = () => {
   return (
     <section className="flex flex-col gap-6">
       <div className="twp grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
-            <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-5 w-5 text-payload-elevation-900 opacity-75" />
-          </CardHeader>
-          <CardContent className="text-payload-elevation-900">
-            <div className="text-3xl font-bold">
-              {currency ? formatPrice(totalRevenue.value, currency, locale) : totalRevenue.value}
-            </div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
-              +{totalRevenue.percentage}% from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
-            <CardTitle className="text-base font-medium">Total Orders</CardTitle>
-            <ClipboardPaste className="h-5 w-5 text-payload-elevation-900 opacity-75" />
-          </CardHeader>
-          <CardContent className="text-payload-elevation-900">
-            <div className="text-3xl font-bold">{totalOrders.value}</div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
-              +{totalOrders.percentage}% from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
-            <CardTitle className="text-base font-medium">Ranged Revenue</CardTitle>
-            <DollarSign className="h-5 w-5 text-payload-elevation-900 opacity-75" />
-          </CardHeader>
-          <CardContent className="text-payload-elevation-900">
-            <div className="text-3xl font-bold">
-              {currency ? formatPrice(rangedRevenue.value, currency, locale) : rangedRevenue.value}
-            </div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
-              +{rangedRevenue.percentage}% from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
-            <CardTitle className="text-base font-medium">Ranged Orders</CardTitle>
-            <ClipboardPaste className="h-5 w-5 text-payload-elevation-900 opacity-75" />
-          </CardHeader>
-          <CardContent className="text-payload-elevation-900">
-            <div className="text-3xl font-bold">{rangedOrders.value}</div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
-              +{rangedOrders.percentage}% from last month
-            </p>
-          </CardContent>
-        </Card>
+        <OverviewCard
+          label={t("adminDashboard:totalRevenue")}
+          icon={<DollarSign className="h-5 w-5 text-payload-elevation-900 opacity-75" />}
+          value={currency ? formatPrice(totalRevenue.value, currency, locale) : totalRevenue.value}
+          percentage={totalRevenue.percentage}
+        />
+        <OverviewCard
+          label={t("adminDashboard:totalOrders")}
+          icon={<ClipboardPaste className="h-5 w-5 text-payload-elevation-900 opacity-75" />}
+          value={totalOrders.value}
+          percentage={totalOrders.percentage}
+        />
+        <OverviewCard
+          label={t("adminDashboard:rangedRevenue")}
+          icon={<DollarSign className="h-5 w-5 text-payload-elevation-900 opacity-75" />}
+          value={currency ? formatPrice(rangedRevenue.value, currency, locale) : rangedRevenue.value}
+          percentage={rangedRevenue.percentage}
+        />
+        <OverviewCard
+          label={t("adminDashboard:rangedOrders")}
+          icon={<ClipboardPaste className="h-5 w-5 text-payload-elevation-900 opacity-75" />}
+          value={rangedOrders.value}
+          percentage={rangedOrders.percentage}
+        />
       </div>
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-7">
         <OverviewChart />
