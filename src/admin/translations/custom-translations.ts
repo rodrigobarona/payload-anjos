@@ -25,6 +25,8 @@ export const customTranslationsObject = {
       rangedOrders: "Orders in period",
       "from-last-month": "from last month",
       overview: "Overview",
+      revenue: "Revenue",
+      orders: "Orders",
     },
   },
   pl: {
@@ -52,6 +54,8 @@ export const customTranslationsObject = {
       "from-last-month": "z poprzedniego miesiąca",
       overview: "Podsumowanie",
       "recent-orders": "Ostatnie zamówienia",
+      revenue: "Przychód",
+      orders: "Zamówienia",
     },
   },
 };

@@ -1,76 +1,92 @@
 "use client";
 
+import { useTranslation } from "@payloadcms/ui";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
+import {
+  type CustomTranslationsKeys,
+  type CustomTranslationsObject,
+} from "@/admin/translations/custom-translations";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const data = [
   {
     name: "January",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "February",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "March",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "April",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "May",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "June",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "July",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "August",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "September",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "October",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "November",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 1000) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
   {
     name: "December",
-    total: Math.floor(Math.random() * 5000) + 1000,
+    orders: Math.floor(Math.random() * 100) + 10,
+    revenue: Math.floor(Math.random() * 5000) + 1000,
   },
 ];
 
-const chartConfig = {
-  total: {
-    label: "Total",
-    theme: {
-      light: "var(--theme-elevation-0)",
-      dark: "var(--theme-elevation-900)",
-    },
-  },
-} satisfies ChartConfig;
-
 export const OverviewChart = () => {
+  const { t } = useTranslation<CustomTranslationsObject, CustomTranslationsKeys>();
+  const chartConfig = {
+    revenue: {
+      label: t("adminDashboard:revenue"),
+    },
+    orders: {
+      label: t("adminDashboard:orders"),
+    },
+  } satisfies ChartConfig;
   return (
     <Card className="twp rounded-xl border border-payload-elevation-150 bg-transparent lg:col-span-4">
       <CardHeader>
-        <CardTitle>Overview</CardTitle>
+        <CardTitle>{t("adminDashboard:overview")}</CardTitle>
       </CardHeader>
       <CardContent className="mt-6">
         <ResponsiveContainer width="100%" height={500}>
@@ -98,7 +114,19 @@ export const OverviewChart = () => {
                   <ChartTooltipContent className="border-payload-elevation-150 bg-payload-elevation-50 text-sm text-payload-elevation-900" />
                 }
               />
-              <Bar dataKey="total" fill="currentColor" radius={[4, 4, 0, 0]} className="fill-primary" />
+              <Bar
+                dataKey="revenue"
+                fill="var(--theme-elevation-900)"
+                stackId="a"
+                className="fill-payload-elevation-900"
+              />
+              <Bar
+                dataKey="orders"
+                fill="var(--theme-elevation-600)"
+                radius={[4, 4, 0, 0]}
+                stackId="a"
+                className="fill-payload-elevation-600"
+              />
             </BarChart>
           </ChartContainer>
         </ResponsiveContainer>
