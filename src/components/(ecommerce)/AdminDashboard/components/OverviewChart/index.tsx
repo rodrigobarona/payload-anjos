@@ -1,6 +1,8 @@
 "use client";
 
 import { useTranslation } from "@payloadcms/ui";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import {
@@ -10,71 +12,31 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
-const data = [
-  {
-    name: "January",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "February",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "March",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "April",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "May",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "June",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "July",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "August",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "September",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "October",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "November",
-    orders: Math.floor(Math.random() * 1000) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "December",
-    orders: Math.floor(Math.random() * 100) + 10,
-    revenue: Math.floor(Math.random() * 5000) + 1000,
-  },
-];
+type ChartData = {
+  name: string;
+  orders: number;
+  revenue: number;
+};
 
 export const OverviewChart = () => {
   const { t } = useTranslation<CustomTranslationsObject, CustomTranslationsKeys>();
+
+  const [ChartData, setChartData] = useState<ChartData[] | undefined>();
+
+  useEffect(() => {
+    const fetchChartData = async () => {
+      try {
+        const { data } = await axios.get<ChartData[]>("/api/orders/chart", {
+          withCredentials: true,
+        });
+        setChartData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    void fetchChartData();
+  }, []);
+
   const chartConfig = {
     revenue: {
       label: t("adminDashboard:revenue"),
@@ -91,7 +53,7 @@ export const OverviewChart = () => {
       <CardContent className="mt-6">
         <ResponsiveContainer width="100%" height={500}>
           <ChartContainer config={chartConfig}>
-            <BarChart data={data}>
+            <BarChart data={ChartData}>
               <XAxis
                 dataKey="name"
                 stroke="#888888"

@@ -1,5 +1,6 @@
 import { type CollectionConfig } from "payload";
 
+import { getChartData } from "@/endpoints/adminDashboard/getChartData";
 import { getOrderCount } from "@/endpoints/adminDashboard/getOrderCount";
 import { getRevenue } from "@/endpoints/adminDashboard/getRevenue";
 import { currencyField } from "@/fields/currencyField";
@@ -42,6 +43,11 @@ export const Orders: CollectionConfig = {
       path: "/count",
       method: "post",
       handler: getOrderCount,
+    },
+    {
+      path: "/chart",
+      method: "get",
+      handler: getChartData,
     },
   ],
   fields: [
