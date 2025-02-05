@@ -2,9 +2,10 @@
 import { useTranslation } from "@payloadcms/ui";
 import axios from "axios";
 import { subDays, format } from "date-fns";
+import { ClipboardPaste, DollarSign } from "lucide-react";
 import { animate } from "motion/react";
 import { useSearchParams } from "next/navigation";
-import { type SetStateAction, type Dispatch, useEffect, useState, useCallback } from "react";
+import { type SetStateAction, type Dispatch, useEffect, useState, useCallback, useRef } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type OrderCountResponse } from "@/endpoints/adminDashboard/getOrderCount";
@@ -32,46 +33,6 @@ export const Overview = () => {
   const dateFrom = searchParams.get("from") ?? format(subDays(new Date(), 30), "yyyy-MM-dd");
   const dateTo = searchParams.get("to") ?? format(new Date(), "yyyy-MM-dd");
 
-  const fetchOrderCount = useCallback(
-    async (
-      orderCount: number,
-      setOrderCount: Dispatch<SetStateAction<number>>,
-      requestData?: { dateFrom?: string; dateTo?: string },
-    ) => {
-      const { data } = await axios.post<OrderCountResponse>("/api/orders/count", requestData ?? {}, {
-        withCredentials: true,
-      });
-      const animation = animate(orderCount, data.total, {
-        duration: 1,
-        onUpdate: (value) => setOrderCount(Math.round(value)),
-        onComplete: () => setOrderCount(data.total),
-      });
-
-      return () => animation.stop();
-    },
-    [],
-  );
-
-  const fetchRevenue = useCallback(
-    async (
-      revenue: number,
-      setRevenue: Dispatch<SetStateAction<number>>,
-      requestData?: { dateFrom?: string; dateTo?: string },
-    ) => {
-      const { data } = await axios.post<RevenueResponse>("/api/orders/revenue", requestData ?? {}, {
-        withCredentials: true,
-      });
-      const animation = animate(revenue, data.totalRevenue, {
-        duration: 1,
-        onUpdate: (value) => setRevenue(Math.round(value)),
-        onComplete: () => setRevenue(data.totalRevenue),
-      });
-
-      return () => animation.stop();
-    },
-    [],
-  );
-
   useEffect(() => {
     const fetchCurrency = async () => {
       const { data } = await axios.get<ShopSetting>("/api/globals/shopSettings", { withCredentials: true });
@@ -81,21 +42,74 @@ export const Overview = () => {
     void fetchCurrency();
   }, []);
 
-  useEffect(() => {
-    void fetchRevenue(totalRevenue, setTotalRevenue);
-  }, [fetchRevenue, totalRevenue]);
+  const totalRevenueRef = useRef(totalRevenue);
+  const rangedRevenueRef = useRef(rangedRevenue);
+  const totalOrdersRef = useRef(totalOrders);
+  const rangedOrdersRef = useRef(rangedOrders);
+
+  const fetchRevenue = useCallback(
+    async (
+      currentRef: React.MutableRefObject<number>,
+      setRevenue: Dispatch<SetStateAction<number>>,
+      requestData?: { dateFrom?: string; dateTo?: string },
+    ) => {
+      const { data } = await axios.post<RevenueResponse>("/api/orders/revenue", requestData ?? {}, {
+        withCredentials: true,
+      });
+
+      const animation = animate(currentRef.current, data.totalRevenue, {
+        duration: 1,
+        onUpdate: (value) => {
+          currentRef.current = Math.round(value);
+          setRevenue(currentRef.current);
+        },
+        onComplete: () => setRevenue(data.totalRevenue),
+      });
+
+      return () => animation.stop();
+    },
+    [],
+  );
+
+  const fetchOrderCount = useCallback(
+    async (
+      currentRef: React.MutableRefObject<number>,
+      setOrders: Dispatch<SetStateAction<number>>,
+      requestData?: { dateFrom?: string; dateTo?: string },
+    ) => {
+      const { data } = await axios.post<OrderCountResponse>("/api/orders/count", requestData ?? {}, {
+        withCredentials: true,
+      });
+
+      const animation = animate(currentRef.current, data.total, {
+        duration: 1,
+        onUpdate: (value) => {
+          currentRef.current = Math.round(value);
+          setOrders(currentRef.current);
+        },
+        onComplete: () => setOrders(data.total),
+      });
+
+      return () => animation.stop();
+    },
+    [],
+  );
 
   useEffect(() => {
-    void fetchRevenue(rangedRevenue, setRangedRevenue, { dateFrom, dateTo });
-  }, [dateFrom, dateTo, fetchRevenue, rangedRevenue]);
+    void fetchRevenue(totalRevenueRef, setTotalRevenue);
+  }, [fetchRevenue]);
 
   useEffect(() => {
-    void fetchOrderCount(totalOrders, setTotalOrders);
-  }, [totalOrders, fetchOrderCount]);
+    void fetchRevenue(rangedRevenueRef, setRangedRevenue, { dateFrom, dateTo });
+  }, [dateFrom, dateTo, fetchRevenue]);
 
   useEffect(() => {
-    void fetchOrderCount(rangedOrders, setRangedOrders, { dateFrom, dateTo });
-  }, [dateFrom, dateTo, rangedOrders, fetchOrderCount]);
+    void fetchOrderCount(totalOrdersRef, setTotalOrders);
+  }, [fetchOrderCount]);
+
+  useEffect(() => {
+    void fetchOrderCount(rangedOrdersRef, setRangedOrders, { dateFrom, dateTo });
+  }, [dateFrom, dateTo, fetchOrderCount]);
 
   return (
     <section className="flex flex-col gap-6">
@@ -103,62 +117,33 @@ export const Overview = () => {
         <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
             <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-5 w-5 text-payload-elevation-900 opacity-75"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
+            <DollarSign className="h-5 w-5 text-payload-elevation-900 opacity-75" />
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
             <div className="text-3xl font-bold">
               {currency ? formatPrice(totalRevenue, currency, locale) : totalRevenue}
             </div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
+            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
+              Total Profits Generated by Your Shop
+            </p>
           </CardContent>
         </Card>
         <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
-            <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-5 w-5 text-payload-elevation-900 opacity-75"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
+            <CardTitle className="text-base font-medium">Total Orders</CardTitle>
+            <ClipboardPaste className="h-5 w-5 text-payload-elevation-900 opacity-75" />
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
             <div className="text-3xl font-bold">{totalOrders}</div>
-            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">+20.1% from last month</p>
+            <p className="mt-1 text-sm text-payload-elevation-900 opacity-75">
+              Total Orders Generated by Your Shop
+            </p>
           </CardContent>
         </Card>
         <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
-            <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-5 w-5 text-payload-elevation-900 opacity-75"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
+            <CardTitle className="text-base font-medium">Ranged Revenue</CardTitle>
+            <DollarSign className="h-5 w-5 text-payload-elevation-900 opacity-75" />
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
             <div className="text-3xl font-bold">
@@ -169,19 +154,8 @@ export const Overview = () => {
         </Card>
         <Card className="rounded-xl border-payload-elevation-150 bg-transparent">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 text-payload-elevation-900">
-            <CardTitle className="text-base font-medium">Total Revenue</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-5 w-5 text-payload-elevation-900 opacity-75"
-            >
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
+            <CardTitle className="text-base font-medium">Ranged Orders</CardTitle>
+            <ClipboardPaste className="h-5 w-5 text-payload-elevation-900 opacity-75" />
           </CardHeader>
           <CardContent className="text-payload-elevation-900">
             <div className="text-3xl font-bold">{rangedOrders}</div>
