@@ -5,6 +5,15 @@ import { useEffect, useState } from "react";
 import { CMSLink } from "@/components/Link";
 import { Logo } from "@/components/Logo/Logo";
 import { Media } from "@/components/Media";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
 import { Link } from "@/i18n/routing";
 import { type Header } from "@/payload-types";
 import { useCartState } from "@/stores/CartStateStore";
@@ -67,7 +76,7 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
   return (
     <header className={classes} style={data.background ? { background: data.background } : {}}>
       <div
-        className={`container flex w-full items-center py-8 lg:gap-8 ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}
+        className={`container relative flex w-full items-center py-6 md:py-8 lg:gap-8 ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}
       >
         <Link href="/" className="mr-auto">
           {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (
@@ -80,6 +89,35 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
             <Logo />
           )}
         </Link>
+        <Command className="group absolute left-1/2 top-full h-fit w-screen -translate-x-1/2 overflow-visible border-b-0 px-4 shadow-md lg:top-1/2 lg:w-fit lg:min-w-[450px] lg:-translate-y-1/2 lg:rounded-lg lg:px-0 xl:w-1/2">
+          <CommandInput placeholder="Type a command or search..." className="border-b-0" />
+          <CommandList className="absolute left-0 top-full hidden h-fit max-h-[350px] w-full -translate-y-[4px] rounded-b-lg bg-white px-4 group-focus-within:block lg:px-0">
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup heading="Suggestions">
+              <CommandItem>
+                <span>Calendar</span>
+              </CommandItem>
+              <CommandItem>
+                <span>Search Emoji</span>
+              </CommandItem>
+              <CommandItem disabled>
+                <span>Calculator</span>
+              </CommandItem>
+            </CommandGroup>
+            <CommandSeparator />
+            <CommandGroup heading="Settings">
+              <CommandItem>
+                <span>Profile</span>
+              </CommandItem>
+              <CommandItem>
+                <span>Billing</span>
+              </CommandItem>
+              <CommandItem>
+                <span>Settings</span>
+              </CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </Command>
         <button
           aria-label="Toggle Menu"
           className="z-20 order-1 ml-8 flex flex-col items-end justify-center gap-[6px] lg:hidden"
