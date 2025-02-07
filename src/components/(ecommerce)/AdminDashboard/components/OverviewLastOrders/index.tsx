@@ -95,7 +95,7 @@ export const OverviewLastOrders = () => {
             className="px-0 text-base hover:bg-payload-elevation-0"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Status
+            {t("adminDashboard:status")}
             <ArrowUpDown width={20} height={20} className="ml-2" />
           </Button>
         );
@@ -113,7 +113,7 @@ export const OverviewLastOrders = () => {
             className="px-0 text-base hover:bg-payload-elevation-0"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Email
+            {t("adminDashboard:email")}
             <ArrowUpDown width={20} height={20} className="ml-2" />
           </Button>
         );
@@ -144,16 +144,16 @@ export const OverviewLastOrders = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{t("adminDashboard:openMenu")}</span>
                 <MoreHorizontal />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-payload-elevation-50">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("adminDashboard:actions")}</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(order.orderDetails.transactionID ?? "")}
               >
-                Copy payment ID
+                {t("adminDashboard:copyPaymentID")}
               </DropdownMenuItem>
               <DropdownMenuSeparator className="border-payload-elevation-0 bg-payload-elevation-0" />
               {order.customer && (
@@ -162,13 +162,13 @@ export const OverviewLastOrders = () => {
                     href={`/admin/collections/customers/${typeof order.customer === "string" ? order.customer : order.customer.id}`}
                     className="no-underline"
                   >
-                    View customer
+                    {t("adminDashboard:viewCustomer")}
                   </Link>
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem asChild>
                 <Link href={`/admin/collections/orders/${order.id}`} className="no-underline">
-                  View order
+                  {t("adminDashboard:viewOrder")}
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -296,7 +296,7 @@ export const OverviewLastOrders = () => {
                         checked={column.getIsVisible()}
                         onCheckedChange={(value) => column.toggleVisibility(!!value)}
                       >
-                        {column.id}
+                        {t(`adminDashboard:${column.id as "date" | "status" | "email" | "amount"}`)}
                       </DropdownMenuCheckboxItem>
                     );
                   })}
