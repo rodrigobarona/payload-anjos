@@ -14,9 +14,9 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
+  CommandSearchInput,
   CommandSeparator,
 } from "@/components/ui/command";
 import { type Locale } from "@/i18n/config";
@@ -32,6 +32,7 @@ export const Search = () => {
   const [resultProducts, setResultProducts] = useState<Product[]>([]);
   const [resultCategories, setResultCategories] = useState<ProductCategory[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState(searchParams.get("search") ?? "");
   const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -99,12 +100,6 @@ export const Search = () => {
   }, 300);
 
   useEffect(() => {
-    if (pathname === "/search") {
-      const params = new URLSearchParams(searchParams);
-      params.delete("search");
-      router.push(`?${params.toString()}`);
-      return;
-    }
     void fetchProductsAndCategories("");
   }, [pathname, fetchProductsAndCategories, router, searchParams]);
 
@@ -113,29 +108,23 @@ export const Search = () => {
       const params = new URLSearchParams(searchParams);
       params.set("search", value);
       router.push(`?${params.toString()}`);
+      setSearchValue(value);
       return;
     }
+    setSearchValue(value);
     await fetchProductsAndCategories(value);
-  };
-
-  const handleSearchBlur = () => {
-    if (pathname === "/search") {
-      const params = new URLSearchParams(searchParams);
-      params.delete("search");
-      router.push(`?${params.toString()}`);
-      return;
-    }
   };
 
   return (
     <Command
-      onBlur={handleSearchBlur}
       ref={searchRef}
       className="group absolute left-1/2 top-full h-fit w-screen max-w-[550px] -translate-x-1/2 overflow-visible border-b-0 px-4 shadow-md lg:top-1/2 lg:w-fit lg:min-w-[450px] lg:-translate-y-1/2 lg:rounded-lg lg:px-0 xl:w-1/2"
     >
-      <CommandInput
+      <CommandSearchInput
         onFocus={() => setIsOpen(true)}
         onValueChange={handleSearchChange}
+        value={searchValue}
+        searchValue={searchValue}
         placeholder={t("search")}
         className="h-fit border-b-0 py-2"
       />

@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 import * as React from "react";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/utilities/cn";
 
 const Command = React.forwardRef<
@@ -51,6 +52,28 @@ const CommandInput = React.forwardRef<
     />
   </div>
 ));
+
+const CommandSearchInput = React.forwardRef<
+  React.ElementRef<typeof CommandPrimitive.Input>,
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
+    searchValue?: string;
+  }
+>(({ className, searchValue, ...props }, ref) => (
+  <div className="flex items-center px-3" cmdk-input-wrapper="">
+    <CommandPrimitive.Input
+      ref={ref}
+      className={cn(
+        "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        className,
+      )}
+      {...props}
+    />
+    <Link href={`/search?search=${searchValue}`} className="-m-2 aspect-square p-2">
+      <Search className="h-5 w-5 shrink-0 opacity-50" />
+    </Link>
+  </div>
+));
+CommandSearchInput.displayName = CommandPrimitive.Input.displayName;
 
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
@@ -131,4 +154,5 @@ export {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
+  CommandSearchInput,
 };
