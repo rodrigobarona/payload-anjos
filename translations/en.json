@@ -359,7 +359,7 @@
   },
   "Search": {
     "no-results": "No results found.",
-    "results": "Results for",
+    "results": "Results for: ",
     "search": "Search...",
     "categories": "Categories",
     "products": "Products"

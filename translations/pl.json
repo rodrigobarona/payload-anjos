@@ -360,7 +360,7 @@
   },
   "Search": {
     "no-results": "Brak wyników.",
-    "results": "Wyniki dla",
+    "results": "Wyniki dla: ",
     "search": "Szukaj...",
     "categories": "Kategorie",
     "products": "Produkty"

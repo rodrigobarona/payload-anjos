@@ -97,11 +97,13 @@ export const Search = () => {
     } catch (error) {
       console.log(error);
     }
-  }, 300);
+  }, 200);
 
   useEffect(() => {
-    void fetchProductsAndCategories("");
-  }, [pathname, fetchProductsAndCategories, router, searchParams]);
+    if (pathname !== "/search") {
+      void fetchProductsAndCategories("");
+    }
+  }, [pathname, fetchProductsAndCategories, router]);
 
   const handleSearchChange = async (value: string) => {
     if (pathname === "/search") {
@@ -131,7 +133,7 @@ export const Search = () => {
       <CommandList
         className={twMerge(
           "absolute left-0 top-full h-fit max-h-[650px] w-full -translate-y-[4px] rounded-b-lg bg-white px-4 shadow-lg lg:px-0",
-          isOpen ? "block" : "hidden",
+          isOpen && pathname !== "/search" ? "block" : "hidden",
         )}
       >
         <CommandEmpty>{t("no-results")}</CommandEmpty>

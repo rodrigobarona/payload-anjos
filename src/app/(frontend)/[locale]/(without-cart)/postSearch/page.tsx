@@ -14,11 +14,11 @@ import type { Metadata } from "next/types";
 
 type Args = {
   searchParams: Promise<{
-    search: string;
+    q: string;
   }>;
 };
 export default async function Page({ searchParams: searchParamsPromise }: Args) {
-  const { search: query } = await searchParamsPromise;
+  const { q: query } = await searchParamsPromise;
   console.log(query);
   const payload = await getPayload({ config });
   const locale = (await getLocale()) as Locale;
