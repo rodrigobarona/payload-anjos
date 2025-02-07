@@ -1,4 +1,3 @@
-
 import { backgroundPicker } from "@/fields/backgroundPicker";
 import { link } from "@/fields/link";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";

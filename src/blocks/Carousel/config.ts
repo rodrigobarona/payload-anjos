@@ -1,4 +1,3 @@
-
 import {
   FixedToolbarFeature,
   HeadingFeature,

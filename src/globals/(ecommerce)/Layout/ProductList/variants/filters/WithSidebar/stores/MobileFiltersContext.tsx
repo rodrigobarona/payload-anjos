@@ -3,7 +3,7 @@ import { create } from "zustand";
 type MobileFiltersState = {
   mobileFiltersOpen: boolean;
   setMobileFiltersOpen: (open: boolean) => void;
-}
+};
 
 const useMobileFiltersStore = create<MobileFiltersState>((set) => ({
   mobileFiltersOpen: false, // domyślna wartość

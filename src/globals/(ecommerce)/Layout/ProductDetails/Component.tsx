@@ -8,7 +8,6 @@ import { getCachedGlobal } from "@/utilities/getGlobals";
 
 import { WithImageGalleryExpandableDetails } from "./variants/WithImageGalleryExpandableDetails";
 
-
 import { ProductBreadcrumbs } from "../../../../components/(ecommerce)/ProductBreadcrumbs";
 
 export const ProductDetails = async ({ variant, product }: { variant?: string; product: Product }) => {

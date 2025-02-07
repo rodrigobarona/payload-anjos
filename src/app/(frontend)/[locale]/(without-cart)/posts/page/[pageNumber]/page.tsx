@@ -1,4 +1,3 @@
-
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 import React from "react";
@@ -11,8 +10,6 @@ import configPromise from "@payload-config";
 
 import PageClient from "./page.client";
 
-
-
 import type { Metadata } from "next/types";
 
 export const revalidate = 600;
@@ -22,7 +19,7 @@ type Args = {
     pageNumber: string;
     locale: Locale;
   }>;
-}
+};
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber, locale } = await paramsPromise;

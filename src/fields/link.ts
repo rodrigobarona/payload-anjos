@@ -2,7 +2,6 @@ import deepMerge from "@/utilities/deepMerge";
 
 import type { Field } from "payload";
 
-
 export type LinkAppearances = "default" | "outline";
 
 export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {

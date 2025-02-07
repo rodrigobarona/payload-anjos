@@ -5,7 +5,7 @@ import { cn } from "src/utilities/cn";
 
 export type Props = {
   posts: CardPostData[];
-}
+};
 
 export const CollectionArchive = (props: Props) => {
   const { posts } = props;

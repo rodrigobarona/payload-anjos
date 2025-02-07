@@ -7,7 +7,7 @@ import { CopyButton } from "./CopyButton";
 type Props = {
   code: string;
   language?: string;
-}
+};
 
 export const Code = ({ code, language = "" }: Props) => {
   if (!code) return null;

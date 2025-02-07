@@ -7,7 +7,6 @@ import { cn } from "src/utilities/cn";
 
 import type { Props as MediaProps } from "../types";
 
-
 export const VideoMedia = (props: MediaProps) => {
   const { onClick, resource, videoClassName } = props;
 

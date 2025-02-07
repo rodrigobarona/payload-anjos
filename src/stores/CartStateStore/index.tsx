@@ -4,7 +4,7 @@ type CartState = {
   isOpen: boolean;
   toggleCart: () => void;
   setCartState: (isOpen: boolean) => void;
-}
+};
 
 const useCartStateStore = create<CartState>((set) => ({
   isOpen: false,

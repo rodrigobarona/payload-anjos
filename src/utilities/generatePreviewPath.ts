@@ -2,7 +2,6 @@ import { type PayloadRequest, type CollectionSlug } from "payload";
 
 import { type Locale } from "@/i18n/config";
 
-
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   posts: "/posts",
   pages: "",

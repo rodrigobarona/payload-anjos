@@ -1,6 +1,5 @@
 "use client";
 
-
 import { createContext, useCallback, useContext, useState } from "react";
 
 import canUseDOM from "@/utilities/canUseDOM";
@@ -10,7 +9,7 @@ import type { Theme } from "@/providers/Theme/types";
 export type ContextType = {
   headerTheme?: Theme | null;
   setHeaderTheme: (theme: Theme | null) => void;
-}
+};
 
 const initialContext: ContextType = {
   headerTheme: undefined,

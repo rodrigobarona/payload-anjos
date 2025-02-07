@@ -1,4 +1,3 @@
-
 import { anyone } from "@/access/anyone";
 import { authenticated } from "@/access/authenticated";
 

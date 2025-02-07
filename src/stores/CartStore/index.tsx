@@ -12,7 +12,7 @@ type CartState = {
   updateCart: (cartToSet: Cart) => void;
   removeFromCart: (productId: string, variantSlug?: string) => void;
   synchronizeCart: () => Promise<void>;
-}
+};
 
 const saveCartToUserAccount = async (cart: Cart) => {
   try {

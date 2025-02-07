@@ -39,7 +39,16 @@ export const ResetPasswordEmail = async ({
       >
         {t("message")}
       </Text>
-      <Button href={url} style={{ background: "#000", color: "#fff", padding: "12px 20px", backgroundColor: "#6366f1", margin: "0 auto" }}>
+      <Button
+        href={url}
+        style={{
+          background: "#000",
+          color: "#fff",
+          padding: "12px 20px",
+          backgroundColor: "#6366f1",
+          margin: "0 auto",
+        }}
+      >
         {t("button")}
       </Button>
     </Html>

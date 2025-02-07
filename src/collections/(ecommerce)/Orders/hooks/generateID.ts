@@ -1,4 +1,4 @@
-import { getPayload ,type  CollectionBeforeValidateHook } from "payload";
+import { getPayload, type CollectionBeforeValidateHook } from "payload";
 
 import { type Order } from "@/payload-types";
 import config from "@payload-config";

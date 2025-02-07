@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line
 import { GeistMono } from "geist/font/mono";
 // eslint-disable-next-line

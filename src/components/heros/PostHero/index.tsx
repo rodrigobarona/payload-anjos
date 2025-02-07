@@ -6,8 +6,6 @@ import { formatDateTime } from "src/utilities/formatDateTime";
 
 import type { Post } from "@/payload-types";
 
-
-
 export const PostHero = ({ post }: { post: Post }) => {
   const { categories, heroImage, populatedAuthors, publishedAt, title } = post;
 

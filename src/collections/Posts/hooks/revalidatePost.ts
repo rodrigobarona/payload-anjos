@@ -1,4 +1,3 @@
-
 import { revalidatePath, revalidateTag } from "next/cache";
 
 import type { Post } from "@/payload-types";

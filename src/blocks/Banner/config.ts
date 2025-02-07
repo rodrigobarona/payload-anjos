@@ -2,7 +2,6 @@ import { FixedToolbarFeature, InlineToolbarFeature, lexicalEditor } from "@paylo
 
 import type { Block } from "payload";
 
-
 export const Banner: Block = {
   slug: "banner",
   fields: [

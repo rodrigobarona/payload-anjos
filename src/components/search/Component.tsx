@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useDebounce } from "@/utilities/useDebounce";
 
-
 export const Search = () => {
   const [value, setValue] = useState("");
   const router = useRouter();

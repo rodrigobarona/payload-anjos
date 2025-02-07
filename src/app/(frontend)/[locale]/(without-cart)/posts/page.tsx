@@ -1,4 +1,3 @@
-
 import { getLocale } from "next-intl/server";
 import { getPayload } from "payload";
 import React from "react";
@@ -10,8 +9,6 @@ import { type Locale } from "@/i18n/config";
 import config from "@payload-config";
 
 import PageClient from "./page.client";
-
-
 
 import type { Metadata } from "next/types";
 

@@ -4,7 +4,6 @@ import { marginFields, paddingFields } from "@/fields/spacingFields";
 
 import type { Block } from "payload";
 
-
 export const CallToAction: Block = {
   slug: "cta",
   interfaceName: "CallToActionBlock",

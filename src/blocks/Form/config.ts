@@ -1,5 +1,3 @@
-
-
 import { noBlocksLexical } from "@/fields/noBlocksLexical";
 
 import type { Block } from "payload";

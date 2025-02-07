@@ -4,7 +4,10 @@ import { Select, useField, useForm, useTranslation } from "@payloadcms/ui";
 import axios, { isAxiosError } from "axios";
 import { useState } from "react";
 
-import { type CustomTranslationsKeys, type CustomTranslationsObject } from "@/admin/translations/custom-translations";
+import {
+  type CustomTranslationsKeys,
+  type CustomTranslationsObject,
+} from "@/admin/translations/custom-translations";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utilities/cn";
 

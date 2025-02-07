@@ -1,6 +1,10 @@
-
 /* eslint-disable */
-import { useFormContext ,type  FieldErrorsImpl,type  FieldValues,type  UseFormRegister } from "react-hook-form";
+import {
+  useFormContext,
+  type FieldErrorsImpl,
+  type FieldValues,
+  type UseFormRegister,
+} from "react-hook-form";
 
 import { Checkbox as CheckboxUi } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -19,9 +23,7 @@ export const Checkbox = ({
   required: requiredFromProps,
   width,
 }: CheckboxField & {
-  errors: Partial<
-    FieldErrorsImpl<Record<string, any>>
-  >;
+  errors: Partial<FieldErrorsImpl<Record<string, any>>>;
   getValues: any;
   register: UseFormRegister<FieldValues>;
   setValue: any;

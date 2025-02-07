@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from "react";
 
-
 import { CMSLink } from "@/components/Link";
 import { Media } from "@/components/Media";
 import RichText from "@/components/RichText";

@@ -4,7 +4,7 @@ type Props = {
   className?: string;
   loading?: "lazy" | "eager";
   priority?: "auto" | "high" | "low";
-}
+};
 
 export const Logo = (props: Props) => {
   const { loading: loadingFromProps, priority: priorityFromProps, className } = props;

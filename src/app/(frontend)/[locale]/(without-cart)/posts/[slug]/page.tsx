@@ -1,4 +1,3 @@
-
 import { draftMode } from "next/headers";
 import { getPayload } from "payload";
 import React, { cache } from "react";
@@ -45,7 +44,7 @@ type Args = {
     slug?: string;
     locale: Locale;
   }>;
-}
+};
 
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode();

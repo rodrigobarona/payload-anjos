@@ -5,7 +5,6 @@ import configPromise from "@payload-config";
 
 import type { Config } from "@/payload-types";
 
-
 type Collection = keyof Config["collections"];
 
 async function getDocument(collection: Collection, slug: string, depth = 0) {

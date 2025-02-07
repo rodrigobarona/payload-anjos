@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { themeLocalStorageKey ,type  Theme } from "./types";
+import { themeLocalStorageKey, type Theme } from "./types";
 
 import { useTheme } from "..";
-
 
 export const ThemeSelector = () => {
   const { setTheme } = useTheme();

@@ -9,7 +9,7 @@ import { type Currency } from "./types";
 type CurrencyState = {
   currency: Currency;
   setCurrency: (currency: Currency) => void;
-}
+};
 
 const useCurrencyStore = create<CurrencyState>((set) => ({
   currency: "USD",

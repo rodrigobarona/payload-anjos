@@ -1,4 +1,3 @@
-
 import { getPayload } from "payload";
 
 import { CollectionArchive } from "@/components/CollectionArchive";

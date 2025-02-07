@@ -10,7 +10,7 @@ type Props = {
   disableNotFound?: boolean;
   url: string;
   locale: string;
-}
+};
 
 /* This component helps us with SSR based dynamic redirects */
 export const PayloadRedirects = async ({ disableNotFound, url, locale }: Props) => {

@@ -2,7 +2,6 @@ import { authenticated } from "@/access/authenticated";
 
 import type { CollectionConfig } from "payload";
 
-
 export const Administrators: CollectionConfig = {
   slug: "administrators",
   labels: {

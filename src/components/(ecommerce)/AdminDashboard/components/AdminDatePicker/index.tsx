@@ -78,7 +78,7 @@ export function AdminDatePicker({ className }: React.HTMLAttributes<HTMLDivEleme
             id="date"
             variant={"outline"}
             className={cn(
-              "border-payload-elevation-150 bg-payload-elevation-50 h-full w-[300px] justify-start gap-2 border text-left font-normal hover:bg-payload-backgroundColor",
+              "h-full w-[300px] justify-start gap-2 border border-payload-elevation-150 bg-payload-elevation-50 text-left font-normal hover:bg-payload-backgroundColor",
               !date && "text-payload-elevation-900",
             )}
           >
@@ -97,7 +97,7 @@ export function AdminDatePicker({ className }: React.HTMLAttributes<HTMLDivEleme
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="bg-payload-elevation-50 border-payload-elevation-150 w-auto rounded-lg p-0"
+          className="w-auto rounded-lg border-payload-elevation-150 bg-payload-elevation-50 p-0"
           align={isMobile ? "start" : "end"}
         >
           <Calendar

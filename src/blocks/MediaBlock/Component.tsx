@@ -14,11 +14,6 @@ import { Media } from "../../components/Media";
 import type { MediaBlock as MediaBlockProps } from "@/payload-types";
 import type { StaticImageData } from "next/image";
 
-
-
-
-
-
 type Props = MediaBlockProps & {
   breakout?: boolean;
   captionClassName?: string;

@@ -16,9 +16,7 @@ export const Number = ({
   required: requiredFromProps,
   width,
 }: TextField & {
-  errors: Partial<
-    FieldErrorsImpl<Record<string, any>>
-  >;
+  errors: Partial<FieldErrorsImpl<Record<string, any>>>;
   register: UseFormRegister<FieldValues>;
 }) => {
   return (
