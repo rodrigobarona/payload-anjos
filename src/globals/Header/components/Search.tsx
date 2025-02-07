@@ -120,6 +120,7 @@ export const Search = () => {
   return (
     <Command
       ref={searchRef}
+      shouldFilter={false}
       className="group absolute left-1/2 top-full h-fit w-screen max-w-[550px] -translate-x-1/2 overflow-visible border-b-0 px-4 shadow-md lg:top-1/2 lg:w-fit lg:min-w-[450px] lg:-translate-y-1/2 lg:rounded-lg lg:px-0 xl:w-1/2"
     >
       <CommandSearchInput
@@ -137,31 +138,35 @@ export const Search = () => {
         )}
       >
         <CommandEmpty>{t("no-results")}</CommandEmpty>
-        <CommandGroup heading={t("products")}>
-          {resultProducts.map((product) => (
-            <CommandItem asChild className="cursor-pointer" key={product.id}>
-              <Link
-                onClick={handleItemClick}
-                className="flex items-center gap-3"
-                href={`/product/${product.slug}`}
-              >
-                <Media className="h-16 w-16" resource={product.images[0]} />
-                <p className="mr-auto">{product.title}</p>
-                <PriceClient pricing={product.pricing ?? []} />
-              </Link>
-            </CommandItem>
-          ))}
-        </CommandGroup>
+        {resultProducts.length > 0 && (
+          <CommandGroup heading={t("products")}>
+            {resultProducts.map((product) => (
+              <CommandItem asChild className="cursor-pointer" key={product.id}>
+                <Link
+                  onClick={handleItemClick}
+                  className="flex items-center gap-3"
+                  href={`/product/${product.slug}`}
+                >
+                  <Media className="h-16 w-16" resource={product.images[0]} />
+                  <p className="mr-auto">{product.title}</p>
+                  <PriceClient pricing={product.pricing ?? []} />
+                </Link>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
         <CommandSeparator />
-        <CommandGroup heading={t("categories")}>
-          {resultCategories.map((category) => (
-            <CommandItem asChild className="cursor-pointer" key={category.id}>
-              <Link onClick={handleItemClick} href={`/category/${category.slug}`}>
-                {category.title}
-              </Link>
-            </CommandItem>
-          ))}
-        </CommandGroup>
+        {resultCategories.length > 0 && (
+          <CommandGroup heading={t("categories")}>
+            {resultCategories.map((category) => (
+              <CommandItem asChild className="cursor-pointer" key={category.id}>
+                <Link onClick={handleItemClick} href={`/category/${category.slug}`}>
+                  {category.title}
+                </Link>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
       </CommandList>
     </Command>
   );
