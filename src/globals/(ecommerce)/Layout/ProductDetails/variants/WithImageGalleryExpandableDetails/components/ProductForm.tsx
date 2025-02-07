@@ -155,9 +155,6 @@ export const ProductForm = ({
         <div className="mt-8">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium text-gray-900">{t("size")}</h2>
-            <a href="#" className="text-sm font-medium text-main-600 hover:text-main-500">
-              {t("sizing-chart")}
-            </a>
           </div>
 
           <fieldset aria-label={t("choose-size")} className="mt-2">
