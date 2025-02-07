@@ -59,7 +59,7 @@ const CommandSearchInput = React.forwardRef<
     searchValue?: string;
   }
 >(({ className, searchValue, ...props }, ref) => (
-  <div className="flex items-center px-3" cmdk-input-wrapper="">
+  <div className="container mx-auto flex w-full items-center lg:px-3" cmdk-input-wrapper="">
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
