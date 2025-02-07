@@ -30,7 +30,12 @@
     "filters": "Filtry",
     "categories": "Kategorie",
     "products": "Produkty",
-    "close-filters": "Zamknij filtry"
+    "close-filters": "Zamknij filtry",
+    "sort": "Sortuj",
+    "most-popular": "Najpopularniejsze",
+    "newest": "Najnowsze",
+    "price-low-to-high": "Cena: od najniższej",
+    "price-high-to-low": "Cena: od najwyższej"
   },
   "Cart": {
     "title": "Koszyk",

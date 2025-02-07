@@ -30,7 +30,12 @@
     "filters": "Filters",
     "categories": "Categories",
     "products": "Products",
-    "close-filters": "Close filters"
+    "close-filters": "Close filters",
+    "sort": "Sort",
+    "most-popular": "Most popular",
+    "newest": "Newest",
+    "price-low-to-high": "Price: low to high",
+    "price-high-to-low": "Price: high to low"
   },
   "Cart": {
     "title": "Shopping cart",

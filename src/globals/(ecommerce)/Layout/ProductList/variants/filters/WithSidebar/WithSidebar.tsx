@@ -21,13 +21,6 @@ import { MobileFiltersDialog } from "./components/MobileFiltersDialog";
 import { MobileFunnelFiltersButton } from "./components/MobileFunnelFiltersButton";
 import { SortSelect } from "./components/SortSelect";
 
-const sortOptions = [
-  { label: "Most Popular", value: "most-popular" },
-  { label: "Newest", value: "newest" },
-  { label: "Price: Low to High", value: "priceasc" },
-  { label: "Price: High to Low", value: "pricedesc" },
-];
-
 export const WithSidebar = ({
   title,
   category,
@@ -98,6 +91,13 @@ export const WithSidebar = ({
   ];
 
   const t = useTranslations("ProductList");
+
+  const sortOptions = [
+    { label: t("most-popular"), value: "most-popular" },
+    { label: t("newest"), value: "newest" },
+    { label: t("price-low-to-high"), value: "priceasc" },
+    { label: t("price-high-to-low"), value: "pricedesc" },
+  ];
 
   return (
     <div className="bg-white">
@@ -223,7 +223,7 @@ export const WithSidebar = ({
             <div className="flex items-center">
               <SortSelect defaultValue={searchParams.sortBy}>
                 <SelectTrigger className="w-48">
-                  <SelectValue placeholder="Sort" />
+                  <SelectValue placeholder={t("sort")} />
                 </SelectTrigger>
                 <SelectContent className="py-1">
                   {sortOptions.map((option) => (
