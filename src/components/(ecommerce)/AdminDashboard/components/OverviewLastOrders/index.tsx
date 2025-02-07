@@ -2,6 +2,8 @@
 "use no memo";
 // TODO: delete use no memo after Tanstack react-table bump to react 19
 
+import { type DefaultTranslationKeys, type TFunction } from "@payloadcms/translations";
+import { useTranslation } from "@payloadcms/ui";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -18,11 +20,13 @@ import axios from "axios";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
+import { type Where } from "payload";
 import { stringify } from "qs-esm";
 import { useEffect, useState } from "react";
 
+import { type CustomTranslationsKeys } from "@/admin/translations/custom-translations";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -34,94 +38,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { type Order } from "@/payload-types";
-
-export const columns: ColumnDef<Order>[] = [
-  {
-    id: "date",
-    header: "Date",
-    cell: ({ row }) => {
-      const date = new Date(row.original.createdAt);
-      return date.toLocaleDateString();
-    },
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    id: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      return <div className="capitalize">{row.original.orderDetails.status}</div>;
-    },
-  },
-  {
-    id: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="text-base hover:bg-payload-elevation-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown width={20} height={20} className="ml-2" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.original.shippingAddress.email}</div>,
-  },
-  {
-    id: "amount",
-    header: () => <div className="text-right hover:bg-payload-elevation-0">Amount</div>,
-    cell: ({ row }) => {
-      const amount = row.original.orderDetails.totalWithShipping;
-
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const order = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-payload-elevation-50">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(order.id)}>
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator className="border-payload-elevation-0 bg-payload-elevation-0" />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href={`/admin/collections/orders/${order.id}`} className="no-underline">
-                View order
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
+import { formatPrice } from "@/utilities/formatPrices";
 
 const select = {
   id: true,
   createdAt: true,
+  customer: true,
   orderDetails: {
     status: true,
     totalWithShipping: true,
+    currency: true,
+    transactionID: true,
   },
   shippingAddress: {
     email: true,
@@ -136,6 +63,120 @@ export const OverviewLastOrders = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
+  const { i18n } = useTranslation();
+  const t: TFunction<CustomTranslationsKeys | DefaultTranslationKeys> = i18n.t;
+
+  const columns: ColumnDef<Order>[] = [
+    {
+      id: "date",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="px-0 text-base hover:bg-payload-elevation-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {t("adminDashboard:date")}
+            <ArrowUpDown width={20} height={20} className="ml-2" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const date = new Date(row.original.createdAt);
+        return date.toLocaleDateString();
+      },
+    },
+    {
+      id: "status",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="px-0 text-base hover:bg-payload-elevation-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Status
+            <ArrowUpDown width={20} height={20} className="ml-2" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return <p>{t(`adminDashboard:${row.original.orderDetails.status}`)}</p>;
+      },
+    },
+    {
+      id: "email",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="px-0 text-base hover:bg-payload-elevation-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Email
+            <ArrowUpDown width={20} height={20} className="ml-2" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => <div className="lowercase">{row.original.shippingAddress.email}</div>,
+    },
+    {
+      id: "amount",
+      header: () => (
+        <div className="text-right hover:bg-payload-elevation-0">{t("adminDashboard:amount")}</div>
+      ),
+      cell: ({ row }) => {
+        const amount = row.original.orderDetails.totalWithShipping;
+        const currency = row.original.orderDetails.currency;
+
+        const formatted = formatPrice(amount, currency, i18n.language);
+
+        return <div className="text-right font-medium">{formatted}</div>;
+      },
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const order = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-payload-elevation-50">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => navigator.clipboard.writeText(order.orderDetails.transactionID ?? "")}
+              >
+                Copy payment ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="border-payload-elevation-0 bg-payload-elevation-0" />
+              {order.customer && (
+                <DropdownMenuItem>
+                  <Link
+                    href={`/admin/collections/customers/${typeof order.customer === "string" ? order.customer : order.customer.id}`}
+                    className="no-underline"
+                  >
+                    View customer
+                  </Link>
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem asChild>
+                <Link href={`/admin/collections/orders/${order.id}`} className="no-underline">
+                  View order
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
 
   const createQueryString = (name: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -150,12 +191,33 @@ export const OverviewLastOrders = () => {
   const [data, setData] = useState<Order[]>([]);
 
   useEffect(() => {
+    const filteringQuery: Where = {
+      "shippingAddress.email": {
+        contains: columnFilters.find((filter) => filter.id === "email")?.value,
+      },
+    };
+
+    const sortingQuery = sorting.map((sort) => {
+      switch (sort.id) {
+        case "status": {
+          return sort.desc ? "-orderDetails.status" : "orderDetails.status";
+        }
+        case "email": {
+          return sort.desc ? "-shippingAddress.email" : "shippingAddress.email";
+        }
+        case "date": {
+          return sort.desc ? "-createdAt" : "createdAt";
+        }
+      }
+    });
+
     const stringifiedQuery = stringify(
       {
         select,
-        limit: 5,
+        limit: 6,
         page: currentPage,
-        sort: "-createdAt",
+        sort: sortingQuery.length === 1 ? sortingQuery[0] : sortingQuery,
+        where: filteringQuery,
       },
       { addQueryPrefix: true },
     );
@@ -165,16 +227,13 @@ export const OverviewLastOrders = () => {
         const { data } = await axios.get<{ docs: Order[] }>(`/api/orders${stringifiedQuery}`, {
           withCredentials: true,
         });
-        console.log(data);
         setData(data.docs);
       } catch (error) {
         console.log(error);
       }
     };
     void fetchOrders();
-  }, [currentPage]);
-
-  console.log(data);
+  }, [currentPage, sorting, columnFilters]);
 
   const table = useReactTable({
     data,
@@ -188,6 +247,8 @@ export const OverviewLastOrders = () => {
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     manualPagination: true,
+    manualSorting: true,
+    manualFiltering: true,
 
     state: {
       sorting,
@@ -199,17 +260,14 @@ export const OverviewLastOrders = () => {
   return (
     <Card className="twp rounded-xl border border-payload-elevation-150 bg-transparent lg:col-span-3">
       <CardHeader>
-        <CardTitle>Recent Orders</CardTitle>
-        <CardDescription className="text-base text-payload-elevation-900 opacity-75">
-          You made 265 sales this month.
-        </CardDescription>
+        <CardTitle>{t("adminDashboard:recentOrders")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="w-full">
           <div className="flex items-center py-4">
             <div className="no-twp field-type text">
               <input
-                placeholder="Filter emails..."
+                placeholder={t("adminDashboard:filterEmails")}
                 value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
                 onChange={(event) => {
                   table.getColumn("email")?.setFilterValue(event.target.value);
@@ -223,7 +281,7 @@ export const OverviewLastOrders = () => {
                   variant="outline"
                   className="ml-auto border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-backgroundColor"
                 >
-                  Columns <ChevronDown className="ml-2" width={20} height={20} />
+                  {t("adminDashboard:columns")} <ChevronDown className="ml-2" width={20} height={20} />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-payload-elevation-50">
@@ -291,30 +349,24 @@ export const OverviewLastOrders = () => {
             </Table>
           </div>
           <div className="flex items-center justify-end space-x-2 py-4">
-            <div className="flex-1 text-base text-payload-elevation-900 opacity-75">
-              {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length}{" "}
-              row(s) selected.
-            </div>
-            <div className="space-x-2">
-              <Button
-                variant="outline"
-                className="border border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-elevation-0"
-                size="sm"
-                onClick={() => handlePaginationChange(currentPage - 1)}
-                disabled={currentPage <= 1}
-              >
-                Previous
-              </Button>
-              <Button
-                variant="outline"
-                className="border border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-elevation-0"
-                size="sm"
-                onClick={() => handlePaginationChange(currentPage + 1)}
-                disabled={data.length < 5}
-              >
-                Next
-              </Button>
-            </div>
+            <Button
+              variant="outline"
+              className="border border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-elevation-0"
+              size="sm"
+              onClick={() => handlePaginationChange(currentPage - 1)}
+              disabled={currentPage <= 1}
+            >
+              {t("adminDashboard:previous")}
+            </Button>
+            <Button
+              variant="outline"
+              className="border border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-elevation-0"
+              size="sm"
+              onClick={() => handlePaginationChange(currentPage + 1)}
+              disabled={data.length < 6}
+            >
+              {t("adminDashboard:next")}
+            </Button>
           </div>
         </div>
       </CardContent>
