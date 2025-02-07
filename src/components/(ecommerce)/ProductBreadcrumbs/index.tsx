@@ -40,7 +40,7 @@ export const ProductBreadcrumbs = ({ product }: { product: Product }) => {
             )}
           <li className="text-sm">
             <Link
-              href={`/products/${product.slug}`}
+              href={`/product/${product.slug}`}
               aria-current="page"
               className="font-medium text-gray-500 hover:text-gray-600"
             >
