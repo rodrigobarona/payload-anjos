@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { type Where } from "payload";
 import { stringify } from "qs-esm";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
@@ -22,6 +22,7 @@ import {
 import { type Locale } from "@/i18n/config";
 import { useRouter, usePathname, Link } from "@/i18n/routing";
 import { type ProductCategory, type Product } from "@/payload-types";
+import { getPriceRange } from "@/utilities/getPriceRange";
 
 export const Search = () => {
   const t = useTranslations("Search");
@@ -67,22 +68,49 @@ export const Search = () => {
         ],
       };
 
-      const stringifiedQuery = stringify(
+      const productsSelect = {
+        id: true,
+        slug: true,
+        title: true,
+        images: true,
+        variants: {
+          pricing: true,
+        },
+        enableVariantPrices: true,
+        pricing: true,
+      };
+
+      const categorySelect = {
+        id: true,
+        slug: true,
+        title: true,
+      };
+
+      const productStringifiedQuery = stringify(
         {
           where,
+          select: productsSelect,
+        },
+        { addQueryPrefix: true },
+      );
+
+      const categoryStringifiedQuery = stringify(
+        {
+          where,
+          select: categorySelect,
         },
         { addQueryPrefix: true },
       );
 
       const { data: productData } = await axios.get<{ docs: Product[] }>(
-        `/api/products${stringifiedQuery}&locale=${locale}&limit=5`,
+        `/api/products${productStringifiedQuery}&locale=${locale}&limit=5`,
         {
           withCredentials: true,
         },
       );
 
       const { data: categoriesData } = await axios.get<{ docs: ProductCategory[] }>(
-        `/api/productCategories${stringifiedQuery}&locale=${locale}&limit=5`,
+        `/api/productCategories${categoryStringifiedQuery}&locale=${locale}&limit=5`,
         {
           withCredentials: true,
         },
@@ -93,7 +121,6 @@ export const Search = () => {
 
       setResultProducts(products);
       setResultCategories(categories);
-      console.log(products, categories);
     } catch (error) {
       console.log(error);
     }
@@ -147,19 +174,39 @@ export const Search = () => {
           <CommandEmpty>{t("no-results")}</CommandEmpty>
           {resultProducts.length > 0 && (
             <CommandGroup heading={t("products")}>
-              {resultProducts.map((product) => (
-                <CommandItem asChild className="cursor-pointer" key={product.id}>
-                  <Link
-                    onClick={handleItemClick}
-                    className="flex items-center gap-3"
-                    href={`/product/${product.slug}`}
-                  >
-                    <Media className="h-16 w-16" resource={product.images[0]} />
-                    <p className="mr-auto">{product.title}</p>
-                    <PriceClient pricing={product.pricing ?? []} />
-                  </Link>
-                </CommandItem>
-              ))}
+              {resultProducts.map((product) => {
+                const priceRange = getPriceRange(product.variants, product.enableVariantPrices ?? false);
+
+                let pricingComponent: ReactNode;
+
+                if (priceRange?.length === 2) {
+                  pricingComponent = (
+                    <div>
+                      <PriceClient pricing={priceRange[0]} />
+                      <span className="mx-1">-</span>
+                      <PriceClient pricing={priceRange[1]} />
+                    </div>
+                  );
+                } else if (priceRange?.length === 1) {
+                  pricingComponent = <PriceClient pricing={priceRange[0]} />;
+                } else if (!product.enableVariantPrices && product.pricing) {
+                  pricingComponent = <PriceClient pricing={product.pricing} />;
+                }
+
+                return (
+                  <CommandItem asChild className="cursor-pointer" key={product.id}>
+                    <Link
+                      onClick={handleItemClick}
+                      className="flex items-center gap-3"
+                      href={`/product/${product.slug}`}
+                    >
+                      <Media className="h-16 w-16" resource={product.images[0]} />
+                      <p className="mr-auto">{product.title}</p>
+                      {pricingComponent}
+                    </Link>
+                  </CommandItem>
+                );
+              })}
             </CommandGroup>
           )}
           <CommandSeparator />
