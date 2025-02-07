@@ -128,7 +128,7 @@ export const Search = () => {
         value={searchValue}
         searchValue={searchValue}
         placeholder={t("search")}
-        className="h-fit border-b-0 py-2"
+        className="h-fit border-b-0 lg:py-2"
       />
       <CommandList
         className={twMerge(
