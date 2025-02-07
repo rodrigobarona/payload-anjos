@@ -126,6 +126,12 @@ export const Search = () => {
       <CommandSearchInput
         onFocus={() => setIsOpen(true)}
         onValueChange={handleSearchChange}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            setIsOpen(false);
+            router.push(`/search?search=${searchValue}`);
+          }
+        }}
         value={searchValue}
         searchValue={searchValue}
         placeholder={t("search")}
