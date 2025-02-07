@@ -69,7 +69,7 @@ export const DefaultHeader = ({ data, disableCart }: { data: Header; disableCart
   return (
     <header className={classes} style={data.background ? { background: data.background } : {}}>
       <div
-        className={`container relative flex w-full items-center py-6 md:py-8 lg:gap-8 ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}
+        className={`container relative flex w-full items-center py-6 lg:gap-8 ${scrollValue > 0 ? "scrolled" : ""} ${isMenuOpened ? "opened" : ""}`}
       >
         <Link href="/" className="mr-auto">
           {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (

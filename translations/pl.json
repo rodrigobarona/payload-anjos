@@ -357,5 +357,12 @@
       "password-same": "Nowe hasło musi być inne niż stare",
       "server-error": "Wewnętrzny błąd serwera. Skontaktuj się z pomocą techniczną."
     }
+  },
+  "Search": {
+    "no-results": "Brak wyników.",
+    "results": "Wyniki dla",
+    "search": "Szukaj",
+    "categories": "Kategorie",
+    "products": "Produkty"
   }
 }

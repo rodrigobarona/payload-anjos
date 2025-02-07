@@ -131,13 +131,13 @@ export const Search = () => {
     <Command
       onBlur={handleSearchBlur}
       ref={searchRef}
-      className="group absolute left-1/2 top-full h-fit w-screen -translate-x-1/2 overflow-visible border-b-0 px-4 shadow-md lg:top-1/2 lg:w-fit lg:min-w-[450px] lg:-translate-y-1/2 lg:rounded-lg lg:px-0 xl:w-1/2"
+      className="group absolute left-1/2 top-full h-fit w-screen max-w-[550px] -translate-x-1/2 overflow-visible border-b-0 px-4 shadow-md lg:top-1/2 lg:w-fit lg:min-w-[450px] lg:-translate-y-1/2 lg:rounded-lg lg:px-0 xl:w-1/2"
     >
       <CommandInput
         onFocus={() => setIsOpen(true)}
         onValueChange={handleSearchChange}
         placeholder={t("search")}
-        className="border-b-0"
+        className="h-fit border-b-0 py-2"
       />
       <CommandList
         className={twMerge(

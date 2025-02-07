@@ -358,7 +358,7 @@
     }
   },
   "Search": {
-    "no-results": "No results found",
+    "no-results": "No results found.",
     "results": "Results for",
     "search": "Search...",
     "categories": "Categories",
