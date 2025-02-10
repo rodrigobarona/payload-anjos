@@ -46,6 +46,7 @@ export async function POST(req: Request) {
               orderDetails: {
                 status: "paid",
                 transactionID: paymentIntent.id,
+                amountPaid: paymentIntent.amount_received / 100,
               },
             },
           });

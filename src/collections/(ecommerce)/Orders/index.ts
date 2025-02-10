@@ -646,6 +646,16 @@ export const Orders: CollectionConfig = {
           ],
         },
         {
+          name: "amountPaid",
+          type: "number",
+          defaultValue: 0,
+          label: { en: "Amount Paid", pl: "Zapłacona kwota" },
+          required: true,
+          admin: {
+            readOnly: true,
+          },
+        },
+        {
           name: "shipping",
           type: "select",
           label: {

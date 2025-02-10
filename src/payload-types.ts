@@ -1390,6 +1390,7 @@ export interface Order {
     shippingCost: number;
     totalWithShipping: number;
     currency: string;
+    amountPaid: number;
     shipping?: ('inpost-pickup' | 'inpost-courier' | 'inpost-courier-cod') | null;
     transactionID?: string | null;
     status: 'pending' | 'paid' | 'unpaid' | 'processing' | 'shipped' | 'completed' | 'cancelled' | 'returned';
@@ -2214,6 +2215,7 @@ export interface OrdersSelect<T extends boolean = true> {
         shippingCost?: T;
         totalWithShipping?: T;
         currency?: T;
+        amountPaid?: T;
         shipping?: T;
         transactionID?: T;
         status?: T;
