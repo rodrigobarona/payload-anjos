@@ -32,6 +32,8 @@ export const ProductForm = ({
   const [quantity, setQuantity] = useState(1);
   const { updateCart, cart } = useCart();
 
+  const defaultVariant = filledVariants?.find((variant) => variant.stock > 0) ?? filledVariants?.[0];
+
   const { toggleWishList, wishlist } = useWishList();
 
   const t = useTranslations("ProductDetails");
@@ -59,7 +61,7 @@ export const ProductForm = ({
     if (quantity > maxQuantity) {
       setQuantity(maxQuantity);
     }
-  }, [selectedVariant, maxQuantity, quantity]);
+  }, [selectedVariant, maxQuantity, quantity, minQuantity]);
 
   useEffect(() => {
     setOverStock(false);
@@ -119,7 +121,7 @@ export const ProductForm = ({
 
           <fieldset aria-label={t("choose-color")} className="mt-2">
             <RadioGroup
-              value={selectedVariant?.color?.id ?? filledVariants?.[0]?.color?.id}
+              value={selectedVariant?.color?.id ?? defaultVariant?.color?.id}
               onChange={handleChangeColor}
               className="flex items-center gap-x-3"
             >
@@ -159,7 +161,7 @@ export const ProductForm = ({
 
           <fieldset aria-label={t("choose-size")} className="mt-2">
             <RadioGroup
-              value={selectedVariant?.size?.id ?? filledVariants?.[0]?.size?.id}
+              value={selectedVariant?.size?.id ?? defaultVariant?.size?.id}
               onChange={handleChangeSize}
               className="grid grid-cols-3 gap-3 sm:grid-cols-6"
             >

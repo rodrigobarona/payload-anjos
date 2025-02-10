@@ -39,7 +39,7 @@ export const WithImageGalleryExpandableDetails = ({
   }));
 
   const selectedVariant =
-    filledVariants?.find((filledVariant) => filledVariant.slug === variant) ?? filledVariants?.[0];
+    filledVariants?.find((filledVariant) => filledVariant.slug === variant) ?? filledVariants?.find((variant) => variant.stock > 0) ?? filledVariants?.[0];
 
   const maxQuantity = selectedVariant?.stock ?? product.stock ?? 999;
   const minQuantity = 1;
