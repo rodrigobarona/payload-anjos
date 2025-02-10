@@ -126,6 +126,9 @@ export const Orders: CollectionConfig = {
                   type: "text",
                   admin: {
                     hidden: true,
+                    components: {
+                      Field: "@/collections/(ecommerce)/Orders/components/ProductNameField#ProductNameField",
+                    },
                   },
                 },
                 {
@@ -220,6 +223,10 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
+                        components: {
+                          Field:
+                            "@/collections/(ecommerce)/Orders/components/ProductTotalPriceField#ProductTotalPriceField",
+                        },
                       },
                       required: true,
                     },
@@ -264,7 +271,6 @@ export const Orders: CollectionConfig = {
                     pl: "NIP",
                   },
                   admin: {
-                    readOnly: true,
                     condition: (_, siblingData) => Boolean(siblingData.isCompany),
                   },
                 },
@@ -597,7 +603,12 @@ export const Orders: CollectionConfig = {
                 en: "Total (without shipping)",
                 pl: "Suma (bez kosztów dostawy)",
               },
-
+              admin: {
+                components: {
+                  Field:
+                    "@/collections/(ecommerce)/Orders/components/OrderTotalPriceField#OrderTotalPriceField",
+                },
+              },
               required: true,
             },
             {
@@ -623,6 +634,10 @@ export const Orders: CollectionConfig = {
                 pl: "Suma (z kosztami dostawy)",
               },
               admin: {
+                components: {
+                  Field:
+                    "@/collections/(ecommerce)/Orders/components/OrderTotalWithShippingField#OrderTotalWithShippingField",
+                },
                 width: "50%",
               },
               required: true,

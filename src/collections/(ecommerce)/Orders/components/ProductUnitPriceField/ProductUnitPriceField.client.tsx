@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export const ProductUnitPriceFieldClient = ({
   path,
-  isFromAPI,
+  // isFromAPI,
   unitPrice,
   field,
   schemaPath,
@@ -27,19 +27,11 @@ export const ProductUnitPriceFieldClient = ({
   const { dispatchFields } = useForm();
 
   const handleUnlock = () => {
-    if (isFromAPI) {
-      dispatchFields({
-        type: "UPDATE",
-        path: checkboxPath,
-        value: !checkboxValue,
-      });
-    } else {
-      dispatchFields({
-        type: "UPDATE",
-        path: checkboxPath,
-        value: !checkboxValue,
-      });
-    }
+    dispatchFields({
+      type: "UPDATE",
+      path: checkboxPath,
+      value: !checkboxValue,
+    });
   };
 
   useEffect(() => {
