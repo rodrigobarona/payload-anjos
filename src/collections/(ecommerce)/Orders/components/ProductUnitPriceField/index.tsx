@@ -35,7 +35,7 @@ export const ProductUnitPriceField: NumberFieldServerComponent = async ({
         ?.pricing?.find((price) => price.currency === (orderDetails.currency as Currency))?.value
     : product?.pricing?.find((price) => price.currency === (orderDetails.currency as Currency))?.value;
 
-  console.log(unitPrice);
+  // console.log(unitPrice);
 
   const isFromAPI = Boolean(siblingData.isFromAPI as boolean);
 
@@ -45,6 +45,7 @@ export const ProductUnitPriceField: NumberFieldServerComponent = async ({
         path={path}
         isFromAPI={isFromAPI}
         field={clientField}
+        unitPrice={unitPrice}
         schemaPath={schemaPath}
         permissions={permissions}
       />

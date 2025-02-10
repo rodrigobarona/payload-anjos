@@ -205,6 +205,7 @@ export const Orders: CollectionConfig = {
                         en: "Auto Price",
                         pl: "Automatyczna cena",
                       },
+                      defaultValue: false,
                       admin: {
                         readOnly: true,
                         hidden: true,
@@ -315,7 +316,6 @@ export const Orders: CollectionConfig = {
                       },
                       admin: {
                         width: "50%",
-                        readOnly: true,
                       },
                     },
                     {

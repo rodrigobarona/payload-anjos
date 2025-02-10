@@ -1,12 +1,12 @@
 "use client";
-import { NumberField, useForm } from "@payloadcms/ui";
+import { NumberField, useField, useForm, useFormFields } from "@payloadcms/ui";
 import { type SanitizedFieldPermissions, type NumberFieldClient } from "payload";
-import { useState } from "react";
+import { useEffect } from "react";
 
 export const ProductUnitPriceFieldClient = ({
   path,
-
   isFromAPI,
+  unitPrice,
   field,
   schemaPath,
   permissions,
@@ -18,39 +18,51 @@ export const ProductUnitPriceFieldClient = ({
   schemaPath?: string;
   permissions?: SanitizedFieldPermissions;
 }) => {
-  const [unlocked, setUnlocked] = useState(false);
-  const form = useForm();
+  const { value, setValue } = useField<number>({ path });
+
+  const checkboxPath = path.replace("price", "autoprice");
+  const checkboxValue = useFormFields(([fields]) => {
+    return fields[checkboxPath]?.value as boolean;
+  });
+  const { dispatchFields } = useForm();
 
   const handleUnlock = () => {
     if (isFromAPI) {
-      setUnlocked(true);
-      form.dispatchFields({
+      dispatchFields({
         type: "UPDATE",
-        path: "products.1.autoprice",
-        value: !unlocked,
+        path: checkboxPath,
+        value: !checkboxValue,
       });
     } else {
-      setUnlocked(!unlocked);
-      form.dispatchFields({
+      dispatchFields({
         type: "UPDATE",
-        path: "products.1.autoprice",
-        value: !unlocked,
+        path: checkboxPath,
+        value: !checkboxValue,
       });
     }
   };
 
+  useEffect(() => {
+    if (checkboxValue) {
+      setValue(unitPrice);
+    }
+  }, [checkboxValue, setValue, value, unitPrice]);
+
   return (
     <div className="no-twp">
       <NumberField
-        readOnly={!unlocked}
+        readOnly={checkboxValue}
         field={field}
         path={path}
+        onChange={(e) => {
+          setValue(e);
+        }}
         schemaPath={schemaPath}
         permissions={permissions}
       />
 
-      <p className="mt-2" onClick={handleUnlock}>
-        {unlocked ? "Włącz auto-cenę" : "Wyłącz auto-cenę"}
+      <p className="mt-2 cursor-pointer" onClick={handleUnlock}>
+        {!checkboxValue ? "Włącz auto-cenę" : "Wyłącz auto-cenę"}
       </p>
     </div>
   );
