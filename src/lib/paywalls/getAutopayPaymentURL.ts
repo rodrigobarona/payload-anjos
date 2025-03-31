@@ -5,13 +5,19 @@ import axios from "axios";
 import { type Paywall } from "@/payload-types";
 import { type Currency } from "@/stores/Currency/types";
 
-export const getAutopayPaymentURL = async (
-  total: number,
-  autopay: Paywall["autopay"],
-  orderID: string,
-  currency: Currency,
-  customerEmail: string,
-) => {
+export const getAutopayPaymentURL = async ({
+  total,
+  autopay,
+  orderID,
+  currency,
+  customerEmail,
+}: {
+  total: number;
+  autopay: Paywall["autopay"];
+  orderID: string;
+  currency: Currency;
+  customerEmail: string;
+}) => {
   const serviceID = autopay?.serviceID ?? "";
   const hashKey = autopay?.hashKey ?? "";
   const endpoint = autopay?.endpoint ?? "";

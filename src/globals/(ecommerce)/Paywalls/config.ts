@@ -41,6 +41,13 @@ export const Paywalls: GlobalConfig = {
           },
           value: "autopay",
         },
+        {
+          label: {
+            en: "Przelewy24",
+            pl: "Przelewy24",
+          },
+          value: "p24",
+        },
       ],
       defaultValue: "stripe",
       required: true,
@@ -160,6 +167,82 @@ export const Paywalls: GlobalConfig = {
           access: {
             read: authenticated,
 
+            create: authenticated,
+            update: authenticated,
+          },
+          required: true,
+        },
+      ],
+    },
+    {
+      name: "p24",
+      label: {
+        en: "Przelewy24 configuration",
+        pl: "Konfiguracja Przelewy24",
+      },
+      type: "group",
+      admin: {
+        condition: (data) => {
+          return data.paywall === "p24";
+        },
+        description: {
+          pl: "Jeśli chcesz korzystać ze środowiska testowego, podaj tu odpowiadające klucze.",
+          en: "If you want to use test environment, you can also provide test keys here.",
+        },
+      },
+      fields: [
+        {
+          name: "posId",
+          type: "text",
+          label: {
+            en: "POS ID (User ID)",
+            pl: "POS ID (ID użytkownika)",
+          },
+          access: {
+            read: authenticated,
+            create: authenticated,
+            update: authenticated,
+          },
+          required: true,
+        },
+        {
+          name: "crc",
+          type: "text",
+          label: {
+            en: "CRC Key",
+            pl: "CRC (Klucz do CRC)",
+          },
+          access: {
+            read: authenticated,
+            create: authenticated,
+            update: authenticated,
+          },
+          required: true,
+        },
+        {
+          name: "secretId",
+          type: "text",
+          label: {
+            en: "Secret ID (Klucz do raportów)",
+            pl: "Secret ID (Klucz do raportów)",
+          },
+          access: {
+            read: authenticated,
+            create: authenticated,
+
+            update: authenticated,
+          },
+          required: true,
+        },
+        {
+          name: "endpoint",
+          type: "text",
+          label: {
+            en: "Endpoint",
+            pl: "Endpoint",
+          },
+          access: {
+            read: authenticated,
             create: authenticated,
             update: authenticated,
           },

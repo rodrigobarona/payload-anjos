@@ -3102,7 +3102,7 @@ export interface InpostCourierCod {
  */
 export interface Paywall {
   id: string;
-  paywall: 'stripe' | 'autopay';
+  paywall: 'stripe' | 'autopay' | 'p24';
   /**
    * If you want to use test environment, you can also provide test keys here.
    */
@@ -3117,6 +3117,15 @@ export interface Paywall {
   autopay?: {
     serviceID: string;
     hashKey: string;
+    endpoint: string;
+  };
+  /**
+   * If you want to use test environment, you can also provide test keys here.
+   */
+  p24?: {
+    posId: string;
+    crc: string;
+    secretId: string;
     endpoint: string;
   };
   updatedAt?: string | null;
@@ -3482,6 +3491,14 @@ export interface PaywallsSelect<T extends boolean = true> {
     | {
         serviceID?: T;
         hashKey?: T;
+        endpoint?: T;
+      };
+  p24?:
+    | T
+    | {
+        posId?: T;
+        crc?: T;
+        secretId?: T;
         endpoint?: T;
       };
   updatedAt?: T;

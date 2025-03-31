@@ -5,15 +5,23 @@ import { type Currency } from "@/stores/Currency/types";
 
 import { type FilledProduct } from "../getFilledProducts";
 
-export const getStripePaymentURL = async (
-  filledProducts: FilledProduct[],
-  shippingCost: number,
-  shippingLabel: string,
-  currency: Currency,
-  locale: Locale,
-  apiKey: string,
-  orderID: string,
-) => {
+export const getStripePaymentURL = async ({
+  filledProducts,
+  shippingCost,
+  shippingLabel,
+  currency,
+  locale,
+  apiKey,
+  orderID,
+}: {
+  filledProducts: FilledProduct[];
+  shippingCost: number;
+  shippingLabel: string;
+  currency: Currency;
+  locale: Locale;
+  apiKey: string;
+  orderID: string;
+}) => {
   const stripe = new Stripe(apiKey);
 
   const stripeMappedProducts = filledProducts.map((product) => {

@@ -6,6 +6,7 @@ import { getFilledProducts } from "@/lib/getFilledProducts";
 import { getTotal } from "@/lib/getTotal";
 import { getTotalWeight } from "@/lib/getTotalWeight";
 import { getAutopayPaymentURL } from "@/lib/paywalls/getAutopayPaymentURL";
+import { getP24PaymentURL } from "@/lib/paywalls/getP24PaymentURL";
 import { getStripePaymentURL } from "@/lib/paywalls/getStripePaymentURL";
 import { type CheckoutFormData } from "@/schemas/checkoutForm.schema";
 import { type Cart } from "@/stores/CartStore/types";
@@ -231,28 +232,45 @@ export async function POST(req: Request) {
 
     const totalWithShipping = (total.find((price) => price.currency === currency)?.value ?? 0) + shippingCost;
 
+    console.log(paywalls.paywall);
+
     try {
       switch (paywalls.paywall) {
         case "stripe":
-          redirectURL = await getStripePaymentURL(
+          redirectURL = await getStripePaymentURL({
             filledProducts,
             shippingCost,
-            courierData.settings.label,
+            shippingLabel: courierData.settings.label,
             currency,
             locale,
-            paywalls?.stripe?.secret ?? "",
-            order.id,
-          );
+            apiKey: paywalls?.stripe?.secret ?? "",
+            orderID: order.id,
+          });
           break;
 
         case "autopay":
-          redirectURL = await getAutopayPaymentURL(
-            totalWithShipping,
-            paywalls?.autopay,
-            order.id,
+          redirectURL = await getAutopayPaymentURL({
+            total: totalWithShipping,
+            autopay: paywalls?.autopay,
+            orderID: order.id,
             currency,
-            checkoutData.shipping.email,
-          );
+            customerEmail: checkoutData.shipping.email,
+          });
+          break;
+        case "p24":
+          redirectURL = await getP24PaymentURL({
+            secretId: paywalls.p24?.secretId ?? "",
+            posId: Number(paywalls.p24?.posId ?? 0),
+            crc: paywalls.p24?.crc ?? "",
+            endpoint: paywalls.p24?.endpoint ?? "",
+            sessionId: order.id,
+            amount: totalWithShipping,
+            currency,
+            description: `${locale} - ${order.id}`,
+            email: order.shippingAddress.email,
+            locale,
+            client: user,
+          });
           break;
 
         default:
@@ -260,11 +278,6 @@ export async function POST(req: Request) {
       }
     } catch (error) {
       console.log(error);
-      return Response.json({ status: 500, message: "Error while creating payment" });
-    }
-    return Response.json({ status: 500, message: "Error while creating payment" });
-
-    if (!redirectURL) {
       return Response.json({ status: 500, message: "Error while creating payment" });
     }
 
