@@ -5,6 +5,7 @@ import { type Locale } from "@/i18n/config";
 import { getFilledProducts } from "@/lib/getFilledProducts";
 import { getTotal } from "@/lib/getTotal";
 import { getTotalWeight } from "@/lib/getTotalWeight";
+import { getAutopayPaymentURL } from "@/lib/paywalls/getAutopayPaymentURL";
 import { getStripePaymentURL } from "@/lib/paywalls/getStripePaymentURL";
 import { type CheckoutFormData } from "@/schemas/checkoutForm.schema";
 import { type Cart } from "@/stores/CartStore/types";
@@ -105,15 +106,15 @@ export async function POST(req: Request) {
           quantity: product.quantity ?? 0,
           isFromAPI: true,
           hasVariant: product.enableVariants && product.variant ? true : false,
-          variantSlug: product.variant.variantSlug ?? undefined,
-          color: product.variant.color?.slug ?? undefined,
-          size: product.variant.size?.slug ?? undefined,
+          variantSlug: product.variant?.variantSlug ?? undefined,
+          color: product.variant?.color?.slug ?? undefined,
+          size: product.variant?.size?.slug ?? undefined,
           price:
-            product.variant.pricing && product.enableVariantPrices
+            product.variant?.pricing && product.enableVariantPrices
               ? (product.variant.pricing.find((price) => price.currency === currency)?.value ?? 0)
               : (product.pricing?.find((price) => price.currency === currency)?.value ?? 0),
           priceTotal:
-            (product.variant.pricing && product.enableVariantPrices
+            (product.variant?.pricing && product.enableVariantPrices
               ? (product.variant.pricing.find((price) => price.currency === currency)?.value ?? 0)
               : (product.pricing?.find((price) => price.currency === currency)?.value ?? 0)) *
             (product?.quantity ?? 0),
@@ -228,6 +229,8 @@ export async function POST(req: Request) {
       });
     }
 
+    const totalWithShipping = (total.find((price) => price.currency === currency)?.value ?? 0) + shippingCost;
+
     try {
       switch (paywalls.paywall) {
         case "stripe":
@@ -242,6 +245,16 @@ export async function POST(req: Request) {
           );
           break;
 
+        case "autopay":
+          redirectURL = await getAutopayPaymentURL(
+            totalWithShipping,
+            paywalls?.autopay,
+            order.id,
+            currency,
+            checkoutData.shipping.email,
+          );
+          break;
+
         default:
           break;
       }
@@ -249,6 +262,7 @@ export async function POST(req: Request) {
       console.log(error);
       return Response.json({ status: 500, message: "Error while creating payment" });
     }
+    return Response.json({ status: 500, message: "Error while creating payment" });
 
     if (!redirectURL) {
       return Response.json({ status: 500, message: "Error while creating payment" });

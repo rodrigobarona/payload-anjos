@@ -105,6 +105,68 @@ export const Paywalls: GlobalConfig = {
         },
       ],
     },
+    {
+      name: "autopay",
+      label: {
+        en: "Autopay configuration",
+        pl: "Konfiguracja Autopay",
+      },
+      type: "group",
+      admin: {
+        condition: (data) => {
+          return data.paywall === "autopay";
+        },
+        description: {
+          pl: "Jeśli chcesz korzystać ze środowiska testowego, podaj tu odpowiadające klucze.",
+          en: "If you want to use test environment, you can also provide test keys here.",
+        },
+      },
+      fields: [
+        {
+          name: "serviceID",
+          type: "text",
+          label: {
+            en: "Service ID",
+            pl: "ServiceID (Identyfikator Serwisu Partnera)",
+          },
+          access: {
+            read: authenticated,
+            create: authenticated,
+            update: authenticated,
+          },
+          required: true,
+        },
+        {
+          name: "hashKey",
+          type: "text",
+          label: {
+            en: "Hash Key",
+            pl: "HashKey (Klucz do generowania hasha)",
+          },
+          access: {
+            read: authenticated,
+            create: authenticated,
+            update: authenticated,
+          },
+          required: true,
+        },
+        {
+          name: "endpoint",
+          type: "text",
+          label: {
+            en: "Endpoint",
+            pl: "Endpoint",
+          },
+          access: {
+            read: authenticated,
+
+            create: authenticated,
+            update: authenticated,
+          },
+          required: true,
+        },
+      ],
+    },
   ],
   hooks: {
     afterChange: [revalidateGlobal],

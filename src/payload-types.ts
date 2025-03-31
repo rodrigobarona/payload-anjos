@@ -3111,6 +3111,14 @@ export interface Paywall {
     webhookSecret: string;
     public?: string | null;
   };
+  /**
+   * If you want to use test environment, you can also provide test keys here.
+   */
+  autopay?: {
+    serviceID: string;
+    hashKey: string;
+    endpoint: string;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3468,6 +3476,13 @@ export interface PaywallsSelect<T extends boolean = true> {
         secret?: T;
         webhookSecret?: T;
         public?: T;
+      };
+  autopay?:
+    | T
+    | {
+        serviceID?: T;
+        hashKey?: T;
+        endpoint?: T;
       };
   updatedAt?: T;
   createdAt?: T;
