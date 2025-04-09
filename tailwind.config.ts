@@ -1,6 +1,5 @@
 import tailwindTypography from "@tailwindcss/typography";
 import tailwindAnimate from "tailwindcss-animate";
-import { scopedPreflightStyles, isolateInsideOfContainer } from "tailwindcss-scoped-preflight";
 
 import type { Config } from "tailwindcss";
 
@@ -15,15 +14,7 @@ const config: Config = {
   corePlugins: {
     preflight: false,
   },
-  plugins: [
-    tailwindAnimate,
-    tailwindTypography,
-    scopedPreflightStyles({
-      isolationStrategy: isolateInsideOfContainer(".twp", {
-        except: ".no-twp",
-      }),
-    }),
-  ],
+  plugins: [tailwindAnimate, tailwindTypography],
   prefix: "",
   safelist: [
     "lg:col-span-4",
