@@ -2,14 +2,14 @@
 import { GeistMono } from "geist/font/mono";
 // eslint-disable-next-line
 import { GeistSans } from "geist/font/sans";
-import { draftMode } from "next/headers";
+// import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import React, { type ReactNode } from "react";
 
 import "../globals.css";
-import { LivePreviewListener } from "@/components/LivePreviewListener";
+// import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { Footer } from "@/globals/Footer/Component";
 import { type Locale } from "@/i18n/config";
 import { routing } from "@/i18n/routing";
@@ -31,7 +31,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
   children: ReactNode;
 }) {
-  const { isEnabled } = await draftMode();
+  // const { isEnabled } = await draftMode();
   const { locale } = await params;
 
   if (!routing.locales.includes(locale as Locale)) {
@@ -62,7 +62,7 @@ export default async function RootLayout({
                 preview: isEnabled,
               }}
             /> */}
-            {isEnabled && <LivePreviewListener />}
+            {/* {isEnabled && <LivePreviewListener />} */}
             {children}
             <Footer />
           </NextIntlClientProvider>
