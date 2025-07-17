@@ -1,9 +1,9 @@
 import { cache } from "react";
 
-import type { NavPreferences, Payload, User } from "payload";
+import type { NavPreferences, Payload, TypedUser } from "payload";
 
 export const getNavPrefs = cache(
-  async ({ payload, user }: { payload: Payload; user?: User }): Promise<NavPreferences | null> =>
+  async ({ payload, user }: { payload: Payload; user?: TypedUser }): Promise<NavPreferences | null> =>
     user
       ? payload
           .find({
