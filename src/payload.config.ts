@@ -51,6 +51,9 @@ export default buildConfig({
         Logo: "@/components/AdminLogoBig/AdminLogoBig#AdminLogoBig",
         Icon: "@/components/AdminLogoIcon/AdminLogoIcon#AdminLogoIcon",
       },
+      Nav: {
+        path: "@/components/AdminNavbar#AdminNavbar",
+      },
       views: {
         dashboard: {
           Component: "@/components/(ecommerce)/AdminDashboard#AdminDashboard",
