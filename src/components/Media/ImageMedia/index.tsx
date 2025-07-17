@@ -57,7 +57,7 @@ export const ImageMedia = (props: MediaProps) => {
         className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height : undefined}
-        placeholder={placeholderFromProps ?? "blur-sm"}
+        placeholder={placeholderFromProps ?? "blur"}
         blurDataURL={placeholderBlur}
         priority={priority}
         quality={100}
