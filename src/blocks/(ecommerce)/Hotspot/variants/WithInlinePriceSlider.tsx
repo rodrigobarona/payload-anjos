@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { type OptionsType } from "node_modules/.pnpm/embla-carousel@8.5.2/node_modules/embla-carousel/esm/components/Options";
 import { type ReactNode } from "react";
 
 import { PriceClient } from "@/components/(ecommerce)/PriceClient";
@@ -15,12 +14,17 @@ import { Link } from "@/i18n/routing";
 import { type Product } from "@/payload-types";
 import { getPriceRange } from "@/utilities/getPriceRange";
 
+import type useEmblaCarousel from "embla-carousel-react";
+
+type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
+type CarouselOptions = UseCarouselParameters[0];
+
 export const WithInlinePriceSlider = ({
   products,
   opts,
 }: {
   products: Product[];
-  opts?: Partial<OptionsType>;
+  opts?: Partial<CarouselOptions>;
 }) => {
   const t = useTranslations("ProductList");
   return (
