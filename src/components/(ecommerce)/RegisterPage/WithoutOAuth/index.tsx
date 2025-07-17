@@ -12,11 +12,11 @@ export const RegisterPageWithoutOAuth = () => {
       <div className="container flex w-full flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <Image
-            alt="Pimento"
+            alt="Mandala Software House"
             width={125}
             height={88}
-            src="/pimento.svg"
-            className="-my-5 mx-auto h-20 w-auto invert"
+            src="/mandala.svg"
+            className="mx-auto -my-5 h-20 w-auto invert"
           />
           <h2 className="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">{t("title")}</h2>
         </div>
@@ -28,7 +28,7 @@ export const RegisterPageWithoutOAuth = () => {
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             {t("have-account")}{" "}
-            <Link href="/register" className="font-semibold text-main-600 hover:text-main-500">
+            <Link href="/register" className="text-main-600 hover:text-main-500 font-semibold">
               {t("login-now")}
             </Link>
           </p>

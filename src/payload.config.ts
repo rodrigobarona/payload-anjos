@@ -70,7 +70,7 @@ export default buildConfig({
         },
       ],
       title: "Admin Panel",
-      titleSuffix: "| Pimento",
+      titleSuffix: "| Mandala SH",
     },
     importMap: {
       baseDir: path.resolve(dirname),

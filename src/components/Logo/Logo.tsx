@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 type Props = {
   className?: string;
@@ -15,14 +15,14 @@ export const Logo = (props: Props) => {
   return (
     /* eslint-disable @next/next/no-img-element */
     <img
-      alt="Pimento logo"
+      alt="Mandala Software House logo"
       width={125}
       height={88}
       loading={loading}
       fetchPriority={priority}
       decoding="async"
       className={clsx("-my-7 h-[88px] w-full max-w-37.5", className)}
-      src="/pimento.svg"
+      src="/mandala.svg"
     />
   );
 };
