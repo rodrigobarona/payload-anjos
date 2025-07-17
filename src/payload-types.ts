@@ -54,6 +54,7 @@ export type SupportedTimezones =
   | 'Asia/Singapore'
   | 'Asia/Tokyo'
   | 'Asia/Seoul'
+  | 'Australia/Brisbane'
   | 'Australia/Sydney'
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
@@ -245,7 +246,7 @@ export interface Page {
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('default' | 'outline-solid') | null;
+            appearance?: ('default' | 'outline') | null;
           };
           id?: string | null;
         }[]
@@ -452,6 +453,13 @@ export interface Administrator {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -493,7 +501,7 @@ export interface CallToActionBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline-solid') | null;
+          appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
       }[]
@@ -550,7 +558,7 @@ export interface ContentBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline-solid') | null;
+          appearance?: ('default' | 'outline') | null;
         };
         background?: string | null;
         id?: string | null;
@@ -774,6 +782,7 @@ export interface Form {
             label?: string | null;
             width?: number | null;
             defaultValue?: string | null;
+            placeholder?: string | null;
             options?:
               | {
                   label: string;
@@ -917,7 +926,7 @@ export interface CarouselBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline-solid') | null;
+          appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
       }[]
@@ -1037,13 +1046,15 @@ export interface ProductCategory {
   slug?: string | null;
   slugLock?: boolean | null;
   subcategories?: {
-    docs?: (string | ProductSubCategory)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | ProductSubCategory)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   products?: {
-    docs?: (string | Product)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Product)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1058,9 +1069,10 @@ export interface ProductSubCategory {
   slug?: string | null;
   slugLock?: boolean | null;
   products?: {
-    docs?: (string | Product)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Product)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1259,9 +1271,10 @@ export interface Customer {
       }[]
     | null;
   orders?: {
-    docs?: (string | Order)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Order)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   cart?:
     | {
         [k: string]: unknown;
@@ -1291,6 +1304,13 @@ export interface Customer {
   _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -2164,6 +2184,13 @@ export interface AdministratorsSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2202,6 +2229,13 @@ export interface CustomersSelect<T extends boolean = true> {
   _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2475,6 +2509,7 @@ export interface FormsSelect<T extends boolean = true> {
               label?: T;
               width?: T;
               defaultValue?: T;
+              placeholder?: T;
               options?:
                 | T
                 | {

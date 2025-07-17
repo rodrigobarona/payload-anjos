@@ -1,24 +1,10 @@
-import { LinkFeature, lexicalEditor, BlocksFeature } from "@payloadcms/richtext-lexical";
+import { LinkFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import { type Config } from "payload";
-
-// import {
-//   BgColorFeature,
-//   HighlightColorFeature,
-//   TextColorFeature,
-//   YoutubeFeature,
-//   VimeoFeature,
-// } from "payloadcms-lexical-ext";
-import { Accordion } from "@/blocks/Accordion/config";
-import { Carousel } from "@/blocks/Carousel/config";
-import { FormBlock } from "@/blocks/Form/config";
 
 export const defaultLexical: Config["editor"] = lexicalEditor({
   features: ({ defaultFeatures }) => {
     return [
       ...defaultFeatures,
-      BlocksFeature({
-        blocks: [Carousel, FormBlock, Accordion],
-      }),
       LinkFeature({
         enabledCollections: ["pages", "posts"],
         fields: ({ defaultFields }) => {
@@ -41,12 +27,6 @@ export const defaultLexical: Config["editor"] = lexicalEditor({
           ];
         },
       }),
-      // TextColorFeature(),
-      // HighlightColorFeature(),
-      // BgColorFeature(),
-
-      //   YoutubeFeature(),
-      //   VimeoFeature(),
     ];
   },
 });
