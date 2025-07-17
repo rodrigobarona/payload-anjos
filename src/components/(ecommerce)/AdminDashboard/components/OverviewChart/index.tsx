@@ -10,7 +10,13 @@ import {
   type CustomTranslationsObject,
 } from "@/admin/translations/custom-translations";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type CustomTooltipProps,
+} from "@/components/ui/chart";
 
 type ChartData = {
   name: string;
@@ -46,7 +52,7 @@ export const OverviewChart = () => {
     },
   } satisfies ChartConfig;
   return (
-    <Card className="twp rounded-xl border border-payload-elevation-150 bg-transparent lg:col-span-4">
+    <Card className="twp border-payload-elevation-150 rounded-xl border bg-transparent lg:col-span-4">
       <CardHeader>
         <CardTitle>{t("adminDashboard:overview")}</CardTitle>
       </CardHeader>
@@ -72,9 +78,12 @@ export const OverviewChart = () => {
               <ChartTooltip
                 cursor={false}
                 labelClassName="text-payload-elevation-900"
-                content={
-                  <ChartTooltipContent className="border-payload-elevation-150 bg-payload-elevation-50 text-sm text-payload-elevation-900" />
-                }
+                content={(props: CustomTooltipProps) => (
+                  <ChartTooltipContent
+                    {...props}
+                    className="border-payload-elevation-150 bg-payload-elevation-50 text-payload-elevation-900 text-sm"
+                  />
+                )}
               />
               <Bar
                 dataKey="revenue"
