@@ -2,7 +2,12 @@ import { getTranslations } from "next-intl/server";
 import { getPayload } from "payload";
 
 import { WithInlinePrice } from "@/globals/(ecommerce)/Layout/ProductList/variants/listings/WithInlinePrice";
+import { routing } from "@/i18n/routing";
 import config from "@payload-config";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 const SearchPage = async ({ searchParams }: { searchParams: Promise<{ search: string }> }) => {
   const { search } = await searchParams;
@@ -33,7 +38,7 @@ const SearchPage = async ({ searchParams }: { searchParams: Promise<{ search: st
 
   return (
     <main className="container">
-      <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-gray-200 pb-6 pt-24">
+      <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-gray-200 pt-24 pb-6">
         <h1 className="text-4xl font-bold tracking-tight text-gray-900">
           {t("results")} {search}
         </h1>
