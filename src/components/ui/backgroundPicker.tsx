@@ -54,7 +54,7 @@ export const GradientPicker = ({
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant={"outline"}
+            variant={"outline-solid"}
             className={cn(
               "w-[220px] justify-start text-left font-normal",
               !background && "text-muted-foreground",
@@ -64,7 +64,7 @@ export const GradientPicker = ({
             <div className="flex w-full items-center gap-2">
               {background ? (
                 <div
-                  className="h-4 w-4 rounded !bg-cover !bg-center transition-all"
+                  className="h-4 w-4 rounded bg-cover! bg-center! transition-all"
                   style={{ background }}
                 ></div>
               ) : (

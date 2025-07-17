@@ -49,7 +49,7 @@ export const ProductGallery = ({
               </span>
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 group-data-[selected]:ring-main-500"
+                className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 group-data-selected:ring-main-500"
               />
             </Tab>
           )}

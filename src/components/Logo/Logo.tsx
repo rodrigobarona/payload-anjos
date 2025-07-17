@@ -21,7 +21,7 @@ export const Logo = (props: Props) => {
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx("-my-7 h-[88px] w-full max-w-[9.375rem]", className)}
+      className={clsx("-my-7 h-[88px] w-full max-w-37.5", className)}
       src="/pimento.svg"
     />
   );

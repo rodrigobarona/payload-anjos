@@ -83,7 +83,7 @@ export const WithImageGalleryExpandableDetails = ({
                     </span>
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 group-data-[selected]:ring-main-500"
+                      className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 group-data-selected:ring-main-500"
                     />
                   </Tab>
                 ),
@@ -159,17 +159,17 @@ export const WithImageGalleryExpandableDetails = ({
                   <Disclosure key={detail.id} as="div">
                     <h3>
                       <DisclosureButton className="group relative flex w-full items-center justify-between py-6 text-left">
-                        <span className="text-sm font-medium text-gray-900 group-data-[open]:text-main-600">
+                        <span className="text-sm font-medium text-gray-900 group-data-open:text-main-600">
                           {detail.title}
                         </span>
                         <span className="ml-6 flex items-center">
                           <PlusIcon
                             aria-hidden="true"
-                            className="block size-6 text-gray-400 group-hover:text-gray-500 group-data-[open]:hidden"
+                            className="block size-6 text-gray-400 group-hover:text-gray-500 group-data-open:hidden"
                           />
                           <MinusIcon
                             aria-hidden="true"
-                            className="hidden size-6 text-main-400 group-hover:text-main-500 group-data-[open]:block"
+                            className="hidden size-6 text-main-400 group-hover:text-main-500 group-data-open:block"
                           />
                         </span>
                       </DisclosureButton>

@@ -55,7 +55,7 @@ export const ChangeData = ({
             <FormItem className="flex w-full items-center">
               <FormControl>
                 <Input
-                  className="w-full border-none p-0 text-gray-900 outline-none ring-0 focus-within:outline-none focus:outline-none"
+                  className="w-full border-none p-0 text-gray-900 outline-hidden ring-0 focus-within:outline-hidden focus:outline-hidden"
                   type={type}
                   readOnly={!isEnabled}
                   {...field}

@@ -85,7 +85,7 @@ export const ChangePassword = ({ user }: { user: Customer }) => {
             {t("change-password")}
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-screen-sm">
+        <DialogContent className="max-w-(--breakpoint-sm)">
           <DialogHeader>
             <DialogTitle className="mb-4">{t("change-password")}</DialogTitle>
           </DialogHeader>

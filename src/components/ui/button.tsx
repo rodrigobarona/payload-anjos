@@ -5,7 +5,7 @@ import * as React from "react";
 import { cn } from "src/utilities/cn";
 
 const buttonVariants = cva(
-  "twp inline-flex items-center justify-center whitespace-nowrap rounded text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "twp inline-flex items-center justify-center whitespace-nowrap rounded text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     defaultVariants: {
       size: "default",
@@ -27,9 +27,9 @@ const buttonVariants = cva(
         outline: "border border-border bg-background hover:bg-card hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         tailwind:
-          "flex w-full justify-center rounded-md bg-main-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-main-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-main-600",
+          "flex w-full justify-center rounded-md bg-main-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-main-500 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-main-600",
         tailwindOutline:
-          "flex w-full justify-center rounded-md border-main-600 border px-3 bg-white py-1.5 text-sm/6 font-semibold text-main-600 shadow-sm hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-main-600",
+          "flex w-full justify-center rounded-md border-main-600 border px-3 bg-white py-1.5 text-sm/6 font-semibold text-main-600 shadow-xs hover:bg-gray-50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-main-600",
       },
     },
   },

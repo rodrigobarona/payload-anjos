@@ -1,63 +1,83 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-body {
-  margin: 0;
+@config '../../../tailwind.config.ts';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-}
+@layer utilities {
+  body {
+    margin: 0;
+  }
 
-.direction-rtl {
-  direction: rtl;
-}
+  html {
+    scroll-behavior: smooth;
+  }
 
-.header {
-  z-index: 10;
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  position: relative;
-  transition:
-    transform 0.3s,
-    width 0.3s,
-    max-width 0.3s,
-    background-color 0.3s,
-    backdrop-filter 0.3s,
-    padding 0.3s;
-  justify-content: space-between;
-}
+  .direction-rtl {
+    direction: rtl;
+  }
 
-.header.scrolled {
-  background-color: rgba(230, 234, 249, 0.5);
-}
-
-.header.scrolled .backdrop_blur {
-  backdrop-filter: blur(16px);
-  z-index: -30;
-}
-
-@media (min-width: 768px) {
-  .header.opened {
-    padding: 1.5rem 0;
+  .header {
+    z-index: 10;
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    position: relative;
+    transition:
+      transform 0.3s,
+      width 0.3s,
+      max-width 0.3s,
+      background-color 0.3s,
+      backdrop-filter 0.3s,
+      padding 0.3s;
+    justify-content: space-between;
   }
 
   .header.scrolled {
-    border-radius: 1.5rem;
-    max-width: 76rem;
+    background-color: rgba(230, 234, 249, 0.5);
   }
 
   .header.scrolled .backdrop_blur {
-    border-radius: 1.5rem;
+    backdrop-filter: blur(16px);
+    z-index: -30;
   }
-}
 
-.header_hidden {
-  transform: translateX(-50%) translateY(-100%);
+  @media (min-width: 768px) {
+    .header.opened {
+      padding: 1.5rem 0;
+    }
+
+    .header.scrolled {
+      border-radius: 1.5rem;
+      max-width: 76rem;
+    }
+
+    .header.scrolled .backdrop_blur {
+      border-radius: 1.5rem;
+    }
+  }
+
+  .header_hidden {
+    transform: translateX(-50%) translateY(-100%);
+  }
 }
 
 @layer base {
@@ -160,9 +180,11 @@ html {
   }
 }
 
-html body[data-scroll-locked] {
-  overflow: visible !important;
-  margin-right: 0 !important;
+@layer utilities {
+  html body[data-scroll-locked] {
+    overflow: visible !important;
+    margin-right: 0 !important;
+  }
 }
 
 @layer base {
@@ -170,7 +192,7 @@ html body[data-scroll-locked] {
     @apply border-border;
   }
   body {
-    @apply flex min-h-[100vh] flex-col bg-background text-foreground;
+    @apply flex min-h-screen flex-col bg-background text-foreground;
   }
 }
 

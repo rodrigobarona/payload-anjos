@@ -279,7 +279,7 @@ export const OverviewLastOrders = () => {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="ml-auto border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-backgroundColor"
+                  className="ml-auto border-payload-elevation-150 bg-payload-elevation-50 text-base hover:bg-payload-background-color"
                 >
                   {t("adminDashboard:columns")} <ChevronDown className="ml-2" width={20} height={20} />
                 </Button>

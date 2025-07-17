@@ -22,7 +22,7 @@ export const RegisterPageWithoutOAuth = () => {
         </div>
 
         <div className="mt-10 w-full sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+          <div className="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12">
             <RegisterForm />
           </div>
 

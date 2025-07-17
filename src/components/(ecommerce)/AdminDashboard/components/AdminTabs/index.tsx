@@ -19,25 +19,25 @@ export const AdminTabs = () => {
     <Tabs defaultValue="overview" onValueChange={handleValueChange}>
       <TabsList className="h-fit rounded-lg bg-payload-elevation-50 p-1.5 text-base">
         <TabsTrigger
-          className="rounded-lg px-3.5 text-base text-payload-elevation-900 data-[state=active]:bg-payload-backgroundColor"
+          className="rounded-lg px-3.5 text-base text-payload-elevation-900 data-[state=active]:bg-payload-background-color"
           value="overview"
         >
           Overview
         </TabsTrigger>
         <TabsTrigger
-          className="rounded-lg text-base text-payload-elevation-900 data-[state=active]:bg-payload-backgroundColor"
+          className="rounded-lg text-base text-payload-elevation-900 data-[state=active]:bg-payload-background-color"
           value="analytics"
         >
           Analytics
         </TabsTrigger>
         <TabsTrigger
-          className="rounded-lg text-base text-payload-elevation-900 data-[state=active]:bg-payload-backgroundColor"
+          className="rounded-lg text-base text-payload-elevation-900 data-[state=active]:bg-payload-background-color"
           value="reports"
         >
           Reports
         </TabsTrigger>
         <TabsTrigger
-          className="rounded-lg text-base text-payload-elevation-900 data-[state=active]:bg-payload-backgroundColor"
+          className="rounded-lg text-base text-payload-elevation-900 data-[state=active]:bg-payload-background-color"
           value="notifications"
         >
           Notifications

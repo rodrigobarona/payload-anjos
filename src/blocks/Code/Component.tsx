@@ -12,7 +12,7 @@ type Props = CodeBlockProps & {
 
 export const CodeBlock = ({ className, code, language }: Props) => {
   return (
-    <div className={[className, "not-prose container max-w-screen-lg"].filter(Boolean).join(" ")}>
+    <div className={[className, "not-prose container max-w-(--breakpoint-lg)"].filter(Boolean).join(" ")}>
       <Code code={code} language={language} />
     </div>
   );

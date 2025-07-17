@@ -52,7 +52,7 @@ export const QuantityInput = ({
       <Input
         type="number"
         className={cn(
-          `mx-auto h-full w-full min-w-10 max-w-16 p-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`,
+          `mx-auto h-full w-full min-w-10 max-w-16 p-2 text-center outline-hidden [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`,
           inputVariant === "cart" && "p-1",
         )}
         value={quantity}

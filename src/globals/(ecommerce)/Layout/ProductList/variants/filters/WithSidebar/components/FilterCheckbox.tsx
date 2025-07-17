@@ -56,7 +56,7 @@ export const FilterCheckbox = ({
       id={`filter-${sectionId}-${optionIdx}`}
       name={`${sectionId}[]`}
       type="checkbox"
-      className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-main-600 checked:bg-main-600 indeterminate:border-main-600 indeterminate:bg-main-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-main-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+      className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-main-600 checked:bg-main-600 indeterminate:border-main-600 indeterminate:bg-main-600 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-main-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
     />
   );
 };

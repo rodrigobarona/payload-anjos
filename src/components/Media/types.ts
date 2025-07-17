@@ -17,5 +17,5 @@ export type Props = {
   size?: string; // for NextImage only
   src?: StaticImageData; // for static media
   videoClassName?: string;
-  placeholder?: "blur" | "empty";
+  placeholder?: "blur-sm" | "empty";
 };

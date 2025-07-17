@@ -135,7 +135,7 @@ export const ProductForm = ({
                     disabled={!isAvailable}
                     className={cn(
                       "ring-gray-500",
-                      "focus:outline-hidden data-[focus]:data-[checked]:ring-3 relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 data-[checked]:ring-2 data-[focus]:data-[checked]:ring-offset-1",
+                      "focus:outline-hidden data-focus:data-checked:ring-3 relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 data-checked:ring-2 data-focus:data-checked:ring-offset-1",
                       !isAvailable && "cursor-not-allowed opacity-25",
                     )}
                   >
@@ -181,7 +181,7 @@ export const ProductForm = ({
                       matchingVariant
                         ? "focus:outline-hidden cursor-pointer"
                         : "cursor-not-allowed opacity-25",
-                      "flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-main-600 data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-main-500 data-[focus]:ring-offset-2 data-[checked]:hover:bg-main-700 sm:flex-1",
+                      "flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-checked:border-transparent data-checked:bg-main-600 data-checked:text-white data-focus:ring-2 data-focus:ring-main-500 data-focus:ring-offset-2 data-checked:hover:bg-main-700 sm:flex-1",
                     )}
                   >
                     {size.label}

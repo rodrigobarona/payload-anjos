@@ -55,7 +55,7 @@ export const ArchiveBlock = async (
     <div className="my-16" id={`block-${id}`}>
       {introContent && (
         <div className="container mb-16">
-          <RichText className="ml-0 max-w-[48rem]" data={introContent} enableGutter={false} />
+          <RichText className="ml-0 max-w-3xl" data={introContent} enableGutter={false} />
         </div>
       )}
       <CollectionArchive posts={posts} />

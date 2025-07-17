@@ -72,7 +72,7 @@ export const WithSidebarOrders = async () => {
                       key={`${product.id}-${product.variantSlug}`}
                       alt={product.productName ?? ""}
                       resource={image}
-                      className="aspect-square w-20 rounded-[6px] border object-cover shadow-sm"
+                      className="aspect-square w-20 rounded-[6px] border object-cover shadow-xs"
                     />
                   )
                 );

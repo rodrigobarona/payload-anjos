@@ -59,7 +59,7 @@ export const DeliveryMethod = ({
                 {t("choose-pickup")}
               </Button>
             </DialogTrigger>
-            <DialogContent className="flex h-[75dvh] w-[95vw] max-w-screen-xl flex-col sm:w-[80vw]">
+            <DialogContent className="flex h-[75dvh] w-[95vw] max-w-(--breakpoint-xl) flex-col sm:w-[80vw]">
               <DialogHeader>
                 <DialogTitle>
                   <h3 className="text-lg font-semibold leading-none tracking-tight">{t("choose-pickup")}</h3>
@@ -84,7 +84,7 @@ export const DeliveryMethod = ({
   return (
     <div className="flex flex-1 flex-col">
       <span className="flex flex-1 items-center gap-3">
-        {icon?.url && <Media resource={icon} className="block aspect-[31/24] max-h-12 w-fit max-w-[62px]" />}
+        {icon?.url && <Media resource={icon} className="block aspect-31/24 max-h-12 w-fit max-w-[62px]" />}
         <div className="flex-1">
           <span className="block text-sm font-medium text-gray-900">{title}</span>
           <span className="block items-center text-sm text-gray-500">{turnaround}</span>

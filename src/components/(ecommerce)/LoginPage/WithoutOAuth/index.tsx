@@ -22,7 +22,7 @@ export const LoginPageWithoutOAuth = ({ verified }: { verified?: string }) => {
         </div>
 
         <div className="mt-10 w-full sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+          <div className="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12">
             <LoginForm />
             {verified === "true" && <p className="mt-4 text-sm text-green-600">{t("verified-success")}</p>}
             {verified === "false" && <p className="mt-4 text-sm text-red-500">{t("verified-fail")}</p>}

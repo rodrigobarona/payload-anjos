@@ -17,7 +17,7 @@ export const AdminColorPicker: TextFieldClientComponent = ({ path, field }) => {
     <>
       <FieldLabel label={field.label}></FieldLabel>
       <div
-        className="preview twp flex h-full min-h-[150px] w-full items-center justify-center rounded !bg-cover !bg-center p-10 transition-all"
+        className="preview twp flex h-full min-h-[150px] w-full items-center justify-center rounded bg-cover! bg-center! p-10 transition-all"
         style={{ background: typeof value === "string" ? value : "transparent" }}
       >
         <GradientPicker background={typeof value === "string" ? value : ""} setBackground={setValue} />

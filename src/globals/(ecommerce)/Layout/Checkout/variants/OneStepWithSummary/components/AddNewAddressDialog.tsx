@@ -71,7 +71,7 @@ export const AddNewAddressDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogContent className="max-w-screen-sm">
+      <DialogContent className="max-w-(--breakpoint-sm)">
         <DialogHeader>
           <DialogTitle className="mb-4">{t("add-address")}</DialogTitle>
         </DialogHeader>

@@ -108,13 +108,13 @@ export const WithSidebar = ({
           {/*  Server from */}
           <DialogBackdrop
             transition
-            className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
+            className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-closed:opacity-0"
           />
 
           <div className="fixed inset-0 z-40 flex">
             <DialogPanel
               transition
-              className="relative ml-auto flex size-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
+              className="relative ml-auto flex size-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-closed:translate-x-full"
             >
               <div className="flex items-center justify-between px-4">
                 <h2 className="text-lg font-medium text-gray-900">{t("filters")}</h2>
@@ -157,7 +157,7 @@ export const WithSidebar = ({
                           <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
                             <span className="font-medium text-gray-900">{section.name}</span>
                             <span className="ml-6 flex items-center">
-                              <PlusIcon aria-hidden="true" className="size-5 group-data-[open]:hidden" />
+                              <PlusIcon aria-hidden="true" className="size-5 group-data-open:hidden" />
                               <MinusIcon
                                 aria-hidden="true"
                                 className="size-5 group-[&:not([data-open])]:hidden"
@@ -179,21 +179,21 @@ export const WithSidebar = ({
                                     <svg
                                       fill="none"
                                       viewBox="0 0 14 14"
-                                      className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
+                                      className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
                                     >
                                       <path
                                         d="M3 8L6 11L11 3.5"
                                         strokeWidth={2}
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        className="opacity-0 group-has-[:checked]:opacity-100"
+                                        className="opacity-0 group-has-checked:opacity-100"
                                       />
                                       <path
                                         d="M3 7H11"
                                         strokeWidth={2}
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        className="opacity-0 group-has-[:indeterminate]:opacity-100"
+                                        className="opacity-0 group-has-indeterminate:opacity-100"
                                       />
                                     </svg>
                                   </div>
@@ -280,7 +280,7 @@ export const WithSidebar = ({
                           <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
                             <span className="font-medium text-gray-900">{section.name}</span>
                             <span className="ml-6 flex items-center">
-                              <PlusIcon aria-hidden="true" className="size-5 group-data-[open]:hidden" />
+                              <PlusIcon aria-hidden="true" className="size-5 group-data-open:hidden" />
                               <MinusIcon
                                 aria-hidden="true"
                                 className="size-5 group-[&:not([data-open])]:hidden"
@@ -302,21 +302,21 @@ export const WithSidebar = ({
                                     <svg
                                       fill="none"
                                       viewBox="0 0 14 14"
-                                      className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
+                                      className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
                                     >
                                       <path
                                         d="M3 8L6 11L11 3.5"
                                         strokeWidth={2}
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        className="opacity-0 group-has-[:checked]:opacity-100"
+                                        className="opacity-0 group-has-checked:opacity-100"
                                       />
                                       <path
                                         d="M3 7H11"
                                         strokeWidth={2}
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        className="opacity-0 group-has-[:indeterminate]:opacity-100"
+                                        className="opacity-0 group-has-indeterminate:opacity-100"
                                       />
                                     </svg>
                                   </div>

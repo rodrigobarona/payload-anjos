@@ -42,7 +42,7 @@ export const FloatingHeader = ({ data }: { data: Header }) => {
   }, [data.hideOnScroll]);
 
   const classes = cn(
-    `sticky flex w-full top-0 justify-center md:px-12 transition-transformColors z-50`,
+    `sticky flex w-full top-0 justify-center md:px-12 transition-transform-colors z-50`,
     `${scrollValue > 0 && !isMenuOpened ? "md:translate-y-6" : ""}`,
     `${data.hideOnScroll && scrollDown ? "-translate-y-full md:-translate-y-full" : ""}`,
     // { ...(theme ? { "data-theme": theme } : {}) },
@@ -61,8 +61,8 @@ export const FloatingHeader = ({ data }: { data: Header }) => {
           {data.logo && typeof data.logo !== "string" && data.logo.url && data.logo.alt ? (
             <Media
               resource={data.logo}
-              imgClassName="h-[88px] w-full max-w-[9.375rem]"
-              className={`${isMenuOpened && "invert lg:invert-0"} -my-7 h-[88px] w-full max-w-[9.375rem]`}
+              imgClassName="h-[88px] w-full max-w-37.5"
+              className={`${isMenuOpened && "invert lg:invert-0"} -my-7 h-[88px] w-full max-w-37.5`}
             />
           ) : (
             <Logo />

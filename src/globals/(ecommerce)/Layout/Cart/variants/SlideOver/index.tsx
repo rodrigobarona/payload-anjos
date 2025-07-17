@@ -99,10 +99,10 @@ export const SlideOver = () => {
   const t = useTranslations("Cart");
 
   return (
-    <Dialog open={isOpen} onClose={toggleCart} className="relative z-[100]">
+    <Dialog open={isOpen} onClose={toggleCart} className="relative z-100">
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-500/75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
+        className="fixed inset-0 bg-gray-500/75 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
       />
 
       <div className="fixed inset-0 overflow-hidden">
@@ -110,7 +110,7 @@ export const SlideOver = () => {
           <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
             <DialogPanel
               transition
-              className="pointer-events-auto w-screen max-w-md transform transition duration-500 ease-in-out data-[closed]:translate-x-full sm:duration-700"
+              className="pointer-events-auto w-screen max-w-md transform transition duration-500 ease-in-out data-closed:translate-x-full sm:duration-700"
             >
               <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                 <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
@@ -254,7 +254,7 @@ export const SlideOver = () => {
                     <Link
                       href="/checkout"
                       onClick={() => setCartState(false)}
-                      className="flex items-center justify-center rounded-md border border-transparent bg-main-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-main-700"
+                      className="flex items-center justify-center rounded-md border border-transparent bg-main-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-main-700"
                     >
                       {t("checkout")}
                     </Link>

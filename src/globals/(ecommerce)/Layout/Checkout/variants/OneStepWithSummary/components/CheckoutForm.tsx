@@ -224,7 +224,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
 
               <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                 {shippingAddresses ? (
-                  <div className="group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 ring-main-500 focus:outline-none">
+                  <div className="group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-xs ring-2 ring-main-500 focus:outline-hidden">
                     <span className="flex flex-1">
                       <span className="flex w-full flex-col">
                         <span className="block text-sm font-medium text-gray-900">{shipping.name}</span>
@@ -331,7 +331,7 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                           <FormControl>
                             <Select onValueChange={field.onChange} defaultValue={field.value ?? "pl"}>
                               <FormControl>
-                                <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-main-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
+                                <SelectTrigger className="w-full appearance-none rounded-md bg-white py-2 pr-3 text-base text-gray-900 outline-solid outline-1 -outline-offset-1 outline-gray-300 focus:outline-solid focus:outline-2 focus:-outline-offset-2 focus:outline-main-600 focus:ring-0 focus:ring-offset-0 sm:text-sm/6">
                                   <SelectValue placeholder={t("country-placeholder")} />
                                 </SelectTrigger>
                               </FormControl>
@@ -396,11 +396,11 @@ export const CheckoutForm = ({ user, geowidgetToken }: { user?: Customer; geowid
                           value={deliveryMethod.slug}
                           aria-label={deliveryMethod.title}
                           aria-description={`${deliveryMethod.turnaround} for price`}
-                          className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-main-500"
+                          className="group relative flex cursor-pointer items-center rounded-lg border border-gray-300 bg-white p-4 shadow-xs focus:outline-hidden data-checked:border-transparent data-focus:ring-2 data-focus:ring-main-500"
                         >
                           <span
                             aria-hidden="true"
-                            className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-main-500"
+                            className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-focus:border group-data-checked:border-main-500"
                           />
 
                           <DeliveryMethod geowidgetToken={geowidgetToken} deliveryMethod={deliveryMethod} />

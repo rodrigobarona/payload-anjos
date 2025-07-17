@@ -73,7 +73,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         <div className="prose max-w-none text-center dark:prose-invert">
           <h1 className="mb-8 lg:mb-16">Search</h1>
 
-          <div className="mx-auto max-w-[50rem]">
+          <div className="mx-auto max-w-200">
             <Search />
           </div>
         </div>

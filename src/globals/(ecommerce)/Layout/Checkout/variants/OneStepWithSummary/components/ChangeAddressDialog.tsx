@@ -34,7 +34,7 @@ export const ChangeAddressDialog = ({
   const c = useTranslations("CheckoutForm.countries");
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogContent className="max-w-screen-sm">
+      <DialogContent className="max-w-(--breakpoint-sm)">
         <DialogHeader>
           <DialogTitle className="mb-4">{t("change-address")}</DialogTitle>
         </DialogHeader>
@@ -58,7 +58,7 @@ export const ChangeAddressDialog = ({
               }}
               key={shipping.id}
               className={cn(
-                "group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-sm ring-2 ring-gray-200 focus:outline-none",
+                "group relative flex cursor-pointer rounded-lg border border-gray-300 border-transparent bg-white p-4 shadow-xs ring-2 ring-gray-200 focus:outline-hidden",
                 shipping.id === selectedID && "ring-main-500",
               )}
             >

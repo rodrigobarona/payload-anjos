@@ -79,7 +79,7 @@ export const OrderSummary = ({
     <div className="mt-10 lg:sticky lg:top-28 lg:mt-0 lg:h-fit">
       <h2 className="text-lg font-medium text-gray-900">{t("order-summary")}</h2>
 
-      <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
+      <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-xs">
         <h3 className="sr-only">{t("items-in-cart")}</h3>
         <ul role="list" className="divide-y divide-gray-200">
           {products?.map((product) => (
@@ -199,7 +199,7 @@ export const OrderSummary = ({
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <button
             type="submit"
-            className="w-full rounded-md border border-transparent bg-main-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-main-700 focus:outline-none focus:ring-2 focus:ring-main-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+            className="w-full rounded-md border border-transparent bg-main-600 px-4 py-3 text-base font-medium text-white shadow-xs hover:bg-main-700 focus:outline-hidden focus:ring-2 focus:ring-main-500 focus:ring-offset-2 focus:ring-offset-gray-50"
           >
             {t("confirm")}
           </button>
