@@ -13,12 +13,12 @@ import type { ContentBlock as ContentBlockProps } from "@/payload-types";
 
 export const ContentBlock = (props: ContentBlockProps) => {
   const colsSpanClasses = {
-    oneSixth: "2",
-    oneThird: "4",
-    half: "6",
-    twoThirds: "8",
-    fiveSixth: "10",
-    full: "12",
+    oneSixth: "lg:col-span-2",
+    oneThird: "lg:col-span-4",
+    half: "lg:col-span-6",
+    twoThirds: "lg:col-span-8",
+    fiveSixth: "lg:col-span-10",
+    full: "lg:col-span-12",
   };
 
   const isSingleRadius = !props.specifiedRadius && props.radius && props.radiusAll;
@@ -32,7 +32,7 @@ export const ContentBlock = (props: ContentBlockProps) => {
   return (
     <section
       className={cn(
-        "container relative px-0",
+        "relative container px-0",
         spacingTopClasses[props.spacingTop ?? "medium"],
         spacingBottomClasses[props.spacingBottom ?? "medium"],
         paddingTopClasses[props.paddingTop ?? "medium"],
@@ -49,7 +49,7 @@ export const ContentBlock = (props: ContentBlockProps) => {
       {(!props.alignment || props.alignment === null || props.alignment === "center") && (
         <div
           style={props.background ? { background: props.background } : {}}
-          className="absolute left-1/2 top-1/2 -z-10 h-full w-screen -translate-x-1/2 -translate-y-1/2"
+          className="absolute top-1/2 left-1/2 -z-10 h-full w-screen -translate-x-1/2 -translate-y-1/2"
         />
       )}
       <div className="grid grid-cols-4 gap-y-8 lg:grid-cols-12">
@@ -61,10 +61,11 @@ export const ContentBlock = (props: ContentBlockProps) => {
             return (
               <div
                 className={cn(
-                  `col-span-4 px-8 lg:col-span-${colsSpanClasses[size!]}`,
+                  `col-span-4 px-8`,
                   {
                     "md:col-span-2": size !== "full",
                   },
+                  colsSpanClasses[size!],
                   props.alignment !== "center" ? "lg:first:pl-0 lg:last:pr-0" : "",
                   paddingTopClasses[col.paddingTop ?? "medium"],
                   paddingBottomClasses[col.paddingBottom ?? "medium"],
