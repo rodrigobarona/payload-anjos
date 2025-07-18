@@ -2,6 +2,10 @@
 
 A modern ecommerce storefront powered by Payload and Next.js. This template provides all the essential features to build and manage a beautiful online store.
 
+## 🌐 Live demo
+
+You can access the live demo of the template at [https://ecommerce.mandala.sh/en](https://ecommerce.mandala.sh/en).
+
 ## ✨ Features
 
 - **Modern Storefront**: A beautiful and fast storefront built with Next.js and Tailwind CSS.
