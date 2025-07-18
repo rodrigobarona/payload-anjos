@@ -21,6 +21,11 @@ import { MobileFiltersDialog } from "./components/MobileFiltersDialog";
 import { MobileFunnelFiltersButton } from "./components/MobileFunnelFiltersButton";
 import { SortSelect } from "./components/SortSelect";
 
+// Type guard
+const isProductCategory = (category: ProductCategory | ProductSubCategory): category is ProductCategory => {
+  return "subcategories" in category;
+};
+
 export const WithSidebar = ({
   title,
   category,
@@ -38,10 +43,7 @@ export const WithSidebar = ({
   };
   children: ReactNode;
 }) => {
-  // Type guard
-  const isProductCategory = (category: ProductCategory | ProductSubCategory): category is ProductCategory => {
-    return "subcategories" in category;
-  };
+  const t = useTranslations("ProductList");
 
   const sizes = Array.from(
     new Map(
@@ -80,17 +82,15 @@ export const WithSidebar = ({
   const filters = [
     {
       id: "color",
-      name: "Color",
+      name: t("color"),
       options: colors,
     },
     {
       id: "size",
-      name: "Size",
+      name: t("size"),
       options: sizes,
     },
   ];
-
-  const t = useTranslations("ProductList");
 
   const sortOptions = [
     { label: t("most-popular"), value: "most-popular" },
@@ -217,7 +217,7 @@ export const WithSidebar = ({
         </MobileFiltersDialog>
 
         <main className="container mx-auto">
-          <div className="flex items-baseline justify-between gap-4 border-b border-gray-200 pb-6 pt-24">
+          <div className="flex items-baseline justify-between gap-4 border-b border-gray-200 pt-24 pb-6">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">{title}</h1>
 
             <div className="flex items-center">
@@ -238,7 +238,7 @@ export const WithSidebar = ({
             </div>
           </div>
 
-          <section aria-labelledby="products-heading" className="pb-24 pt-6">
+          <section aria-labelledby="products-heading" className="pt-6 pb-24">
             <h2 id="products-heading" className="sr-only">
               {t("products")}
             </h2>
