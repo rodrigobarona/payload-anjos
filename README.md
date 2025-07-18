@@ -1,6 +1,6 @@
 # Payload Ecommerce Template
 
-A modern, production-ready ecommerce storefront powered by Payload and Next.js. This template provides all the essential features to build and manage a beautiful online store.
+A modern ecommerce storefront powered by Payload and Next.js. This template provides all the essential features to build and manage a beautiful online store.
 
 ## ✨ Features
 
@@ -10,34 +10,30 @@ A modern, production-ready ecommerce storefront powered by Payload and Next.js. 
 - **Shopping Cart & Checkout**: A complete and secure checkout flow.
 - **User Accounts**: Customers can create accounts to view their order history and manage their profiles.
 - **SEO Friendly**: Pre-configured for search engine optimization.
+- **Multi-language**: Supports multiple languages out of the box.
+- **Payments and Shipping**: Supports payments and shipping out of the box.
 - **Customizable**: Easily extend and customize the design and functionality to fit your brand.
 
 ## 📸 Screenshots
 
-*(Here you can add screenshots of your storefront, admin panel, and key features.)*
-
-**Example:**
-`![Screenshot of the homepage](./path/to/screenshot.jpg)`
+- **Example storefront**
+  ![Example storefront](./public/screenshots/storefront.png)
 
 ## 🚀 Getting Started
 
 Follow these steps to get your ecommerce store up and running on your local machine.
 
-### Prerequisites
-
-- Node.js (v18 or higher)
-- pnpm (or npm/yarn)
-- A MongoDB database (you can use a free one from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
-
 ### Installation & Setup
 
 1.  **Clone the repository:**
+
     ```bash
-    git clone <your-repository-url>
+    git clone https://github.com/Mandala-Software-House/payload-ecommerce-template.git
     cd payload-ecommerce
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     pnpm install
     ```
@@ -53,6 +49,7 @@ Follow these steps to get your ecommerce store up and running on your local mach
     Now, open the `.env` file and fill in the required variables, especially your `MONGODB_URI` and `PAYLOAD_SECRET`.
 
 4.  **Run the development server:**
+
     ```bash
     pnpm dev
     ```
@@ -70,4 +67,3 @@ Follow these steps to get your ecommerce store up and running on your local mach
 - **Customizing Pages**: You can edit pages like 'About Us' or create new ones using the 'Pages' collection.
 
 Feel free to explore the admin panel to discover all the features!
-
