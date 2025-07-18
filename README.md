@@ -17,7 +17,10 @@ A modern ecommerce storefront powered by Payload and Next.js. This template prov
 ## 📸 Screenshots
 
 - **Example storefront**
-  ![Example storefront](./public/screenshots/storefront.png)
+  ![Example storefront](./public/storefront.png)
+
+- **Admin panel Dashboard**
+  ![Admin panel Dashboard](./public/admin-dashboard.png)
 
 ## 🚀 Getting Started
 
