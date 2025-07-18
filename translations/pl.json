@@ -35,7 +35,9 @@
     "most-popular": "Najpopularniejsze",
     "newest": "Najnowsze",
     "price-low-to-high": "Cena: od najniższej",
-    "price-high-to-low": "Cena: od najwyższej"
+    "price-high-to-low": "Cena: od najwyższej",
+    "color": "Kolor",
+    "size": "Rozmiar"
   },
   "Cart": {
     "title": "Koszyk",

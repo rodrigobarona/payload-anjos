@@ -24,8 +24,8 @@ export const generateMeta = async (args: { doc: Partial<Page> | Partial<Post> })
   const ogImage = getImageURL(doc?.meta?.image);
 
   const title = doc?.meta?.title
-    ? doc?.meta?.title + " | Payload Website Template"
-    : "Payload Website Template";
+    ? doc?.meta?.title + " | Payload Ecommerce Template"
+    : "Payload Ecommerce Template";
 
   return {
     description: doc?.meta?.description,

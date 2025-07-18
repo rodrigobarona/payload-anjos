@@ -35,7 +35,9 @@
     "most-popular": "Most popular",
     "newest": "Newest",
     "price-low-to-high": "Price: low to high",
-    "price-high-to-low": "Price: high to low"
+    "price-high-to-low": "Price: high to low",
+    "color": "Color",
+    "size": "Size"
   },
   "Cart": {
     "title": "Shopping cart",
