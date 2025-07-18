@@ -128,6 +128,7 @@ export const Products: CollectionConfig = {
                     en: "Title",
                     pl: "Tytuł",
                   },
+                  localized: true,
                   type: "text",
                   required: true,
                 },
@@ -137,6 +138,7 @@ export const Products: CollectionConfig = {
                     en: "Content",
                     pl: "Zawartość",
                   },
+                  localized: true,
                   required: true,
                   type: "richText",
                   editor: defaultLexical,
@@ -263,23 +265,28 @@ export const Products: CollectionConfig = {
               },
               fields: [
                 {
-                  name: "label",
-                  label: {
-                    en: "Color name",
-                    pl: "Nazwa koloru",
-                  },
-                  type: "text",
-                  localized: true,
-                  required: true,
-                },
-                {
-                  name: "slug",
-                  type: "text",
-                  required: true,
-                  label: {
-                    en: "Color slug",
-                    pl: "Slug koloru",
-                  },
+                  type: "row",
+                  fields: [
+                    {
+                      name: "label",
+                      label: {
+                        en: "Color name",
+                        pl: "Nazwa koloru",
+                      },
+                      type: "text",
+                      localized: true,
+                      required: true,
+                    },
+                    {
+                      name: "slug",
+                      type: "text",
+                      required: true,
+                      label: {
+                        en: "Color slug",
+                        pl: "Slug koloru",
+                      },
+                    },
+                  ],
                 },
                 {
                   name: "colorValue",

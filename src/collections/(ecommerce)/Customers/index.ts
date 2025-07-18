@@ -25,6 +25,8 @@ export const Customers: CollectionConfig = {
       en: "Clients",
       pl: "Klienci",
     },
+    defaultColumns: ["fullName", "email", "createdAt", "updatedAt"],
+    useAsTitle: "fullName",
   },
   auth: {
     maxLoginAttempts: 30,
@@ -38,8 +40,21 @@ export const Customers: CollectionConfig = {
         revalidateTag("user-auth");
       },
     ],
+    beforeChange: [
+      async ({ data }) => {
+        return { ...data, fullName: `${data.firstName} ${data.lastName}` };
+      },
+    ],
   },
   fields: [
+    {
+      name: "fullName",
+      type: "text",
+      admin: {
+        hidden: true,
+      },
+      // virtual: true,
+    },
     {
       type: "row",
       fields: [

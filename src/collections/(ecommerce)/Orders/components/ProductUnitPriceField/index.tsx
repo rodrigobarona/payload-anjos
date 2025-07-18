@@ -40,7 +40,7 @@ export const ProductUnitPriceField: NumberFieldServerComponent = async ({
   const isFromAPI = Boolean(siblingData.isFromAPI as boolean);
 
   return (
-    <div className="max-w-1/2 twp mx-[5px] my-auto h-fit w-full flex-1">
+    <div className="mx-[5px] my-auto h-fit w-full max-w-1/2 flex-1">
       <ProductUnitPriceFieldClient
         path={path}
         isFromAPI={isFromAPI}

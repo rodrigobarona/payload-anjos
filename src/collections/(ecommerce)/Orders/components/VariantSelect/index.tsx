@@ -10,7 +10,7 @@ export type VariantsArr = {
 
 export const VariantSelect: TextFieldServerComponent = async ({ path }) => {
   return (
-    <div className="max-w-1/2 twp mx-[5px] my-auto h-fit w-full flex-1">
+    <div className="mx-[5px] my-auto flex h-fit w-full max-w-1/2 flex-1 flex-col gap-[5px]">
       <FieldLabel label="Wariant" />
       <VariantSelectClient path={path} />
     </div>

@@ -65,7 +65,7 @@ export const CourierShipmentMenuClient = ({ orderID }: { orderID: string }) => {
 
   return (
     <>
-      <div className="twp flex w-full flex-col gap-4 md:flex-row lg:flex-col xl:flex-row">
+      <div className="flex w-full flex-col gap-4 md:flex-row lg:flex-col xl:flex-row">
         <div className="min-h-[38px] md:w-2/3 lg:w-full xl:w-2/3">
           <form className="grid flex-1 grid-cols-2 gap-4 md:flex lg:grid xl:flex">
             <div className="flex-1">
@@ -118,7 +118,7 @@ export const CourierShipmentMenuClient = ({ orderID }: { orderID: string }) => {
         <Button
           disabled={Boolean(value) && value.length > 0}
           className={cn(
-            "twp mt-7 min-h-[38px] flex-1 text-base md:w-1/6 lg:w-full xl:w-1/6",
+            "twp bg-payload-elevation-900 text-payload-elevation-50 hover:bg-payload-elevation-700 mt-7 min-h-[38px] w-full flex-1 cursor-pointer border-0 border-transparent text-base transition-colors md:w-1/6 lg:w-full xl:w-1/6",
             ((value && value.length > 0) || isLoading) && "pointer-events-none cursor-not-allowed opacity-50",
           )}
           onClick={createPackage}
@@ -129,7 +129,7 @@ export const CourierShipmentMenuClient = ({ orderID }: { orderID: string }) => {
           <Button
             disabled={!value}
             className={cn(
-              "twp max-h-[38px] min-h-[38px] flex-1 text-base",
+              "twp bg-payload-elevation-900 text-payload-elevation-50 hover:bg-payload-elevation-700 max-h-[38px] min-h-[38px] w-full flex-1 cursor-pointer border-0 border-transparent text-base transition-colors",
               (!value || isDownloading) && "pointer-events-none cursor-not-allowed opacity-50",
             )}
             onClick={() => getShippingLabel({ setIsDownloading, setError, orderID })}
@@ -137,7 +137,12 @@ export const CourierShipmentMenuClient = ({ orderID }: { orderID: string }) => {
             {isDownloading ? t("custom:downloadingLabel") : t("custom:downloadLabel")}
           </Button>
 
-          <Button variant="link" onClick={handleResetPackage} disabled={!value} className="mt-2 pl-0">
+          <Button
+            variant="link"
+            onClick={handleResetPackage}
+            disabled={!value}
+            className="text-payload-elevation-900 mt-2 cursor-pointer border-0 p-0 pl-0"
+          >
             {t("custom:resetPackage")}
           </Button>
         </div>

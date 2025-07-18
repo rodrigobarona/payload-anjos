@@ -40,14 +40,13 @@ export const SizeSelect: TextFieldClientComponent = ({ path }) => {
   }, [variantType, handleSizeChange]);
 
   return variantType !== "colors" ? (
-    <div className="twp my-auto h-fit flex-1">
+    <div className="my-auto ml-0 flex h-fit flex-1 flex-col gap-[5px]">
       <FieldLabel label="Rozmiar" />
       <Select
         value={{
           label: sizes?.find((size) => size.slug === value)?.label,
           value,
         }}
-        className="custom-select"
         onChange={handleSizeChange}
         options={
           sizes

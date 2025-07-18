@@ -1207,6 +1207,7 @@ export interface Product {
  */
 export interface Customer {
   id: string;
+  fullName?: string | null;
   firstName?: string | null;
   lastName?: string | null;
   birthDate?: string | null;
@@ -2197,6 +2198,7 @@ export interface AdministratorsSelect<T extends boolean = true> {
  * via the `definition` "customers_select".
  */
 export interface CustomersSelect<T extends boolean = true> {
+  fullName?: T;
   firstName?: T;
   lastName?: T;
   birthDate?: T;

@@ -41,7 +41,7 @@ export const ColorSelect: TextFieldClientComponent = ({ path }) => {
   }, [variantType, handleColorChange]);
 
   return variantType !== "sizes" ? (
-    <div className="twp my-auto h-fit flex-1">
+    <div className="my-auto flex h-fit flex-1 flex-col gap-[5px]">
       <FieldLabel label="Kolor" />
       <Select
         value={{
@@ -49,7 +49,6 @@ export const ColorSelect: TextFieldClientComponent = ({ path }) => {
           value,
         }}
         onChange={handleColorChange}
-        className="custom-select"
         options={
           colors
             ? colors?.map((color) => ({

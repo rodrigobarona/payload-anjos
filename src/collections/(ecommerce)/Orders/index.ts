@@ -109,7 +109,6 @@ export const Orders: CollectionConfig = {
               name: "products",
               type: "array",
               label: { en: "Products", pl: "Produkty" },
-
               admin: {
                 components: {
                   RowLabel: "@/components/(ecommerce)/RowLabels/OrderProductsRowLabel#OrderProductsRowLabel",
