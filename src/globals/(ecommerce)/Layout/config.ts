@@ -1,3 +1,18 @@
+import {
+  BlocksFeature,
+  FixedToolbarFeature,
+  HeadingFeature,
+  HorizontalRuleFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from "@payloadcms/richtext-lexical";
+
+import { Accordion } from "@/blocks/Accordion/config";
+import { Banner } from "@/blocks/Banner/config";
+import { Carousel } from "@/blocks/Carousel/config";
+import { Code } from "@/blocks/Code/config";
+import { FormBlock } from "@/blocks/Form/config";
+import { MediaBlock } from "@/blocks/MediaBlock/config";
 import { revalidateGlobal } from "@/hooks/revalidateGlobal";
 
 import type { GlobalConfig } from "payload";
@@ -203,6 +218,18 @@ export const ShopLayout: GlobalConfig = {
                 {
                   name: "content",
                   type: "richText",
+                  editor: lexicalEditor({
+                    features: ({ rootFeatures }) => {
+                      return [
+                        ...rootFeatures,
+                        HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3", "h4"] }),
+                        BlocksFeature({ blocks: [Banner, Code, MediaBlock, Accordion, Carousel, FormBlock] }),
+                        FixedToolbarFeature(),
+                        InlineToolbarFeature(),
+                        HorizontalRuleFeature(),
+                      ];
+                    },
+                  }),
                   label: {
                     en: "Content",
                     pl: "Treść",
