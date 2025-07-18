@@ -1,7 +1,7 @@
 {
-  "name": "payload-boilerplate",
+  "name": "payload-ecommerce-template",
   "version": "1.0.0",
-  "description": "Website template for Payload",
+  "description": "Ecommerce template built with PayloadCMS and Next.js",
   "license": "MIT",
   "type": "module",
   "scripts": {
