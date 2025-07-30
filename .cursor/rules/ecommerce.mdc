@@ -1,0 +1,308 @@
+---
+description: Ecommerce-specific rules for products, cart, orders, payments, and shipping functionality
+globs:
+  ["src/collections/(ecommerce)/**/*", "src/components/(ecommerce)/**/*", "src/stores/**/*", "src/lib/**/*"]
+alwaysApply: false
+---
+
+# Ecommerce Rules
+
+## Product Management
+
+### Product Variants
+
+- Always validate variant combinations are unique
+- Use descriptive variant slugs (e.g., "red-large", "blue-small")
+- Implement proper stock tracking per variant
+- Handle variant pricing consistently across currencies
+
+### Product Data Structure
+
+```typescript
+// Product with variants example
+{
+  enableVariants: true,
+  variantsType: "colorsAndSizes",
+  colors: [
+    { label: "Red", slug: "red", colorValue: "#FF0000" }
+  ],
+  sizes: [
+    { label: "Large", slug: "l" }
+  ],
+  variants: [
+    {
+      color: "red",
+      size: "l",
+      variantSlug: "red-l",
+      stock: 50,
+      pricing: [{ value: 29.99, currency: "USD" }]
+    }
+  ]
+}
+```
+
+### Stock Management
+
+- Implement atomic stock operations to prevent overselling
+- Use transactions for order processing and stock reduction
+- Set up low stock alerts and notifications
+- Handle backorders appropriately based on configuration
+
+## Shopping Cart
+
+### Cart State Management
+
+- Use Zustand for cart state with persistence
+- Implement optimistic updates with rollback capability
+- Validate cart items on every operation
+- Sync cart with user account when logged in
+
+### Cart Operations
+
+```typescript
+// Cart validation pattern
+const validateCartItem = (item: CartItem) => {
+  // Check product still exists
+  // Verify variant is still available
+  // Validate stock levels
+  // Check price hasn't changed significantly
+};
+
+// Add to cart with validation
+const addToCart = async (product: Product, variant?: string, quantity = 1) => {
+  const cartItem = createCartItem(product, variant, quantity);
+  await validateCartItem(cartItem);
+  updateCartState(cartItem);
+};
+```
+
+### Cart Persistence
+
+- Store cart in localStorage for guest users
+- Sync with database for authenticated users
+- Handle cart merging on login
+- Implement cart recovery for abandoned carts
+
+## Checkout Process
+
+### Multi-Step Checkout
+
+1. **Cart Review** - Validate items and quantities
+2. **Shipping Information** - Address and method selection
+3. **Payment Information** - Payment method and details
+4. **Order Review** - Final confirmation
+5. **Payment Processing** - Secure payment handling
+6. **Order Confirmation** - Success page and email
+
+### Checkout Validation
+
+- Validate all cart items before checkout
+- Verify shipping address completeness
+- Confirm payment method compatibility
+- Check inventory availability at payment time
+
+### Guest vs Registered Checkout
+
+- Allow guest checkout for faster conversion
+- Offer account creation after order completion
+- Pre-fill information for registered users
+- Maintain order history for both user types
+
+## Payment Integration
+
+### Payment Gateway Patterns
+
+```typescript
+// Payment processing interface
+interface PaymentProcessor {
+  createPaymentIntent(order: Order): Promise<PaymentIntent>;
+  confirmPayment(paymentData: PaymentData): Promise<PaymentResult>;
+  handleWebhook(webhookData: any): Promise<void>;
+}
+
+// Stripe implementation
+class StripeProcessor implements PaymentProcessor {
+  async createPaymentIntent(order: Order) {
+    return await stripe.paymentIntents.create({
+      amount: Math.round(order.total * 100),
+      currency: order.currency.toLowerCase(),
+      metadata: { orderId: order.id }
+    });
+  }
+}
+```
+
+### Payment Security
+
+- Never store credit card information
+- Use payment gateway tokens for recurring payments
+- Implement webhook validation for payment confirmations
+- Handle payment failures gracefully with retry mechanisms
+
+### Multi-Currency Support
+
+- Store prices in multiple currencies
+- Implement real-time exchange rate updates
+- Handle currency conversion consistently
+- Display prices in user's preferred currency
+
+## Order Management
+
+### Order Lifecycle
+
+```typescript
+type OrderStatus =
+  | 'pending'     // Order created, payment pending
+  | 'paid'        // Payment confirmed
+  | 'processing'  // Order being prepared
+  | 'shipped'     // Order dispatched
+  | 'completed'   // Order delivered
+  | 'cancelled'   // Order cancelled
+  | 'returned';   // Order returned
+
+// Status transition validation
+const validateStatusTransition = (from: OrderStatus, to: OrderStatus) => {
+  const validTransitions = {
+    pending: ['paid', 'cancelled'],
+    paid: ['processing', 'cancelled'],
+    processing: ['shipped', 'cancelled'],
+    shipped: ['completed', 'returned'],
+    completed: ['returned'],
+    cancelled: [],
+    returned: []
+  };
+
+  return validTransitions[from].includes(to);
+};
+```
+
+### Order Processing
+
+- Generate unique order IDs
+- Create order confirmation emails
+- Update inventory immediately on payment
+- Trigger fulfillment processes
+- Handle order modifications carefully
+
+### Inventory Integration
+
+- Reduce stock atomically on order creation
+- Restore stock on order cancellation
+- Handle partial shipments for large orders
+- Implement inventory reservations for checkout
+
+## Shipping Integration
+
+### InPost Integration
+
+- Use proper API credentials for environment
+- Validate pickup point selections
+- Calculate shipping costs accurately
+- Generate shipping labels programmatically
+
+### Shipping Calculation
+
+```typescript
+const calculateShipping = (items: CartItem[], method: ShippingMethod, address: Address) => {
+  const totalWeight = items.reduce((sum, item) => sum + (item.weight * item.quantity), 0);
+  const totalValue = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+  // Free shipping threshold
+  if (totalValue >= method.freeShippingThreshold) {
+    return { cost: 0, method };
+  }
+
+  // Weight-based calculation
+  const baseCost = method.basePrice;
+  const weightCost = Math.max(0, totalWeight - 1) * method.perKgPrice;
+
+  return { cost: baseCost + weightCost, method };
+};
+```
+
+### Address Validation
+
+- Validate postal codes for supported countries
+- Verify address completeness
+- Handle international shipping restrictions
+- Support pickup point selections
+
+## Customer Account Features
+
+### Account Management
+
+- Implement secure password handling
+- Allow profile updates with validation
+- Manage multiple shipping addresses
+- Provide order history with details
+
+### Wishlist Functionality
+
+- Store wishlist items persistently
+- Allow wishlist sharing
+- Implement price drop notifications
+- Enable quick add-to-cart from wishlist
+
+### Order History
+
+- Display orders with current status
+- Allow order tracking and updates
+- Enable reordering of previous orders
+- Provide downloadable invoices
+
+## Analytics and Reporting
+
+### Ecommerce Metrics
+
+- Track conversion rates at each checkout step
+- Monitor abandoned cart rates
+- Analyze product performance
+- Calculate customer lifetime value
+
+### Revenue Reporting
+
+```typescript
+const getRevenueMetrics = async (timeframe: string) => {
+  const orders = await getCompletedOrders(timeframe);
+
+  return {
+    totalRevenue: orders.reduce((sum, order) => sum + order.total, 0),
+    orderCount: orders.length,
+    averageOrderValue: totalRevenue / orderCount,
+    topProducts: getTopSellingProducts(orders),
+    customerSegments: analyzeCustomerSegments(orders)
+  };
+};
+```
+
+## Performance Optimization
+
+### Cart Performance
+
+- Implement debounced cart updates
+- Use optimistic UI updates
+- Cache product information in cart items
+- Minimize database queries for cart operations
+
+### Product Loading
+
+- Implement proper image lazy loading
+- Use Next.js Image component for optimization
+- Cache product data appropriately
+- Implement infinite scroll for product listings
+
+## Error Handling
+
+### Ecommerce Error Patterns
+
+- Handle payment failures gracefully
+- Manage inventory conflicts during checkout
+- Provide clear error messages for users
+- Implement retry mechanisms for transient failures
+
+### Validation Errors
+
+- Validate product availability before add to cart
+- Check shipping method compatibility
+- Verify payment method acceptability
+- Confirm address deliverability

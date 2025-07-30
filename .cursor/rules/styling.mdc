@@ -1,0 +1,426 @@
+---
+description: Styling and UI component rules for TailwindCSS, design system, and responsive design
+globs: ["src/components/ui/**/*", "src/app/**/globals.css", "tailwind.config.ts", "src/utilities/cn.ts"]
+alwaysApply: false
+---
+
+# Styling & UI Component Rules
+
+## TailwindCSS Best Practices
+
+### Class Organization
+
+- Use consistent class ordering: layout → display → positioning → sizing → spacing → typography → colors → effects
+- Group related utilities together
+- Use responsive prefixes consistently
+- Prefer semantic class combinations over custom CSS
+
+```typescript
+// Good class ordering example
+<div className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+```
+
+### Responsive Design
+
+- Use mobile-first approach
+- Implement consistent breakpoints: `sm:` `md:` `lg:` `xl:` `2xl:`
+- Test responsive behavior across all target devices
+- Use container queries where appropriate
+
+```typescript
+// Mobile-first responsive example
+<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+```
+
+### Dark Mode Support
+
+- Use CSS variables for theme-aware colors
+- Implement proper dark mode variants
+- Test all components in both light and dark themes
+- Use semantic color names rather than specific values
+
+```css
+/* CSS variables for theming */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+}
+```
+
+## UI Component System
+
+### Component Design Principles
+
+- Build composable, reusable components
+- Use consistent naming conventions
+- Implement proper prop interfaces
+- Support common variants and sizes
+
+### Base Component Pattern
+
+```typescript
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utilities/cn";
+
+const componentVariants = cva(
+  "base-classes-that-always-apply",
+  {
+    variants: {
+      variant: {
+        default: "default-variant-classes",
+        secondary: "secondary-variant-classes",
+        destructive: "destructive-variant-classes",
+      },
+      size: {
+        default: "default-size-classes",
+        sm: "small-size-classes",
+        lg: "large-size-classes",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
+
+interface ComponentProps
+  extends React.HTMLAttributes<HTMLElement>,
+    VariantProps<typeof componentVariants> {
+  asChild?: boolean;
+}
+
+export function Component({
+  className,
+  variant,
+  size,
+  asChild = false,
+  ...props
+}: ComponentProps) {
+  const Comp = asChild ? Slot : "div";
+
+  return (
+    <Comp
+      className={cn(componentVariants({ variant, size, className }))}
+      {...props}
+    />
+  );
+}
+```
+
+### Design Token Usage
+
+- Use design tokens from TailwindCSS configuration
+- Maintain consistent spacing scale
+- Use semantic color palette
+- Implement consistent typography scale
+
+```typescript
+// Design tokens example
+const tokens = {
+  spacing: {
+    xs: '0.5rem',    // 8px
+    sm: '0.75rem',   // 12px
+    md: '1rem',      // 16px
+    lg: '1.5rem',    // 24px
+    xl: '2rem',      // 32px
+  },
+  colors: {
+    primary: 'hsl(var(--primary))',
+    secondary: 'hsl(var(--secondary))',
+    destructive: 'hsl(var(--destructive))',
+  }
+};
+```
+
+## Component Patterns
+
+### Compound Component Pattern
+
+```typescript
+interface AccordionContextType {
+  openItems: string[];
+  toggleItem: (value: string) => void;
+}
+
+const AccordionContext = createContext<AccordionContextType | null>(null);
+
+export function Accordion({ children, type = 'single' }: AccordionProps) {
+  const [openItems, setOpenItems] = useState<string[]>([]);
+
+  const toggleItem = (value: string) => {
+    setOpenItems(prev =>
+      type === 'single'
+        ? prev.includes(value) ? [] : [value]
+        : prev.includes(value)
+          ? prev.filter(item => item !== value)
+          : [...prev, value]
+    );
+  };
+
+  return (
+    <AccordionContext.Provider value={{ openItems, toggleItem }}>
+      <div className="accordion">{children}</div>
+    </AccordionContext.Provider>
+  );
+}
+
+Accordion.Item = AccordionItem;
+Accordion.Trigger = AccordionTrigger;
+Accordion.Content = AccordionContent;
+```
+
+### Polymorphic Component Pattern
+
+```typescript
+type AsProp<C extends React.ElementType> = {
+  as?: C;
+};
+
+type PropsToOmit<C extends React.ElementType, P> = keyof (AsProp<C> & P);
+
+type PolymorphicComponentProp<
+  C extends React.ElementType,
+  Props = {}
+> = React.PropsWithChildren<Props & AsProp<C>> &
+  Omit<React.ComponentPropsWithoutRef<C>, PropsToOmit<C, Props>>;
+
+interface BoxProps {
+  variant?: 'default' | 'bordered';
+}
+
+export function Box<C extends React.ElementType = 'div'>({
+  as,
+  variant = 'default',
+  className,
+  children,
+  ...props
+}: PolymorphicComponentProp<C, BoxProps>) {
+  const Component = as || 'div';
+
+  return (
+    <Component
+      className={cn(
+        'box-base-styles',
+        variant === 'bordered' && 'border border-gray-200',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+}
+```
+
+## Accessibility Guidelines
+
+### ARIA Implementation
+
+- Use proper ARIA labels and descriptions
+- Implement keyboard navigation
+- Provide focus management
+- Use semantic HTML elements
+
+```typescript
+// Accessible button example
+export function Button({ children, disabled, ...props }: ButtonProps) {
+  return (
+    <button
+      className={cn(buttonVariants({ variant, size, className }))}
+      disabled={disabled}
+      aria-disabled={disabled}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+
+// Accessible form field
+export function FormField({ label, error, children, ...props }: FormFieldProps) {
+  const id = useId();
+  const errorId = `${id}-error`;
+
+  return (
+    <div className="form-field">
+      <label htmlFor={id} className="form-label">
+        {label}
+      </label>
+      {React.cloneElement(children, {
+        id,
+        'aria-describedby': error ? errorId : undefined,
+        'aria-invalid': Boolean(error),
+        ...props,
+      })}
+      {error && (
+        <div id={errorId} className="form-error" role="alert">
+          {error}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+### Focus Management
+
+- Implement visible focus indicators
+- Use logical tab order
+- Manage focus for modal dialogs
+- Provide skip links for navigation
+
+### Color Contrast
+
+- Ensure WCAG AA compliance (4.5:1 ratio)
+- Test with color blindness simulators
+- Use tools to verify contrast ratios
+- Provide alternative indicators beyond color
+
+## Animation Guidelines
+
+### CSS Animations
+
+- Use CSS animations for simple state changes
+- Implement proper easing functions
+- Respect user's motion preferences
+- Keep animations performant
+
+```css
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+### Motion Library Integration
+
+```typescript
+import { motion, AnimatePresence } from 'framer-motion';
+
+// Page transitions
+export function PageTransition({ children }: { children: React.ReactNode }) {
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+```
+
+## Component Testing
+
+### Visual Testing
+
+- Test all component variants
+- Verify responsive behavior
+- Check dark mode support
+- Validate accessibility features
+
+### Interaction Testing
+
+```typescript
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+describe('Button Component', () => {
+  it('handles click events', async () => {
+    const handleClick = jest.fn();
+    const user = userEvent.setup();
+
+    render(<Button onClick={handleClick}>Click me</Button>);
+
+    await user.click(screen.getByRole('button'));
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports keyboard navigation', async () => {
+    const handleClick = jest.fn();
+    const user = userEvent.setup();
+
+    render(<Button onClick={handleClick}>Click me</Button>);
+
+    const button = screen.getByRole('button');
+    button.focus();
+
+    await user.keyboard('{Enter}');
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+});
+```
+
+## Performance Optimization
+
+### CSS Performance
+
+- Use efficient selectors
+- Minimize CSS bundle size
+- Leverage CSS containment
+- Optimize critical rendering path
+
+### Component Performance
+
+- Use CSS-in-JS sparingly
+- Prefer CSS classes over inline styles
+- Implement proper component memoization
+- Optimize re-renders with proper dependencies
+
+## Maintenance Guidelines
+
+### Design System Updates
+
+- Version component changes carefully
+- Maintain backward compatibility where possible
+- Document breaking changes clearly
+- Provide migration guides for major updates
+
+### Code Organization
+
+- Keep related components together
+- Use consistent file naming
+- Export components from index files
+- Maintain proper component documentation

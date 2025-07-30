@@ -1,0 +1,413 @@
+---
+description: Frontend development rules for Next.js, React components, routing, and state management
+globs: ["src/app/**/*", "src/components/**/*", "src/providers/**/*", "src/blocks/**/*"]
+alwaysApply: false
+---
+
+# Frontend Development Rules
+
+## Next.js App Router
+
+### Route Organization
+- Use route groups `()` to organize related routes
+- Separate cart-enabled routes in `(with-cart)/`
+- Place content-only routes in `(without-cart)/`
+- Use `[locale]` for internationalized routes
+- Place API routes in appropriate directory structure
+
+### Page Components
+```typescript
+// Page component pattern
+export default async function PageName({ params, searchParams }: {
+  params: Promise<{ slug: string; locale: string }>;
+  searchParams: Promise<Record<string, string | undefined>>;
+}) {
+  const { slug, locale } = await params;
+
+  // Server-side data fetching
+  const data = await getData(slug, locale);
+
+  if (!data) {
+    notFound();
+  }
+
+  return <PageContent data={data} />;
+}
+
+// Metadata generation
+export async function generateMetadata({ params }: {
+  params: Promise<{ slug: string; locale: string }>;
+}): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const data = await getData(slug, locale);
+
+  return {
+    title: data?.meta?.title || data?.title,
+    description: data?.meta?.description,
+    openGraph: {
+      title: data?.title,
+      description: data?.meta?.description,
+      images: data?.images?.[0]?.url ? [data.images[0].url] : [],
+    },
+  };
+}
+```
+
+### Data Fetching Patterns
+- Use Server Components for initial data loading
+- Implement proper error boundaries
+- Use loading states and Suspense
+- Cache data appropriately with Next.js cache
+
+### Route Handlers
+```typescript
+// API route pattern
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const data = await fetchData(searchParams);
+
+    return Response.json(data);
+  } catch (error) {
+    console.error('API Error:', error);
+    return Response.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+}
+```
+
+## React Component Development
+
+### Component Structure
+- Use functional components with hooks
+- Implement proper TypeScript interfaces
+- Use descriptive component and prop names
+- Keep components focused and single-purpose
+
+### Component Patterns
+```typescript
+// Component interface pattern
+interface ComponentProps {
+  data: DataType;
+  variant?: 'default' | 'compact';
+  onAction?: (id: string) => void;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export function Component({
+  data,
+  variant = 'default',
+  onAction,
+  className,
+  children
+}: ComponentProps) {
+  // Component implementation
+  return (
+    <div className={cn('base-styles', variantStyles[variant], className)}>
+      {children}
+    </div>
+  );
+}
+```
+
+### Hook Patterns
+- Use custom hooks for reusable logic
+- Implement proper dependency arrays
+- Handle cleanup in useEffect
+- Use proper TypeScript typing for hooks
+
+```typescript
+// Custom hook pattern
+export function useProductData(productId: string) {
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const data = await getProduct(productId);
+        setProduct(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (productId) {
+      fetchProduct();
+    }
+  }, [productId]);
+
+  return { product, loading, error };
+}
+```
+
+## State Management
+
+### Zustand Store Patterns
+- Create focused stores for specific domains
+- Use TypeScript interfaces for store state
+- Implement actions as methods within the store
+- Use middleware for persistence and devtools
+
+```typescript
+// Store pattern
+interface StoreState {
+  data: DataType[];
+  loading: boolean;
+  error: string | null;
+
+  // Actions
+  fetchData: () => Promise<void>;
+  updateItem: (id: string, updates: Partial<DataType>) => void;
+  clearError: () => void;
+}
+
+export const useStore = create<StoreState>()(
+  persist(
+    (set, get) => ({
+      data: [],
+      loading: false,
+      error: null,
+
+      fetchData: async () => {
+        set({ loading: true, error: null });
+        try {
+          const data = await api.getData();
+          set({ data, loading: false });
+        } catch (error) {
+          set({
+            error: error instanceof Error ? error.message : 'Unknown error',
+            loading: false
+          });
+        }
+      },
+
+      updateItem: (id, updates) => {
+        set(state => ({
+          data: state.data.map(item =>
+            item.id === id ? { ...item, ...updates } : item
+          )
+        }));
+      },
+
+      clearError: () => set({ error: null }),
+    }),
+    {
+      name: 'store-name',
+      partialize: (state) => ({ data: state.data }), // Only persist data
+    }
+  )
+);
+```
+
+### Context Patterns
+- Use React Context for app-wide state
+- Implement proper context providers
+- Use custom hooks to consume context
+- Avoid prop drilling with strategic context placement
+
+## Internationalization
+
+### Translation Usage
+```typescript
+import { useTranslations } from 'next-intl';
+
+export function Component() {
+  const t = useTranslations('namespace');
+
+  return (
+    <div>
+      <h1>{t('title')}</h1>
+      <p>{t('description', { name: 'value' })}</p>
+    </div>
+  );
+}
+```
+
+### Locale Handling
+- Use proper locale routing patterns
+- Implement locale-specific metadata
+- Handle locale switching gracefully
+- Validate locale parameters
+
+### Translation Keys
+- Use descriptive, hierarchical translation keys
+- Group related translations in namespaces
+- Implement pluralization where needed
+- Provide fallback values
+
+## Performance Optimization
+
+### Code Splitting
+```typescript
+// Dynamic imports for heavy components
+const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
+  loading: () => <ComponentSkeleton />,
+  ssr: false, // Client-side only if needed
+});
+
+// Route-level code splitting
+const AdminPanel = dynamic(() => import('./AdminPanel'), {
+  loading: () => <AdminSkeleton />,
+});
+```
+
+### Image Optimization
+```typescript
+import Image from 'next/image';
+
+// Proper image usage
+<Image
+  src={imageUrl}
+  alt={altText}
+  width={width}
+  height={height}
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+  priority={isAboveFold}
+  placeholder="blur"
+  blurDataURL="data:image/jpeg;base64,..."
+/>
+```
+
+### Memoization
+```typescript
+// Component memoization
+export const ExpensiveComponent = memo(({ data }: Props) => {
+  const processedData = useMemo(() =>
+    expensiveProcessing(data), [data]
+  );
+
+  const handleClick = useCallback((id: string) => {
+    // Handler logic
+  }, [/* dependencies */]);
+
+  return <div>{/* Component JSX */}</div>;
+});
+```
+
+## Error Handling
+
+### Error Boundaries
+```typescript
+'use client';
+
+interface ErrorBoundaryProps {
+  fallback?: React.ComponentType<{ error: Error; reset: () => void }>;
+  children: React.ReactNode;
+}
+
+export function ErrorBoundary({ fallback: Fallback, children }: ErrorBoundaryProps) {
+  return (
+    <ErrorBoundaryPrimitive
+      fallback={({ error, resetError }) =>
+        Fallback ? (
+          <Fallback error={error} reset={resetError} />
+        ) : (
+          <DefaultErrorFallback error={error} reset={resetError} />
+        )
+      }
+    >
+      {children}
+    </ErrorBoundaryPrimitive>
+  );
+}
+```
+
+### Loading States
+```typescript
+// Loading state patterns
+export function LoadingState() {
+  return (
+    <div className="animate-pulse">
+      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+      <div className="h-4 bg-gray-200 rounded w-1/2" />
+    </div>
+  );
+}
+
+// Suspense boundaries
+<Suspense fallback={<LoadingState />}>
+  <AsyncComponent />
+</Suspense>
+```
+
+## Component Architecture
+
+### Compound Components
+```typescript
+// Compound component pattern
+interface TabsContextType {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+
+const TabsContext = createContext<TabsContextType | null>(null);
+
+export function Tabs({ children, defaultTab }: TabsProps) {
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  return (
+    <TabsContext.Provider value={{ activeTab, setActiveTab }}>
+      <div className="tabs">{children}</div>
+    </TabsContext.Provider>
+  );
+}
+
+Tabs.List = function TabsList({ children }: { children: React.ReactNode }) {
+  return <div className="tabs-list">{children}</div>;
+};
+
+Tabs.Tab = function Tab({ value, children }: TabProps) {
+  const context = useContext(TabsContext);
+  // Implementation
+};
+```
+
+### Render Props Pattern
+```typescript
+interface RenderPropsComponentProps<T> {
+  data: T[];
+  loading: boolean;
+  error: string | null;
+  children: (props: {
+    data: T[];
+    loading: boolean;
+    error: string | null;
+    retry: () => void;
+  }) => React.ReactNode;
+}
+
+export function RenderPropsComponent<T>({
+  data,
+  loading,
+  error,
+  children
+}: RenderPropsComponentProps<T>) {
+  const retry = useCallback(() => {
+    // Retry logic
+  }, []);
+
+  return <>{children({ data, loading, error, retry })}</>;
+}
+```
+
+## Testing Considerations
+
+### Component Testing
+- Write tests for user interactions
+- Test error states and edge cases
+- Mock external dependencies appropriately
+- Use proper testing utilities and matchers
+
+### Integration Testing
+- Test complete user flows
+- Verify API integrations
+- Test responsive behavior
+- Validate accessibility requirements

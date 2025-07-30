@@ -1,0 +1,477 @@
+---
+description: TypeScript coding standards, type safety, and interface design patterns
+globs: ["**/*.ts", "**/*.tsx", "src/payload-types.ts", "*.d.ts"]
+alwaysApply: true
+---
+
+# TypeScript Rules
+
+## Type Safety Standards
+
+### Strict TypeScript Configuration
+
+- Enable strict mode in `tsconfig.json`
+- Use `noImplicitAny: true`
+- Enable `strictNullChecks: true`
+- Use `noImplicitReturns: true`
+- Enable `noUnusedLocals: true` and `noUnusedParameters: true`
+
+### Type Definitions
+
+- Always provide explicit types for function parameters
+- Use return type annotations for public functions
+- Avoid `any` type - use `unknown` if necessary
+- Use type assertions sparingly and with type guards
+
+```typescript
+// Good: Explicit types
+interface UserData {
+  id: string;
+  name: string;
+  email: string;
+  age?: number;
+}
+
+function processUser(user: UserData): Promise<ProcessedUser> {
+  // Implementation
+}
+
+// Bad: Implicit any
+function processUser(user) {
+  // Type is implicitly any
+}
+```
+
+### Null Safety
+
+- Use optional chaining `?.` for safe property access
+- Use nullish coalescing `??` for default values
+- Handle null/undefined cases explicitly
+- Use type guards for runtime validation
+
+```typescript
+// Safe property access
+const userName = user?.profile?.name ?? 'Anonymous';
+
+// Type guard example
+function isProduct(item: unknown): item is Product {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    'id' in item &&
+    'title' in item &&
+    typeof (item as Product).id === 'string'
+  );
+}
+```
+
+## Interface Design
+
+### Interface Conventions
+
+- Use PascalCase for interface names
+- Add `Props` suffix for component props interfaces
+- Use `Config` suffix for configuration interfaces
+- Group related interfaces together
+
+```typescript
+// Component props interface
+interface ProductCardProps {
+  product: Product;
+  variant?: 'default' | 'compact';
+  onAddToCart?: (productId: string) => void;
+  className?: string;
+}
+
+// Configuration interface
+interface PaymentConfig {
+  provider: 'stripe' | 'autopay' | 'p24';
+  apiKey: string;
+  environment: 'sandbox' | 'production';
+}
+
+// Data model interface
+interface Product {
+  id: string;
+  title: string;
+  description?: string;
+  price: Money;
+  variants?: ProductVariant[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+### Extending Interfaces
+
+- Use interface extension for related types
+- Prefer composition over deep inheritance
+- Use intersection types for combining types
+- Create base interfaces for common properties
+
+```typescript
+// Base interface
+interface BaseEntity {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Extended interfaces
+interface Product extends BaseEntity {
+  title: string;
+  price: Money;
+}
+
+interface User extends BaseEntity {
+  email: string;
+  name: string;
+}
+
+// Intersection types
+type ProductWithUser = Product & {
+  author: User;
+};
+```
+
+## Generic Types
+
+### Generic Conventions
+
+- Use descriptive generic parameter names
+- Provide default generic types where appropriate
+- Use constraints to limit generic types
+- Document generic type parameters
+
+```typescript
+// Generic function with constraints
+function findById<T extends BaseEntity>(
+  items: T[],
+  id: string
+): T | undefined {
+  return items.find(item => item.id === id);
+}
+
+// Generic interface with defaults
+interface ApiResponse<TData = unknown, TError = string> {
+  data?: TData;
+  error?: TError;
+  loading: boolean;
+}
+
+// Generic hook example
+function useAsyncData<T>(
+  fetcher: () => Promise<T>
+): ApiResponse<T> {
+  // Implementation
+}
+```
+
+### Utility Types
+
+- Use built-in utility types when appropriate
+- Create custom utility types for domain-specific needs
+- Document complex utility types
+
+```typescript
+// Using built-in utility types
+type PartialProduct = Partial<Product>;
+type ProductKeys = keyof Product;
+type ProductValues = Product[keyof Product];
+
+// Custom utility types
+type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
+
+// Domain-specific utility types
+type CartItem = Pick<Product, 'id' | 'title' | 'price'> & {
+  quantity: number;
+  variantSlug?: string;
+};
+```
+
+## Payload CMS Types
+
+### Generated Types Usage
+
+- Import types from `@/payload-types`
+- Use generated types for all Payload operations
+- Extend generated types when necessary
+- Keep manual types in sync with Payload schema
+
+```typescript
+import type { Product, Order, Customer } from '@/payload-types';
+
+// Using generated types
+const createOrder = async (
+  customer: Customer,
+  items: CartItem[]
+): Promise<Order> => {
+  // Implementation using properly typed Payload operations
+};
+
+// Extending generated types
+interface ProductWithCalculatedFields extends Product {
+  discountedPrice?: number;
+  isOnSale: boolean;
+  averageRating?: number;
+}
+```
+
+### Collection Type Patterns
+
+```typescript
+// Collection query result types
+type ProductQueryResult = {
+  docs: Product[];
+  totalDocs: number;
+  page: number;
+  totalPages: number;
+};
+
+// Hook for typed Payload operations
+function usePayloadFind<T>(
+  collection: string,
+  query?: QueryOptions
+): {
+  data: T[] | null;
+  loading: boolean;
+  error: string | null;
+} {
+  // Implementation
+}
+```
+
+## Error Handling Types
+
+### Error Type Definitions
+
+```typescript
+// Base error interface
+interface BaseError {
+  message: string;
+  code?: string;
+  timestamp: Date;
+}
+
+// Specific error types
+interface ValidationError extends BaseError {
+  field: string;
+  value: unknown;
+}
+
+interface PaymentError extends BaseError {
+  paymentIntentId?: string;
+  decline_code?: string;
+}
+
+// Result type pattern
+type Result<T, E = Error> =
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+// Usage example
+async function processPayment(
+  order: Order
+): Promise<Result<PaymentResult, PaymentError>> {
+  try {
+    const result = await paymentProvider.charge(order);
+    return { success: true, data: result };
+  } catch (error) {
+    return {
+      success: false,
+      error: error as PaymentError
+    };
+  }
+}
+```
+
+## React TypeScript Patterns
+
+### Component Type Patterns
+
+```typescript
+// Functional component with props
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  isLoading?: boolean;
+  children: React.ReactNode;
+}
+
+export const Button: React.FC<ButtonProps> = ({
+  variant = 'primary',
+  size = 'md',
+  isLoading = false,
+  children,
+  disabled,
+  ...props
+}) => {
+  return (
+    <button
+      disabled={disabled || isLoading}
+      {...props}
+    >
+      {isLoading ? <Spinner /> : children}
+    </button>
+  );
+};
+
+// Polymorphic component types
+type PolymorphicRef<C extends React.ElementType> =
+  React.ComponentPropsWithRef<C>['ref'];
+
+interface PolymorphicProps<C extends React.ElementType> {
+  as?: C;
+  children: React.ReactNode;
+}
+
+type PolymorphicComponentProps<
+  C extends React.ElementType,
+  Props = {}
+> = PolymorphicProps<C> &
+  Props &
+  Omit<React.ComponentPropsWithoutRef<C>, keyof (PolymorphicProps<C> & Props)>;
+```
+
+### Hook Type Patterns
+
+```typescript
+// Custom hook with proper typing
+function useLocalStorage<T>(
+  key: string,
+  defaultValue: T
+): [T, (value: T | ((prev: T) => T)) => void] {
+  const [value, setValue] = useState<T>(() => {
+    try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : defaultValue;
+    } catch {
+      return defaultValue;
+    }
+  });
+
+  const setStoredValue = useCallback((value: T | ((prev: T) => T)) => {
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+      setValue(valueToStore);
+      localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      console.error(`Error setting localStorage key "${key}":`, error);
+    }
+  }, [key]);
+
+  return [value, setStoredValue];
+}
+```
+
+## API and Data Types
+
+### API Response Types
+
+```typescript
+// Standard API response structure
+interface ApiResponse<T> {
+  data: T;
+  message?: string;
+  status: number;
+}
+
+interface ApiError {
+  message: string;
+  status: number;
+  errors?: ValidationError[];
+}
+
+// Pagination types
+interface PaginationMeta {
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalDocs: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
+interface PaginatedResponse<T> extends ApiResponse<T[]> {
+  meta: PaginationMeta;
+}
+```
+
+### Form and Validation Types
+
+```typescript
+// Form state types
+interface FormState<T> {
+  values: T;
+  errors: Partial<Record<keyof T, string>>;
+  touched: Partial<Record<keyof T, boolean>>;
+  isSubmitting: boolean;
+  isValid: boolean;
+}
+
+// Validation schema type
+type ValidationSchema<T> = {
+  [K in keyof T]?: (value: T[K]) => string | undefined;
+};
+
+// Form hook example
+function useForm<T extends Record<string, any>>(
+  initialValues: T,
+  validationSchema?: ValidationSchema<T>
+): FormState<T> & {
+  setValue: <K extends keyof T>(field: K, value: T[K]) => void;
+  setError: <K extends keyof T>(field: K, error: string) => void;
+  handleSubmit: (onSubmit: (values: T) => void | Promise<void>) => Promise<void>;
+} {
+  // Implementation
+}
+```
+
+## Best Practices
+
+### Type Organization
+
+- Keep types close to their usage
+- Export types from main module files
+- Use barrel exports for type collections
+- Document complex types with JSDoc
+
+### Performance Considerations
+
+- Use `const assertions` for immutable data
+- Implement proper memoization with correct dependencies
+- Use type-only imports when possible
+- Optimize bundle size with tree shaking
+
+```typescript
+// Const assertion for immutable data
+const SHIPPING_METHODS = [
+  'standard',
+  'express',
+  'overnight'
+] as const;
+
+type ShippingMethod = typeof SHIPPING_METHODS[number];
+
+// Type-only imports
+import type { Product, Order } from '@/payload-types';
+import type { ComponentProps } from 'react';
+
+// Regular imports
+import { useState, useCallback } from 'react';
+```
+
+### Code Quality
+
+- Use meaningful type names
+- Avoid type gymnastics - keep types simple
+- Prefer composition over complex inheritance
+- Write self-documenting type definitions
+
+### Testing Types
+
+- Test type safety with TypeScript compiler
+- Use type testing utilities for complex types
+- Verify runtime type checking with validation libraries
+- Document type expectations in tests

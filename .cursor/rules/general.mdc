@@ -1,0 +1,83 @@
+---
+description: General project conventions and best practices for the PayloadCMS ecommerce template
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# General Project Rules
+
+## Project Overview
+
+This is a PayloadCMS ecommerce template built with Next.js 15, TypeScript, TailwindCSS, and MongoDB. It's a modern, full-featured ecommerce platform with multi-language support, payment integration, and advanced product management.
+
+## Code Style & Conventions
+
+### File Naming
+
+- Use kebab-case for files and directories
+- Use PascalCase for React components
+- Use camelCase for variables and functions
+- Collection files should be in PascalCase (e.g., `Products/index.ts`)
+- Component files should end with `.tsx` for React components
+- Utility files should end with `.ts` for pure TypeScript
+
+### Import Organization
+
+Always organize imports in this order:
+
+1. React and Next.js imports
+2. Third-party library imports
+3. PayloadCMS imports
+4. Local component imports (using `@/` alias)
+5. Type-only imports at the end
+
+```typescript
+import React from 'react';
+import { notFound } from 'next/navigation';
+import { getPayload } from 'payload';
+import { Button } from '@/components/ui/button';
+import type { Product } from '@/payload-types';
+```
+
+### Directory Structure Rules
+
+- Group related ecommerce functionality in `(ecommerce)/` folders
+- Use route groups `()` for Next.js app organization
+- Keep components close to where they're used
+- Shared utilities go in `src/utilities/`
+- Reusable UI components go in `src/components/ui/`
+
+### Error Handling
+
+- Always handle async operations with try-catch
+- Use proper TypeScript error types
+- Provide user-friendly error messages
+- Log errors appropriately for debugging
+
+### Performance Considerations
+
+- Use Next.js Image component for all images
+- Implement proper loading states
+- Use dynamic imports for heavy components
+- Optimize database queries with proper indexing
+
+### Security Best Practices
+
+- Never expose sensitive environment variables to client
+- Validate all user inputs
+- Use PayloadCMS access control patterns
+- Sanitize data before database operations
+
+## Environment Variables
+
+- Use descriptive names with appropriate prefixes
+- Group related variables logically
+- Always provide `.env.example` for reference
+- Document all required variables in setup docs
+
+## Documentation
+
+- Update documentation when adding new features
+- Include TypeScript interfaces in documentation
+- Provide code examples for complex functionality
+- Keep README and setup guides current

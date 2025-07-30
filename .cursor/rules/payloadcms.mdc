@@ -1,0 +1,245 @@
+---
+description: PayloadCMS specific rules for collections, globals, hooks, and admin customizations
+globs: ["src/collections/**/*", "src/globals/**/*", "src/admin/**/*", "src/access/**/*", "src/hooks/**/*", "src/fields/**/*", "src/payload.config.ts"]
+alwaysApply: false
+---
+
+# PayloadCMS Rules
+
+## Collection Development
+
+### Collection Structure
+
+- Each collection should be in its own directory under `src/collections/`
+- Use `index.ts` for the main collection export
+- Group ecommerce collections in `(ecommerce)/` subdirectory
+- Include hooks in a `hooks/` subdirectory if collection-specific
+
+### Collection Configuration
+
+```typescript
+export const CollectionName: CollectionConfig = {
+  slug: "collectionName",
+  access: {
+    read: accessPattern,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
+  },
+  labels: {
+    singular: { en: "Item", pl: "Element" },
+    plural: { en: "Items", pl: "Elementy" },
+  },
+  admin: {
+    useAsTitle: "title",
+    defaultColumns: ["title", "updatedAt"],
+    group: { en: "Group Name", pl: "Nazwa Grupy" },
+  },
+  fields: [
+    // Field definitions
+  ],
+};
+```
+
+### Field Conventions
+
+- Always use localized fields for user-facing content
+- Use required validation where appropriate
+- Implement proper field relationships with `relationTo`
+- Use admin descriptions for complex fields
+- Implement conditional field display with `admin.condition`
+
+### Access Control Patterns
+
+- Use predefined access patterns from `src/access/`
+- `anyone` - Public read access
+- `authenticated` - Requires authentication
+- `authenticatedOrPublished` - Public if published, auth for drafts
+- Custom access functions should follow the same pattern
+
+## Globals Development
+
+### Global Structure
+
+- Each global should have its own directory
+- Include `config.ts` for configuration
+- Include `Component.tsx` for frontend rendering if applicable
+- Group ecommerce globals in `(ecommerce)/` subdirectory
+
+### Global Configuration
+
+```typescript
+export const GlobalName: GlobalConfig = {
+  slug: "globalName",
+  access: {
+    read: () => true,
+    update: authenticated,
+  },
+  admin: {
+    group: { en: "Settings", pl: "Ustawienia" },
+  },
+  fields: [
+    // Field definitions
+  ],
+  hooks: {
+    afterChange: [revalidateGlobal],
+  },
+};
+```
+
+## Hooks and Validation
+
+### Hook Patterns
+
+- Use TypeScript for all hooks
+- Implement proper error handling
+- Return appropriate data from hooks
+- Use async/await for database operations
+
+### Common Hook Types
+
+```typescript
+// Before validation
+beforeValidate: [
+  ({ data, operation }) => {
+    // Transform data before validation
+    return data;
+  }
+]
+
+// After change
+afterChange: [
+  async ({ doc, operation, req }) => {
+    // Side effects after document change
+    if (operation === 'create') {
+      await sendNotificationEmail(doc);
+    }
+  }
+]
+
+// Before delete
+beforeDelete: [
+  async ({ id, req }) => {
+    // Cleanup before deletion
+    await cleanupRelatedData(id);
+  }
+]
+```
+
+### Validation Rules
+
+- Implement server-side validation for all critical fields
+- Use Zod schemas for complex validation
+- Provide clear error messages
+- Validate relationships exist
+
+## Admin Panel Customization
+
+### Custom Components
+
+- Place admin components in `src/admin/components/`
+- Use PayloadCMS component patterns
+- Implement proper TypeScript interfaces
+- Handle loading and error states
+
+### Admin Interface Rules
+
+- Use consistent labeling (English/Polish)
+- Group related functionality logically
+- Implement responsive admin components
+- Use proper PayloadCMS styling patterns
+
+### Custom Fields
+
+- Create reusable field definitions in `src/fields/`
+- Export field configurations for reuse
+- Document field usage and parameters
+- Implement proper validation
+
+## Database Operations
+
+### Query Patterns
+
+```typescript
+// Find with proper typing
+const products = await payload.find({
+  collection: 'products',
+  where: {
+    status: { equals: 'published' }
+  },
+  depth: 2,
+  limit: 10,
+});
+
+// Update with validation
+await payload.update({
+  collection: 'products',
+  id: productId,
+  data: {
+    stock: newStock
+  },
+});
+```
+
+### Relationship Management
+
+- Use proper depth settings for populated relationships
+- Implement cascading deletes where appropriate
+- Validate relationship integrity
+- Use joins for performance when appropriate
+
+## Internationalization
+
+### Localized Content
+
+- Mark user-facing fields as `localized: true`
+- Provide translations for all admin labels
+- Use proper locale fallbacks
+- Implement locale-specific validation
+
+### Translation Patterns
+
+```typescript
+{
+  name: "title",
+  type: "text",
+  localized: true,
+  required: true,
+  label: {
+    en: "Title",
+    pl: "Tytuł"
+  }
+}
+```
+
+## Performance Optimization
+
+### Query Optimization
+
+- Use proper indexing on frequently queried fields
+- Implement pagination for large datasets
+- Use select to limit returned fields
+- Optimize relationship queries with depth control
+
+### Caching Strategy
+
+- Implement revalidation hooks for cache invalidation
+- Use Next.js cache tags appropriately
+- Cache expensive operations
+- Implement proper cache invalidation
+
+## Security Considerations
+
+### Data Protection
+
+- Never expose sensitive data in public APIs
+- Implement proper field-level access control
+- Validate file uploads properly
+- Sanitize user inputs
+
+### Authentication & Authorization
+
+- Use PayloadCMS built-in auth where possible
+- Implement proper session management
+- Use secure password policies
+- Implement rate limiting for auth endpoints
