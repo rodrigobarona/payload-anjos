@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPayload } from "payload";
 
 import { Media as MediaComponent } from "@/components/Media";
@@ -13,6 +13,10 @@ import { getOrderProducts } from "@/utilities/getOrderProducts";
 
 const OrdersPage = async ({ params }: { params: Promise<{ locale: Locale; id: string }> }) => {
   const { locale, id } = await params;
+
+  // Enable static rendering
+  setRequestLocale(locale);
+
   const payload = await getPayload({ config });
   const order = await payload.findByID({
     collection: "orders",

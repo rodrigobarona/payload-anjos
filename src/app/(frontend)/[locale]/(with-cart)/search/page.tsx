@@ -1,16 +1,30 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPayload } from "payload";
 
 import { WithInlinePrice } from "@/globals/(ecommerce)/Layout/ProductList/variants/listings/WithInlinePrice";
 import { routing } from "@/i18n/routing";
 import config from "@payload-config";
 
+// Search pages are inherently dynamic due to search parameters
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-const SearchPage = async ({ searchParams }: { searchParams: Promise<{ search: string }> }) => {
+const SearchPage = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ search: string }>;
+}) => {
+  const { locale } = await params;
   const { search } = await searchParams;
+
+  // Enable static rendering
+  setRequestLocale(locale);
+
   const payload = await getPayload({ config });
   // TODO: pagination for more products
   const { docs: products } = search
