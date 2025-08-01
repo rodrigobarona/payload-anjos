@@ -1,6 +1,6 @@
 import { type Product } from "@/payload-types";
 type BaseProduct = {
-  id: string;
+  id: number; // Changed from string to number for PostgreSQL
   choosenVariantSlug?: string;
 };
 

@@ -159,7 +159,7 @@ export const OverviewLastOrders = () => {
               {order.customer && (
                 <DropdownMenuItem>
                   <Link
-                    href={`/admin/collections/customers/${typeof order.customer === "string" ? order.customer : order.customer.id}`}
+                    href={`/admin/collections/customers/${typeof order.customer === "number" ? order.customer : order.customer.id}`}
                     className="no-underline"
                   >
                     {t("adminDashboard:viewCustomer")}

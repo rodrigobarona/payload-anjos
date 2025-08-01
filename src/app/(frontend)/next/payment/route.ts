@@ -101,7 +101,7 @@ export async function POST(req: Request) {
         customer: user?.id,
         extractedFromStock: true,
         products: filledProducts.map((product) => ({
-          id: product.id,
+          id: String(product.id), // Convert number to string for Order interface
           product: product.id,
           productName: product.title,
           quantity: product.quantity ?? 0,

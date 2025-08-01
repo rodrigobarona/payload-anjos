@@ -34,7 +34,7 @@ export const Default = async ({ customer, locale }: { customer: Customer; locale
       <Body style={main}>
         <Container style={container}>
           <Section style={message}>
-            {messages?.logo && typeof messages.logo !== "string" && (
+            {messages?.logo && typeof messages.logo !== "number" && (
               <Img
                 alt={messages.logo.alt ?? ""}
                 src={`${baseUrl}${messages.logo.url ?? ""}`}

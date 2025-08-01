@@ -73,8 +73,8 @@ This template includes extensive documentation covering every aspect of the syst
 ### **Backend & CMS**
 
 - **[PayloadCMS 3.47](https://payloadcms.com)** - Headless CMS and admin panel
-- **[MongoDB](https://mongodb.com)** - Database with Mongoose ODM
-- **[AWS S3](https://aws.amazon.com/s3/)** - File storage (compatible with Cloudflare R2)
+- **[Supabase](https://supabase.com)** - PostgreSQL database and S3-compatible storage
+- **[PostgreSQL](https://postgresql.org)** - Database with Supabase managed service
 
 ### **Development Tools**
 
@@ -100,8 +100,8 @@ This template includes extensive documentation covering every aspect of the syst
 
 - **Node.js 18+**
 - **pnpm** (recommended) or npm
-- **MongoDB** (local or Atlas)
-- **S3-compatible storage** (AWS S3 or Cloudflare R2)
+- **Supabase Account** (for PostgreSQL database and storage)
+- **S3-compatible storage** (Supabase Storage included)
 
 ### Installation
 
@@ -182,17 +182,17 @@ Built-in support for multiple languages:
 Essential variables (see [setup guide](.docs/01-setup.md) for complete list):
 
 ```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/payload-ecommerce
+# Database - Supabase PostgreSQL
+DATABASE_URI=postgresql://postgres:password@db.project-ref.supabase.co:5432/postgres
 
 # Payload
 PAYLOAD_SECRET=your-super-secret-key
 
-# S3 Storage
-S3_ENDPOINT=https://s3.amazonaws.com
-S3_ACCESS_KEY_ID=your-access-key
-S3_SECRET_ACCESS_KEY=your-secret-key
-S3_BUCKET=your-bucket-name
+# Supabase Storage (S3-Compatible)
+SUPABASE_STORAGE_BUCKET=your-bucket-name
+SUPABASE_STORAGE_ENDPOINT=https://project-ref.supabase.co/storage/v1/s3
+SUPABASE_STORAGE_ACCESS_KEY_ID=your-access-key
+SUPABASE_STORAGE_SECRET_ACCESS_KEY=your-secret-key
 
 # Payment Gateways
 STRIPE_SECRET_KEY=sk_test_...

@@ -22,7 +22,7 @@ export const Settings = ({ user }: { user: Customer }) => {
               text={t("update")}
               altText={t("save")}
               name="firstName"
-              userID={user.id}
+              userID={String(user.id)}
             />
           </dd>
         </div>
@@ -36,7 +36,7 @@ export const Settings = ({ user }: { user: Customer }) => {
               text={t("update")}
               altText={t("save")}
               name="lastName"
-              userID={user.id}
+              userID={String(user.id)}
             />
           </dd>
         </div>
@@ -50,7 +50,7 @@ export const Settings = ({ user }: { user: Customer }) => {
               text={t("update")}
               altText={t("save")}
               name="email"
-              userID={user.id}
+              userID={String(user.id)}
             />
           </dd>
         </div>
@@ -74,7 +74,7 @@ export const Settings = ({ user }: { user: Customer }) => {
               type="date"
               altText={t("save")}
               name="birthDate"
-              userID={user.id}
+              userID={String(user.id)}
             />
           </dd>
         </div>
